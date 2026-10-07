@@ -38,5 +38,6 @@ GitHub Actions updates. A clean audit is a dated result, not a future security
 guarantee. Future runtime dependencies require their own checks and support policy.
 
 Inherited `CHANGELOG.md` and `docs/UPSTREAM_README.md` are excluded from style/link
-changes and protected by content hashes. They preserve historical upstream material
+changes and Git whitespace normalization/checks, and protected by content hashes.
+They preserve historical upstream material
 whose licensing differs from new community work.
