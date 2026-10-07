@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.pdf binary
+
+# Preserve inherited documentation bytes, including historical whitespace.
+docs/UPSTREAM_README.md -whitespace
+CHANGELOG.md -whitespace

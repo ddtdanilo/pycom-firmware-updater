@@ -1,0 +1,26 @@
+name: Feature or design proposal
+description: Propose scoped work, explain the need, and compare alternatives.
+title: "proposal: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Problem and intended users
+      description: Explain the concrete need and relate it to the maintenance plan.
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Proposed approach and alternatives
+      description: Include scope, dependencies, license implications, and open decisions.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and validation
+      description: Explain the evidence needed before the feature can be called supported.
+    validations:
+      required: true
