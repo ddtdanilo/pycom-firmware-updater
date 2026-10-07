@@ -1,0 +1,26 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.addHost.marshal (Python 3.9)
+
+from utils.hosts import Hosts
+from utils.constants import UPDATE_HOSTS
+import os
+
+def createHost():
+    if not UPDATE_HOSTS:
+        return None
+    hosts_path = None
+    if os.name == 'nt':
+        hosts_path = os.path.join(os.environ['SYSTEMROOT'], 'system32\\drivers\\etc\\hosts')
+    elif os.name == 'posix':
+        hosts_path = '/etc/hosts'
+    if hosts_path is not None:
+        hosts = Hosts(hosts_path)
+        exists = hosts.get_one('fwupdater.pycom.io')
+        if exists == '[Unknown]':
+            hosts.write_direct(hosts_path, 'fwupdater.pycom.io', '127.0.0.1')
+            hosts.write_direct(hosts_path, 'fwupdater.pycom.io', '0.0.0.0')

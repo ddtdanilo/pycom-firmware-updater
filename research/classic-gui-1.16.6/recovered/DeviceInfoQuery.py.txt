@@ -1,0 +1,164 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: DeviceInfoQuery.py
+import requests, platform, binascii
+from RunInWorker import RunInWorker
+from misc import print_debug, print_exception, detectOsFamily, calc_int_version
+from settings import MAX_TIMEOUT, SERVER_URL, TOOL_VERSION, UPDATER_TYPE, SIGFOX_CLIENT_NAME, AUTH_PWD, SECURE_QUERIES
+from requests.auth import HTTPBasicAuth
+
+class DeviceInfoQuery(object):
+
+    def __init__(self):
+        self.__worker = RunInWorker()
+        self.__timeout = 5
+        return
+
+    def add_timeout(self, timeout):
+        if self.__timeout + timeout <= MAX_TIMEOUT:
+            self.__timeout = self.__timeout + timeout
+        else:
+            self.__timeout = MAX_TIMEOUT
+        return
+
+    def __get_worker(self, params):
+        print_debug(('[GET METHOD] url={}, route={}, json={}, params={}').format(params['url'], params['route'], params['query'], params))
+        try:
+            if params.get('query', None) is not None:
+                r = requests.get(params['url'] + params['route'], params=params['query'], allow_redirects=True, timeout=self.__timeout)
+            else:
+                r = requests.get(params['url'] + params['route'], allow_redirects=True, timeout=self.__timeout)
+            try:
+                ret_val = r.json()
+            except ValueError:
+                ret_val = r.text
+
+            return (
+             r.status_code, ret_val)
+        except Exception as e:
+            print_exception(e)
+            return
+
+        return
+
+    def __get(self, route, callback):
+        params = {'route': route, 'url': SERVER_URL, 'query': {'toolversion': (calc_int_version(TOOL_VERSION))}}
+        self.__worker.run(self.__get_worker, params, callback)
+        return
+
+    def __get_pybytes(self, route, wmac, url, callback):
+        params = {'route': route, 'url': url, 'query': wmac}
+        self.__worker.run(self.__get_worker, params, callback)
+        return
+
+    def __post_pybytes(self, route, json, url, callback):
+        params = {'route': route, 'url': url, 'json': json}
+        self.__worker.run(self.__post_worker, params, callback)
+        return
+
+    def __post_worker(self, params):
+        if params.get('url') is not None:
+            url = params.get('url')
+        else:
+            url = SERVER_URL
+        print_debug(('[POST METHOD] url={}, route={}, json={}, params={}').format(url, params['route'], params['json'], params))
+        try:
+            if params.get('route') in SECURE_QUERIES:
+                r = requests.post(url + params['route'], auth=HTTPBasicAuth(SIGFOX_CLIENT_NAME, binascii.a2b_base64(AUTH_PWD)), json=params['json'], allow_redirects=True, timeout=self.__timeout)
+            else:
+                r = requests.post(url + params['route'], json=params['json'], allow_redirects=True, timeout=self.__timeout)
+            ret_val = r.json()
+        except ValueError:
+            ret_val = None
+        except Exception as e:
+            print_exception(e)
+            return (None, None)
+
+        return (
+         r.status_code, ret_val)
+
+    def __post(self, route, params, callback):
+        params['toolversion'] = calc_int_version(TOOL_VERSION)
+        self.__worker.run(self.__post_worker, {'route': route, 'json': params}, callback)
+        return
+
+    def get_info(self, wmac, smac, callback):
+        json_parameters = {'wmac': wmac, 'smac': smac}
+        return self.__post('/device/info', json_parameters, (lambda res, req: callback(res)))
+
+    def insert(self, name, wmac, smac, callback):
+        json_parameters = {'name': name, 'wmac': wmac, 'smac': smac}
+        return self.__post('/device/insert', json_parameters, (lambda res, req: callback(res)))
+
+    def insert_sigfox(self, name, wmac, smac, zone, callback):
+        json_parameters = {'name': name, 'wmac': wmac, 'smac': smac, 'zone': zone, 'client': SIGFOX_CLIENT_NAME}
+        return self.__post('/device/insert/sigfox', json_parameters, (lambda res, req: callback(res)))
+
+    def register_sigfox(self, wmac, zone, callback):
+        json_parameters = {'wmac': wmac, 'zone': zone, 'client': SIGFOX_CLIENT_NAME}
+        return self.__post('/device/register/sigfox', json_parameters, (lambda res, req: callback(res)))
+
+    def update_firmware_info(self, wmac, version, callback):
+        json_parameters = {'wmac': wmac, 'version': version}
+        return self.__post('/device/update/fwversion', json_parameters, (lambda res, req: callback(res)))
+
+    def send_update_status(self, wmac, success, error_msg, callback):
+        updater_version = calc_int_version(TOOL_VERSION)
+        os_version = detectOsFamily()
+        os_detail = ''
+        os_uname = ''
+        if os_version == 'unix':
+            try:
+                linux_dist = platform.linux_distribution()
+                os_detail = linux_dist[0] + ' ' + linux_dist[1] + ' ' + linux_dist[2]
+            except Exception as e:
+                print_exception(e)
+                os_detail = str(e)
+
+        elif os_version == 'macos':
+            try:
+                mac_v = platform.mac_ver()
+                try:
+                    os_detail = (mac_v[0] + ' ' + mac_v[2]).replace("'", '').replace('"', '')
+                except:
+                    os_detail = mac_v[0].replace("'", '').replace('"', '')
+
+            except Exception as e:
+                print_exception(e)
+                os_detail = str(e).replace("'", '').replace('"', '')
+
+        elif os_version == 'win32':
+            try:
+                win_v = platform.win32_ver()
+                os_detail = (win_v[0] + ' ' + win_v[1] + ' ' + win_v[2] + ' ' + win_v[3]).replace("'", '').replace('"', '')
+            except Exception as e:
+                print_exception(e)
+                os_detail = str(e).replace("'", '').replace('"', '')
+
+        try:
+            os_uname = str(platform.uname()).replace("'", '').replace('"', '')
+        except Exception as e:
+            os_uname = str(e).replace("'", '').replace('"', '')
+
+        try:
+            os_platform = str(platform.platform(aliased=True).replace('-', ' ')).replace("'", '').replace('"', '')
+        except Exception as e:
+            os_platform = str(e).replace("'", '').replace('"', '')
+
+        if SERVER_URL == 'https://software.pycom.io' and UPDATER_TYPE != 'internal':
+            json_parameters = {'wmac': wmac, 'updater_version': updater_version, 'os_version': os_version, 'os_detail': os_detail, 'platform': os_platform, 'success': (str(success).lower()), 'error_msg': (str(error_msg))}
+        else:
+            json_parameters = {'wmac': wmac, 'updater_version': updater_version, 'os_version': os_version, 'os_detail': os_detail, 'uname': os_uname, 'platform': os_platform, 'success': (str(success).lower()), 'error_msg': (str(error_msg))}
+        return self.__post('/device/update/log', json_parameters, (lambda res, req: callback(res)))
+
+    def get_pybytes_activation(self, activation_token, wmac, url, callback):
+        return self.__get_pybytes('/quick-device-activation/' + activation_token, wmac, url, (lambda res, req: callback(res)))
+
+    def post_pybytes_activation(self, json, url, callback):
+        return self.__post_pybytes('/v2/quick-device-activation', json, url, (lambda res, req: callback(res)))

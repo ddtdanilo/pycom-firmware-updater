@@ -1,0 +1,113 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.esp_utils.marshal (Python 3.9)
+
+from errors_lib.no_impolemented_in_rome_error import NotImplementedInROMError
+from errors_lib.fatal_error import FatalError
+
+def div_roundup(a, b):
+    ''' Return a/b rounded up to nearest integer,
+    equivalent result to int(math.ceil(float(int(a)) / float(int(b))), only
+    without possible floating point accuracy errors.
+    '''
+    return (int(a) + int(b) - 1) // int(b)
+
+
+def align_file_position(f, size):
+    ''' Align the position in the file to the next block of specified size '''
+    align = size - 1 - f.tell() % size
+    f.seek(align, 1)
+
+
+def flash_size_bytes(size):
+    ''' Given a flash size of the type passed in args.flash_size
+    (ie 512KB or 1MB) then return the size in bytes.
+    '''
+    if 'MB' in size:
+        return int(size[:size.index('MB')]) * 1024 * 1024
+    if None in size:
+        return int(size[:size.index('KB')]) * 1024
+    raise None('Unknown size %s' % size)
+
+
+def check_supported_function(func, check_func):
+    """
+    Decorator implementation that wraps a check around an ESPLoader
+    bootloader function to check if it's supported.
+
+    This is used to capture the multidimensional differences in
+    functionality between the ESP8266 & ESP32 ROM loaders, and the
+    software stub that runs on both. Not possible to do this cleanly
+    via inheritance alone.
+    """
+    
+    def inner(*args, **kwargs):
+        obj = args[0]
+    # WARNING: Decompyle incomplete
+
+    return inner
+
+
+def stub_function_only(func):
+    ''' Attribute for a function only supported in the software stub loader '''
+    return check_supported_function(func, (lambda o: o.IS_STUB))
+
+
+def stub_and_esp32_function_only(func):
+    '''
+    Attribute for a function only supported by software stubs or ESP32 ROM
+    '''
+    return check_supported_function(func, (lambda o: if not o.IS_STUB:
+passo.CHIP_NAME == 'ESP32'))
+
+
+def esp8266_function_only(func):
+    ''' Attribute for a function only supported on ESP8266 '''
+    return check_supported_function(func, (lambda o: o.CHIP_NAME == 'ESP8266'))
+
+
+def slip_reader(port):
+    '''Generator to read SLIP packets from a serial port.
+    Yields one full SLIP packet at a time, raises exception on timeout or invalid data.
+
+    Designed to avoid too many calls to serial.read(1), which can bog
+    down on slow systems.
+    '''
+    partial_packet = None
+    in_escape = False
+    waiting = port.inWaiting()
+    read_bytes = port.read(1 if waiting == 0 else waiting)
+    if read_bytes == b'':
+        raise FatalError('Timed out waiting for packet %s' % 'header' if partial_packet is None else 'content')
+    for b in read_bytes:
+        if type(b) is int:
+            b = bytes([
+                b])
+        if partial_packet is None:
+            if b == b'\xc0':
+                partial_packet = b''
+            else:
+                raise FatalError('Invalid head of packet (%r)' % b)
+            continue
+        if in_escape:
+            in_escape = False
+            if b == b'\xdc':
+                partial_packet += b'\xc0'
+            elif b == b'\xdd':
+                partial_packet += b'\xdb'
+            else:
+                raise FatalError('Invalid SLIP escape (%r%r)' % (b'\xdb', b))
+            continue
+        if b == b'\xdb':
+            in_escape = True
+            continue
+        if b == b'\xc0':
+            yield partial_packet
+            partial_packet = None
+            continue
+        partial_packet += b
+    continue

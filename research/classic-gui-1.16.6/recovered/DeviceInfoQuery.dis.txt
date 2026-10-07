@@ -1,0 +1,1146 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: DeviceInfoQuery
+  1:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (None)
+               6 IMPORT_NAME          (requests)
+               9 STORE_NAME           (requests)
+              12 LOAD_CONST           (-1)
+              15 LOAD_CONST           (None)
+              18 IMPORT_NAME          (platform)
+              21 STORE_NAME           (platform)
+              24 LOAD_CONST           (-1)
+              27 LOAD_CONST           (None)
+              30 IMPORT_NAME          (binascii)
+              33 STORE_NAME           (binascii)
+
+  3:          36 LOAD_CONST           (-1)
+              39 LOAD_CONST           (('RunInWorker',))
+              42 IMPORT_NAME          (RunInWorker)
+              45 IMPORT_FROM          (RunInWorker)
+              48 STORE_NAME           (RunInWorker)
+              51 POP_TOP
+
+  4:          52 LOAD_CONST           (-1)
+              55 LOAD_CONST           (('print_debug', 'print_exception', 'detectOsFamily', 'calc_int_version'))
+              58 IMPORT_NAME          (misc)
+              61 IMPORT_FROM          (print_debug)
+              64 STORE_NAME           (print_debug)
+              67 IMPORT_FROM          (print_exception)
+              70 STORE_NAME           (print_exception)
+              73 IMPORT_FROM          (detectOsFamily)
+              76 STORE_NAME           (detectOsFamily)
+              79 IMPORT_FROM          (calc_int_version)
+              82 STORE_NAME           (calc_int_version)
+              85 POP_TOP
+
+  5:          86 LOAD_CONST           (-1)
+              89 LOAD_CONST           (('MAX_TIMEOUT', 'SERVER_URL', 'TOOL_VERSION', 'UPDATER_TYPE', 'SIGFOX_CLIENT_NAME', 'AUTH_PWD', 'SECURE_QUERIES'))
+              92 IMPORT_NAME          (settings)
+              95 IMPORT_FROM          (MAX_TIMEOUT)
+              98 STORE_NAME           (MAX_TIMEOUT)
+             101 IMPORT_FROM          (SERVER_URL)
+             104 STORE_NAME           (SERVER_URL)
+             107 IMPORT_FROM          (TOOL_VERSION)
+             110 STORE_NAME           (TOOL_VERSION)
+             113 IMPORT_FROM          (UPDATER_TYPE)
+             116 STORE_NAME           (UPDATER_TYPE)
+             119 IMPORT_FROM          (SIGFOX_CLIENT_NAME)
+             122 STORE_NAME           (SIGFOX_CLIENT_NAME)
+             125 IMPORT_FROM          (AUTH_PWD)
+             128 STORE_NAME           (AUTH_PWD)
+             131 IMPORT_FROM          (SECURE_QUERIES)
+             134 STORE_NAME           (SECURE_QUERIES)
+             137 POP_TOP
+
+  6:         138 LOAD_CONST           (-1)
+             141 LOAD_CONST           (('HTTPBasicAuth',))
+             144 IMPORT_NAME          (requests.auth)
+             147 IMPORT_FROM          (HTTPBasicAuth)
+             150 STORE_NAME           (HTTPBasicAuth)
+             153 POP_TOP
+
+  8:         154 LOAD_CONST           ("DeviceInfoQuery")
+             157 LOAD_NAME            (object)
+             160 BUILD_TUPLE          1
+             163 LOAD_CONST           (<Code2 code object DeviceInfoQuery at <address omitted>, file DeviceInfoQuery.py>, line 8)
+             166 MAKE_FUNCTION        (0 default parameters)
+             169 CALL_FUNCTION        (0 positional, 0 named)
+             172 BUILD_CLASS
+             173 STORE_NAME           (DeviceInfoQuery)
+             176 LOAD_CONST           (None)
+             179 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery
+  8:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+ 10:           6 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file DeviceInfoQuery.py>, line 10)
+               9 MAKE_FUNCTION        (0 default parameters)
+              12 STORE_NAME           (__init__)
+
+ 14:          15 LOAD_CONST           (<Code2 code object add_timeout at <address omitted>, file DeviceInfoQuery.py>, line 14)
+              18 MAKE_FUNCTION        (0 default parameters)
+              21 STORE_NAME           (add_timeout)
+
+ 20:          24 LOAD_CONST           (<Code2 code object __get_worker at <address omitted>, file DeviceInfoQuery.py>, line 20)
+              27 MAKE_FUNCTION        (0 default parameters)
+              30 STORE_NAME           (_DeviceInfoQuery__get_worker)
+
+ 46:          33 LOAD_CONST           (<Code2 code object __get at <address omitted>, file DeviceInfoQuery.py>, line 46)
+              36 MAKE_FUNCTION        (0 default parameters)
+              39 STORE_NAME           (_DeviceInfoQuery__get)
+
+ 50:          42 LOAD_CONST           (<Code2 code object __get_pybytes at <address omitted>, file DeviceInfoQuery.py>, line 50)
+              45 MAKE_FUNCTION        (0 default parameters)
+              48 STORE_NAME           (_DeviceInfoQuery__get_pybytes)
+
+ 54:          51 LOAD_CONST           (<Code2 code object __post_pybytes at <address omitted>, file DeviceInfoQuery.py>, line 54)
+              54 MAKE_FUNCTION        (0 default parameters)
+              57 STORE_NAME           (_DeviceInfoQuery__post_pybytes)
+
+ 58:          60 LOAD_CONST           (<Code2 code object __post_worker at <address omitted>, file DeviceInfoQuery.py>, line 58)
+              63 MAKE_FUNCTION        (0 default parameters)
+              66 STORE_NAME           (_DeviceInfoQuery__post_worker)
+
+ 85:          69 LOAD_CONST           (<Code2 code object __post at <address omitted>, file DeviceInfoQuery.py>, line 85)
+              72 MAKE_FUNCTION        (0 default parameters)
+              75 STORE_NAME           (_DeviceInfoQuery__post)
+
+ 89:          78 LOAD_CONST           (<Code2 code object get_info at <address omitted>, file DeviceInfoQuery.py>, line 89)
+              81 MAKE_FUNCTION        (0 default parameters)
+              84 STORE_NAME           (get_info)
+
+ 93:          87 LOAD_CONST           (<Code2 code object insert at <address omitted>, file DeviceInfoQuery.py>, line 93)
+              90 MAKE_FUNCTION        (0 default parameters)
+              93 STORE_NAME           (insert)
+
+ 97:          96 LOAD_CONST           (<Code2 code object insert_sigfox at <address omitted>, file DeviceInfoQuery.py>, line 97)
+              99 MAKE_FUNCTION        (0 default parameters)
+             102 STORE_NAME           (insert_sigfox)
+
+101:         105 LOAD_CONST           (<Code2 code object register_sigfox at <address omitted>, file DeviceInfoQuery.py>, line 101)
+             108 MAKE_FUNCTION        (0 default parameters)
+             111 STORE_NAME           (register_sigfox)
+
+105:         114 LOAD_CONST           (<Code2 code object update_firmware_info at <address omitted>, file DeviceInfoQuery.py>, line 105)
+             117 MAKE_FUNCTION        (0 default parameters)
+             120 STORE_NAME           (update_firmware_info)
+
+109:         123 LOAD_CONST           (<Code2 code object send_update_status at <address omitted>, file DeviceInfoQuery.py>, line 109)
+             126 MAKE_FUNCTION        (0 default parameters)
+             129 STORE_NAME           (send_update_status)
+
+154:         132 LOAD_CONST           (<Code2 code object get_pybytes_activation at <address omitted>, file DeviceInfoQuery.py>, line 154)
+             135 MAKE_FUNCTION        (0 default parameters)
+             138 STORE_NAME           (get_pybytes_activation)
+
+157:         141 LOAD_CONST           (<Code2 code object post_pybytes_activation at <address omitted>, file DeviceInfoQuery.py>, line 157)
+             144 MAKE_FUNCTION        (0 default parameters)
+             147 STORE_NAME           (post_pybytes_activation)
+             150 LOAD_LOCALS
+             151 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__init__
+ 11:           0 LOAD_GLOBAL          (RunInWorker)
+               3 CALL_FUNCTION        (0 positional, 0 named)
+               6 LOAD_FAST            (self)
+               9 STORE_ATTR           (_DeviceInfoQuery__worker)
+
+ 12:          12 LOAD_CONST           (5)
+              15 LOAD_FAST            (self)
+              18 STORE_ATTR           (_DeviceInfoQuery__timeout)
+              21 LOAD_CONST           (None)
+              24 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.add_timeout
+ 15:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+               6 LOAD_FAST            (timeout)
+               9 BINARY_ADD
+              10 LOAD_GLOBAL          (MAX_TIMEOUT)
+              13 COMPARE_OP           (<=)
+              16 POP_JUMP_IF_FALSE    (to 38)
+
+ 16:          19 LOAD_FAST            (self)
+              22 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+              25 LOAD_FAST            (timeout)
+              28 BINARY_ADD
+              29 LOAD_FAST            (self)
+              32 STORE_ATTR           (_DeviceInfoQuery__timeout)
+              35 JUMP_FORWARD         (to 47)
+
+ 18:     >>   38 LOAD_GLOBAL          (MAX_TIMEOUT)
+              41 LOAD_FAST            (self)
+              44 STORE_ATTR           (_DeviceInfoQuery__timeout)
+         >>   47 LOAD_CONST           (None)
+              50 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__get_worker
+ 25:           0 LOAD_GLOBAL          (print_debug)
+               3 LOAD_CONST           ("[GET METHOD] url={}, route={}, json={}, params={}")
+               6 LOAD_ATTR            (format)
+               9 LOAD_FAST            (params)
+              12 LOAD_CONST           ("url")
+              15 BINARY_SUBSCR
+              16 LOAD_FAST            (params)
+              19 LOAD_CONST           ("route")
+              22 BINARY_SUBSCR
+              23 LOAD_FAST            (params)
+              26 LOAD_CONST           ("query")
+              29 BINARY_SUBSCR
+              30 LOAD_FAST            (params)
+              33 CALL_FUNCTION        (4 positional, 0 named)
+              36 CALL_FUNCTION        (1 positional, 0 named)
+              39 POP_TOP
+
+ 26:          40 SETUP_EXCEPT         (to 226)
+
+ 27:          43 LOAD_FAST            (params)
+              46 LOAD_ATTR            (get)
+              49 LOAD_CONST           ("query")
+              52 LOAD_CONST           (None)
+              55 CALL_FUNCTION        (2 positional, 0 named)
+              58 LOAD_CONST           (None)
+              61 COMPARE_OP           (is-not)
+              64 POP_JUMP_IF_FALSE    (to 122)
+
+ 28:          67 LOAD_GLOBAL          (requests)
+              70 LOAD_ATTR            (get)
+              73 LOAD_FAST            (params)
+              76 LOAD_CONST           ("url")
+              79 BINARY_SUBSCR
+              80 LOAD_FAST            (params)
+              83 LOAD_CONST           ("route")
+              86 BINARY_SUBSCR
+              87 BINARY_ADD
+              88 LOAD_CONST           ("params")
+
+ 29:          91 LOAD_FAST            (params)
+              94 LOAD_CONST           ("query")
+              97 BINARY_SUBSCR
+              98 LOAD_CONST           ("allow_redirects")
+
+ 30:         101 LOAD_GLOBAL          (True)
+             104 LOAD_CONST           ("timeout")
+
+ 31:         107 LOAD_FAST            (self)
+             110 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+             113 CALL_FUNCTION        (1 positional, 3 named)
+             116 STORE_FAST           (r)
+             119 JUMP_FORWARD         (to 164)
+
+ 33:     >>  122 LOAD_GLOBAL          (requests)
+             125 LOAD_ATTR            (get)
+             128 LOAD_FAST            (params)
+             131 LOAD_CONST           ("url")
+             134 BINARY_SUBSCR
+             135 LOAD_FAST            (params)
+             138 LOAD_CONST           ("route")
+             141 BINARY_SUBSCR
+             142 BINARY_ADD
+             143 LOAD_CONST           ("allow_redirects")
+
+ 34:         146 LOAD_GLOBAL          (True)
+             149 LOAD_CONST           ("timeout")
+
+ 35:         152 LOAD_FAST            (self)
+             155 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+             158 CALL_FUNCTION        (1 positional, 2 named)
+             161 STORE_FAST           (r)
+
+ 37:     >>  164 SETUP_EXCEPT         (to 183)
+
+ 38:         167 LOAD_FAST            (r)
+             170 LOAD_ATTR            (json)
+             173 CALL_FUNCTION        (0 positional, 0 named)
+             176 STORE_FAST           (ret_val)
+             179 POP_BLOCK
+             180 JUMP_FORWARD         (to 209)
+
+ 39:     >>  183 DUP_TOP
+             184 LOAD_GLOBAL          (ValueError)
+             187 COMPARE_OP           (exception-match)
+             190 POP_JUMP_IF_FALSE    (to 208)
+             193 POP_TOP
+             194 POP_TOP
+             195 POP_TOP
+
+ 40:         196 LOAD_FAST            (r)
+             199 LOAD_ATTR            (text)
+             202 STORE_FAST           (ret_val)
+             205 JUMP_FORWARD         (to 209)
+         >>  208 END_FINALLY
+
+ 41:     >>  209 LOAD_FAST            (r)
+             212 LOAD_ATTR            (status_code)
+             215 LOAD_FAST            (ret_val)
+             218 BUILD_TUPLE          2
+             221 RETURN_VALUE
+             222 POP_BLOCK
+             223 JUMP_FORWARD         (to 256)
+
+ 42:     >>  226 DUP_TOP
+             227 LOAD_GLOBAL          (Exception)
+             230 COMPARE_OP           (exception-match)
+             233 POP_JUMP_IF_FALSE    (to 255)
+             236 POP_TOP
+             237 STORE_FAST           (e)
+             240 POP_TOP
+
+ 43:         241 LOAD_GLOBAL          (print_exception)
+             244 LOAD_FAST            (e)
+             247 CALL_FUNCTION        (1 positional, 0 named)
+             250 POP_TOP
+
+ 44:         251 LOAD_CONST           (None)
+             254 RETURN_VALUE
+         >>  255 END_FINALLY
+         >>  256 LOAD_CONST           (None)
+             259 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__get
+ 47:           0 BUILD_MAP            3
+               3 LOAD_FAST            (route)
+               6 LOAD_CONST           ("route")
+               9 STORE_MAP
+              10 LOAD_GLOBAL          (SERVER_URL)
+              13 LOAD_CONST           ("url")
+              16 STORE_MAP
+              17 BUILD_MAP            1
+              20 LOAD_GLOBAL          (calc_int_version)
+              23 LOAD_GLOBAL          (TOOL_VERSION)
+              26 CALL_FUNCTION        (1 positional, 0 named)
+              29 LOAD_CONST           ("toolversion")
+              32 STORE_MAP
+              33 LOAD_CONST           ("query")
+              36 STORE_MAP
+              37 STORE_FAST           (params)
+
+ 48:          40 LOAD_FAST            (self)
+              43 LOAD_ATTR            (_DeviceInfoQuery__worker)
+              46 LOAD_ATTR            (run)
+              49 LOAD_FAST            (self)
+              52 LOAD_ATTR            (_DeviceInfoQuery__get_worker)
+              55 LOAD_FAST            (params)
+              58 LOAD_FAST            (callback)
+              61 CALL_FUNCTION        (3 positional, 0 named)
+              64 POP_TOP
+              65 LOAD_CONST           (None)
+              68 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__get_pybytes
+ 51:           0 BUILD_MAP            3
+               3 LOAD_FAST            (route)
+               6 LOAD_CONST           ("route")
+               9 STORE_MAP
+              10 LOAD_FAST            (url)
+              13 LOAD_CONST           ("url")
+              16 STORE_MAP
+              17 LOAD_FAST            (wmac)
+              20 LOAD_CONST           ("query")
+              23 STORE_MAP
+              24 STORE_FAST           (params)
+
+ 52:          27 LOAD_FAST            (self)
+              30 LOAD_ATTR            (_DeviceInfoQuery__worker)
+              33 LOAD_ATTR            (run)
+              36 LOAD_FAST            (self)
+              39 LOAD_ATTR            (_DeviceInfoQuery__get_worker)
+              42 LOAD_FAST            (params)
+              45 LOAD_FAST            (callback)
+              48 CALL_FUNCTION        (3 positional, 0 named)
+              51 POP_TOP
+              52 LOAD_CONST           (None)
+              55 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__post_pybytes
+ 55:           0 BUILD_MAP            3
+               3 LOAD_FAST            (route)
+               6 LOAD_CONST           ("route")
+               9 STORE_MAP
+              10 LOAD_FAST            (url)
+              13 LOAD_CONST           ("url")
+              16 STORE_MAP
+              17 LOAD_FAST            (json)
+              20 LOAD_CONST           ("json")
+              23 STORE_MAP
+              24 STORE_FAST           (params)
+
+ 56:          27 LOAD_FAST            (self)
+              30 LOAD_ATTR            (_DeviceInfoQuery__worker)
+              33 LOAD_ATTR            (run)
+              36 LOAD_FAST            (self)
+              39 LOAD_ATTR            (_DeviceInfoQuery__post_worker)
+              42 LOAD_FAST            (params)
+              45 LOAD_FAST            (callback)
+              48 CALL_FUNCTION        (3 positional, 0 named)
+              51 POP_TOP
+              52 LOAD_CONST           (None)
+              55 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__post_worker
+ 59:           0 LOAD_FAST            (params)
+               3 LOAD_ATTR            (get)
+               6 LOAD_CONST           ("url")
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 LOAD_CONST           (None)
+              15 COMPARE_OP           (is-not)
+              18 POP_JUMP_IF_FALSE    (to 39)
+
+ 60:          21 LOAD_FAST            (params)
+              24 LOAD_ATTR            (get)
+              27 LOAD_CONST           ("url")
+              30 CALL_FUNCTION        (1 positional, 0 named)
+              33 STORE_FAST           (url)
+              36 JUMP_FORWARD         (to 45)
+
+ 62:     >>   39 LOAD_GLOBAL          (SERVER_URL)
+              42 STORE_FAST           (url)
+
+ 63:     >>   45 LOAD_GLOBAL          (print_debug)
+              48 LOAD_CONST           ("[POST METHOD] url={}, route={}, json={}, params={}")
+              51 LOAD_ATTR            (format)
+              54 LOAD_FAST            (url)
+              57 LOAD_FAST            (params)
+              60 LOAD_CONST           ("route")
+              63 BINARY_SUBSCR
+              64 LOAD_FAST            (params)
+              67 LOAD_CONST           ("json")
+              70 BINARY_SUBSCR
+              71 LOAD_FAST            (params)
+              74 CALL_FUNCTION        (4 positional, 0 named)
+              77 CALL_FUNCTION        (1 positional, 0 named)
+              80 POP_TOP
+
+ 64:          81 SETUP_EXCEPT         (to 244)
+
+ 65:          84 LOAD_FAST            (params)
+              87 LOAD_ATTR            (get)
+              90 LOAD_CONST           ("route")
+              93 CALL_FUNCTION        (1 positional, 0 named)
+              96 LOAD_GLOBAL          (SECURE_QUERIES)
+              99 COMPARE_OP           (in)
+             102 POP_JUMP_IF_FALSE    (to 180)
+
+ 66:         105 LOAD_GLOBAL          (requests)
+             108 LOAD_ATTR            (post)
+             111 LOAD_FAST            (url)
+             114 LOAD_FAST            (params)
+             117 LOAD_CONST           ("route")
+             120 BINARY_SUBSCR
+             121 BINARY_ADD
+             122 LOAD_CONST           ("auth")
+
+ 67:         125 LOAD_GLOBAL          (HTTPBasicAuth)
+             128 LOAD_GLOBAL          (SIGFOX_CLIENT_NAME)
+             131 LOAD_GLOBAL          (binascii)
+             134 LOAD_ATTR            (a2b_base64)
+             137 LOAD_GLOBAL          (AUTH_PWD)
+             140 CALL_FUNCTION        (1 positional, 0 named)
+             143 CALL_FUNCTION        (2 positional, 0 named)
+             146 LOAD_CONST           ("json")
+
+ 68:         149 LOAD_FAST            (params)
+             152 LOAD_CONST           ("json")
+             155 BINARY_SUBSCR
+             156 LOAD_CONST           ("allow_redirects")
+
+ 69:         159 LOAD_GLOBAL          (True)
+             162 LOAD_CONST           ("timeout")
+
+ 70:         165 LOAD_FAST            (self)
+             168 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+             171 CALL_FUNCTION        (1 positional, 4 named)
+             174 STORE_FAST           (r)
+             177 JUMP_FORWARD         (to 228)
+
+ 72:     >>  180 LOAD_GLOBAL          (requests)
+             183 LOAD_ATTR            (post)
+             186 LOAD_FAST            (url)
+             189 LOAD_FAST            (params)
+             192 LOAD_CONST           ("route")
+             195 BINARY_SUBSCR
+             196 BINARY_ADD
+             197 LOAD_CONST           ("json")
+
+ 73:         200 LOAD_FAST            (params)
+             203 LOAD_CONST           ("json")
+             206 BINARY_SUBSCR
+             207 LOAD_CONST           ("allow_redirects")
+
+ 74:         210 LOAD_GLOBAL          (True)
+             213 LOAD_CONST           ("timeout")
+
+ 75:         216 LOAD_FAST            (self)
+             219 LOAD_ATTR            (_DeviceInfoQuery__timeout)
+             222 CALL_FUNCTION        (1 positional, 3 named)
+             225 STORE_FAST           (r)
+
+ 77:     >>  228 LOAD_FAST            (r)
+             231 LOAD_ATTR            (json)
+             234 CALL_FUNCTION        (0 positional, 0 named)
+             237 STORE_FAST           (ret_val)
+             240 POP_BLOCK
+             241 JUMP_FORWARD         (to 296)
+
+ 78:     >>  244 DUP_TOP
+             245 LOAD_GLOBAL          (ValueError)
+             248 COMPARE_OP           (exception-match)
+             251 POP_JUMP_IF_FALSE    (to 266)
+             254 POP_TOP
+             255 POP_TOP
+             256 POP_TOP
+
+ 79:         257 LOAD_CONST           (None)
+             260 STORE_FAST           (ret_val)
+             263 JUMP_FORWARD         (to 296)
+
+ 80:         266 DUP_TOP
+             267 LOAD_GLOBAL          (Exception)
+             270 COMPARE_OP           (exception-match)
+             273 POP_JUMP_IF_FALSE    (to 295)
+             276 POP_TOP
+             277 STORE_FAST           (e)
+             280 POP_TOP
+
+ 81:         281 LOAD_GLOBAL          (print_exception)
+             284 LOAD_FAST            (e)
+             287 CALL_FUNCTION        (1 positional, 0 named)
+             290 POP_TOP
+
+ 82:         291 LOAD_CONST           ((None, None))
+             294 RETURN_VALUE
+             295 END_FINALLY
+
+ 83:     >>  296 LOAD_FAST            (r)
+             299 LOAD_ATTR            (status_code)
+             302 LOAD_FAST            (ret_val)
+             305 BUILD_TUPLE          2
+             308 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.__post
+ 86:           0 LOAD_GLOBAL          (calc_int_version)
+               3 LOAD_GLOBAL          (TOOL_VERSION)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 LOAD_FAST            (params)
+              12 LOAD_CONST           ("toolversion")
+              15 STORE_SUBSCR
+
+ 87:          16 LOAD_FAST            (self)
+              19 LOAD_ATTR            (_DeviceInfoQuery__worker)
+              22 LOAD_ATTR            (run)
+              25 LOAD_FAST            (self)
+              28 LOAD_ATTR            (_DeviceInfoQuery__post_worker)
+              31 BUILD_MAP            2
+              34 LOAD_FAST            (route)
+              37 LOAD_CONST           ("route")
+              40 STORE_MAP
+              41 LOAD_FAST            (params)
+              44 LOAD_CONST           ("json")
+              47 STORE_MAP
+              48 LOAD_FAST            (callback)
+              51 CALL_FUNCTION        (3 positional, 0 named)
+              54 POP_TOP
+              55 LOAD_CONST           (None)
+              58 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.get_info
+ 90:           0 BUILD_MAP            2
+               3 LOAD_FAST            (wmac)
+               6 LOAD_CONST           ("wmac")
+               9 STORE_MAP
+              10 LOAD_FAST            (smac)
+              13 LOAD_CONST           ("smac")
+              16 STORE_MAP
+              17 STORE_FAST           (json_parameters)
+
+ 91:          20 LOAD_FAST            (self)
+              23 LOAD_ATTR            (_DeviceInfoQuery__post)
+              26 LOAD_CONST           ("/device/info")
+              29 LOAD_FAST            (json_parameters)
+              32 LOAD_CLOSURE         (callback)
+              35 BUILD_TUPLE          1
+              38 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 91)
+              41 MAKE_CLOSURE         0
+              44 CALL_FUNCTION        (3 positional, 0 named)
+              47 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.get_info.<lambda>
+ 91:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.insert
+ 94:           0 BUILD_MAP            3
+               3 LOAD_FAST            (name)
+               6 LOAD_CONST           ("name")
+               9 STORE_MAP
+              10 LOAD_FAST            (wmac)
+              13 LOAD_CONST           ("wmac")
+              16 STORE_MAP
+              17 LOAD_FAST            (smac)
+              20 LOAD_CONST           ("smac")
+              23 STORE_MAP
+              24 STORE_FAST           (json_parameters)
+
+ 95:          27 LOAD_FAST            (self)
+              30 LOAD_ATTR            (_DeviceInfoQuery__post)
+              33 LOAD_CONST           ("/device/insert")
+              36 LOAD_FAST            (json_parameters)
+              39 LOAD_CLOSURE         (callback)
+              42 BUILD_TUPLE          1
+              45 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 95)
+              48 MAKE_CLOSURE         0
+              51 CALL_FUNCTION        (3 positional, 0 named)
+              54 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.insert.<lambda>
+ 95:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.insert_sigfox
+ 98:           0 BUILD_MAP            5
+               3 LOAD_FAST            (name)
+               6 LOAD_CONST           ("name")
+               9 STORE_MAP
+              10 LOAD_FAST            (wmac)
+              13 LOAD_CONST           ("wmac")
+              16 STORE_MAP
+              17 LOAD_FAST            (smac)
+              20 LOAD_CONST           ("smac")
+              23 STORE_MAP
+              24 LOAD_FAST            (zone)
+              27 LOAD_CONST           ("zone")
+              30 STORE_MAP
+              31 LOAD_GLOBAL          (SIGFOX_CLIENT_NAME)
+              34 LOAD_CONST           ("client")
+              37 STORE_MAP
+              38 STORE_FAST           (json_parameters)
+
+ 99:          41 LOAD_FAST            (self)
+              44 LOAD_ATTR            (_DeviceInfoQuery__post)
+              47 LOAD_CONST           ("/device/insert/sigfox")
+              50 LOAD_FAST            (json_parameters)
+              53 LOAD_CLOSURE         (callback)
+              56 BUILD_TUPLE          1
+              59 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 99)
+              62 MAKE_CLOSURE         0
+              65 CALL_FUNCTION        (3 positional, 0 named)
+              68 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.insert_sigfox.<lambda>
+ 99:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.register_sigfox
+102:           0 BUILD_MAP            3
+               3 LOAD_FAST            (wmac)
+               6 LOAD_CONST           ("wmac")
+               9 STORE_MAP
+              10 LOAD_FAST            (zone)
+              13 LOAD_CONST           ("zone")
+              16 STORE_MAP
+              17 LOAD_GLOBAL          (SIGFOX_CLIENT_NAME)
+              20 LOAD_CONST           ("client")
+              23 STORE_MAP
+              24 STORE_FAST           (json_parameters)
+
+103:          27 LOAD_FAST            (self)
+              30 LOAD_ATTR            (_DeviceInfoQuery__post)
+              33 LOAD_CONST           ("/device/register/sigfox")
+              36 LOAD_FAST            (json_parameters)
+              39 LOAD_CLOSURE         (callback)
+              42 BUILD_TUPLE          1
+              45 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 103)
+              48 MAKE_CLOSURE         0
+              51 CALL_FUNCTION        (3 positional, 0 named)
+              54 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.register_sigfox.<lambda>
+103:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.update_firmware_info
+106:           0 BUILD_MAP            2
+               3 LOAD_FAST            (wmac)
+               6 LOAD_CONST           ("wmac")
+               9 STORE_MAP
+              10 LOAD_FAST            (version)
+              13 LOAD_CONST           ("version")
+              16 STORE_MAP
+              17 STORE_FAST           (json_parameters)
+
+107:          20 LOAD_FAST            (self)
+              23 LOAD_ATTR            (_DeviceInfoQuery__post)
+              26 LOAD_CONST           ("/device/update/fwversion")
+              29 LOAD_FAST            (json_parameters)
+              32 LOAD_CLOSURE         (callback)
+              35 BUILD_TUPLE          1
+              38 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 107)
+              41 MAKE_CLOSURE         0
+              44 CALL_FUNCTION        (3 positional, 0 named)
+              47 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.update_firmware_info.<lambda>
+107:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.send_update_status
+110:           0 LOAD_GLOBAL          (calc_int_version)
+               3 LOAD_GLOBAL          (TOOL_VERSION)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 STORE_FAST           (updater_version)
+
+111:          12 LOAD_GLOBAL          (detectOsFamily)
+              15 CALL_FUNCTION        (0 positional, 0 named)
+              18 STORE_FAST           (os_version)
+
+112:          21 LOAD_CONST           ("")
+              24 STORE_FAST           (os_detail)
+
+113:          27 LOAD_CONST           ("")
+              30 STORE_FAST           (os_uname)
+
+114:          33 LOAD_FAST            (os_version)
+              36 LOAD_CONST           ("unix")
+              39 COMPARE_OP           (==)
+              42 POP_JUMP_IF_FALSE    (to 142)
+
+115:          45 SETUP_EXCEPT         (to 98)
+
+116:          48 LOAD_GLOBAL          (platform)
+              51 LOAD_ATTR            (linux_distribution)
+              54 CALL_FUNCTION        (0 positional, 0 named)
+              57 STORE_FAST           (linux_dist)
+
+117:          60 LOAD_FAST            (linux_dist)
+              63 LOAD_CONST           (0)
+              66 BINARY_SUBSCR
+              67 LOAD_CONST           (" ")
+              70 BINARY_ADD
+              71 LOAD_FAST            (linux_dist)
+              74 LOAD_CONST           (1)
+              77 BINARY_SUBSCR
+              78 BINARY_ADD
+         >>   79 LOAD_CONST           (" ")
+              82 BINARY_ADD
+              83 LOAD_FAST            (linux_dist)
+              86 LOAD_CONST           (2)
+              89 BINARY_SUBSCR
+              90 BINARY_ADD
+              91 STORE_FAST           (os_detail)
+              94 POP_BLOCK
+         >>   95 JUMP_ABSOLUTE        (to 504)
+
+118:     >>   98 DUP_TOP
+              99 LOAD_GLOBAL          (Exception)
+             102 COMPARE_OP           (exception-match)
+             105 POP_JUMP_IF_FALSE    (to 138)
+             108 POP_TOP
+             109 STORE_FAST           (e)
+             112 POP_TOP
+
+119:         113 LOAD_GLOBAL          (print_exception)
+             116 LOAD_FAST            (e)
+             119 CALL_FUNCTION        (1 positional, 0 named)
+             122 POP_TOP
+
+120:         123 LOAD_GLOBAL          (str)
+             126 LOAD_FAST            (e)
+             129 CALL_FUNCTION        (1 positional, 0 named)
+             132 STORE_FAST           (os_detail)
+             135 JUMP_ABSOLUTE        (to 504)
+         >>  138 END_FINALLY
+             139 JUMP_FORWARD         (to 504)
+
+121:     >>  142 LOAD_FAST            (os_version)
+             145 LOAD_CONST           ("macos")
+             148 COMPARE_OP           (==)
+             151 POP_JUMP_IF_FALSE    (to 335)
+
+122:         154 SETUP_EXCEPT         (to 267)
+
+123:         157 LOAD_GLOBAL          (platform)
+             160 LOAD_ATTR            (mac_ver)
+             163 CALL_FUNCTION        (0 positional, 0 named)
+             166 STORE_FAST           (mac_v)
+
+124:         169 SETUP_EXCEPT         (to 222)
+
+125:         172 LOAD_FAST            (mac_v)
+             175 LOAD_CONST           (0)
+             178 BINARY_SUBSCR
+             179 LOAD_CONST           (" ")
+             182 BINARY_ADD
+             183 LOAD_FAST            (mac_v)
+             186 LOAD_CONST           (2)
+             189 BINARY_SUBSCR
+             190 BINARY_ADD
+             191 LOAD_ATTR            (replace)
+             194 LOAD_CONST           ("'")
+             197 LOAD_CONST           ("")
+             200 CALL_FUNCTION        (2 positional, 0 named)
+             203 LOAD_ATTR            (replace)
+             206 LOAD_CONST           ('"')
+             209 LOAD_CONST           ("")
+             212 CALL_FUNCTION        (2 positional, 0 named)
+             215 STORE_FAST           (os_detail)
+             218 POP_BLOCK
+             219 JUMP_FORWARD         (to 263)
+
+126:     >>  222 POP_TOP
+             223 POP_TOP
+             224 POP_TOP
+
+127:         225 LOAD_FAST            (mac_v)
+             228 LOAD_CONST           (0)
+             231 BINARY_SUBSCR
+             232 LOAD_ATTR            (replace)
+             235 LOAD_CONST           ("'")
+             238 LOAD_CONST           ("")
+             241 CALL_FUNCTION        (2 positional, 0 named)
+         >>  244 LOAD_ATTR            (replace)
+             247 LOAD_CONST           ('"')
+             250 LOAD_CONST           ("")
+             253 CALL_FUNCTION        (2 positional, 0 named)
+             256 STORE_FAST           (os_detail)
+             259 JUMP_FORWARD         (to 263)
+             262 END_FINALLY
+         >>  263 POP_BLOCK
+             264 JUMP_ABSOLUTE        (to 504)
+
+128:     >>  267 DUP_TOP
+             268 LOAD_GLOBAL          (Exception)
+             271 COMPARE_OP           (exception-match)
+             274 POP_JUMP_IF_FALSE    (to 331)
+             277 POP_TOP
+             278 STORE_FAST           (e)
+             281 POP_TOP
+
+129:         282 LOAD_GLOBAL          (print_exception)
+             285 LOAD_FAST            (e)
+             288 CALL_FUNCTION        (1 positional, 0 named)
+             291 POP_TOP
+
+130:         292 LOAD_GLOBAL          (str)
+             295 LOAD_FAST            (e)
+             298 CALL_FUNCTION        (1 positional, 0 named)
+             301 LOAD_ATTR            (replace)
+             304 LOAD_CONST           ("'")
+             307 LOAD_CONST           ("")
+             310 CALL_FUNCTION        (2 positional, 0 named)
+             313 LOAD_ATTR            (replace)
+             316 LOAD_CONST           ('"')
+             319 LOAD_CONST           ("")
+             322 CALL_FUNCTION        (2 positional, 0 named)
+             325 STORE_FAST           (os_detail)
+             328 JUMP_ABSOLUTE        (to 504)
+             331 END_FINALLY
+             332 JUMP_FORWARD         (to 504)
+
+131:         335 LOAD_FAST            (os_version)
+             338 LOAD_CONST           ("win32")
+             341 COMPARE_OP           (==)
+             344 POP_JUMP_IF_FALSE    (to 504)
+
+132:         347 SETUP_EXCEPT         (to 436)
+
+133:         350 LOAD_GLOBAL          (platform)
+             353 LOAD_ATTR            (win32_ver)
+             356 CALL_FUNCTION        (0 positional, 0 named)
+             359 STORE_FAST           (win_v)
+
+134:         362 LOAD_FAST            (win_v)
+             365 LOAD_CONST           (0)
+             368 BINARY_SUBSCR
+             369 LOAD_CONST           (" ")
+             372 BINARY_ADD
+             373 LOAD_FAST            (win_v)
+             376 LOAD_CONST           (1)
+             379 BINARY_SUBSCR
+             380 BINARY_ADD
+             381 LOAD_CONST           (" ")
+             384 BINARY_ADD
+             385 LOAD_FAST            (win_v)
+             388 LOAD_CONST           (2)
+             391 BINARY_SUBSCR
+             392 BINARY_ADD
+             393 LOAD_CONST           (" ")
+             396 BINARY_ADD
+             397 LOAD_FAST            (win_v)
+             400 LOAD_CONST           (3)
+             403 BINARY_SUBSCR
+             404 BINARY_ADD
+             405 LOAD_ATTR            (replace)
+             408 LOAD_CONST           ("'")
+             411 LOAD_CONST           ("")
+             414 CALL_FUNCTION        (2 positional, 0 named)
+             417 LOAD_ATTR            (replace)
+             420 LOAD_CONST           ('"')
+             423 LOAD_CONST           ("")
+             426 CALL_FUNCTION        (2 positional, 0 named)
+             429 STORE_FAST           (os_detail)
+             432 POP_BLOCK
+             433 JUMP_ABSOLUTE        (to 504)
+
+135:     >>  436 DUP_TOP
+             437 LOAD_GLOBAL          (Exception)
+             440 COMPARE_OP           (exception-match)
+             443 POP_JUMP_IF_FALSE    (to 500)
+             446 POP_TOP
+             447 STORE_FAST           (e)
+             450 POP_TOP
+
+136:         451 LOAD_GLOBAL          (print_exception)
+             454 LOAD_FAST            (e)
+             457 CALL_FUNCTION        (1 positional, 0 named)
+             460 POP_TOP
+
+137:         461 LOAD_GLOBAL          (str)
+             464 LOAD_FAST            (e)
+             467 CALL_FUNCTION        (1 positional, 0 named)
+             470 LOAD_ATTR            (replace)
+             473 LOAD_CONST           ("'")
+             476 LOAD_CONST           ("")
+             479 CALL_FUNCTION        (2 positional, 0 named)
+             482 LOAD_ATTR            (replace)
+             485 LOAD_CONST           ('"')
+             488 LOAD_CONST           ("")
+             491 CALL_FUNCTION        (2 positional, 0 named)
+             494 STORE_FAST           (os_detail)
+             497 JUMP_ABSOLUTE        (to 504)
+             500 END_FINALLY
+             501 JUMP_FORWARD         (to 504)
+
+138:     >>  504 SETUP_EXCEPT         (to 553)
+
+139:         507 LOAD_GLOBAL          (str)
+             510 LOAD_GLOBAL          (platform)
+             513 LOAD_ATTR            (uname)
+             516 CALL_FUNCTION        (0 positional, 0 named)
+             519 CALL_FUNCTION        (1 positional, 0 named)
+             522 LOAD_ATTR            (replace)
+             525 LOAD_CONST           ("'")
+             528 LOAD_CONST           ("")
+             531 CALL_FUNCTION        (2 positional, 0 named)
+             534 LOAD_ATTR            (replace)
+             537 LOAD_CONST           ('"')
+             540 LOAD_CONST           ("")
+             543 CALL_FUNCTION        (2 positional, 0 named)
+             546 STORE_FAST           (os_uname)
+             549 POP_BLOCK
+             550 JUMP_FORWARD         (to 608)
+
+140:     >>  553 DUP_TOP
+             554 LOAD_GLOBAL          (Exception)
+             557 COMPARE_OP           (exception-match)
+             560 POP_JUMP_IF_FALSE    (to 607)
+             563 POP_TOP
+             564 STORE_FAST           (e)
+             567 POP_TOP
+
+141:         568 LOAD_GLOBAL          (str)
+             571 LOAD_FAST            (e)
+             574 CALL_FUNCTION        (1 positional, 0 named)
+             577 LOAD_ATTR            (replace)
+             580 LOAD_CONST           ("'")
+             583 LOAD_CONST           ("")
+             586 CALL_FUNCTION        (2 positional, 0 named)
+             589 LOAD_ATTR            (replace)
+             592 LOAD_CONST           ('"')
+             595 LOAD_CONST           ("")
+             598 CALL_FUNCTION        (2 positional, 0 named)
+             601 STORE_FAST           (os_uname)
+             604 JUMP_FORWARD         (to 608)
+             607 END_FINALLY
+
+143:     >>  608 SETUP_EXCEPT         (to 675)
+
+144:         611 LOAD_GLOBAL          (str)
+             614 LOAD_GLOBAL          (platform)
+             617 LOAD_ATTR            (platform)
+             620 LOAD_CONST           ("aliased")
+             623 LOAD_GLOBAL          (True)
+             626 CALL_FUNCTION        (0 positional, 1 named)
+             629 LOAD_ATTR            (replace)
+             632 LOAD_CONST           ("-")
+             635 LOAD_CONST           (" ")
+             638 CALL_FUNCTION        (2 positional, 0 named)
+             641 CALL_FUNCTION        (1 positional, 0 named)
+             644 LOAD_ATTR            (replace)
+             647 LOAD_CONST           ("'")
+             650 LOAD_CONST           ("")
+             653 CALL_FUNCTION        (2 positional, 0 named)
+             656 LOAD_ATTR            (replace)
+             659 LOAD_CONST           ('"')
+             662 LOAD_CONST           ("")
+             665 CALL_FUNCTION        (2 positional, 0 named)
+             668 STORE_FAST           (os_platform)
+             671 POP_BLOCK
+             672 JUMP_FORWARD         (to 730)
+
+145:     >>  675 DUP_TOP
+             676 LOAD_GLOBAL          (Exception)
+             679 COMPARE_OP           (exception-match)
+             682 POP_JUMP_IF_FALSE    (to 729)
+             685 POP_TOP
+             686 STORE_FAST           (e)
+             689 POP_TOP
+
+146:         690 LOAD_GLOBAL          (str)
+             693 LOAD_FAST            (e)
+             696 CALL_FUNCTION        (1 positional, 0 named)
+             699 LOAD_ATTR            (replace)
+             702 LOAD_CONST           ("'")
+             705 LOAD_CONST           ("")
+             708 CALL_FUNCTION        (2 positional, 0 named)
+             711 LOAD_ATTR            (replace)
+             714 LOAD_CONST           ('"')
+             717 LOAD_CONST           ("")
+             720 CALL_FUNCTION        (2 positional, 0 named)
+             723 STORE_FAST           (os_platform)
+             726 JUMP_FORWARD         (to 730)
+             729 END_FINALLY
+
+148:     >>  730 LOAD_GLOBAL          (SERVER_URL)
+             733 LOAD_CONST           ("https://software.pycom.io")
+             736 COMPARE_OP           (==)
+             739 POP_JUMP_IF_FALSE    (to 830)
+             742 LOAD_GLOBAL          (UPDATER_TYPE)
+             745 LOAD_CONST           ("internal")
+             748 COMPARE_OP           (!=)
+             751 POP_JUMP_IF_FALSE    (to 830)
+
+149:         754 BUILD_MAP            7
+             757 LOAD_FAST            (wmac)
+             760 LOAD_CONST           ("wmac")
+             763 STORE_MAP
+             764 LOAD_FAST            (updater_version)
+             767 LOAD_CONST           ("updater_version")
+             770 STORE_MAP
+             771 LOAD_FAST            (os_version)
+             774 LOAD_CONST           ("os_version")
+             777 STORE_MAP
+             778 LOAD_FAST            (os_detail)
+             781 LOAD_CONST           ("os_detail")
+             784 STORE_MAP
+             785 LOAD_FAST            (os_platform)
+             788 LOAD_CONST           ("platform")
+             791 STORE_MAP
+             792 LOAD_GLOBAL          (str)
+             795 LOAD_FAST            (success)
+             798 CALL_FUNCTION        (1 positional, 0 named)
+             801 LOAD_ATTR            (lower)
+             804 CALL_FUNCTION        (0 positional, 0 named)
+             807 LOAD_CONST           ("success")
+             810 STORE_MAP
+             811 LOAD_GLOBAL          (str)
+             814 LOAD_FAST            (error_msg)
+             817 CALL_FUNCTION        (1 positional, 0 named)
+             820 LOAD_CONST           ("error_msg")
+             823 STORE_MAP
+             824 STORE_FAST           (json_parameters)
+             827 JUMP_FORWARD         (to 910)
+
+151:         830 BUILD_MAP            8
+             833 LOAD_FAST            (wmac)
+             836 LOAD_CONST           ("wmac")
+             839 STORE_MAP
+             840 LOAD_FAST            (updater_version)
+             843 LOAD_CONST           ("updater_version")
+             846 STORE_MAP
+             847 LOAD_FAST            (os_version)
+             850 LOAD_CONST           ("os_version")
+             853 STORE_MAP
+             854 LOAD_FAST            (os_detail)
+             857 LOAD_CONST           ("os_detail")
+             860 STORE_MAP
+             861 LOAD_FAST            (os_uname)
+             864 LOAD_CONST           ("uname")
+             867 STORE_MAP
+             868 LOAD_FAST            (os_platform)
+             871 LOAD_CONST           ("platform")
+             874 STORE_MAP
+             875 LOAD_GLOBAL          (str)
+             878 LOAD_FAST            (success)
+             881 CALL_FUNCTION        (1 positional, 0 named)
+             884 LOAD_ATTR            (lower)
+             887 CALL_FUNCTION        (0 positional, 0 named)
+             890 LOAD_CONST           ("success")
+             893 STORE_MAP
+             894 LOAD_GLOBAL          (str)
+             897 LOAD_FAST            (error_msg)
+             900 CALL_FUNCTION        (1 positional, 0 named)
+             903 LOAD_CONST           ("error_msg")
+             906 STORE_MAP
+             907 STORE_FAST           (json_parameters)
+
+152:     >>  910 LOAD_FAST            (self)
+             913 LOAD_ATTR            (_DeviceInfoQuery__post)
+             916 LOAD_CONST           ("/device/update/log")
+             919 LOAD_FAST            (json_parameters)
+             922 LOAD_CLOSURE         (callback)
+             925 BUILD_TUPLE          1
+             928 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 152)
+             931 MAKE_CLOSURE         0
+             934 CALL_FUNCTION        (3 positional, 0 named)
+             937 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.send_update_status.<lambda>
+152:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.get_pybytes_activation
+155:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_DeviceInfoQuery__get_pybytes)
+               6 LOAD_CONST           ("/quick-device-activation/")
+               9 LOAD_FAST            (activation_token)
+              12 BINARY_ADD
+              13 LOAD_FAST            (wmac)
+              16 LOAD_FAST            (url)
+              19 LOAD_CLOSURE         (callback)
+              22 BUILD_TUPLE          1
+              25 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 155)
+              28 MAKE_CLOSURE         0
+              31 CALL_FUNCTION        (4 positional, 0 named)
+              34 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.get_pybytes_activation.<lambda>
+155:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.post_pybytes_activation
+158:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_DeviceInfoQuery__post_pybytes)
+               6 LOAD_CONST           ("/v2/quick-device-activation")
+               9 LOAD_FAST            (json)
+              12 LOAD_FAST            (url)
+              15 LOAD_CLOSURE         (callback)
+              18 BUILD_TUPLE          1
+              21 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceInfoQuery.py>, line 158)
+              24 MAKE_CLOSURE         0
+              27 CALL_FUNCTION        (4 positional, 0 named)
+              30 RETURN_VALUE
+
+Symbol: DeviceInfoQuery.DeviceInfoQuery.post_pybytes_activation.<lambda>
+158:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE

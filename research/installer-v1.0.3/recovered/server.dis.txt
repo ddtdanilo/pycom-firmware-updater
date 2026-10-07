@@ -1,0 +1,1565 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('AnyThreadEventLoopPolicy',))
+              4 IMPORT_NAME              0 (tornado.platform.asyncio)
+              6 IMPORT_FROM              1 (AnyThreadEventLoopPolicy)
+              8 STORE_NAME               1 (AnyThreadEventLoopPolicy)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('wake_up', 'print_debug', 'tryToLoadJson'))
+             16 IMPORT_NAME              2 (utils.utils)
+             18 IMPORT_FROM              3 (wake_up)
+             20 STORE_NAME               3 (wake_up)
+             22 IMPORT_FROM              4 (print_debug)
+             24 STORE_NAME               4 (print_debug)
+             26 IMPORT_FROM              5 (tryToLoadJson)
+             28 STORE_NAME               5 (tryToLoadJson)
+             30 POP_TOP
+
+  3          32 LOAD_CONST               0 (0)
+             34 LOAD_CONST               3 (('HOUR',))
+             36 IMPORT_NAME              6 (utils.constants)
+             38 IMPORT_FROM              7 (HOUR)
+             40 STORE_NAME               7 (HOUR)
+             42 POP_TOP
+
+  4          44 LOAD_CONST               0 (0)
+             46 LOAD_CONST               4 (('WebSocketServerProtocol',))
+             48 IMPORT_NAME              8 (websockets)
+             50 IMPORT_FROM              9 (WebSocketServerProtocol)
+             52 STORE_NAME               9 (WebSocketServerProtocol)
+             54 POP_TOP
+
+  5          56 LOAD_CONST               0 (0)
+             58 LOAD_CONST               5 (('ENABLE_SSL', 'CERT_PEM_USERNAME', 'CERT_PEM_PASSWORD', 'TMP_FOLDER_PATH'))
+             60 IMPORT_NAME             10 (settings)
+             62 IMPORT_FROM             11 (ENABLE_SSL)
+             64 STORE_NAME              11 (ENABLE_SSL)
+             66 IMPORT_FROM             12 (CERT_PEM_USERNAME)
+             68 STORE_NAME              12 (CERT_PEM_USERNAME)
+             70 IMPORT_FROM             13 (CERT_PEM_PASSWORD)
+             72 STORE_NAME              13 (CERT_PEM_PASSWORD)
+             74 IMPORT_FROM             14 (TMP_FOLDER_PATH)
+             76 STORE_NAME              14 (TMP_FOLDER_PATH)
+             78 POP_TOP
+
+  6          80 LOAD_CONST               0 (0)
+             82 LOAD_CONST               6 (('QtWidgets', 'QtGui'))
+             84 IMPORT_NAME             15 (PySide2)
+             86 IMPORT_FROM             16 (QtWidgets)
+             88 STORE_NAME              16 (QtWidgets)
+             90 IMPORT_FROM             17 (QtGui)
+             92 STORE_NAME              17 (QtGui)
+             94 POP_TOP
+
+  7          96 LOAD_CONST               0 (0)
+             98 LOAD_CONST               7 (('SystemTrayIcon',))
+            100 IMPORT_NAME             18 (tray)
+            102 IMPORT_FROM             19 (SystemTrayIcon)
+            104 STORE_NAME              19 (SystemTrayIcon)
+            106 POP_TOP
+
+  8         108 LOAD_CONST               0 (0)
+            110 LOAD_CONST               8 (('Enum',))
+            112 IMPORT_NAME             20 (enum)
+            114 IMPORT_FROM             21 (Enum)
+            116 STORE_NAME              21 (Enum)
+            118 POP_TOP
+
+  9         120 LOAD_CONST               0 (0)
+            122 LOAD_CONST               9 (None)
+            124 IMPORT_NAME             22 (utils.actions)
+            126 IMPORT_FROM             23 (actions)
+            128 STORE_NAME              23 (actions)
+            130 POP_TOP
+
+ 10         132 LOAD_CONST               0 (0)
+            134 LOAD_CONST               9 (None)
+            136 IMPORT_NAME              8 (websockets)
+            138 STORE_NAME               8 (websockets)
+
+ 11         140 LOAD_CONST               0 (0)
+            142 LOAD_CONST               9 (None)
+            144 IMPORT_NAME             24 (queue)
+            146 STORE_NAME              24 (queue)
+
+ 12         148 LOAD_CONST               0 (0)
+            150 LOAD_CONST               9 (None)
+            152 IMPORT_NAME             25 (pathlib)
+            154 STORE_NAME              25 (pathlib)
+
+ 13         156 LOAD_CONST               0 (0)
+            158 LOAD_CONST               9 (None)
+            160 IMPORT_NAME             26 (asyncio)
+            162 STORE_NAME              26 (asyncio)
+
+ 14         164 LOAD_CONST               0 (0)
+            166 LOAD_CONST               9 (None)
+            168 IMPORT_NAME             27 (json)
+            170 STORE_NAME              27 (json)
+
+ 15         172 LOAD_CONST               0 (0)
+            174 LOAD_CONST               9 (None)
+            176 IMPORT_NAME             28 (ssl)
+            178 STORE_NAME              28 (ssl)
+
+ 16         180 LOAD_CONST               0 (0)
+            182 LOAD_CONST               9 (None)
+            184 IMPORT_NAME             29 (urllib)
+            186 STORE_NAME              29 (urllib)
+
+ 17         188 LOAD_CONST               0 (0)
+            190 LOAD_CONST               9 (None)
+            192 IMPORT_NAME             30 (os)
+            194 STORE_NAME              30 (os)
+
+ 18         196 LOAD_CONST               0 (0)
+            198 LOAD_CONST               9 (None)
+            200 IMPORT_NAME             31 (requests)
+            202 STORE_NAME              31 (requests)
+
+ 19         204 LOAD_CONST               0 (0)
+            206 LOAD_CONST               9 (None)
+            208 IMPORT_NAME             32 (OpenSSL)
+            210 STORE_NAME              32 (OpenSSL)
+
+ 20         212 LOAD_CONST               0 (0)
+            214 LOAD_CONST               9 (None)
+            216 IMPORT_NAME             33 (datetime)
+            218 STORE_NAME              33 (datetime)
+
+ 21         220 LOAD_CONST               0 (0)
+            222 LOAD_CONST               9 (None)
+            224 IMPORT_NAME             34 (threading)
+            226 STORE_NAME              34 (threading)
+
+ 22         228 LOAD_CONST               0 (0)
+            230 LOAD_CONST               9 (None)
+            232 IMPORT_NAME             35 (time)
+            234 STORE_NAME              35 (time)
+
+ 23         236 LOAD_CONST               0 (0)
+            238 LOAD_CONST               9 (None)
+            240 IMPORT_NAME             36 (signal)
+            242 STORE_NAME              36 (signal)
+
+ 24         244 LOAD_CONST               0 (0)
+            246 LOAD_CONST               9 (None)
+            248 IMPORT_NAME             37 (sys)
+            250 STORE_NAME              37 (sys)
+
+ 27         252 LOAD_BUILD_CLASS
+            254 LOAD_CONST              10 (<code object AppState at <address omitted>, file "server.py", line 27>)
+            256 LOAD_CONST              11 ('AppState')
+            258 MAKE_FUNCTION            0
+            260 LOAD_CONST              11 ('AppState')
+            262 LOAD_NAME               21 (Enum)
+            264 CALL_FUNCTION            3
+            266 STORE_NAME              38 (AppState)
+
+ 33         268 LOAD_BUILD_CLASS
+            270 LOAD_CONST              12 (<code object Server at <address omitted>, file "server.py", line 33>)
+            272 LOAD_CONST              13 ('Server')
+            274 MAKE_FUNCTION            0
+            276 LOAD_CONST              13 ('Server')
+            278 CALL_FUNCTION            2
+            280 STORE_NAME              39 (Server)
+            282 LOAD_CONST               9 (None)
+            284 RETURN_VALUE
+
+Disassembly of <code object AppState at <address omitted>, file "server.py", line 27>:
+ 27           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('AppState')
+              6 STORE_NAME               2 (__qualname__)
+
+ 28           8 LOAD_CONST               1 ('starting')
+             10 STORE_NAME               3 (STARTING)
+
+ 29          12 LOAD_CONST               2 ('running')
+             14 STORE_NAME               4 (RUNNING)
+
+ 30          16 LOAD_CONST               3 ('error')
+             18 STORE_NAME               5 (ERROR)
+             20 LOAD_CONST               4 (None)
+             22 RETURN_VALUE
+
+Disassembly of <code object Server at <address omitted>, file "server.py", line 33>:
+ 33           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('Server')
+              6 STORE_NAME               2 (__qualname__)
+
+ 34           8 LOAD_CONST               1 (<code object __init__ at <address omitted>, file "server.py", line 34>)
+             10 LOAD_CONST               2 ('Server.__init__')
+             12 MAKE_FUNCTION            0
+             14 STORE_NAME               3 (__init__)
+
+ 52          16 LOAD_CONST               3 (<code object get_icon at <address omitted>, file "server.py", line 52>)
+             18 LOAD_CONST               4 ('Server.get_icon')
+             20 MAKE_FUNCTION            0
+             22 STORE_NAME               4 (get_icon)
+
+ 57          24 LOAD_CONST               5 (<code object add_message at <address omitted>, file "server.py", line 57>)
+             26 LOAD_CONST               6 ('Server.add_message')
+             28 MAKE_FUNCTION            0
+             30 STORE_NAME               5 (add_message)
+
+ 60          32 LOAD_CONST               7 (<code object queue_processor at <address omitted>, file "server.py", line 60>)
+             34 LOAD_CONST               8 ('Server.queue_processor')
+             36 MAKE_FUNCTION            0
+             38 STORE_NAME               6 (queue_processor)
+
+ 77          40 LOAD_CONST               9 (<code object disconnect_client at <address omitted>, file "server.py", line 77>)
+             42 LOAD_CONST              10 ('Server.disconnect_client')
+             44 MAKE_FUNCTION            0
+             46 STORE_NAME               7 (disconnect_client)
+
+ 85          48 LOAD_CONST              11 (<code object get_certificate at <address omitted>, file "server.py", line 85>)
+             50 LOAD_CONST              12 ('Server.get_certificate')
+             52 MAKE_FUNCTION            0
+             54 STORE_NAME               8 (get_certificate)
+
+105          56 LOAD_NAME                9 (WebSocketServerProtocol)
+             58 LOAD_CONST              13 (('client',))
+             60 BUILD_CONST_KEY_MAP      1
+             62 LOAD_CONST              14 (<code object keep_alive at <address omitted>, file "server.py", line 105>)
+             64 LOAD_CONST              15 ('Server.keep_alive')
+             66 MAKE_FUNCTION            4 (annotations)
+             68 STORE_NAME              10 (keep_alive)
+
+115          70 LOAD_CONST              16 (<code object handle_messages at <address omitted>, file "server.py", line 115>)
+             72 LOAD_CONST              17 ('Server.handle_messages')
+             74 MAKE_FUNCTION            0
+             76 STORE_NAME              11 (handle_messages)
+
+174          78 LOAD_NAME                9 (WebSocketServerProtocol)
+             80 LOAD_CONST              13 (('client',))
+             82 BUILD_CONST_KEY_MAP      1
+             84 LOAD_CONST              18 (<code object connect_client at <address omitted>, file "server.py", line 174>)
+             86 LOAD_CONST              19 ('Server.connect_client')
+             88 MAKE_FUNCTION            4 (annotations)
+             90 STORE_NAME              12 (connect_client)
+
+185          92 LOAD_CONST              20 (<code object stop_and_exit at <address omitted>, file "server.py", line 185>)
+             94 LOAD_CONST              21 ('Server.stop_and_exit')
+             96 MAKE_FUNCTION            0
+             98 STORE_NAME              13 (stop_and_exit)
+
+194         100 LOAD_CONST              22 (<code object check_cert_expiration at <address omitted>, file "server.py", line 194>)
+            102 LOAD_CONST              23 ('Server.check_cert_expiration')
+            104 MAKE_FUNCTION            0
+            106 STORE_NAME              14 (check_cert_expiration)
+
+212         108 LOAD_CONST              24 (<code object set_tray_icon at <address omitted>, file "server.py", line 212>)
+            110 LOAD_CONST              25 ('Server.set_tray_icon')
+            112 MAKE_FUNCTION            0
+            114 STORE_NAME              15 (set_tray_icon)
+
+216         116 LOAD_CONST              26 (<code object add_tray_icon at <address omitted>, file "server.py", line 216>)
+            118 LOAD_CONST              27 ('Server.add_tray_icon')
+            120 MAKE_FUNCTION            0
+            122 STORE_NAME              16 (add_tray_icon)
+
+224         124 LOAD_CONST              35 (('localhost', 8765))
+            126 LOAD_CONST              30 (<code object listen at <address omitted>, file "server.py", line 224>)
+            128 LOAD_CONST              31 ('Server.listen')
+            130 MAKE_FUNCTION            1 (defaults)
+            132 STORE_NAME              17 (listen)
+
+257         134 LOAD_CONST              32 (<code object start_queue_processor at <address omitted>, file "server.py", line 257>)
+            136 LOAD_CONST              33 ('Server.start_queue_processor')
+            138 MAKE_FUNCTION            0
+            140 STORE_NAME              18 (start_queue_processor)
+            142 LOAD_CONST              34 (None)
+            144 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "server.py", line 34>:
+ 35           0 LOAD_GLOBAL              0 (asyncio)
+              2 LOAD_METHOD              1 (set_event_loop_policy)
+              4 LOAD_GLOBAL              2 (AnyThreadEventLoopPolicy)
+              6 CALL_FUNCTION            0
+              8 CALL_METHOD              1
+             10 POP_TOP
+
+ 36          12 LOAD_GLOBAL              0 (asyncio)
+             14 LOAD_METHOD              3 (new_event_loop)
+             16 CALL_METHOD              0
+             18 POP_TOP
+
+ 37          20 LOAD_GLOBAL              4 (set)
+             22 CALL_FUNCTION            0
+             24 LOAD_FAST                0 (self)
+             26 STORE_ATTR               5 (clients)
+
+ 38          28 LOAD_GLOBAL              6 (queue)
+             30 LOAD_METHOD              7 (Queue)
+             32 CALL_METHOD              0
+             34 LOAD_FAST                0 (self)
+             36 STORE_ATTR               6 (queue)
+
+ 39          38 LOAD_GLOBAL              0 (asyncio)
+             40 LOAD_METHOD              8 (get_event_loop)
+             42 CALL_METHOD              0
+             44 LOAD_FAST                0 (self)
+             46 STORE_ATTR               9 (loop)
+
+ 40          48 LOAD_CONST               1 (5)
+             50 LOAD_FAST                0 (self)
+             52 STORE_ATTR              10 (_client_timeout)
+
+ 41          54 LOAD_CONST               0 (None)
+             56 LOAD_FAST                0 (self)
+             58 STORE_ATTR              11 (_wake_up_task)
+
+ 42          60 LOAD_CONST               2 (False)
+             62 LOAD_FAST                0 (self)
+             64 STORE_ATTR              12 (is_running)
+
+ 43          66 LOAD_CONST               3 ('https://software.pycom.io/signed.crt')
+             68 LOAD_FAST                0 (self)
+             70 STORE_ATTR              13 (cert_url)
+
+ 44          72 LOAD_CONST               4 ('https://software.pycom.io/domain.key')
+             74 LOAD_FAST                0 (self)
+             76 STORE_ATTR              14 (cert_pem_url)
+
+ 45          78 LOAD_GLOBAL             15 (TMP_FOLDER_PATH)
+             80 LOAD_FAST                0 (self)
+             82 STORE_ATTR              16 (cert_dir)
+
+ 46          84 LOAD_CONST               5 ('fwUpdater.pem')
+             86 LOAD_FAST                0 (self)
+             88 STORE_ATTR              17 (cert_name)
+
+ 47          90 LOAD_GLOBAL             18 (os)
+             92 LOAD_ATTR               19 (path)
+             94 LOAD_METHOD             20 (join)
+             96 LOAD_FAST                0 (self)
+             98 LOAD_ATTR               16 (cert_dir)
+            100 LOAD_FAST                0 (self)
+            102 LOAD_ATTR               17 (cert_name)
+            104 CALL_METHOD              2
+            106 LOAD_FAST                0 (self)
+            108 STORE_ATTR              21 (cert_path)
+
+ 49         110 LOAD_GLOBAL             22 (AppState)
+            112 LOAD_ATTR               23 (STARTING)
+            114 LOAD_FAST                0 (self)
+            116 STORE_ATTR              24 (state)
+
+ 50         118 LOAD_CONST               0 (None)
+            120 LOAD_FAST                0 (self)
+            122 STORE_ATTR              25 (tray_icon)
+            124 LOAD_CONST               0 (None)
+            126 RETURN_VALUE
+
+Disassembly of <code object get_icon at <address omitted>, file "server.py", line 52>:
+ 53           0 LOAD_GLOBAL              0 (pathlib)
+              2 LOAD_METHOD              1 (Path)
+              4 LOAD_GLOBAL              2 (__file__)
+              6 CALL_METHOD              1
+              8 LOAD_METHOD              3 (with_name)
+             10 LOAD_CONST               1 ('assets')
+             12 CALL_METHOD              1
+             14 STORE_FAST               1 (assets_path)
+
+ 54          16 LOAD_FAST                1 (assets_path)
+             18 LOAD_CONST               2 ('py_{}.ico')
+             20 LOAD_METHOD              4 (format)
+             22 LOAD_FAST                0 (self)
+             24 LOAD_ATTR                5 (state)
+             26 LOAD_ATTR                6 (value)
+             28 CALL_METHOD              1
+             30 BINARY_TRUE_DIVIDE
+             32 STORE_FAST               2 (icon)
+
+ 55          34 LOAD_GLOBAL              7 (QtGui)
+             36 LOAD_METHOD              8 (QIcon)
+             38 LOAD_GLOBAL              9 (str)
+             40 LOAD_FAST                2 (icon)
+             42 CALL_FUNCTION            1
+             44 CALL_METHOD              1
+             46 RETURN_VALUE
+
+Disassembly of <code object add_message at <address omitted>, file "server.py", line 57>:
+ 58           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (queue)
+              4 LOAD_METHOD              1 (put)
+              6 LOAD_FAST                1 (msg)
+              8 CALL_METHOD              1
+             10 POP_TOP
+             12 LOAD_CONST               0 (None)
+             14 RETURN_VALUE
+
+Disassembly of <code object queue_processor at <address omitted>, file "server.py", line 60>:
+ 61     >>    0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (is_running)
+              4 POP_JUMP_IF_FALSE      170
+
+ 62           6 LOAD_FAST                0 (self)
+              8 LOAD_ATTR                1 (queue)
+             10 LOAD_METHOD              2 (empty)
+             12 CALL_METHOD              0
+             14 POP_JUMP_IF_TRUE       152
+
+ 63          16 LOAD_FAST                0 (self)
+             18 LOAD_ATTR                1 (queue)
+             20 LOAD_METHOD              3 (get)
+             22 CALL_METHOD              0
+             24 STORE_FAST               1 (item)
+
+ 64          26 LOAD_FAST                0 (self)
+             28 LOAD_ATTR                1 (queue)
+             30 LOAD_METHOD              4 (task_done)
+             32 CALL_METHOD              0
+             34 POP_TOP
+
+ 65          36 LOAD_FAST                1 (item)
+             38 LOAD_METHOD              3 (get)
+             40 LOAD_CONST               1 ('client')
+             42 CALL_METHOD              1
+             44 STORE_FAST               2 (client)
+
+ 66          46 LOAD_FAST                2 (client)
+             48 LOAD_CONST               0 (None)
+             50 IS_OP                    1
+             52 POP_JUMP_IF_FALSE      168
+
+ 67          54 LOAD_FAST                1 (item)
+             56 LOAD_METHOD              3 (get)
+             58 LOAD_CONST               2 ('message')
+             60 CALL_METHOD              1
+             62 STORE_FAST               3 (message)
+
+ 68          64 SETUP_FINALLY           20 (to 86)
+
+ 69          66 LOAD_FAST                2 (client)
+             68 LOAD_METHOD              5 (send)
+             70 LOAD_FAST                3 (message)
+             72 CALL_METHOD              1
+             74 GET_AWAITABLE
+             76 LOAD_CONST               0 (None)
+             78 YIELD_FROM
+             80 POP_TOP
+             82 POP_BLOCK
+             84 JUMP_ABSOLUTE          168
+
+ 70     >>   86 DUP_TOP
+             88 LOAD_GLOBAL              6 (Exception)
+             90 JUMP_IF_NOT_EXC_MATCH   148
+             92 POP_TOP
+             94 STORE_FAST               4 (e)
+             96 POP_TOP
+             98 SETUP_FINALLY           40 (to 140)
+
+ 71         100 LOAD_GLOBAL              7 (print)
+            102 LOAD_GLOBAL              8 (str)
+            104 LOAD_FAST                4 (e)
+            106 CALL_FUNCTION            1
+            108 CALL_FUNCTION            1
+            110 POP_TOP
+
+ 72         112 LOAD_GLOBAL              7 (print)
+            114 LOAD_CONST               3 ('not sending message')
+            116 CALL_FUNCTION            1
+            118 POP_TOP
+
+ 73         120 LOAD_GLOBAL              7 (print)
+            122 LOAD_FAST                3 (message)
+            124 CALL_FUNCTION            1
+            126 POP_TOP
+            128 POP_BLOCK
+            130 POP_EXCEPT
+            132 LOAD_CONST               0 (None)
+            134 STORE_FAST               4 (e)
+            136 DELETE_FAST              4 (e)
+            138 JUMP_ABSOLUTE          168
+        >>  140 LOAD_CONST               0 (None)
+            142 STORE_FAST               4 (e)
+            144 DELETE_FAST              4 (e)
+            146 RERAISE
+        >>  148 RERAISE
+            150 JUMP_ABSOLUTE            0
+
+ 75     >>  152 LOAD_GLOBAL              9 (asyncio)
+            154 LOAD_METHOD             10 (sleep)
+            156 LOAD_CONST               4 (1)
+            158 CALL_METHOD              1
+            160 GET_AWAITABLE
+            162 LOAD_CONST               0 (None)
+            164 YIELD_FROM
+            166 POP_TOP
+        >>  168 JUMP_ABSOLUTE            0
+        >>  170 LOAD_CONST               0 (None)
+            172 RETURN_VALUE
+
+Disassembly of <code object disconnect_client at <address omitted>, file "server.py", line 77>:
+ 78           0 LOAD_FAST                1 (client)
+              2 LOAD_METHOD              0 (close)
+              4 CALL_METHOD              0
+              6 GET_AWAITABLE
+              8 LOAD_CONST               0 (None)
+             10 YIELD_FROM
+             12 POP_TOP
+
+ 79          14 LOAD_FAST                0 (self)
+             16 LOAD_ATTR                1 (clients)
+             18 LOAD_METHOD              2 (remove)
+             20 LOAD_FAST                1 (client)
+             22 CALL_METHOD              1
+             24 POP_TOP
+
+ 80          26 LOAD_FAST                1 (client)
+             28 LOAD_ATTR                3 (remote_address)
+             30 POP_JUMP_IF_FALSE       50
+
+ 81          32 LOAD_GLOBAL              4 (print_debug)
+             34 LOAD_CONST               1 ('client {}:{} disconnected')
+             36 LOAD_ATTR                5 (format)
+             38 LOAD_FAST                1 (client)
+             40 LOAD_ATTR                3 (remote_address)
+             42 CALL_FUNCTION_EX         0
+             44 CALL_FUNCTION            1
+             46 POP_TOP
+             48 JUMP_FORWARD             8 (to 58)
+
+ 83     >>   50 LOAD_GLOBAL              4 (print_debug)
+             52 LOAD_CONST               2 ('client disconnected')
+             54 CALL_FUNCTION            1
+             56 POP_TOP
+        >>   58 LOAD_CONST               0 (None)
+             60 RETURN_VALUE
+
+Disassembly of <code object get_certificate at <address omitted>, file "server.py", line 85>:
+ 86           0 LOAD_GLOBAL              0 (os)
+              2 LOAD_ATTR                1 (path)
+              4 LOAD_METHOD              2 (exists)
+              6 LOAD_FAST                0 (self)
+              8 LOAD_ATTR                3 (cert_dir)
+             10 CALL_METHOD              1
+             12 POP_JUMP_IF_TRUE        26
+
+ 87          14 LOAD_GLOBAL              0 (os)
+             16 LOAD_METHOD              4 (makedirs)
+             18 LOAD_FAST                0 (self)
+             20 LOAD_ATTR                3 (cert_dir)
+             22 CALL_METHOD              1
+             24 POP_TOP
+
+ 88     >>   26 SETUP_FINALLY          190 (to 218)
+
+ 89          28 LOAD_GLOBAL              0 (os)
+             30 LOAD_ATTR                1 (path)
+             32 LOAD_METHOD              2 (exists)
+             34 LOAD_FAST                0 (self)
+             36 LOAD_ATTR                5 (cert_path)
+             38 CALL_METHOD              1
+             40 POP_JUMP_IF_FALSE       54
+
+ 90          42 LOAD_GLOBAL              0 (os)
+             44 LOAD_METHOD              6 (remove)
+             46 LOAD_FAST                0 (self)
+             48 LOAD_ATTR                5 (cert_path)
+             50 CALL_METHOD              1
+             52 POP_TOP
+
+ 91     >>   54 LOAD_GLOBAL              7 (requests)
+             56 LOAD_ATTR                8 (get)
+             58 LOAD_FAST                0 (self)
+             60 LOAD_ATTR                9 (cert_url)
+             62 LOAD_CONST               1 (3)
+             64 LOAD_CONST               2 (('timeout',))
+             66 CALL_FUNCTION_KW         2
+             68 STORE_FAST               1 (cert_main_part)
+
+ 92          70 LOAD_GLOBAL             10 (open)
+             72 LOAD_FAST                0 (self)
+             74 LOAD_ATTR                5 (cert_path)
+             76 LOAD_CONST               3 ('w')
+             78 CALL_FUNCTION            2
+             80 SETUP_WITH              34 (to 116)
+             82 STORE_FAST               2 (file_object)
+
+ 93          84 LOAD_FAST                2 (file_object)
+             86 LOAD_METHOD             11 (write)
+             88 LOAD_FAST                1 (cert_main_part)
+             90 LOAD_ATTR               12 (content)
+             92 LOAD_METHOD             13 (decode)
+             94 LOAD_CONST               4 ('utf-8')
+             96 CALL_METHOD              1
+             98 CALL_METHOD              1
+            100 POP_TOP
+            102 POP_BLOCK
+            104 LOAD_CONST               0 (None)
+            106 DUP_TOP
+            108 DUP_TOP
+            110 CALL_FUNCTION            3
+            112 POP_TOP
+            114 JUMP_FORWARD            16 (to 132)
+        >>  116 WITH_EXCEPT_START
+            118 POP_JUMP_IF_TRUE       122
+            120 RERAISE
+        >>  122 POP_TOP
+            124 POP_TOP
+            126 POP_TOP
+            128 POP_EXCEPT
+            130 POP_TOP
+
+ 95     >>  132 LOAD_GLOBAL              7 (requests)
+            134 LOAD_ATTR                8 (get)
+            136 LOAD_FAST                0 (self)
+            138 LOAD_ATTR               14 (cert_pem_url)
+            140 LOAD_GLOBAL             15 (CERT_PEM_USERNAME)
+            142 LOAD_GLOBAL             16 (CERT_PEM_PASSWORD)
+            144 BUILD_TUPLE              2
+            146 LOAD_CONST               5 (('auth',))
+            148 CALL_FUNCTION_KW         2
+            150 STORE_FAST               3 (pem)
+
+ 96         152 LOAD_GLOBAL             10 (open)
+            154 LOAD_FAST                0 (self)
+            156 LOAD_ATTR                5 (cert_path)
+            158 LOAD_CONST               6 ('a')
+            160 CALL_FUNCTION            2
+            162 SETUP_WITH              34 (to 198)
+            164 STORE_FAST               2 (file_object)
+
+ 97         166 LOAD_FAST                2 (file_object)
+            168 LOAD_METHOD             11 (write)
+            170 LOAD_FAST                3 (pem)
+            172 LOAD_ATTR               12 (content)
+            174 LOAD_METHOD             13 (decode)
+            176 LOAD_CONST               4 ('utf-8')
+            178 CALL_METHOD              1
+            180 CALL_METHOD              1
+            182 POP_TOP
+            184 POP_BLOCK
+            186 LOAD_CONST               0 (None)
+            188 DUP_TOP
+            190 DUP_TOP
+            192 CALL_FUNCTION            3
+            194 POP_TOP
+            196 JUMP_FORWARD            16 (to 214)
+        >>  198 WITH_EXCEPT_START
+            200 POP_JUMP_IF_TRUE       204
+            202 RERAISE
+        >>  204 POP_TOP
+            206 POP_TOP
+            208 POP_TOP
+            210 POP_EXCEPT
+            212 POP_TOP
+        >>  214 POP_BLOCK
+            216 JUMP_FORWARD            88 (to 306)
+
+ 98     >>  218 DUP_TOP
+            220 LOAD_GLOBAL             17 (Exception)
+            222 EXTENDED_ARG             1
+            224 JUMP_IF_NOT_EXC_MATCH   304
+            226 POP_TOP
+            228 STORE_FAST               4 (e)
+            230 POP_TOP
+            232 SETUP_FINALLY           62 (to 296)
+
+ 99         234 LOAD_GLOBAL             18 (AppState)
+            236 LOAD_ATTR               19 (ERROR)
+            238 LOAD_FAST                0 (self)
+            240 STORE_ATTR              20 (state)
+
+100         242 LOAD_FAST                0 (self)
+            244 LOAD_METHOD             21 (set_tray_icon)
+            246 CALL_METHOD              0
+            248 POP_TOP
+
+101         250 LOAD_GLOBAL             22 (print_debug)
+            252 LOAD_CONST               7 ('Error during getting the certificate')
+            254 CALL_FUNCTION            1
+            256 POP_TOP
+
+102         258 LOAD_GLOBAL             22 (print_debug)
+            260 LOAD_FAST                4 (e)
+            262 CALL_FUNCTION            1
+            264 POP_TOP
+
+103         266 LOAD_GLOBAL              0 (os)
+            268 LOAD_METHOD             23 (kill)
+            270 LOAD_GLOBAL              0 (os)
+            272 LOAD_METHOD             24 (getpid)
+            274 CALL_METHOD              0
+            276 LOAD_GLOBAL             25 (signal)
+            278 LOAD_ATTR               26 (SIGTERM)
+            280 CALL_METHOD              2
+            282 POP_TOP
+            284 POP_BLOCK
+            286 POP_EXCEPT
+            288 LOAD_CONST               0 (None)
+            290 STORE_FAST               4 (e)
+            292 DELETE_FAST              4 (e)
+            294 JUMP_FORWARD            10 (to 306)
+        >>  296 LOAD_CONST               0 (None)
+            298 STORE_FAST               4 (e)
+            300 DELETE_FAST              4 (e)
+            302 RERAISE
+        >>  304 RERAISE
+        >>  306 LOAD_CONST               0 (None)
+            308 RETURN_VALUE
+
+Disassembly of <code object keep_alive at <address omitted>, file "server.py", line 105>:
+107     >>    0 LOAD_GLOBAL              0 (asyncio)
+              2 LOAD_METHOD              1 (sleep)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                2 (_client_timeout)
+              8 CALL_METHOD              1
+             10 GET_AWAITABLE
+             12 LOAD_CONST               0 (None)
+             14 YIELD_FROM
+             16 POP_TOP
+
+108          18 SETUP_FINALLY           44 (to 64)
+
+109          20 LOAD_GLOBAL              3 (print_debug)
+             22 LOAD_CONST               1 ('pinging {}:{}')
+             24 LOAD_ATTR                4 (format)
+             26 LOAD_FAST                1 (client)
+             28 LOAD_ATTR                5 (remote_address)
+             30 CALL_FUNCTION_EX         0
+             32 CALL_FUNCTION            1
+             34 POP_TOP
+
+110          36 LOAD_GLOBAL              0 (asyncio)
+             38 LOAD_METHOD              6 (wait_for)
+             40 LOAD_FAST                1 (client)
+             42 LOAD_METHOD              7 (ping)
+             44 CALL_METHOD              0
+             46 LOAD_FAST                0 (self)
+             48 LOAD_ATTR                2 (_client_timeout)
+             50 CALL_METHOD              2
+             52 GET_AWAITABLE
+             54 LOAD_CONST               0 (None)
+             56 YIELD_FROM
+             58 POP_TOP
+             60 POP_BLOCK
+             62 JUMP_ABSOLUTE            0
+
+111     >>   64 DUP_TOP
+             66 LOAD_GLOBAL              0 (asyncio)
+             68 LOAD_ATTR                8 (TimeoutError)
+             70 JUMP_IF_NOT_EXC_MATCH   114
+             72 POP_TOP
+             74 POP_TOP
+             76 POP_TOP
+
+112          78 LOAD_GLOBAL              3 (print_debug)
+             80 LOAD_CONST               2 ('client {}:{} timed out')
+             82 LOAD_ATTR                4 (format)
+             84 LOAD_FAST                1 (client)
+             86 LOAD_ATTR                5 (remote_address)
+             88 CALL_FUNCTION_EX         0
+             90 CALL_FUNCTION            1
+             92 POP_TOP
+
+113          94 LOAD_FAST                0 (self)
+             96 LOAD_METHOD              9 (disconnect_client)
+             98 LOAD_FAST                1 (client)
+            100 CALL_METHOD              1
+            102 GET_AWAITABLE
+            104 LOAD_CONST               0 (None)
+            106 YIELD_FROM
+            108 POP_TOP
+            110 POP_EXCEPT
+            112 JUMP_ABSOLUTE            0
+        >>  114 RERAISE
+            116 JUMP_ABSOLUTE            0
+            118 LOAD_CONST               0 (None)
+            120 RETURN_VALUE
+
+Disassembly of <code object handle_messages at <address omitted>, file "server.py", line 115>:
+117     >>    0 LOAD_FAST                1 (client)
+              2 LOAD_METHOD              0 (recv)
+              4 CALL_METHOD              0
+              6 GET_AWAITABLE
+              8 LOAD_CONST               0 (None)
+             10 YIELD_FROM
+             12 STORE_FAST               2 (message_obj)
+
+118          14 LOAD_GLOBAL              1 (print_debug)
+             16 LOAD_CONST               1 ('recieved message from {}:{}: {}')
+             18 LOAD_ATTR                2 (format)
+             20 BUILD_LIST               0
+             22 LOAD_FAST                1 (client)
+             24 LOAD_ATTR                3 (remote_address)
+             26 LIST_EXTEND              1
+             28 LOAD_FAST                2 (message_obj)
+             30 LIST_APPEND              1
+             32 LIST_TO_TUPLE
+             34 CALL_FUNCTION_EX         0
+             36 CALL_FUNCTION            1
+             38 POP_TOP
+
+119          40 LOAD_GLOBAL              4 (tryToLoadJson)
+             42 LOAD_FAST                2 (message_obj)
+             44 CALL_FUNCTION            1
+             46 LOAD_METHOD              5 (get)
+             48 LOAD_CONST               2 ('action')
+             50 LOAD_CONST               0 (None)
+             52 CALL_METHOD              2
+             54 STORE_FAST               3 (action)
+
+120          56 LOAD_GLOBAL              4 (tryToLoadJson)
+             58 LOAD_FAST                2 (message_obj)
+             60 CALL_FUNCTION            1
+             62 LOAD_METHOD              5 (get)
+             64 LOAD_CONST               3 ('params')
+             66 LOAD_CONST               0 (None)
+             68 CALL_METHOD              2
+             70 STORE_FAST               4 (params)
+
+121          72 LOAD_GLOBAL              4 (tryToLoadJson)
+             74 LOAD_FAST                2 (message_obj)
+             76 CALL_FUNCTION            1
+             78 LOAD_METHOD              5 (get)
+             80 LOAD_CONST               4 ('timeout_reference')
+             82 LOAD_CONST               0 (None)
+             84 CALL_METHOD              2
+             86 STORE_FAST               5 (timeout_ref)
+
+123          88 LOAD_FAST                3 (action)
+             90 LOAD_CONST               5 ('scan_ports')
+             92 COMPARE_OP               2 (==)
+             94 POP_JUMP_IF_FALSE      114
+
+124          96 LOAD_GLOBAL              6 (actions)
+             98 LOAD_METHOD              7 (scan_ports)
+            100 LOAD_FAST                1 (client)
+            102 LOAD_FAST                0 (self)
+            104 LOAD_ATTR                8 (add_message)
+            106 LOAD_FAST                5 (timeout_ref)
+            108 CALL_METHOD              3
+            110 POP_TOP
+            112 JUMP_ABSOLUTE            0
+
+126     >>  114 LOAD_FAST                3 (action)
+            116 LOAD_CONST               6 ('region_list')
+            118 COMPARE_OP               2 (==)
+            120 POP_JUMP_IF_FALSE      148
+
+127         122 LOAD_GLOBAL              6 (actions)
+            124 LOAD_METHOD              9 (get_region_list)
+            126 LOAD_FAST                1 (client)
+            128 LOAD_FAST                0 (self)
+            130 LOAD_ATTR                8 (add_message)
+
+128         132 LOAD_FAST                5 (timeout_ref)
+            134 LOAD_FAST                4 (params)
+            136 LOAD_METHOD              5 (get)
+
+129         138 LOAD_CONST               7 ('tool_verion')
+
+128         140 CALL_METHOD              1
+
+127         142 CALL_METHOD              4
+            144 POP_TOP
+            146 JUMP_ABSOLUTE            0
+
+131     >>  148 LOAD_FAST                3 (action)
+            150 LOAD_CONST               8 ('sigfox_region_list')
+            152 COMPARE_OP               2 (==)
+            154 POP_JUMP_IF_FALSE      182
+
+132         156 LOAD_GLOBAL              6 (actions)
+            158 LOAD_METHOD             10 (get_sigfox_region_list)
+            160 LOAD_FAST                1 (client)
+            162 LOAD_FAST                0 (self)
+            164 LOAD_ATTR                8 (add_message)
+
+133         166 LOAD_FAST                5 (timeout_ref)
+            168 LOAD_FAST                4 (params)
+            170 LOAD_METHOD              5 (get)
+
+134         172 LOAD_CONST               7 ('tool_verion')
+
+133         174 CALL_METHOD              1
+
+132         176 CALL_METHOD              4
+            178 POP_TOP
+            180 JUMP_ABSOLUTE            0
+
+135     >>  182 LOAD_FAST                3 (action)
+            184 LOAD_CONST               9 ('remote_config')
+            186 COMPARE_OP               2 (==)
+            188 POP_JUMP_IF_FALSE      216
+
+136         190 LOAD_GLOBAL              6 (actions)
+            192 LOAD_METHOD             11 (remote_config)
+            194 LOAD_FAST                1 (client)
+            196 LOAD_FAST                0 (self)
+            198 LOAD_ATTR                8 (add_message)
+            200 LOAD_FAST                5 (timeout_ref)
+            202 LOAD_FAST                4 (params)
+            204 LOAD_METHOD              5 (get)
+            206 LOAD_CONST              10 ('config')
+            208 CALL_METHOD              1
+            210 CALL_METHOD              4
+            212 POP_TOP
+            214 JUMP_ABSOLUTE            0
+
+138     >>  216 LOAD_FAST                3 (action)
+            218 LOAD_CONST              11 ('infos')
+            220 COMPARE_OP               2 (==)
+            222 EXTENDED_ARG             0
+            224 POP_JUMP_IF_FALSE      252
+
+139         226 LOAD_GLOBAL              6 (actions)
+            228 LOAD_METHOD             12 (infos)
+            230 LOAD_FAST                1 (client)
+            232 LOAD_FAST                0 (self)
+            234 LOAD_ATTR                8 (add_message)
+            236 LOAD_FAST                5 (timeout_ref)
+            238 LOAD_FAST                4 (params)
+            240 LOAD_METHOD              5 (get)
+            242 LOAD_CONST              12 ('port')
+            244 CALL_METHOD              1
+            246 CALL_METHOD              4
+            248 POP_TOP
+            250 JUMP_ABSOLUTE            0
+
+141     >>  252 LOAD_FAST                3 (action)
+            254 LOAD_CONST              13 ('erase_flash')
+            256 COMPARE_OP               2 (==)
+            258 EXTENDED_ARG             1
+            260 POP_JUMP_IF_FALSE      288
+
+142         262 LOAD_GLOBAL              6 (actions)
+            264 LOAD_METHOD             13 (erase_flash)
+            266 LOAD_FAST                1 (client)
+            268 LOAD_FAST                0 (self)
+            270 LOAD_ATTR                8 (add_message)
+            272 LOAD_FAST                5 (timeout_ref)
+            274 LOAD_FAST                4 (params)
+            276 LOAD_METHOD              5 (get)
+            278 LOAD_CONST              12 ('port')
+            280 CALL_METHOD              1
+            282 CALL_METHOD              4
+            284 POP_TOP
+            286 JUMP_ABSOLUTE            0
+
+144     >>  288 LOAD_FAST                3 (action)
+            290 LOAD_CONST              14 ('download_firmware_locally')
+            292 COMPARE_OP               2 (==)
+            294 EXTENDED_ARG             1
+            296 POP_JUMP_IF_FALSE      332
+
+145         298 LOAD_GLOBAL              6 (actions)
+            300 LOAD_METHOD             14 (dl_fw_locally)
+            302 LOAD_FAST                1 (client)
+            304 LOAD_FAST                0 (self)
+            306 LOAD_ATTR                8 (add_message)
+            308 LOAD_FAST                5 (timeout_ref)
+            310 LOAD_FAST                4 (params)
+            312 LOAD_METHOD              5 (get)
+            314 LOAD_CONST              15 ('url')
+            316 CALL_METHOD              1
+            318 LOAD_FAST                4 (params)
+            320 LOAD_METHOD              5 (get)
+            322 LOAD_CONST              16 ('filename')
+            324 CALL_METHOD              1
+            326 CALL_METHOD              5
+            328 POP_TOP
+            330 JUMP_ABSOLUTE            0
+
+147     >>  332 LOAD_FAST                3 (action)
+            334 LOAD_CONST              17 ('device_config')
+            336 COMPARE_OP               2 (==)
+            338 EXTENDED_ARG             1
+            340 POP_JUMP_IF_FALSE      368
+
+148         342 LOAD_GLOBAL              6 (actions)
+            344 LOAD_METHOD             15 (device_config)
+            346 LOAD_FAST                1 (client)
+            348 LOAD_FAST                0 (self)
+            350 LOAD_ATTR                8 (add_message)
+            352 LOAD_FAST                5 (timeout_ref)
+            354 LOAD_FAST                4 (params)
+            356 LOAD_METHOD              5 (get)
+            358 LOAD_CONST              12 ('port')
+            360 CALL_METHOD              1
+            362 CALL_METHOD              4
+            364 POP_TOP
+            366 JUMP_ABSOLUTE            0
+
+150     >>  368 LOAD_FAST                3 (action)
+            370 LOAD_CONST              18 ('write_firmware')
+            372 COMPARE_OP               2 (==)
+            374 EXTENDED_ARG             1
+            376 POP_JUMP_IF_FALSE      462
+
+151         378 LOAD_GLOBAL              6 (actions)
+            380 LOAD_METHOD             16 (write_firmware)
+
+152         382 LOAD_FAST                1 (client)
+
+153         384 LOAD_FAST                0 (self)
+            386 LOAD_ATTR                8 (add_message)
+
+154         388 LOAD_FAST                5 (timeout_ref)
+
+155         390 LOAD_FAST                4 (params)
+            392 LOAD_METHOD              5 (get)
+            394 LOAD_CONST              12 ('port')
+            396 CALL_METHOD              1
+
+156         398 LOAD_FAST                4 (params)
+            400 LOAD_METHOD              5 (get)
+            402 LOAD_CONST              16 ('filename')
+            404 CALL_METHOD              1
+
+157         406 LOAD_FAST                4 (params)
+            408 LOAD_METHOD              5 (get)
+            410 LOAD_CONST              19 ('baud_rate')
+            412 LOAD_CONST              20 (115200)
+            414 CALL_METHOD              2
+
+158         416 LOAD_FAST                4 (params)
+            418 LOAD_METHOD              5 (get)
+            420 LOAD_CONST              21 ('erase_fs')
+            422 LOAD_CONST              22 (False)
+            424 CALL_METHOD              2
+
+159         426 LOAD_FAST                4 (params)
+            428 LOAD_METHOD              5 (get)
+            430 LOAD_CONST              23 ('erase_nvs')
+            432 LOAD_CONST              22 (False)
+            434 CALL_METHOD              2
+
+160         436 LOAD_FAST                4 (params)
+            438 LOAD_METHOD              5 (get)
+            440 LOAD_CONST              10 ('config')
+            442 BUILD_MAP                0
+            444 CALL_METHOD              2
+
+161         446 LOAD_FAST                4 (params)
+            448 LOAD_METHOD              5 (get)
+            450 LOAD_CONST               9 ('remote_config')
+            452 LOAD_CONST               0 (None)
+            454 CALL_METHOD              2
+
+151         456 CALL_METHOD             10
+            458 POP_TOP
+            460 JUMP_ABSOLUTE            0
+
+164     >>  462 LOAD_FAST                0 (self)
+            464 LOAD_METHOD              8 (add_message)
+
+165         466 LOAD_FAST                1 (client)
+
+166         468 LOAD_GLOBAL             17 (json)
+            470 LOAD_METHOD             18 (dumps)
+
+167         472 LOAD_CONST              24 ('error')
+
+168         474 LOAD_CONST              25 ('BAD_REQUEST')
+
+169         476 LOAD_FAST                5 (timeout_ref)
+
+166         478 LOAD_CONST              26 (('action', 'results', 'timeoutRef'))
+            480 BUILD_CONST_KEY_MAP      3
+            482 CALL_METHOD              1
+
+164         484 LOAD_CONST              27 (('client', 'message'))
+            486 BUILD_CONST_KEY_MAP      2
+            488 CALL_METHOD              1
+            490 POP_TOP
+            492 JUMP_ABSOLUTE            0
+            494 LOAD_CONST               0 (None)
+            496 RETURN_VALUE
+
+Disassembly of <code object connect_client at <address omitted>, file "server.py", line 174>:
+175           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (clients)
+              4 LOAD_METHOD              1 (add)
+              6 LOAD_FAST                1 (client)
+              8 CALL_METHOD              1
+             10 POP_TOP
+
+176          12 LOAD_GLOBAL              2 (print_debug)
+             14 LOAD_CONST               1 ('new client connected from {}:{}')
+             16 LOAD_ATTR                3 (format)
+             18 LOAD_FAST                1 (client)
+             20 LOAD_ATTR                4 (remote_address)
+             22 CALL_FUNCTION_EX         0
+             24 CALL_FUNCTION            1
+             26 POP_TOP
+
+177          28 LOAD_GLOBAL              5 (asyncio)
+             30 LOAD_METHOD              6 (ensure_future)
+             32 LOAD_FAST                0 (self)
+             34 LOAD_METHOD              7 (keep_alive)
+             36 LOAD_FAST                1 (client)
+             38 CALL_METHOD              1
+             40 CALL_METHOD              1
+             42 STORE_FAST               3 (keep_alive_task)
+
+179          44 SETUP_FINALLY           20 (to 66)
+
+180          46 LOAD_FAST                0 (self)
+             48 LOAD_METHOD              8 (handle_messages)
+             50 LOAD_FAST                1 (client)
+             52 CALL_METHOD              1
+             54 GET_AWAITABLE
+             56 LOAD_CONST               0 (None)
+             58 YIELD_FROM
+             60 POP_TOP
+             62 POP_BLOCK
+             64 JUMP_FORWARD            44 (to 110)
+
+181     >>   66 DUP_TOP
+             68 LOAD_GLOBAL              9 (websockets)
+             70 LOAD_ATTR               10 (ConnectionClosed)
+             72 JUMP_IF_NOT_EXC_MATCH   108
+             74 POP_TOP
+             76 POP_TOP
+             78 POP_TOP
+
+182          80 LOAD_FAST                3 (keep_alive_task)
+             82 LOAD_METHOD             11 (cancel)
+             84 CALL_METHOD              0
+             86 POP_TOP
+
+183          88 LOAD_FAST                0 (self)
+             90 LOAD_METHOD             12 (disconnect_client)
+             92 LOAD_FAST                1 (client)
+             94 CALL_METHOD              1
+             96 GET_AWAITABLE
+             98 LOAD_CONST               0 (None)
+            100 YIELD_FROM
+            102 POP_TOP
+            104 POP_EXCEPT
+            106 JUMP_FORWARD             2 (to 110)
+        >>  108 RERAISE
+        >>  110 LOAD_CONST               0 (None)
+            112 RETURN_VALUE
+
+Disassembly of <code object stop_and_exit at <address omitted>, file "server.py", line 185>:
+186           0 LOAD_GLOBAL              0 (print_debug)
+              2 LOAD_CONST               1 ('exiting')
+              4 CALL_FUNCTION            1
+              6 POP_TOP
+
+187           8 LOAD_CONST               2 (False)
+             10 LOAD_FAST                0 (self)
+             12 STORE_ATTR               1 (is_running)
+
+188          14 LOAD_FAST                0 (self)
+             16 LOAD_ATTR                2 (_wake_up_task)
+             18 LOAD_METHOD              3 (cancel)
+             20 CALL_METHOD              0
+             22 POP_TOP
+
+189          24 SETUP_FINALLY           18 (to 44)
+
+190          26 LOAD_FAST                0 (self)
+             28 LOAD_ATTR                4 (loop)
+             30 LOAD_METHOD              5 (run_until_complete)
+             32 LOAD_FAST                0 (self)
+             34 LOAD_ATTR                2 (_wake_up_task)
+             36 CALL_METHOD              1
+             38 POP_TOP
+             40 POP_BLOCK
+             42 JUMP_FORWARD            30 (to 74)
+
+191     >>   44 DUP_TOP
+             46 LOAD_GLOBAL              6 (asyncio)
+             48 LOAD_ATTR                7 (CancelledError)
+             50 JUMP_IF_NOT_EXC_MATCH    72
+             52 POP_TOP
+             54 POP_TOP
+             56 POP_TOP
+
+192          58 LOAD_FAST                0 (self)
+             60 LOAD_ATTR                4 (loop)
+             62 LOAD_METHOD              8 (close)
+             64 CALL_METHOD              0
+             66 POP_TOP
+             68 POP_EXCEPT
+             70 JUMP_FORWARD             2 (to 74)
+        >>   72 RERAISE
+        >>   74 LOAD_CONST               0 (None)
+             76 RETURN_VALUE
+
+Disassembly of <code object check_cert_expiration at <address omitted>, file "server.py", line 194>:
+195           0 LOAD_GLOBAL              0 (open)
+              2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                1 (cert_path)
+              6 LOAD_CONST               1 ('r')
+              8 CALL_FUNCTION            2
+             10 SETUP_WITH             156 (to 168)
+             12 STORE_FAST               1 (cert_file)
+
+196          14 LOAD_FAST                1 (cert_file)
+             16 LOAD_METHOD              2 (read)
+             18 CALL_METHOD              0
+             20 STORE_FAST               2 (cert_text)
+
+197          22 LOAD_GLOBAL              3 (OpenSSL)
+             24 LOAD_ATTR                4 (crypto)
+             26 LOAD_METHOD              5 (load_certificate)
+             28 LOAD_GLOBAL              3 (OpenSSL)
+             30 LOAD_ATTR                4 (crypto)
+             32 LOAD_ATTR                6 (FILETYPE_PEM)
+             34 LOAD_FAST                2 (cert_text)
+             36 CALL_METHOD              2
+             38 STORE_FAST               3 (cert)
+
+198          40 LOAD_FAST                3 (cert)
+             42 LOAD_METHOD              7 (get_notAfter)
+             44 CALL_METHOD              0
+             46 LOAD_METHOD              8 (decode)
+             48 LOAD_CONST               2 ('utf8')
+             50 CALL_METHOD              1
+             52 STORE_FAST               4 (cert_expiration_date)
+
+199          54 LOAD_CONST               3 ('%Y%m%d%H%M%SZ')
+             56 STORE_FAST               5 (cert_date_format)
+
+200          58 LOAD_GLOBAL              9 (datetime)
+             60 LOAD_ATTR                9 (datetime)
+             62 LOAD_METHOD             10 (strptime)
+
+201          64 LOAD_FAST                4 (cert_expiration_date)
+
+202          66 LOAD_FAST                5 (cert_date_format)
+
+200          68 CALL_METHOD              2
+             70 STORE_FAST               6 (cert_date_formated)
+
+203          72 LOAD_GLOBAL             11 (print_debug)
+             74 LOAD_CONST               4 ('Certificate will expire {}')
+             76 LOAD_METHOD             12 (format)
+             78 LOAD_FAST                6 (cert_date_formated)
+             80 CALL_METHOD              1
+             82 CALL_FUNCTION            1
+             84 POP_TOP
+
+204          86 LOAD_FAST                6 (cert_date_formated)
+             88 LOAD_METHOD             13 (timestamp)
+             90 CALL_METHOD              0
+             92 STORE_FAST               7 (cert_timestamp)
+
+205          94 LOAD_GLOBAL              9 (datetime)
+             96 LOAD_ATTR                9 (datetime)
+             98 LOAD_METHOD             14 (now)
+            100 CALL_METHOD              0
+            102 LOAD_METHOD             13 (timestamp)
+            104 CALL_METHOD              0
+            106 STORE_FAST               8 (now)
+
+206         108 LOAD_FAST                7 (cert_timestamp)
+            110 LOAD_FAST                8 (now)
+            112 COMPARE_OP               0 (<)
+            114 POP_JUMP_IF_FALSE      144
+
+207         116 LOAD_GLOBAL             11 (print_debug)
+            118 LOAD_CONST               5 ('Certificate expired')
+            120 CALL_FUNCTION            1
+            122 POP_TOP
+
+208         124 LOAD_GLOBAL             15 (os)
+            126 LOAD_METHOD             16 (kill)
+            128 LOAD_GLOBAL             15 (os)
+            130 LOAD_METHOD             17 (getpid)
+            132 CALL_METHOD              0
+            134 LOAD_GLOBAL             18 (signal)
+            136 LOAD_ATTR               19 (SIGTERM)
+            138 CALL_METHOD              2
+            140 POP_TOP
+            142 JUMP_FORWARD            10 (to 154)
+
+210     >>  144 LOAD_GLOBAL             20 (time)
+            146 LOAD_METHOD             21 (sleep)
+            148 LOAD_GLOBAL             22 (HOUR)
+            150 CALL_METHOD              1
+            152 POP_TOP
+        >>  154 POP_BLOCK
+            156 LOAD_CONST               0 (None)
+            158 DUP_TOP
+            160 DUP_TOP
+            162 CALL_FUNCTION            3
+            164 POP_TOP
+            166 JUMP_FORWARD            16 (to 184)
+        >>  168 WITH_EXCEPT_START
+            170 POP_JUMP_IF_TRUE       174
+            172 RERAISE
+        >>  174 POP_TOP
+            176 POP_TOP
+            178 POP_TOP
+            180 POP_EXCEPT
+            182 POP_TOP
+        >>  184 LOAD_CONST               0 (None)
+            186 RETURN_VALUE
+
+Disassembly of <code object set_tray_icon at <address omitted>, file "server.py", line 212>:
+213           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (tray_icon)
+              4 POP_JUMP_IF_FALSE       22
+
+214           6 LOAD_FAST                0 (self)
+              8 LOAD_ATTR                0 (tray_icon)
+             10 LOAD_METHOD              1 (setIcon)
+             12 LOAD_FAST                0 (self)
+             14 LOAD_METHOD              2 (get_icon)
+             16 CALL_METHOD              0
+             18 CALL_METHOD              1
+             20 POP_TOP
+        >>   22 LOAD_CONST               0 (None)
+             24 RETURN_VALUE
+
+Disassembly of <code object add_tray_icon at <address omitted>, file "server.py", line 216>:
+217           0 LOAD_GLOBAL              0 (QtWidgets)
+              2 LOAD_METHOD              1 (QApplication)
+              4 LOAD_GLOBAL              2 (sys)
+              6 LOAD_ATTR                3 (argv)
+              8 CALL_METHOD              1
+             10 STORE_FAST               1 (app)
+
+218          12 LOAD_GLOBAL              0 (QtWidgets)
+             14 LOAD_METHOD              4 (QWidget)
+             16 CALL_METHOD              0
+             18 STORE_FAST               2 (w)
+
+219          20 LOAD_FAST                2 (w)
+             22 LOAD_METHOD              5 (hide)
+             24 CALL_METHOD              0
+             26 POP_TOP
+
+220          28 LOAD_GLOBAL              6 (SystemTrayIcon)
+             30 LOAD_FAST                0 (self)
+             32 LOAD_METHOD              7 (get_icon)
+             34 CALL_METHOD              0
+             36 LOAD_FAST                2 (w)
+             38 CALL_FUNCTION            2
+             40 LOAD_FAST                0 (self)
+             42 STORE_ATTR               8 (tray_icon)
+
+221          44 LOAD_FAST                0 (self)
+             46 LOAD_ATTR                8 (tray_icon)
+             48 LOAD_METHOD              9 (show)
+             50 CALL_METHOD              0
+             52 POP_TOP
+
+222          54 LOAD_GLOBAL              2 (sys)
+             56 LOAD_METHOD             10 (exit)
+             58 LOAD_FAST                1 (app)
+             60 LOAD_METHOD             11 (exec_)
+             62 CALL_METHOD              0
+             64 CALL_METHOD              1
+             66 POP_TOP
+             68 LOAD_CONST               0 (None)
+             70 RETURN_VALUE
+
+Disassembly of <code object listen at <address omitted>, file "server.py", line 224>:
+225           0 LOAD_GLOBAL              0 (print_debug)
+              2 LOAD_CONST               1 ('listening on {}:{}  SSL:{}')
+              4 LOAD_METHOD              1 (format)
+              6 LOAD_FAST                1 (host)
+              8 LOAD_FAST                2 (port)
+             10 LOAD_GLOBAL              2 (ENABLE_SSL)
+             12 CALL_METHOD              3
+             14 CALL_FUNCTION            1
+             16 POP_TOP
+
+226          18 SETUP_FINALLY          116 (to 136)
+
+227          20 LOAD_GLOBAL              2 (ENABLE_SSL)
+             22 POP_JUMP_IF_FALSE      100
+
+228          24 LOAD_FAST                0 (self)
+             26 LOAD_METHOD              3 (get_certificate)
+             28 CALL_METHOD              0
+             30 POP_TOP
+
+229          32 LOAD_GLOBAL              4 (threading)
+             34 LOAD_ATTR                5 (Thread)
+
+230          36 LOAD_FAST                0 (self)
+             38 LOAD_ATTR                6 (check_cert_expiration)
+
+229          40 LOAD_CONST               2 (('target',))
+             42 CALL_FUNCTION_KW         1
+             44 STORE_FAST               3 (timer_thread)
+
+231          46 LOAD_FAST                3 (timer_thread)
+             48 LOAD_METHOD              7 (start)
+             50 CALL_METHOD              0
+             52 POP_TOP
+
+232          54 LOAD_GLOBAL              8 (ssl)
+             56 LOAD_METHOD              9 (SSLContext)
+             58 LOAD_GLOBAL              8 (ssl)
+             60 LOAD_ATTR               10 (PROTOCOL_TLS_SERVER)
+             62 CALL_METHOD              1
+             64 STORE_FAST               4 (ssl_context)
+
+233          66 LOAD_FAST                4 (ssl_context)
+             68 LOAD_METHOD             11 (load_cert_chain)
+             70 LOAD_FAST                0 (self)
+             72 LOAD_ATTR               12 (cert_path)
+             74 CALL_METHOD              1
+             76 POP_TOP
+
+234          78 LOAD_GLOBAL             13 (websockets)
+             80 LOAD_ATTR               14 (serve)
+             82 LOAD_FAST                0 (self)
+             84 LOAD_ATTR               15 (connect_client)
+             86 LOAD_FAST                1 (host)
+             88 LOAD_FAST                2 (port)
+             90 LOAD_FAST                4 (ssl_context)
+             92 LOAD_CONST               3 (('ssl',))
+             94 CALL_FUNCTION_KW         4
+             96 STORE_FAST               5 (ws_server)
+             98 JUMP_FORWARD            16 (to 116)
+
+236     >>  100 LOAD_GLOBAL             13 (websockets)
+            102 LOAD_METHOD             14 (serve)
+            104 LOAD_FAST                0 (self)
+            106 LOAD_ATTR               15 (connect_client)
+            108 LOAD_FAST                1 (host)
+            110 LOAD_FAST                2 (port)
+            112 CALL_METHOD              3
+            114 STORE_FAST               5 (ws_server)
+
+237     >>  116 LOAD_GLOBAL             16 (AppState)
+            118 LOAD_ATTR               17 (RUNNING)
+            120 LOAD_FAST                0 (self)
+            122 STORE_ATTR              18 (state)
+
+238         124 LOAD_FAST                0 (self)
+            126 LOAD_METHOD             19 (set_tray_icon)
+            128 CALL_METHOD              0
+            130 POP_TOP
+            132 POP_BLOCK
+            134 JUMP_FORWARD            60 (to 196)
+
+239     >>  136 DUP_TOP
+            138 LOAD_GLOBAL             20 (Exception)
+            140 JUMP_IF_NOT_EXC_MATCH   194
+            142 POP_TOP
+            144 STORE_FAST               6 (e)
+            146 POP_TOP
+            148 SETUP_FINALLY           36 (to 186)
+
+240         150 LOAD_GLOBAL              0 (print_debug)
+            152 LOAD_FAST                6 (e)
+            154 CALL_FUNCTION            1
+            156 POP_TOP
+
+241         158 LOAD_GLOBAL             16 (AppState)
+            160 LOAD_ATTR               21 (ERROR)
+            162 LOAD_FAST                0 (self)
+            164 STORE_ATTR              18 (state)
+
+242         166 LOAD_FAST                0 (self)
+            168 LOAD_METHOD             19 (set_tray_icon)
+            170 CALL_METHOD              0
+            172 POP_TOP
+            174 POP_BLOCK
+            176 POP_EXCEPT
+            178 LOAD_CONST               0 (None)
+            180 STORE_FAST               6 (e)
+            182 DELETE_FAST              6 (e)
+            184 JUMP_FORWARD            10 (to 196)
+        >>  186 LOAD_CONST               0 (None)
+            188 STORE_FAST               6 (e)
+            190 DELETE_FAST              6 (e)
+            192 RERAISE
+        >>  194 RERAISE
+
+244     >>  196 LOAD_FAST                0 (self)
+            198 LOAD_ATTR               22 (loop)
+            200 LOAD_METHOD             23 (run_until_complete)
+            202 LOAD_FAST                5 (ws_server)
+            204 CALL_METHOD              1
+            206 POP_TOP
+
+245         208 LOAD_GLOBAL             24 (asyncio)
+            210 LOAD_METHOD             25 (ensure_future)
+            212 LOAD_GLOBAL             26 (wake_up)
+            214 CALL_FUNCTION            0
+            216 CALL_METHOD              1
+            218 LOAD_FAST                0 (self)
+            220 STORE_ATTR              27 (_wake_up_task)
+
+247         222 SETUP_FINALLY           78 (to 302)
+            224 SETUP_FINALLY           36 (to 262)
+
+248         226 LOAD_GLOBAL              4 (threading)
+            228 LOAD_ATTR                5 (Thread)
+
+249         230 LOAD_FAST                0 (self)
+            232 LOAD_ATTR               22 (loop)
+            234 LOAD_ATTR               28 (run_forever)
+
+248         236 LOAD_CONST               2 (('target',))
+            238 CALL_FUNCTION_KW         1
+            240 STORE_FAST               7 (tray_icon_thread)
+
+250         242 LOAD_FAST                7 (tray_icon_thread)
+            244 LOAD_METHOD              7 (start)
+            246 CALL_METHOD              0
+            248 POP_TOP
+
+251         250 LOAD_FAST                0 (self)
+            252 LOAD_METHOD             29 (add_tray_icon)
+            254 CALL_METHOD              0
+            256 POP_TOP
+            258 POP_BLOCK
+            260 JUMP_FORWARD            28 (to 290)
+
+252     >>  262 DUP_TOP
+            264 LOAD_GLOBAL             30 (KeyboardInterrupt)
+            266 EXTENDED_ARG             1
+            268 JUMP_IF_NOT_EXC_MATCH   288
+            270 POP_TOP
+            272 POP_TOP
+            274 POP_TOP
+
+253         276 LOAD_GLOBAL              0 (print_debug)
+            278 LOAD_CONST               4 ('caught keyboard interrupt')
+            280 CALL_FUNCTION            1
+            282 POP_TOP
+            284 POP_EXCEPT
+            286 JUMP_FORWARD             2 (to 290)
+        >>  288 RERAISE
+        >>  290 POP_BLOCK
+
+255         292 LOAD_FAST                0 (self)
+            294 LOAD_METHOD             31 (stop_and_exit)
+            296 CALL_METHOD              0
+            298 POP_TOP
+            300 JUMP_FORWARD            10 (to 312)
+        >>  302 LOAD_FAST                0 (self)
+            304 LOAD_METHOD             31 (stop_and_exit)
+            306 CALL_METHOD              0
+            308 POP_TOP
+            310 RERAISE
+        >>  312 LOAD_CONST               0 (None)
+            314 RETURN_VALUE
+
+Disassembly of <code object start_queue_processor at <address omitted>, file "server.py", line 257>:
+258           0 LOAD_CONST               1 (True)
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (is_running)
+
+259           6 LOAD_GLOBAL              1 (asyncio)
+              8 LOAD_METHOD              2 (run)
+             10 LOAD_FAST                0 (self)
+             12 LOAD_METHOD              3 (queue_processor)
+             14 CALL_METHOD              0
+             16 CALL_METHOD              1
+             18 POP_TOP
+             20 LOAD_CONST               0 (None)
+             22 RETURN_VALUE

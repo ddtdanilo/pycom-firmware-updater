@@ -22,6 +22,13 @@ flowchart TD
     Transport --> Device[Pycom module and expansion board]
 ```
 
+The desktop application is the intended end product, with native Apple Silicon
+as the primary host target. The CLI supports verification and automation. The
+GitHub installer yielded a service/tray implementation; a separate classic desktop
+download yielded the Python 2.7/PyQt4 wizard. See [recovery findings](RECOVERY_FINDINGS.md).
+A proposed standalone GUI
+should not require its missing remote frontend or the Intel translation path.
+
 The desktop application is a frontend to the same core used by the CLI. It cannot
 skip target validation, backup policy, preservation rules, or protection checks.
 Firmware package parsing is pure and testable without serial hardware.
@@ -77,6 +84,12 @@ has been qualified. Do not change secure-boot provisioning or irreversible eFuse
 | macOS packaging | PyInstaller universal2 candidate | Complete binary audit and native ARM/Intel qualification |
 | Minimum macOS | Unselected | Clean-host and physical-device results |
 | Application license | Unselected until engine reuse is resolved | Per-file terms and distribution obligations |
+
+Prototype the GUI against a simulated backend while core work progresses. Hardware
+controls remain disabled until their corresponding operations are qualified.
+If a webview/IPC design is chosen, record loopback binding, client authentication,
+origin controls, lifecycle ownership, and a local/offline asset strategy in its ADR.
+An in-process Qt/SwiftUI frontend should not expose a local service unnecessarily.
 
 Record consequential decisions in `docs/decisions/` when made. An ADR includes
 context, alternatives, evidence, decision, consequences, and a revisit trigger.

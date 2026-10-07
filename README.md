@@ -3,17 +3,19 @@
 [![Repository checks](https://github.com/ddtdanilo/pycom-firmware-updater/actions/workflows/repository-checks.yml/badge.svg)](https://github.com/ddtdanilo/pycom-firmware-updater/actions/workflows/repository-checks.yml)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-Support_this_project-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/ddtdanilo)
 
-Keep existing Pycom hardware usable on modern computers.
+Keep existing Pycom hardware usable through a native Apple Silicon graphical updater.
 
 This community-maintained fork aims to preserve a practical way to inspect, back up,
-recover, and update Pycom's ESP32-based modules. The first platform goal is native
-Apple Silicon support, followed by a single **macOS universal2 application** for
-both ARM and Intel Macs. Maintaining existing deployments, extending hardware
-life, and making recovery repeatable are the reasons for this project.
+recover, and update Pycom's ESP32-based modules through a maintained **desktop GUI**.
+The main reason is macOS ending the Intel/Rosetta compatibility path: existing
+hardware should not become unusable because its updater depends on an obsolete
+host architecture. Native Apple Silicon is the primary target; a **macOS universal2
+application** can also serve Intel Macs during the transition, once qualified.
 
-**Current status: planning and repository foundations.** This fork has no runnable
-application, imported flashing engine, community binary, or verified hardware
-support yet. The roadmap describes future work, not available features.
+**Current status: installer recovery, planning, and repository foundations.**
+Redacted reference code, disassembly, and reproducible static-analysis tooling are
+available. This fork has no runnable GUI, imported flashing engine, community
+binary, or verified hardware support yet. The roadmap describes future work.
 
 This is an independent community effort, maintained by [Danilo](https://github.com/ddtdanilo).
 It is not an official Pycom release and is not affiliated with or endorsed by Pycom.
@@ -24,6 +26,8 @@ It is not an official Pycom release and is not affiliated with or endorsed by Py
 | --- | --- |
 | Understand the implementation sequence and release gates | [Maintenance plan](docs/MAINTENANCE_PLAN.md) |
 | Understand the proposed design | [Architecture](docs/ARCHITECTURE.md) |
+| Inspect recovered code and the route to a native GUI | [Recovery findings](docs/RECOVERY_FINDINGS.md) · [Reference snapshot](research/installer-v1.0.3/README.md) |
+| Read the recovered classic graphical wizard | [Classic GUI 1.16.6 recovery](research/classic-gui-1.16.6/README.md) |
 | Check the planned modules, platforms, and validation requirements | [Support matrix](docs/SUPPORT_MATRIX.md) |
 | Check the source investigation and what can be reused | [Source provenance](docs/SOURCE_PROVENANCE.md) |
 | Inspect the plan review and repository checks | [Review record](docs/PLAN_REVIEW.md) · [Tooling](docs/TOOLING.md) |
@@ -36,6 +40,17 @@ The [original updater repository](https://github.com/pycom/pycom-firmware-update
 was archived in September 2024. Its published Git history contains documentation
 and links to installers, rather than the source of the desktop application.
 A fork of that repository therefore cannot simply rebuild the original GUI for ARM.
+
+[Apple's published Rosetta transition](https://developer.apple.com/news/?id=w5ngl9k2)
+makes native Apple Silicon support necessary for continued availability of
+Intel-only applications. The [installer investigation](docs/RECOVERY_FINDINGS.md)
+confirmed that the historical macOS asset contains an x86_64 Python service with
+a Qt tray icon and local WebSocket interface. It yielded partial recovered code,
+but no complete graphical frontend in that package. A **separate public 1.16.6
+desktop application** was then recovered: its Python 2.7/PyQt4 wizard and ten
+supporting modules are available as [reference text](research/classic-gui-1.16.6/README.md).
+The intended result is a standalone GUI that
+works with local packages and a qualified core, without relying on Rosetta.
 
 Pycom did publish a Python command-line engine separately, under
 [`esp32/tools/fw_updater` in `pycom-micropython-sigfox`](https://github.com/pycom/pycom-micropython-sigfox/tree/a37510c092bcec00671c924accb97dcdfa2f4b5d/esp32/tools/fw_updater).
@@ -50,7 +65,7 @@ modernizing it requires compatibility tests, not just repackaging.
 - Make device identification, backup, and preflight checks precede flashing.
 - Preserve device configuration, credentials, and filesystem data where readable
   and verified, unless the operator explicitly chooses an operation that changes them.
-- Provide useful diagnostics, a scriptable CLI, and an accessible desktop UI.
+- Provide useful diagnostics, an accessible desktop UI, and an optional scriptable CLI.
 - Ship independently verified ARM and Intel compatibility before claiming
   universal support.
 
@@ -64,6 +79,8 @@ and vendor cloud services are also outside the updater's control. See the
 | Item | Status |
 | --- | --- |
 | Community mission, technical plan, and contribution guidance | Available |
+| Historical installer inventory, redacted references, and static inspection tool | Available; partial recovery, not runtime code |
+| Classic desktop wizard and supporting modules | Recovered as research references; no maintained GUI build yet |
 | Documentation lint and repository consistency checks | Configured in CI |
 | Public candidate CLI source in the separate Pycom firmware repository | Identified; not imported |
 | New CLI or desktop application in this fork | Not implemented |
@@ -78,7 +95,7 @@ installation instructions are historical and are not current community guidance.
 
 ## Development and contributions
 
-For the current documentation-only phase:
+For the current documentation and research phase:
 
 ```sh
 git clone https://github.com/ddtdanilo/pycom-firmware-updater.git
@@ -101,13 +118,14 @@ Start with [CONTRIBUTING.md](CONTRIBUTING.md), and follow the
 ## Roadmap
 
 1. Resolve provenance, redistribution terms, and representative test fixtures.
-2. Establish a maintained Python core and a CLI with read-only diagnostics.
-3. Validate backup, preservation, flashing, and recovery on physical devices.
-4. Produce native macOS builds and then a complete universal2 bundle.
-5. Add a desktop interface, signing, notarization, and release evidence.
+2. Build a desktop GUI shell with a simulated backend while qualifying the core.
+3. Integrate qualified diagnostics, backup, preservation, flashing, and recovery.
+4. Validate the complete GUI on native Apple Silicon; then qualify universal2.
+5. Sign, notarize, and publish the application with release evidence.
 6. Expand platform and module coverage as reproducible results become available.
 
-The [full maintenance plan](docs/MAINTENANCE_PLAN.md) defines dependencies,
+The optional CLI supports core testing and automation; a CLI alone does not fulfill
+the graphical application goal. The [full maintenance plan](docs/MAINTENANCE_PLAN.md) defines dependencies,
 deliverables, acceptance criteria, open decisions, and release blockers for every
 milestone. No release date or untested compatibility is promised.
 
@@ -115,8 +133,10 @@ milestone. No release date or untested compatibility is promised.
 
 New community-authored files are provided under the MIT license; the inherited
 upstream README and changelog retain their original, unresolved licensing status.
-No license is being granted over Pycom's installers, firmware, trademarks, or
-separately published code. The candidate engine declares GPL and Pycom-specific
+The redacted installer-derived references retain unresolved original rights and
+are excluded from MIT; they are not a license-cleared runtime import. No license
+is granted here over Pycom's installers, firmware, trademarks, or separately
+published code. The candidate engine declares GPL and Pycom-specific
 terms, which must be resolved before it is imported or redistributed.
 See [LICENSE.md](LICENSE.md) and [source provenance](docs/SOURCE_PROVENANCE.md).
 

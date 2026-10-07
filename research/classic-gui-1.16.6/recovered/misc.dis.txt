@@ -1,0 +1,280 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: misc
+  1:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (('print_function',))
+               6 IMPORT_NAME          (__future__)
+               9 IMPORT_FROM          (print_function)
+              12 STORE_NAME           (print_function)
+              15 POP_TOP
+
+  2:          16 LOAD_CONST           (-1)
+              19 LOAD_CONST           (None)
+              22 IMPORT_NAME          (sys)
+              25 STORE_NAME           (sys)
+
+  3:          28 LOAD_CONST           (-1)
+              31 LOAD_CONST           (('print_exc',))
+              34 IMPORT_NAME          (traceback)
+              37 IMPORT_FROM          (print_exc)
+              40 STORE_NAME           (print_exc)
+              43 POP_TOP
+
+  4:          44 LOAD_CONST           (-1)
+              47 LOAD_CONST           (None)
+              50 IMPORT_NAME          (re)
+              53 STORE_NAME           (re)
+
+  6:          56 LOAD_CONST           (-1)
+              59 LOAD_CONST           (('DEBUG',))
+              62 IMPORT_NAME          (settings)
+              65 IMPORT_FROM          (DEBUG)
+              68 STORE_NAME           (DEBUG)
+              71 POP_TOP
+
+  9:          72 LOAD_CONST           (<Code2 code object eprint at <address omitted>, file misc.py>, line 9)
+              75 MAKE_FUNCTION        (0 default parameters)
+              78 STORE_NAME           (eprint)
+
+ 13:          81 LOAD_CONST           (<Code2 code object print_exception at <address omitted>, file misc.py>, line 13)
+              84 MAKE_FUNCTION        (0 default parameters)
+              87 STORE_NAME           (print_exception)
+
+ 20:          90 LOAD_CONST           (<Code2 code object print_debug at <address omitted>, file misc.py>, line 20)
+              93 MAKE_FUNCTION        (0 default parameters)
+              96 STORE_NAME           (print_debug)
+
+ 25:          99 LOAD_CONST           (<Code2 code object detectOsFamily at <address omitted>, file misc.py>, line 25)
+             102 MAKE_FUNCTION        (0 default parameters)
+             105 STORE_NAME           (detectOsFamily)
+
+ 36:         108 LOAD_CONST           (<Code2 code object calc_int_version at <address omitted>, file misc.py>, line 36)
+             111 MAKE_FUNCTION        (0 default parameters)
+             114 STORE_NAME           (calc_int_version)
+             117 LOAD_CONST           (None)
+             120 RETURN_VALUE
+
+Symbol: misc.eprint
+ 10:           0 LOAD_GLOBAL          (print)
+               3 LOAD_CONST           ("file")
+               6 LOAD_GLOBAL          (sys)
+               9 LOAD_ATTR            (stderr)
+              12 LOAD_FAST            (args)
+              15 LOAD_FAST            (kwargs)
+              18 CALL_FUNCTION_VAR_KW (0 positional, 1 named)
+              21 POP_TOP
+              22 LOAD_CONST           (None)
+              25 RETURN_VALUE
+
+Symbol: misc.print_exception
+ 14:           0 LOAD_GLOBAL          (DEBUG)
+               3 POP_JUMP_IF_FALSE    (to 19)
+
+ 15:           6 LOAD_GLOBAL          (print_exc)
+               9 LOAD_FAST            (e)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 POP_TOP
+              16 JUMP_FORWARD         (to 38)
+
+ 17:     >>   19 LOAD_GLOBAL          (eprint)
+              22 LOAD_CONST           ("Exception: {}")
+              25 LOAD_ATTR            (format)
+              28 LOAD_FAST            (e)
+              31 CALL_FUNCTION        (1 positional, 0 named)
+              34 CALL_FUNCTION        (1 positional, 0 named)
+              37 POP_TOP
+         >>   38 LOAD_CONST           (None)
+              41 RETURN_VALUE
+
+Symbol: misc.print_debug
+ 21:           0 LOAD_GLOBAL          (DEBUG)
+               3 POP_JUMP_IF_FALSE    (to 19)
+
+ 22:           6 LOAD_GLOBAL          (eprint)
+               9 LOAD_FAST            (msg)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 POP_TOP
+              16 JUMP_FORWARD         (to 19)
+         >>   19 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+Symbol: misc.detectOsFamily
+ 26:           0 LOAD_GLOBAL          (sys)
+               3 LOAD_ATTR            (platform)
+               6 LOAD_ATTR            (rstrip)
+               9 LOAD_CONST           ("1234567890")
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 STORE_FAST           (osFamily)
+
+ 27:          18 LOAD_FAST            (osFamily)
+              21 LOAD_CONST           ("linux")
+              24 COMPARE_OP           (==)
+              27 POP_JUMP_IF_FALSE    (to 39)
+
+ 28:          30 LOAD_CONST           ("unix")
+              33 STORE_FAST           (osFamily)
+              36 JUMP_FORWARD         (to 81)
+
+ 29:     >>   39 LOAD_FAST            (osFamily)
+              42 LOAD_CONST           ("win")
+              45 COMPARE_OP           (==)
+              48 POP_JUMP_IF_FALSE    (to 60)
+
+ 30:          51 LOAD_CONST           ("win32")
+              54 STORE_FAST           (osFamily)
+              57 JUMP_FORWARD         (to 81)
+
+ 31:     >>   60 LOAD_FAST            (osFamily)
+              63 LOAD_CONST           ("darwin")
+              66 COMPARE_OP           (==)
+              69 POP_JUMP_IF_FALSE    (to 81)
+
+ 32:          72 LOAD_CONST           ("macos")
+              75 STORE_FAST           (osFamily)
+              78 JUMP_FORWARD         (to 81)
+
+ 33:     >>   81 LOAD_FAST            (osFamily)
+              84 RETURN_VALUE
+
+Symbol: misc.calc_int_version
+ 37:           0 LOAD_CONST           ("a")
+               3 LOAD_CONST           ("b")
+               6 LOAD_CONST           ("rc")
+               9 LOAD_CONST           ("r")
+              12 BUILD_LIST           4
+              15 STORE_FAST           (known_types)
+
+ 38:          18 LOAD_FAST            (version)
+              21 LOAD_ATTR            (split)
+              24 LOAD_CONST           (".")
+              27 CALL_FUNCTION        (1 positional, 0 named)
+              30 STORE_FAST           (version_parts)
+
+ 39:          33 LOAD_GLOBAL          (len)
+              36 LOAD_FAST            (version_parts)
+              39 CALL_FUNCTION        (1 positional, 0 named)
+              42 LOAD_CONST           (1)
+              45 BINARY_SUBTRACT
+              46 STORE_FAST           (dots)
+
+ 41:          49 LOAD_FAST            (dots)
+              52 LOAD_CONST           (2)
+              55 COMPARE_OP           (!=)
+              58 POP_JUMP_IF_FALSE    (to 77)
+              61 LOAD_FAST            (dots)
+              64 LOAD_CONST           (3)
+              67 COMPARE_OP           (!=)
+              70 POP_JUMP_IF_FALSE    (to 77)
+
+ 42:          73 LOAD_CONST           (None)
+              76 RETURN_VALUE
+
+ 44:     >>   77 LOAD_FAST            (dots)
+              80 LOAD_CONST           (2)
+              83 COMPARE_OP           (==)
+              86 POP_JUMP_IF_FALSE    (to 105)
+
+ 45:          89 LOAD_FAST            (version_parts)
+              92 LOAD_ATTR            (append)
+              95 LOAD_CONST           ("r0")
+              98 CALL_FUNCTION        (1 positional, 0 named)
+             101 POP_TOP
+             102 JUMP_FORWARD         (to 105)
+
+ 47:     >>  105 LOAD_GLOBAL          (re)
+             108 LOAD_ATTR            (match)
+             111 LOAD_CONST           ("([^0-9]+)([0-9]+)")
+             114 LOAD_FAST            (version_parts)
+             117 LOAD_CONST           (3)
+             120 BINARY_SUBSCR
+             121 CALL_FUNCTION        (2 positional, 0 named)
+             124 STORE_FAST           (release_type_number)
+
+ 48:         127 LOAD_FAST            (known_types)
+             130 LOAD_ATTR            (index)
+             133 LOAD_FAST            (release_type_number)
+             136 LOAD_ATTR            (group)
+             139 LOAD_CONST           (1)
+             142 CALL_FUNCTION        (1 positional, 0 named)
+             145 CALL_FUNCTION        (1 positional, 0 named)
+             148 STORE_FAST           (release_type)
+
+ 49:         151 LOAD_FAST            (release_type)
+             154 LOAD_CONST           (-1)
+             157 COMPARE_OP           (==)
+             160 POP_JUMP_IF_FALSE    (to 167)
+
+ 50:         163 LOAD_CONST           (None)
+             166 RETURN_VALUE
+
+ 52:     >>  167 LOAD_FAST            (release_type_number)
+             170 LOAD_ATTR            (group)
+             173 LOAD_CONST           (2)
+             176 CALL_FUNCTION        (1 positional, 0 named)
+             179 LOAD_FAST            (version_parts)
+             182 LOAD_CONST           (3)
+             185 STORE_SUBSCR
+
+ 55:         186 SETUP_LOOP           (to 231)
+             189 LOAD_GLOBAL          (enumerate)
+             192 LOAD_FAST            (version_parts)
+             195 CALL_FUNCTION        (1 positional, 0 named)
+             198 GET_ITER
+         >>  199 FOR_ITER             (to 230)
+             202 UNPACK_SEQUENCE      2
+             205 STORE_FAST           (idx)
+             208 STORE_FAST           (val)
+
+ 56:         211 LOAD_GLOBAL          (int)
+             214 LOAD_FAST            (val)
+             217 CALL_FUNCTION        (1 positional, 0 named)
+             220 LOAD_FAST            (version_parts)
+             223 LOAD_FAST            (idx)
+             226 STORE_SUBSCR
+             227 JUMP_ABSOLUTE        (to 199)
+         >>  230 POP_BLOCK
+
+ 60:     >>  231 LOAD_FAST            (version_parts)
+             234 LOAD_CONST           (0)
+             237 BINARY_SUBSCR
+             238 STORE_FAST           (version)
+
+ 61:         241 LOAD_FAST            (version)
+             244 LOAD_CONST           (7)
+             247 BINARY_LSHIFT
+             248 LOAD_FAST            (version_parts)
+             251 LOAD_CONST           (1)
+             254 BINARY_SUBSCR
+             255 BINARY_OR
+             256 STORE_FAST           (version)
+
+ 62:         259 LOAD_FAST            (version)
+             262 LOAD_CONST           (10)
+             265 BINARY_LSHIFT
+             266 LOAD_FAST            (version_parts)
+             269 LOAD_CONST           (2)
+             272 BINARY_SUBSCR
+             273 BINARY_OR
+             274 STORE_FAST           (version)
+
+ 63:         277 LOAD_FAST            (version)
+             280 LOAD_CONST           (2)
+             283 BINARY_LSHIFT
+             284 LOAD_FAST            (release_type)
+             287 BINARY_OR
+             288 STORE_FAST           (version)
+
+ 64:         291 LOAD_FAST            (version)
+             294 LOAD_CONST           (7)
+             297 BINARY_LSHIFT
+             298 LOAD_FAST            (version_parts)
+             301 LOAD_CONST           (3)
+             304 BINARY_SUBSCR
+             305 BINARY_OR
+             306 STORE_FAST           (version)
+
+ 66:         309 LOAD_FAST            (version)
+             312 RETURN_VALUE

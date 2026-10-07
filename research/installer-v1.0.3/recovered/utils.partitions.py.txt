@@ -1,0 +1,43 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.partitions.marshal (Python 3.9)
+
+import hashlib
+import struct
+import binascii
+MD5_PARTITION_BEGIN = b'\xeb\xeb\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
+
+def _partition_from_binary(data):
+    (magic, type, subtype, offset, size, name, flags) = struct.unpack(b'<2sBBLL16sL', data)
+    return {
+        'magic': magic,
+        'type': type,
+        'subtype': subtype,
+        'offset': hex(offset),
+        'size': hex(size),
+        'name': name.rstrip(b'\x00'),
+        'flags': flags }
+
+
+def partitions_from_binary(b):
+    md5 = hashlib.md5()
+    result = []
+    for o in range(0, len(b), 32):
+        data = b[o:o + 32]
+        if len(data) != 32:
+            raise ValueError('Partition table length must be a multiple of 32 bytes')
+        if data == b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff':
+            pass
+        elif data[:2] == MD5_PARTITION_BEGIN[:2]:
+            if data[16:] == md5.digest():
+                continue
+            else:
+                raise ValueError("MD5 checksums don't match! (computed: 0x%s, parsed: 0x%s)" % (md5.hexdigest(), binascii.hexlify(data[16:])))
+        else:
+            md5.update(data)
+        result.append(_partition_from_binary(data))
+    return result

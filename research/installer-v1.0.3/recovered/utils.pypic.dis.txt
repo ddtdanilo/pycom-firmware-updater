@@ -1,0 +1,123 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('Pypic',))
+              4 IMPORT_NAME              0 (pypic)
+              6 IMPORT_FROM              1 (Pypic)
+              8 STORE_NAME               1 (Pypic)
+             10 POP_TOP
+
+  4          12 LOAD_CONST               2 (<code object exit_pycom_programming_mode at <address omitted>, file "utils/pypic.py", line 4>)
+             14 LOAD_CONST               3 ('exit_pycom_programming_mode')
+             16 MAKE_FUNCTION            0
+             18 STORE_NAME               2 (exit_pycom_programming_mode)
+
+ 12          20 LOAD_CONST               4 (<code object enter_pycom_programming_mode at <address omitted>, file "utils/pypic.py", line 12>)
+             22 LOAD_CONST               5 ('enter_pycom_programming_mode')
+             24 MAKE_FUNCTION            0
+             26 STORE_NAME               3 (enter_pycom_programming_mode)
+
+ 20          28 LOAD_CONST               6 (<code object reset_pycom_module at <address omitted>, file "utils/pypic.py", line 20>)
+             30 LOAD_CONST               7 ('reset_pycom_module')
+             32 MAKE_FUNCTION            0
+             34 STORE_NAME               4 (reset_pycom_module)
+             36 LOAD_CONST               8 (None)
+             38 RETURN_VALUE
+
+Disassembly of <code object exit_pycom_programming_mode at <address omitted>, file "utils/pypic.py", line 4>:
+  5           0 LOAD_GLOBAL              0 (Pypic)
+              2 LOAD_FAST                0 (esp_port)
+              4 CALL_FUNCTION            1
+              6 STORE_FAST               1 (pic)
+
+  6           8 LOAD_FAST                1 (pic)
+             10 LOAD_METHOD              1 (isdetected)
+             12 CALL_METHOD              0
+             14 POP_JUMP_IF_FALSE       32
+
+  7          16 LOAD_FAST                1 (pic)
+             18 LOAD_METHOD              2 (exit_pycom_programming_mode)
+             20 CALL_METHOD              0
+             22 POP_TOP
+
+  8          24 LOAD_GLOBAL              3 (print)
+             26 LOAD_CONST               1 ('pic.exit_pycom_programming_mode')
+             28 CALL_FUNCTION            1
+             30 POP_TOP
+
+  9     >>   32 LOAD_FAST                1 (pic)
+             34 LOAD_METHOD              4 (close)
+             36 CALL_METHOD              0
+             38 POP_TOP
+             40 LOAD_CONST               0 (None)
+             42 RETURN_VALUE
+
+Disassembly of <code object enter_pycom_programming_mode at <address omitted>, file "utils/pypic.py", line 12>:
+ 13           0 LOAD_GLOBAL              0 (Pypic)
+              2 LOAD_FAST                0 (esp_port)
+              4 CALL_FUNCTION            1
+              6 STORE_FAST               1 (pic)
+
+ 14           8 LOAD_FAST                1 (pic)
+             10 LOAD_METHOD              1 (isdetected)
+             12 CALL_METHOD              0
+             14 POP_JUMP_IF_FALSE       54
+
+ 15          16 LOAD_GLOBAL              2 (print)
+             18 LOAD_CONST               1 ('Product ID: %d HW Version: %d FW Version: 0.0.%d')
+             20 LOAD_FAST                1 (pic)
+             22 LOAD_METHOD              3 (read_product_id)
+             24 CALL_METHOD              0
+             26 LOAD_FAST                1 (pic)
+             28 LOAD_METHOD              4 (read_hw_version)
+             30 CALL_METHOD              0
+             32 LOAD_FAST                1 (pic)
+             34 LOAD_METHOD              5 (read_fw_version)
+             36 CALL_METHOD              0
+             38 BUILD_TUPLE              3
+             40 BINARY_MODULO
+             42 CALL_FUNCTION            1
+             44 POP_TOP
+
+ 16          46 LOAD_FAST                1 (pic)
+             48 LOAD_METHOD              6 (enter_pycom_programming_mode)
+             50 CALL_METHOD              0
+             52 POP_TOP
+
+ 17     >>   54 LOAD_FAST                1 (pic)
+             56 LOAD_METHOD              7 (close)
+             58 CALL_METHOD              0
+             60 POP_TOP
+             62 LOAD_CONST               0 (None)
+             64 RETURN_VALUE
+
+Disassembly of <code object reset_pycom_module at <address omitted>, file "utils/pypic.py", line 20>:
+ 21           0 LOAD_GLOBAL              0 (Pypic)
+              2 LOAD_FAST                0 (esp_port)
+              4 CALL_FUNCTION            1
+              6 STORE_FAST               1 (pic)
+
+ 22           8 LOAD_FAST                1 (pic)
+             10 LOAD_METHOD              1 (isdetected)
+             12 CALL_METHOD              0
+             14 POP_JUMP_IF_FALSE       32
+
+ 23          16 LOAD_FAST                1 (pic)
+             18 LOAD_METHOD              2 (reset_pycom_module)
+             20 CALL_METHOD              0
+             22 POP_TOP
+
+ 24          24 LOAD_GLOBAL              3 (print)
+             26 LOAD_CONST               1 ('pic.reset_pycom_module')
+             28 CALL_FUNCTION            1
+             30 POP_TOP
+
+ 25     >>   32 LOAD_FAST                1 (pic)
+             34 LOAD_METHOD              4 (close)
+             36 CALL_METHOD              0
+             38 POP_TOP
+             40 LOAD_CONST               0 (None)
+             42 RETURN_VALUE

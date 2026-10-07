@@ -1,0 +1,213 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: pypic.py
+from __future__ import print_function
+import argparse, struct, sys, time, serial
+try:
+    from local_settings import DEBUG
+except:
+    DEBUG = False
+
+__version__ = '0.9.2'
+CMD_PEEK = 0
+CMD_POKE = 1
+CMD_MAGIC = 2
+CMD_HW_VER = 16
+CMD_FW_VER = 17
+CMD_PROD_ID = 18
+CMD_SETUP_SLEEP = 32
+CMD_GO_SLEEP = 33
+CMD_CALIBRATE = 34
+CMD_BAUD_CHANGE = 48
+CMD_DFU = 49
+ANSELA_ADDR = 396
+ANSELB_ADDR = 397
+ANSELC_ADDR = 398
+ADCON0_ADDR = 157
+ADCON1_ADDR = 158
+IOCAP_ADDR = 913
+IOCAN_ADDR = 914
+_ADCON0_CHS_POSN = 2
+_ADCON0_ADON_MASK = 1
+_ADCON1_ADCS_POSN = 4
+_ADCON0_GO_nDONE_MASK = 2
+ADRESL_ADDR = 155
+ADRESH_ADDR = 156
+TRISA_ADDR = 140
+TRISC_ADDR = 142
+PORTA_ADDR = 12
+PORTC_ADDR = 14
+WPUA_ADDR = 524
+PCON_ADDR = 150
+STATUS_ADDR = 131
+
+def eprint(*args, **kwargs):
+    print(file=sys.stderr, *args, **kwargs)
+    return
+
+
+def log(*args):
+    print((' ').join(str(a) for a in args))
+    return
+
+
+def error(msg):
+    eprint('error:', msg)
+    return
+
+
+def exit_with_error(code, msg):
+    error(msg)
+    sys.exit(code)
+    return
+
+
+def warn(msg):
+    eprint('warning:', msg)
+    return
+
+
+def print_debug(msg):
+    if DEBUG:
+        eprint(msg)
+    return
+
+
+class Pypic:
+
+    def __init__(self, port):
+        try:
+            self.serial = serial.Serial(port, baudrate=115200, bytesize=serial.FIVEBITS, timeout=0.25, exclusive=True)
+            print_debug('Connected in exclusive mode')
+            connected = True
+        except Exception as e:
+            connected = False
+
+        if not connected:
+            print_debug('Not connecting in exclusive mode because: %s' % str(e))
+            try:
+                self.serial = serial.Serial(port, baudrate=115200, bytesize=serial.FIVEBITS, timeout=0.25)
+            except Exception as e:
+                raise e
+
+        self.detected = False
+        try:
+            if self.read_fw_version() < 6:
+                raise ValueError('PIC firmware out of date')
+            else:
+                self.detected = True
+        except Exception:
+            pass
+
+        return
+
+    def _write(self, data, read=True):
+        self.serial.write(data)
+        if read:
+            r_data = self.serial.read(2)
+            if not r_data:
+                raise Exception('Timeout while waiting for Rx data')
+            return struct.unpack('B', r_data[0])[0]
+        return
+
+    def _send_cmd(self, cmd):
+        return self._write(bytearray([cmd]))
+
+    def read_hw_version(self):
+        return self._send_cmd(CMD_HW_VER)
+
+    def read_fw_version(self):
+        return self._send_cmd(CMD_FW_VER)
+
+    def read_product_id(self):
+        return self._send_cmd(CMD_PROD_ID)
+
+    def peek_memory(self, addr):
+        return self._write(bytearray([CMD_PEEK, addr & 255, addr >> 8 & 255]))
+
+    def poke_memory(self, addr, value):
+        self._write(bytearray([CMD_POKE, addr & 255, addr >> 8 & 255, value & 255]), False)
+        return
+
+    def magic_write_read(self, addr, _and=255, _or=0, _xor=0):
+        return self._write(bytearray([CMD_MAGIC, addr & 255, addr >> 8 & 255, _and & 255, _or & 255, _xor & 255]))
+
+    def magic_write(self, addr, _and=255, _or=0, _xor=0):
+        self._write(bytearray([CMD_MAGIC, addr & 255, addr >> 8 & 255, _and & 255, _or & 255, _xor & 255]), False)
+        return
+
+    def toggle_bits_in_memory(self, addr, bits):
+        self.magic_write(addr, _xor=bits)
+        return
+
+    def mask_bits_in_memory(self, addr, mask):
+        self.magic_write(addr, _and=mask)
+        return
+
+    def set_bits_in_memory(self, addr, bits):
+        self.magic_write(addr, _or=bits)
+        return
+
+    def reset_pycom_module(self):
+        self.mask_bits_in_memory(TRISC_ADDR, -33)
+        self.mask_bits_in_memory(PORTC_ADDR, -33)
+        time.sleep(0.2)
+        self.set_bits_in_memory(PORTC_ADDR, 32)
+        time.sleep(0.1)
+        self.set_bits_in_memory(TRISC_ADDR, 32)
+        return
+
+    def enter_pycom_programming_mode(self, reset=True):
+        self.mask_bits_in_memory(TRISA_ADDR, -33)
+        self.mask_bits_in_memory(PORTA_ADDR, -33)
+        self.mask_bits_in_memory(TRISC_ADDR, -2)
+        self.mask_bits_in_memory(PORTC_ADDR, -2)
+        if reset:
+            self.reset_pycom_module()
+        return
+
+    def exit_pycom_programming_mode(self, reset=True):
+        self.mask_bits_in_memory(TRISA_ADDR, -33)
+        self.set_bits_in_memory(PORTA_ADDR, 32)
+        self.set_bits_in_memory(TRISC_ADDR, 1)
+        if reset:
+            self.reset_pycom_module()
+        return
+
+    def isdetected(self):
+        return self.detected
+
+    def close(self):
+        self.serial.close()
+        return
+
+
+def main(args):
+    parser = argparse.ArgumentParser(description='Sends internal commands to put the Pycom module in programming mode')
+    parser.add_argument('-p', '--port', metavar='PORT', help='the serial port used to communicate with the PIC')
+    parser.add_argument('--enter', action='store_true', help='enter programming mode')
+    parser.add_argument('--exit', action='store_true', help='exit programming mode')
+    parser.add_argument('--noreset', action='store_true', help='do not reset esp32')
+    args = parser.parse_args()
+    if not args.port:
+        exit_with_error(1, 'no serial port specified')
+    if args.enter and args.exit or not args.enter and not args.exit:
+        exit_with_error(1, 'invalid action requested')
+    pic = Pypic(args.port)
+    if pic.isdetected():
+        if args.enter:
+            pic.enter_pycom_programming_mode(not args.noreset)
+        elif args.exit:
+            pic.exit_pycom_programming_mode(not args.noreset)
+    pic.close()
+    return
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))

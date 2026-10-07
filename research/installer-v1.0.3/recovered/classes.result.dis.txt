@@ -1,0 +1,164 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (None)
+              4 IMPORT_NAME              0 (json)
+              6 STORE_NAME               0 (json)
+
+  4           8 LOAD_BUILD_CLASS
+             10 LOAD_CONST               2 (<code object Results at <address omitted>, file "classes/result.py", line 4>)
+             12 LOAD_CONST               3 ('Results')
+             14 MAKE_FUNCTION            0
+             16 LOAD_CONST               3 ('Results')
+             18 LOAD_NAME                1 (object)
+             20 CALL_FUNCTION            3
+             22 STORE_NAME               2 (Results)
+             24 LOAD_CONST               1 (None)
+             26 RETURN_VALUE
+
+Disassembly of <code object Results at <address omitted>, file "classes/result.py", line 4>:
+  4           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('Results')
+              6 STORE_NAME               2 (__qualname__)
+
+  5           8 LOAD_CONST               1 (<code object __init__ at <address omitted>, file "classes/result.py", line 5>)
+             10 LOAD_CONST               2 ('Results.__init__')
+             12 MAKE_FUNCTION            0
+             14 STORE_NAME               3 (__init__)
+
+ 12          16 LOAD_CONST               3 (<code object set_result at <address omitted>, file "classes/result.py", line 12>)
+             18 LOAD_CONST               4 ('Results.set_result')
+             20 MAKE_FUNCTION            0
+             22 STORE_NAME               4 (set_result)
+
+ 15          24 LOAD_CONST               5 (<code object set_action at <address omitted>, file "classes/result.py", line 15>)
+             26 LOAD_CONST               6 ('Results.set_action')
+             28 MAKE_FUNCTION            0
+             30 STORE_NAME               5 (set_action)
+
+ 18          32 LOAD_CONST              12 ((None,))
+             34 LOAD_CONST               8 (<code object send at <address omitted>, file "classes/result.py", line 18>)
+             36 LOAD_CONST               9 ('Results.send')
+             38 MAKE_FUNCTION            1 (defaults)
+             40 STORE_NAME               6 (send)
+
+ 30          42 LOAD_CONST              10 (<code object send_error at <address omitted>, file "classes/result.py", line 30>)
+             44 LOAD_CONST              11 ('Results.send_error')
+             46 MAKE_FUNCTION            0
+             48 STORE_NAME               7 (send_error)
+             50 LOAD_CONST               7 (None)
+             52 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "classes/result.py", line 5>:
+  6           0 LOAD_FAST                1 (client)
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (client)
+
+  7           6 LOAD_FAST                2 (add_message)
+              8 LOAD_FAST                0 (self)
+             10 STORE_ATTR               1 (add_message)
+
+  8          12 LOAD_FAST                4 (action)
+             14 LOAD_FAST                0 (self)
+             16 STORE_ATTR               2 (action)
+
+  9          18 LOAD_CONST               0 (None)
+             20 LOAD_FAST                0 (self)
+             22 STORE_ATTR               3 (result)
+
+ 10          24 LOAD_FAST                3 (reference)
+             26 LOAD_FAST                0 (self)
+             28 STORE_ATTR               4 (reference)
+             30 LOAD_CONST               0 (None)
+             32 RETURN_VALUE
+
+Disassembly of <code object set_result at <address omitted>, file "classes/result.py", line 12>:
+ 13           0 LOAD_FAST                1 (result)
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (result)
+              6 LOAD_CONST               0 (None)
+              8 RETURN_VALUE
+
+Disassembly of <code object set_action at <address omitted>, file "classes/result.py", line 15>:
+ 16           0 LOAD_FAST                1 (action)
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (action)
+              6 LOAD_CONST               0 (None)
+              8 RETURN_VALUE
+
+Disassembly of <code object send at <address omitted>, file "classes/result.py", line 18>:
+ 19           0 LOAD_FAST                1 (result)
+              2 LOAD_CONST               0 (None)
+              4 IS_OP                    1
+              6 POP_JUMP_IF_FALSE       12
+              8 LOAD_FAST                1 (result)
+             10 JUMP_FORWARD             4 (to 16)
+        >>   12 LOAD_FAST                0 (self)
+             14 LOAD_ATTR                0 (result)
+        >>   16 LOAD_FAST                0 (self)
+             18 STORE_ATTR               0 (result)
+
+ 21          20 LOAD_FAST                0 (self)
+             22 LOAD_ATTR                1 (client)
+
+ 22          24 LOAD_GLOBAL              2 (json)
+             26 LOAD_METHOD              3 (dumps)
+
+ 23          28 LOAD_FAST                0 (self)
+             30 LOAD_ATTR                4 (action)
+
+ 24          32 LOAD_FAST                0 (self)
+             34 LOAD_ATTR                0 (result)
+
+ 25          36 LOAD_FAST                0 (self)
+             38 LOAD_ATTR                5 (reference)
+
+ 22          40 LOAD_CONST               1 (('action', 'results', 'timeoutRef'))
+             42 BUILD_CONST_KEY_MAP      3
+             44 CALL_METHOD              1
+
+ 20          46 LOAD_CONST               2 (('client', 'message'))
+             48 BUILD_CONST_KEY_MAP      2
+             50 STORE_FAST               2 (resp)
+
+ 28          52 LOAD_FAST                0 (self)
+             54 LOAD_METHOD              6 (add_message)
+             56 LOAD_FAST                2 (resp)
+             58 CALL_METHOD              1
+             60 POP_TOP
+             62 LOAD_CONST               0 (None)
+             64 RETURN_VALUE
+
+Disassembly of <code object send_error at <address omitted>, file "classes/result.py", line 30>:
+ 32           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (client)
+
+ 33           4 LOAD_GLOBAL              1 (json)
+              6 LOAD_METHOD              2 (dumps)
+
+ 34           8 LOAD_CONST               1 ('error')
+
+ 35          10 LOAD_FAST                1 (error)
+
+ 36          12 LOAD_FAST                0 (self)
+             14 LOAD_ATTR                3 (reference)
+
+ 33          16 LOAD_CONST               2 (('action', 'results', 'timeoutRef'))
+             18 BUILD_CONST_KEY_MAP      3
+             20 CALL_METHOD              1
+
+ 31          22 LOAD_CONST               3 (('client', 'message'))
+             24 BUILD_CONST_KEY_MAP      2
+             26 STORE_FAST               2 (resp)
+
+ 39          28 LOAD_FAST                0 (self)
+             30 LOAD_METHOD              4 (add_message)
+             32 LOAD_FAST                2 (resp)
+             34 CALL_METHOD              1
+             36 POP_TOP
+             38 LOAD_CONST               0 (None)
+             40 RETURN_VALUE

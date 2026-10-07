@@ -1,0 +1,18 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: errors_lib.no_impolemented_in_rome_error.marshal (Python 3.9)
+
+from errors_lib.fatal_error import FatalError
+
+class NotImplementedInROMError(FatalError):
+    '''
+    Wrapper class for the error thrown when a particular ESP bootloader function
+    is not implemented in the ROM bootloader.
+    '''
+    
+    def __init__(self, bootloader, func):
+        FatalError.__init__(self, '%s ROM does not support function %s.' % (bootloader.CHIP_NAME, func.__name__))

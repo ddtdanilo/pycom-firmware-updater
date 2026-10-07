@@ -1,0 +1,157 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: FetchFiles.py
+from io import BytesIO
+import json, requests, binascii
+from requests.auth import HTTPBasicAuth
+from RunInWorker import RunInWorker
+from misc import print_exception, detectOsFamily, print_debug, calc_int_version
+from settings import MAX_TIMEOUT, SERVER_URL, LIST_TYPE, UPDATER_TYPE, SIGFOX_CLIENT_NAME, TOOL_VERSION, AUTH_PWD, LICENSE_TYPES, LICENSE_URL
+
+class FetchFiles(object):
+
+    def __init__(self):
+        self.__worker = RunInWorker()
+        self.__timeout = 5
+        return
+
+    def add_timeout(self, timeout):
+        if self.__timeout + timeout <= MAX_TIMEOUT:
+            self.__timeout = self.__timeout + timeout
+        else:
+            self.__timeout = MAX_TIMEOUT
+        return
+
+    def get_timeout(self):
+        return self.__timeout
+
+    def __product_to_key(self, product, frequency=None):
+        key = '%s.%s with esp32' % (product, product)
+        if product == 'lopy' or product == 'fipy' or product == 'lopy4':
+            key += '.' + str(frequency)
+        return key
+
+    def local_file_worker(self, filename):
+        try:
+            f = open(filename, 'rb')
+            content = f.read()
+            f.close()
+            return content
+        except Exception as e:
+            print_exception(e)
+
+        return
+
+    def get_file_worker(self, params):
+        try:
+            if params.get('type') in LICENSE_TYPES and params.get('redirect') == 'true':
+                r = requests.get(SERVER_URL + '/findupgrade', auth=HTTPBasicAuth(SIGFOX_CLIENT_NAME, binascii.a2b_base64(AUTH_PWD)), params=params, allow_redirects=True, timeout=self.__timeout)
+            else:
+                r = requests.get(SERVER_URL + '/findupgrade', params=params, allow_redirects=True, timeout=self.__timeout)
+            if r.status_code != 200 and r.status_code != 302 and r.status_code != 412:
+                ret = '{"error_code":"' + str(r.status_code) + '"}'
+                return ret
+            return r.content
+        except Exception as e:
+            print_exception(e)
+            ret = '{"error_code":" -1 "}'
+            return ret
+
+        return
+
+    def get_license_worker(self, params):
+        try:
+            r = requests.get(LICENSE_URL, params=params, allow_redirects=True, timeout=self.__timeout)
+            if r.status_code != 200 and r.status_code != 302 and r.status_code != 412 and r.status_code != 404:
+                ret = '{"error_code":"' + str(r.status_code) + '"}'
+                return ret
+            return r.content
+        except Exception as e:
+            print_exception(e)
+            ret = '{"error_code":" -1 "}'
+            return ret
+
+        return
+
+    def get_metadata_worker(self, params):
+        try:
+            r = requests.get(SERVER_URL + '/metadata.json', auth=HTTPBasicAuth(SIGFOX_CLIENT_NAME, binascii.a2b_base64(AUTH_PWD)), timeout=self.__timeout)
+            if r.status_code != 200:
+                ret = '{"error_code":"' + str(r.status_code) + '"}'
+                return ret
+            return r.content
+        except Exception as e:
+            print_exception(e)
+            ret = '{"error_code":" -1 "}'
+            return ret
+
+        return
+
+    def get_local_file(self, params, callback):
+        self.__worker.run(self.local_file_worker, params, callback)
+        return
+
+    def get_license(self, params, callback):
+        self.__worker.run(self.get_license_worker, params, callback)
+        return
+
+    def get_metadata(self, params, callback):
+        self.__worker.run(self.get_metadata_worker, params, callback)
+        return
+
+    def get_file(self, key, redirect, fwtype, strict, version, callback):
+        params = {'key': key, 
+           'redirect': (str(redirect).lower()), 
+           'type': (str(fwtype)), 
+           'strict': (str(strict).lower()), 
+           'tool_version': (calc_int_version(TOOL_VERSION))}
+        if version is not None:
+            params['version'] = version
+        print_debug(('Get_file params: {}').format(params))
+        self.__worker.run(self.get_file_worker, params, callback)
+        return
+
+    def find_new_firmware(self, callback, fwtype, product=None, frequency=None, version=None, key=None):
+        if key is None and product is not None:
+            if product == 'esp32':
+                key = 'esp32'
+            else:
+                product = product.lower()
+                key = self.__product_to_key(product, frequency)
+        return self.get_file(key, False, fwtype, version is not None, version, (lambda res, req: callback(json.loads(res), fwtype if key == 'esp32' else key)))
+
+    def download_new_firmware(self, callback, key=None, product=None, frequency=None, fwtype=None, sha1sum=None, version=None):
+        if not key:
+            product = product.lower()
+            key = self.__product_to_key(product, frequency)
+        firmware_file = self.get_file(key, True, fwtype, True if version is not None else False, version, (lambda res, req: callback(BytesIO(res))))
+        return firmware_file
+
+    def load_license_text(self, callback, params=None):
+        return self.get_license(params, (lambda res, req: callback(str(res))))
+
+    def load_firmware_file(self, callback, filename):
+        return self.get_local_file(filename, (lambda res, req: callback(BytesIO(res))))
+
+    def fetch_frequency_list(self, callback, product):
+        product = product.lower()
+        if product == 'lopy':
+            return self.get_file(product + '.regionlist', True, LIST_TYPE, False, None, (lambda res, req: callback(json.loads(res))))
+        else:
+            if product == 'sipy':
+                return self.get_file(product + '.freqlist', True, LIST_TYPE, False, None, (lambda res, req: callback(json.loads(res))))
+            return
+
+    def fetch_updater_version(self, updater_type, callback):
+        self.get_file('pycom-firmware-updater.' + detectOsFamily(), False, updater_type, UPDATER_TYPE == 'internal', None, (lambda res, req: callback(json.loads(res))))
+        return
+
+    def fetch_metadata(self, callback):
+        self.get_metadata([], (lambda res, req: callback(res)))
+        return

@@ -1,0 +1,109 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: DeviceUpgrade.py
+from RunInWorker import RunInWorker
+from misc import print_debug, print_exception, DEBUG
+from updater import NPyProgrammer, PARTITIONS
+
+class DeviceUpgrade(object):
+    npy = None
+
+    def __init__(self):
+        self.__worker = RunInWorker()
+        self.__params = None
+        self.npy = None
+        return
+
+    def __connect(self, params):
+        params['port'] = str(params['port'])
+        self.__params = params
+        try:
+            self.npy = NPyProgrammer(port=self.__params['port'], baudrate=self.__params['speed'], pypic=self.__params['pypic'], continuation=params.get('continuation', False), debug=DEBUG, resultUpdateList=params['resultUpdateList'], connect_read=params.get('connect_read', True))
+            return True
+        except Exception as e:
+            print_exception(e)
+            return e
+
+        return
+
+    def disconnect(self):
+        self.npy.exit_pycom_programming_mode()
+        return
+
+    def __upgradeWorker(self, params):
+        first_exception = None
+        try:
+            max_attempts = 1
+            script_ok = False
+            print_debug(("This is __upgradeWorker params['config_block'] is not None? {} and params['force_update']? {}").format(params['config_block'] is not None, params['force_update']))
+            if self.__params.get('pypic', False):
+                max_attempts = 3
+            for x in range(0, max_attempts):
+                if x > 0:
+                    try:
+                        self.npy.exit_pycom_programming_mode(reset=False)
+                        self.__params['connect_read'] = False
+                        self.__params['resultUpdateList'].append('Resetting...')
+                        self.__connect(self.__params)
+                    except Exception as ex:
+                        print_exception(ex)
+                        return str(ex)
+
+                try:
+                    if not script_ok:
+                        print_debug(('run_script with erase_nvs: {}').format(params['erase_nvs']))
+                        self.npy.run_script(script=params['script'], config_block=params['config_block'], erase_fs=params['erase_fs'], chip_id=self.npy.get_chip_id(), ui_label=params['ui_label'], erase_nvs=params['erase_nvs'])
+                        script_ok = True
+                    if params['remote_config_block'] is not None:
+                        try:
+                            if params['config_block'] is not None and len(params['config_block']) > 52:
+                                self.npy.print_cb(params['remote_config_block'][0:52] + params['config_block'][52:])
+                                self.npy.write(int(PARTITIONS.get('config')[0], 16), params['remote_config_block'][0:52] + params['config_block'][52:], ui_label=params['ui_label'])
+                            else:
+                                self.npy.print_cb(params['remote_config_block'][0:52])
+                                self.npy.write(int(PARTITIONS.get('config')[0], 16), params['remote_config_block'][0:52], ui_label=params['ui_label'])
+                        except Exception as e:
+                            print_exception(e)
+                            return str('<b>Error updating config block!</b><br>')
+
+                    elif params['config_block'] is not None and params['force_update']:
+                        try:
+                            self.npy.print_cb(params['config_block'])
+                            self.npy.write(int(PARTITIONS.get('config')[0], 16), params['config_block'], ui_label=params['ui_label'])
+                        except Exception as e:
+                            print_exception(e)
+                            return str('<b>Error updating config block!</b><br>')
+
+                    return 0
+                except Exception as e:
+                    self.__params['resultUpdateList'].append(('<b>Exception:</b> {}').format(e))
+                    if not self.__params.get('pypic', False):
+                        raise e
+                    elif x == 0:
+                        first_exception = e
+                    elif x == max_attempts - 1:
+                        if first_exception is not None:
+                            raise first_exception
+                        else:
+                            raise e
+
+        except Exception as e:
+            print_exception(e)
+            return str(e)
+
+        return
+
+    def upgrade(self, script, erase_fs, config_block, remote_config_block, force_update, ui_label, attempt_label, erase_nvs, callback):
+        return self.__worker.run(self.__upgradeWorker, {'script': script, 'erase_fs': erase_fs, 'config_block': config_block, 'attempt_label': attempt_label, 'remote_config_block': remote_config_block, 'force_update': force_update, 'ui_label': ui_label, 'erase_nvs': erase_nvs}, (lambda res, req: callback(res)))
+
+    def connect(self, port, speed, pypic, resultUpdateList, callback):
+        return self.__worker.run(self.__connect, {'port': port, 'speed': speed, 'pypic': pypic, 'resultUpdateList': resultUpdateList}, (lambda res, req: callback(res)))
+
+    def get_chip_id(self):
+        return self.npy.get_chip_id().split(' ')[0]

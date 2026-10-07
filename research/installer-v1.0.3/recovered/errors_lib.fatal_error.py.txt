@@ -1,0 +1,29 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: errors_lib.fatal_error.marshal (Python 3.9)
+
+from utils.utils import hexify
+
+class FatalError(RuntimeError):
+    """
+    Wrapper class for runtime errors that aren't caused by internal bugs, but by
+    ESP8266 responses or input content.
+    """
+    
+    def __init__(self, message):
+        RuntimeError.__init__(self, message)
+
+    
+    def WithResult(message, result):
+        """
+        Return a fatal error object that appends the hex values of
+        'result' as a string formatted argument.
+        """
+        message += ' (result was %s)' % hexify(result)
+        return FatalError(message)
+
+    WithResult = staticmethod(WithResult)

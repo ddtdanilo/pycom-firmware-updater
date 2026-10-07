@@ -1,0 +1,56 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('FatalError',))
+              4 IMPORT_NAME              0 (errors_lib.fatal_error)
+              6 IMPORT_FROM              1 (FatalError)
+              8 STORE_NAME               1 (FatalError)
+             10 POP_TOP
+
+  4          12 LOAD_BUILD_CLASS
+             14 LOAD_CONST               2 (<code object NotImplementedInROMError at <address omitted>, file "errors_lib/no_impolemented_in_rome_error.py", line 4>)
+             16 LOAD_CONST               3 ('NotImplementedInROMError')
+             18 MAKE_FUNCTION            0
+             20 LOAD_CONST               3 ('NotImplementedInROMError')
+             22 LOAD_NAME                1 (FatalError)
+             24 CALL_FUNCTION            3
+             26 STORE_NAME               2 (NotImplementedInROMError)
+             28 LOAD_CONST               4 (None)
+             30 RETURN_VALUE
+
+Disassembly of <code object NotImplementedInROMError at <address omitted>, file "errors_lib/no_impolemented_in_rome_error.py", line 4>:
+  4           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('NotImplementedInROMError')
+              6 STORE_NAME               2 (__qualname__)
+
+  5           8 LOAD_CONST               1 ('\n    Wrapper class for the error thrown when a particular ESP bootloader function\n    is not implemented in the ROM bootloader.\n    ')
+             10 STORE_NAME               3 (__doc__)
+
+ 10          12 LOAD_CONST               2 (<code object __init__ at <address omitted>, file "errors_lib/no_impolemented_in_rome_error.py", line 10>)
+             14 LOAD_CONST               3 ('NotImplementedInROMError.__init__')
+             16 MAKE_FUNCTION            0
+             18 STORE_NAME               4 (__init__)
+             20 LOAD_CONST               4 (None)
+             22 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "errors_lib/no_impolemented_in_rome_error.py", line 10>:
+ 11           0 LOAD_GLOBAL              0 (FatalError)
+              2 LOAD_METHOD              1 (__init__)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_CONST               1 ('%s ROM does not support function %s.')
+
+ 12           8 LOAD_FAST                1 (bootloader)
+             10 LOAD_ATTR                2 (CHIP_NAME)
+             12 LOAD_FAST                2 (func)
+             14 LOAD_ATTR                3 (__name__)
+             16 BUILD_TUPLE              2
+
+ 11          18 BINARY_MODULO
+             20 CALL_METHOD              2
+             22 POP_TOP
+             24 LOAD_CONST               0 (None)
+             26 RETURN_VALUE

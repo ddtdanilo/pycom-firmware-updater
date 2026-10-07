@@ -1,0 +1,390 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('NotImplementedInROMError',))
+              4 IMPORT_NAME              0 (errors_lib.no_impolemented_in_rome_error)
+              6 IMPORT_FROM              1 (NotImplementedInROMError)
+              8 STORE_NAME               1 (NotImplementedInROMError)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('FatalError',))
+             16 IMPORT_NAME              2 (errors_lib.fatal_error)
+             18 IMPORT_FROM              3 (FatalError)
+             20 STORE_NAME               3 (FatalError)
+             22 POP_TOP
+
+  5          24 LOAD_CONST               3 (<code object div_roundup at <address omitted>, file "utils/esp_utils.py", line 5>)
+             26 LOAD_CONST               4 ('div_roundup')
+             28 MAKE_FUNCTION            0
+             30 STORE_NAME               4 (div_roundup)
+
+ 13          32 LOAD_CONST               5 (<code object align_file_position at <address omitted>, file "utils/esp_utils.py", line 13>)
+             34 LOAD_CONST               6 ('align_file_position')
+             36 MAKE_FUNCTION            0
+             38 STORE_NAME               5 (align_file_position)
+
+ 19          40 LOAD_CONST               7 (<code object flash_size_bytes at <address omitted>, file "utils/esp_utils.py", line 19>)
+             42 LOAD_CONST               8 ('flash_size_bytes')
+             44 MAKE_FUNCTION            0
+             46 STORE_NAME               6 (flash_size_bytes)
+
+ 31          48 LOAD_CONST               9 (<code object check_supported_function at <address omitted>, file "utils/esp_utils.py", line 31>)
+             50 LOAD_CONST              10 ('check_supported_function')
+             52 MAKE_FUNCTION            0
+             54 STORE_NAME               7 (check_supported_function)
+
+ 50          56 LOAD_CONST              11 (<code object stub_function_only at <address omitted>, file "utils/esp_utils.py", line 50>)
+             58 LOAD_CONST              12 ('stub_function_only')
+             60 MAKE_FUNCTION            0
+             62 STORE_NAME               8 (stub_function_only)
+
+ 55          64 LOAD_CONST              13 (<code object stub_and_esp32_function_only at <address omitted>, file "utils/esp_utils.py", line 55>)
+             66 LOAD_CONST              14 ('stub_and_esp32_function_only')
+             68 MAKE_FUNCTION            0
+             70 STORE_NAME               9 (stub_and_esp32_function_only)
+
+ 64          72 LOAD_CONST              15 (<code object esp8266_function_only at <address omitted>, file "utils/esp_utils.py", line 64>)
+             74 LOAD_CONST              16 ('esp8266_function_only')
+             76 MAKE_FUNCTION            0
+             78 STORE_NAME              10 (esp8266_function_only)
+
+ 69          80 LOAD_CONST              17 (<code object slip_reader at <address omitted>, file "utils/esp_utils.py", line 69>)
+             82 LOAD_CONST              18 ('slip_reader')
+             84 MAKE_FUNCTION            0
+             86 STORE_NAME              11 (slip_reader)
+             88 LOAD_CONST              19 (None)
+             90 RETURN_VALUE
+
+Disassembly of <code object div_roundup at <address omitted>, file "utils/esp_utils.py", line 5>:
+ 10           0 LOAD_GLOBAL              0 (int)
+              2 LOAD_FAST                0 (a)
+              4 CALL_FUNCTION            1
+              6 LOAD_GLOBAL              0 (int)
+              8 LOAD_FAST                1 (b)
+             10 CALL_FUNCTION            1
+             12 BINARY_ADD
+             14 LOAD_CONST               1 (1)
+             16 BINARY_SUBTRACT
+             18 LOAD_GLOBAL              0 (int)
+             20 LOAD_FAST                1 (b)
+             22 CALL_FUNCTION            1
+             24 BINARY_FLOOR_DIVIDE
+             26 RETURN_VALUE
+
+Disassembly of <code object align_file_position at <address omitted>, file "utils/esp_utils.py", line 13>:
+ 15           0 LOAD_FAST                1 (size)
+              2 LOAD_CONST               1 (1)
+              4 BINARY_SUBTRACT
+              6 LOAD_FAST                0 (f)
+              8 LOAD_METHOD              0 (tell)
+             10 CALL_METHOD              0
+             12 LOAD_FAST                1 (size)
+             14 BINARY_MODULO
+             16 BINARY_SUBTRACT
+             18 STORE_FAST               2 (align)
+
+ 16          20 LOAD_FAST                0 (f)
+             22 LOAD_METHOD              1 (seek)
+             24 LOAD_FAST                2 (align)
+             26 LOAD_CONST               1 (1)
+             28 CALL_METHOD              2
+             30 POP_TOP
+             32 LOAD_CONST               2 (None)
+             34 RETURN_VALUE
+
+Disassembly of <code object flash_size_bytes at <address omitted>, file "utils/esp_utils.py", line 19>:
+ 23           0 LOAD_CONST               1 ('MB')
+              2 LOAD_FAST                0 (size)
+              4 CONTAINS_OP              0
+              6 POP_JUMP_IF_FALSE       38
+
+ 24           8 LOAD_GLOBAL              0 (int)
+             10 LOAD_FAST                0 (size)
+             12 LOAD_CONST               2 (None)
+             14 LOAD_FAST                0 (size)
+             16 LOAD_METHOD              1 (index)
+             18 LOAD_CONST               1 ('MB')
+             20 CALL_METHOD              1
+             22 BUILD_SLICE              2
+             24 BINARY_SUBSCR
+             26 CALL_FUNCTION            1
+             28 LOAD_CONST               3 (1024)
+             30 BINARY_MULTIPLY
+             32 LOAD_CONST               3 (1024)
+             34 BINARY_MULTIPLY
+             36 RETURN_VALUE
+
+ 25     >>   38 LOAD_CONST               4 ('KB')
+             40 LOAD_FAST                0 (size)
+             42 CONTAINS_OP              0
+             44 POP_JUMP_IF_FALSE       72
+
+ 26          46 LOAD_GLOBAL              0 (int)
+             48 LOAD_FAST                0 (size)
+             50 LOAD_CONST               2 (None)
+             52 LOAD_FAST                0 (size)
+             54 LOAD_METHOD              1 (index)
+             56 LOAD_CONST               4 ('KB')
+             58 CALL_METHOD              1
+             60 BUILD_SLICE              2
+             62 BINARY_SUBSCR
+             64 CALL_FUNCTION            1
+             66 LOAD_CONST               3 (1024)
+             68 BINARY_MULTIPLY
+             70 RETURN_VALUE
+
+ 28     >>   72 LOAD_GLOBAL              2 (FatalError)
+             74 LOAD_CONST               5 ('Unknown size %s')
+             76 LOAD_FAST                0 (size)
+             78 BINARY_MODULO
+             80 CALL_FUNCTION            1
+             82 RAISE_VARARGS            1
+             84 LOAD_CONST               2 (None)
+             86 RETURN_VALUE
+
+Disassembly of <code object check_supported_function at <address omitted>, file "utils/esp_utils.py", line 31>:
+ 41           0 LOAD_CLOSURE             0 (check_func)
+              2 LOAD_CLOSURE             1 (func)
+              4 BUILD_TUPLE              2
+              6 LOAD_CONST               1 (<code object inner at <address omitted>, file "utils/esp_utils.py", line 41>)
+              8 LOAD_CONST               2 ('check_supported_function.<locals>.inner')
+             10 MAKE_FUNCTION            8 (closure)
+             12 STORE_FAST               2 (inner)
+
+ 47          14 LOAD_FAST                2 (inner)
+             16 RETURN_VALUE
+
+Disassembly of <code object inner at <address omitted>, file "utils/esp_utils.py", line 41>:
+ 42           0 LOAD_FAST                0 (args)
+              2 LOAD_CONST               1 (0)
+              4 BINARY_SUBSCR
+              6 STORE_FAST               2 (obj)
+
+ 43           8 LOAD_DEREF               0 (check_func)
+             10 LOAD_FAST                2 (obj)
+             12 CALL_FUNCTION            1
+             14 POP_JUMP_IF_FALSE       30
+
+ 44          16 LOAD_DEREF               1 (func)
+             18 LOAD_FAST                0 (args)
+             20 BUILD_MAP                0
+             22 LOAD_FAST                1 (kwargs)
+             24 DICT_MERGE               1
+             26 CALL_FUNCTION_EX         1
+             28 RETURN_VALUE
+
+ 46     >>   30 LOAD_GLOBAL              0 (NotImplementedInROMError)
+             32 LOAD_FAST                2 (obj)
+             34 LOAD_DEREF               1 (func)
+             36 CALL_FUNCTION            2
+             38 RAISE_VARARGS            1
+             40 LOAD_CONST               0 (None)
+             42 RETURN_VALUE
+
+Disassembly of <code object stub_function_only at <address omitted>, file "utils/esp_utils.py", line 50>:
+ 52           0 LOAD_GLOBAL              0 (check_supported_function)
+              2 LOAD_FAST                0 (func)
+              4 LOAD_CONST               1 (<code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 52>)
+              6 LOAD_CONST               2 ('stub_function_only.<locals>.<lambda>')
+              8 MAKE_FUNCTION            0
+             10 CALL_FUNCTION            2
+             12 RETURN_VALUE
+
+Disassembly of <code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 52>:
+ 52           0 LOAD_FAST                0 (o)
+              2 LOAD_ATTR                0 (IS_STUB)
+              4 RETURN_VALUE
+
+Disassembly of <code object stub_and_esp32_function_only at <address omitted>, file "utils/esp_utils.py", line 55>:
+ 59           0 LOAD_GLOBAL              0 (check_supported_function)
+
+ 60           2 LOAD_FAST                0 (func)
+              4 LOAD_CONST               1 (<code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 60>)
+              6 LOAD_CONST               2 ('stub_and_esp32_function_only.<locals>.<lambda>')
+              8 MAKE_FUNCTION            0
+
+ 59          10 CALL_FUNCTION            2
+             12 RETURN_VALUE
+
+Disassembly of <code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 60>:
+ 60           0 LOAD_FAST                0 (o)
+              2 LOAD_ATTR                0 (IS_STUB)
+              4 JUMP_IF_TRUE_OR_POP     14
+              6 LOAD_FAST                0 (o)
+              8 LOAD_ATTR                1 (CHIP_NAME)
+             10 LOAD_CONST               1 ('ESP32')
+             12 COMPARE_OP               2 (==)
+        >>   14 RETURN_VALUE
+
+Disassembly of <code object esp8266_function_only at <address omitted>, file "utils/esp_utils.py", line 64>:
+ 66           0 LOAD_GLOBAL              0 (check_supported_function)
+              2 LOAD_FAST                0 (func)
+              4 LOAD_CONST               1 (<code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 66>)
+              6 LOAD_CONST               2 ('esp8266_function_only.<locals>.<lambda>')
+              8 MAKE_FUNCTION            0
+             10 CALL_FUNCTION            2
+             12 RETURN_VALUE
+
+Disassembly of <code object <lambda> at <address omitted>, file "utils/esp_utils.py", line 66>:
+ 66           0 LOAD_FAST                0 (o)
+              2 LOAD_ATTR                0 (CHIP_NAME)
+              4 LOAD_CONST               1 ('ESP8266')
+              6 COMPARE_OP               2 (==)
+              8 RETURN_VALUE
+
+Disassembly of <code object slip_reader at <address omitted>, file "utils/esp_utils.py", line 69>:
+ 76           0 LOAD_CONST               1 (None)
+              2 STORE_FAST               1 (partial_packet)
+
+ 77           4 LOAD_CONST               2 (False)
+              6 STORE_FAST               2 (in_escape)
+
+ 79     >>    8 LOAD_FAST                0 (port)
+             10 LOAD_METHOD              0 (inWaiting)
+             12 CALL_METHOD              0
+             14 STORE_FAST               3 (waiting)
+
+ 80          16 LOAD_FAST                0 (port)
+             18 LOAD_METHOD              1 (read)
+             20 LOAD_FAST                3 (waiting)
+             22 LOAD_CONST               3 (0)
+             24 COMPARE_OP               2 (==)
+             26 POP_JUMP_IF_FALSE       32
+             28 LOAD_CONST               4 (1)
+             30 JUMP_FORWARD             2 (to 34)
+        >>   32 LOAD_FAST                3 (waiting)
+        >>   34 CALL_METHOD              1
+             36 STORE_FAST               4 (read_bytes)
+
+ 81          38 LOAD_FAST                4 (read_bytes)
+             40 LOAD_CONST               5 (b'')
+             42 COMPARE_OP               2 (==)
+             44 POP_JUMP_IF_FALSE       70
+
+ 82          46 LOAD_GLOBAL              2 (FatalError)
+             48 LOAD_CONST               6 ('Timed out waiting for packet %s')
+
+ 83          50 LOAD_FAST                1 (partial_packet)
+             52 LOAD_CONST               1 (None)
+             54 IS_OP                    0
+             56 POP_JUMP_IF_FALSE       62
+             58 LOAD_CONST               7 ('header')
+             60 JUMP_FORWARD             2 (to 64)
+        >>   62 LOAD_CONST               8 ('content')
+
+ 82     >>   64 BINARY_MODULO
+             66 CALL_FUNCTION            1
+             68 RAISE_VARARGS            1
+
+ 84     >>   70 LOAD_FAST                4 (read_bytes)
+             72 GET_ITER
+        >>   74 FOR_ITER               166 (to 242)
+             76 STORE_FAST               5 (b)
+
+ 86          78 LOAD_GLOBAL              3 (type)
+             80 LOAD_FAST                5 (b)
+             82 CALL_FUNCTION            1
+             84 LOAD_GLOBAL              4 (int)
+             86 IS_OP                    0
+             88 POP_JUMP_IF_FALSE      100
+
+ 87          90 LOAD_GLOBAL              5 (bytes)
+             92 LOAD_FAST                5 (b)
+             94 BUILD_LIST               1
+             96 CALL_FUNCTION            1
+             98 STORE_FAST               5 (b)
+
+ 89     >>  100 LOAD_FAST                1 (partial_packet)
+            102 LOAD_CONST               1 (None)
+            104 IS_OP                    0
+            106 POP_JUMP_IF_FALSE      136
+
+ 90         108 LOAD_FAST                5 (b)
+            110 LOAD_CONST               9 (b'\xc0')
+            112 COMPARE_OP               2 (==)
+            114 POP_JUMP_IF_FALSE      122
+
+ 91         116 LOAD_CONST               5 (b'')
+            118 STORE_FAST               1 (partial_packet)
+            120 JUMP_ABSOLUTE          240
+
+ 93     >>  122 LOAD_GLOBAL              2 (FatalError)
+            124 LOAD_CONST              10 ('Invalid head of packet (%r)')
+            126 LOAD_FAST                5 (b)
+            128 BINARY_MODULO
+            130 CALL_FUNCTION            1
+            132 RAISE_VARARGS            1
+            134 JUMP_ABSOLUTE           74
+
+ 94     >>  136 LOAD_FAST                2 (in_escape)
+            138 POP_JUMP_IF_FALSE      198
+
+ 95         140 LOAD_CONST               2 (False)
+            142 STORE_FAST               2 (in_escape)
+
+ 96         144 LOAD_FAST                5 (b)
+            146 LOAD_CONST              11 (b'\xdc')
+            148 COMPARE_OP               2 (==)
+            150 POP_JUMP_IF_FALSE      162
+
+ 97         152 LOAD_FAST                1 (partial_packet)
+            154 LOAD_CONST               9 (b'\xc0')
+            156 INPLACE_ADD
+            158 STORE_FAST               1 (partial_packet)
+            160 JUMP_ABSOLUTE          240
+
+ 98     >>  162 LOAD_FAST                5 (b)
+            164 LOAD_CONST              12 (b'\xdd')
+            166 COMPARE_OP               2 (==)
+            168 POP_JUMP_IF_FALSE      180
+
+ 99         170 LOAD_FAST                1 (partial_packet)
+            172 LOAD_CONST              13 (b'\xdb')
+            174 INPLACE_ADD
+            176 STORE_FAST               1 (partial_packet)
+            178 JUMP_ABSOLUTE          240
+
+101     >>  180 LOAD_GLOBAL              2 (FatalError)
+            182 LOAD_CONST              14 ('Invalid SLIP escape (%r%r)')
+            184 LOAD_CONST              13 (b'\xdb')
+            186 LOAD_FAST                5 (b)
+            188 BUILD_TUPLE              2
+            190 BINARY_MODULO
+            192 CALL_FUNCTION            1
+            194 RAISE_VARARGS            1
+            196 JUMP_ABSOLUTE           74
+
+102     >>  198 LOAD_FAST                5 (b)
+            200 LOAD_CONST              13 (b'\xdb')
+            202 COMPARE_OP               2 (==)
+            204 POP_JUMP_IF_FALSE      212
+
+103         206 LOAD_CONST              15 (True)
+            208 STORE_FAST               2 (in_escape)
+            210 JUMP_ABSOLUTE           74
+
+104     >>  212 LOAD_FAST                5 (b)
+            214 LOAD_CONST               9 (b'\xc0')
+            216 COMPARE_OP               2 (==)
+            218 POP_JUMP_IF_FALSE      232
+
+105         220 LOAD_FAST                1 (partial_packet)
+            222 YIELD_VALUE
+            224 POP_TOP
+
+106         226 LOAD_CONST               1 (None)
+            228 STORE_FAST               1 (partial_packet)
+            230 JUMP_ABSOLUTE           74
+
+108     >>  232 LOAD_FAST                1 (partial_packet)
+            234 LOAD_FAST                5 (b)
+            236 INPLACE_ADD
+            238 STORE_FAST               1 (partial_packet)
+        >>  240 JUMP_ABSOLUTE           74
+        >>  242 JUMP_ABSOLUTE            8
+            244 LOAD_CONST               1 (None)
+            246 RETURN_VALUE

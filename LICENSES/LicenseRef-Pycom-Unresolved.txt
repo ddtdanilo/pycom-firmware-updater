@@ -1,0 +1,11 @@
+Unresolved rights notice for historical Pycom-derived research references.
+
+This LicenseRef identifies an unresolved licensing status; it is not a license
+grant or permission to use, modify, redistribute, or relicense the original work.
+Original rights remain with their respective holders. Public availability and
+decompilation do not establish a redistribution basis.
+
+The references are published at the repository maintainer's explicit request for
+static research, with provenance and credential redactions. They are excluded
+from the community MIT grant and must not be imported into runtime code without
+a separate recorded rights and validation decision. See LICENSE.md and ADR 0001.

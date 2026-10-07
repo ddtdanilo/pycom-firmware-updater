@@ -1,0 +1,22 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: LoadingSpin.py
+from PyQt4.QtCore import QSize
+from PyQt4.QtGui import QMovie, QLabel
+
+class LoadingSpin(QLabel):
+
+    def __init__(self, img_path):
+        super(self.__class__, self).__init__()
+        movie = QMovie(img_path + '/spinner.gif')
+        movie.setScaledSize(QSize(23, 23))
+        movie.setSpeed(200)
+        self.setMovie(movie)
+        movie.start()
+        return

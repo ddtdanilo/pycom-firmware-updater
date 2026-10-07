@@ -1,0 +1,946 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: FetchFiles
+  1:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (('BytesIO',))
+               6 IMPORT_NAME          (io)
+               9 IMPORT_FROM          (BytesIO)
+              12 STORE_NAME           (BytesIO)
+              15 POP_TOP
+
+  2:          16 LOAD_CONST           (-1)
+              19 LOAD_CONST           (None)
+              22 IMPORT_NAME          (json)
+              25 STORE_NAME           (json)
+              28 LOAD_CONST           (-1)
+              31 LOAD_CONST           (None)
+              34 IMPORT_NAME          (requests)
+              37 STORE_NAME           (requests)
+              40 LOAD_CONST           (-1)
+              43 LOAD_CONST           (None)
+              46 IMPORT_NAME          (binascii)
+              49 STORE_NAME           (binascii)
+
+  3:          52 LOAD_CONST           (-1)
+              55 LOAD_CONST           (('HTTPBasicAuth',))
+              58 IMPORT_NAME          (requests.auth)
+              61 IMPORT_FROM          (HTTPBasicAuth)
+              64 STORE_NAME           (HTTPBasicAuth)
+              67 POP_TOP
+
+  5:          68 LOAD_CONST           (-1)
+              71 LOAD_CONST           (('RunInWorker',))
+              74 IMPORT_NAME          (RunInWorker)
+              77 IMPORT_FROM          (RunInWorker)
+              80 STORE_NAME           (RunInWorker)
+              83 POP_TOP
+
+  6:          84 LOAD_CONST           (-1)
+              87 LOAD_CONST           (('print_exception', 'detectOsFamily', 'print_debug', 'calc_int_version'))
+              90 IMPORT_NAME          (misc)
+              93 IMPORT_FROM          (print_exception)
+              96 STORE_NAME           (print_exception)
+              99 IMPORT_FROM          (detectOsFamily)
+             102 STORE_NAME           (detectOsFamily)
+             105 IMPORT_FROM          (print_debug)
+             108 STORE_NAME           (print_debug)
+             111 IMPORT_FROM          (calc_int_version)
+             114 STORE_NAME           (calc_int_version)
+             117 POP_TOP
+
+  7:         118 LOAD_CONST           (-1)
+             121 LOAD_CONST           (('MAX_TIMEOUT', 'SERVER_URL', 'LIST_TYPE', 'UPDATER_TYPE', 'SIGFOX_CLIENT_NAME', 'TOOL_VERSION', 'AUTH_PWD', 'LICENSE_TYPES', 'LICENSE_URL'))
+             124 IMPORT_NAME          (settings)
+             127 IMPORT_FROM          (MAX_TIMEOUT)
+             130 STORE_NAME           (MAX_TIMEOUT)
+             133 IMPORT_FROM          (SERVER_URL)
+             136 STORE_NAME           (SERVER_URL)
+             139 IMPORT_FROM          (LIST_TYPE)
+             142 STORE_NAME           (LIST_TYPE)
+             145 IMPORT_FROM          (UPDATER_TYPE)
+             148 STORE_NAME           (UPDATER_TYPE)
+             151 IMPORT_FROM          (SIGFOX_CLIENT_NAME)
+             154 STORE_NAME           (SIGFOX_CLIENT_NAME)
+             157 IMPORT_FROM          (TOOL_VERSION)
+             160 STORE_NAME           (TOOL_VERSION)
+             163 IMPORT_FROM          (AUTH_PWD)
+             166 STORE_NAME           (AUTH_PWD)
+             169 IMPORT_FROM          (LICENSE_TYPES)
+             172 STORE_NAME           (LICENSE_TYPES)
+             175 IMPORT_FROM          (LICENSE_URL)
+             178 STORE_NAME           (LICENSE_URL)
+             181 POP_TOP
+
+ 11:         182 LOAD_CONST           ("FetchFiles")
+             185 LOAD_NAME            (object)
+             188 BUILD_TUPLE          1
+             191 LOAD_CONST           (<Code2 code object FetchFiles at <address omitted>, file FetchFiles.py>, line 11)
+             194 MAKE_FUNCTION        (0 default parameters)
+             197 CALL_FUNCTION        (0 positional, 0 named)
+             200 BUILD_CLASS
+             201 STORE_NAME           (FetchFiles)
+             204 LOAD_CONST           (None)
+             207 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles
+ 11:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+ 13:           6 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file FetchFiles.py>, line 13)
+               9 MAKE_FUNCTION        (0 default parameters)
+              12 STORE_NAME           (__init__)
+
+ 17:          15 LOAD_CONST           (<Code2 code object add_timeout at <address omitted>, file FetchFiles.py>, line 17)
+              18 MAKE_FUNCTION        (0 default parameters)
+              21 STORE_NAME           (add_timeout)
+
+ 23:          24 LOAD_CONST           (<Code2 code object get_timeout at <address omitted>, file FetchFiles.py>, line 23)
+              27 MAKE_FUNCTION        (0 default parameters)
+              30 STORE_NAME           (get_timeout)
+
+ 26:          33 LOAD_CONST           (None)
+              36 LOAD_CONST           (<Code2 code object __product_to_key at <address omitted>, file FetchFiles.py>, line 26)
+              39 MAKE_FUNCTION        (1 default parameters)
+              42 STORE_NAME           (_FetchFiles__product_to_key)
+
+ 32:          45 LOAD_CONST           (<Code2 code object local_file_worker at <address omitted>, file FetchFiles.py>, line 32)
+              48 MAKE_FUNCTION        (0 default parameters)
+              51 STORE_NAME           (local_file_worker)
+
+ 41:          54 LOAD_CONST           (<Code2 code object get_file_worker at <address omitted>, file FetchFiles.py>, line 41)
+              57 MAKE_FUNCTION        (0 default parameters)
+              60 STORE_NAME           (get_file_worker)
+
+ 67:          63 LOAD_CONST           (<Code2 code object get_license_worker at <address omitted>, file FetchFiles.py>, line 67)
+              66 MAKE_FUNCTION        (0 default parameters)
+              69 STORE_NAME           (get_license_worker)
+
+ 84:          72 LOAD_CONST           (<Code2 code object get_metadata_worker at <address omitted>, file FetchFiles.py>, line 84)
+              75 MAKE_FUNCTION        (0 default parameters)
+              78 STORE_NAME           (get_metadata_worker)
+
+100:          81 LOAD_CONST           (<Code2 code object get_local_file at <address omitted>, file FetchFiles.py>, line 100)
+              84 MAKE_FUNCTION        (0 default parameters)
+              87 STORE_NAME           (get_local_file)
+
+103:          90 LOAD_CONST           (<Code2 code object get_license at <address omitted>, file FetchFiles.py>, line 103)
+              93 MAKE_FUNCTION        (0 default parameters)
+              96 STORE_NAME           (get_license)
+
+106:          99 LOAD_CONST           (<Code2 code object get_metadata at <address omitted>, file FetchFiles.py>, line 106)
+             102 MAKE_FUNCTION        (0 default parameters)
+             105 STORE_NAME           (get_metadata)
+
+109:         108 LOAD_CONST           (<Code2 code object get_file at <address omitted>, file FetchFiles.py>, line 109)
+             111 MAKE_FUNCTION        (0 default parameters)
+             114 STORE_NAME           (get_file)
+
+124:         117 LOAD_CONST           (None)
+             120 LOAD_CONST           (None)
+             123 LOAD_CONST           (None)
+             126 LOAD_CONST           (None)
+             129 LOAD_CONST           (<Code2 code object find_new_firmware at <address omitted>, file FetchFiles.py>, line 124)
+             132 MAKE_FUNCTION        (4 default parameters)
+             135 STORE_NAME           (find_new_firmware)
+
+134:         138 LOAD_CONST           (None)
+             141 LOAD_CONST           (None)
+             144 LOAD_CONST           (None)
+             147 LOAD_CONST           (None)
+             150 LOAD_CONST           (None)
+             153 LOAD_CONST           (None)
+             156 LOAD_CONST           (<Code2 code object download_new_firmware at <address omitted>, file FetchFiles.py>, line 134)
+             159 MAKE_FUNCTION        (6 default parameters)
+             162 STORE_NAME           (download_new_firmware)
+
+141:         165 LOAD_CONST           (None)
+             168 LOAD_CONST           (<Code2 code object load_license_text at <address omitted>, file FetchFiles.py>, line 141)
+             171 MAKE_FUNCTION        (1 default parameters)
+             174 STORE_NAME           (load_license_text)
+
+144:         177 LOAD_CONST           (<Code2 code object load_firmware_file at <address omitted>, file FetchFiles.py>, line 144)
+             180 MAKE_FUNCTION        (0 default parameters)
+             183 STORE_NAME           (load_firmware_file)
+
+147:         186 LOAD_CONST           (<Code2 code object fetch_frequency_list at <address omitted>, file FetchFiles.py>, line 147)
+             189 MAKE_FUNCTION        (0 default parameters)
+             192 STORE_NAME           (fetch_frequency_list)
+
+154:         195 LOAD_CONST           (<Code2 code object fetch_updater_version at <address omitted>, file FetchFiles.py>, line 154)
+             198 MAKE_FUNCTION        (0 default parameters)
+             201 STORE_NAME           (fetch_updater_version)
+
+159:         204 LOAD_CONST           (<Code2 code object fetch_metadata at <address omitted>, file FetchFiles.py>, line 159)
+             207 MAKE_FUNCTION        (0 default parameters)
+             210 STORE_NAME           (fetch_metadata)
+             213 LOAD_LOCALS
+             214 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.__init__
+ 14:           0 LOAD_GLOBAL          (RunInWorker)
+               3 CALL_FUNCTION        (0 positional, 0 named)
+               6 LOAD_FAST            (self)
+               9 STORE_ATTR           (_FetchFiles__worker)
+
+ 15:          12 LOAD_CONST           (5)
+              15 LOAD_FAST            (self)
+              18 STORE_ATTR           (_FetchFiles__timeout)
+              21 LOAD_CONST           (None)
+              24 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.add_timeout
+ 18:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_FetchFiles__timeout)
+               6 LOAD_FAST            (timeout)
+               9 BINARY_ADD
+              10 LOAD_GLOBAL          (MAX_TIMEOUT)
+              13 COMPARE_OP           (<=)
+              16 POP_JUMP_IF_FALSE    (to 38)
+
+ 19:          19 LOAD_FAST            (self)
+              22 LOAD_ATTR            (_FetchFiles__timeout)
+              25 LOAD_FAST            (timeout)
+              28 BINARY_ADD
+              29 LOAD_FAST            (self)
+              32 STORE_ATTR           (_FetchFiles__timeout)
+              35 JUMP_FORWARD         (to 47)
+
+ 21:     >>   38 LOAD_GLOBAL          (MAX_TIMEOUT)
+              41 LOAD_FAST            (self)
+              44 STORE_ATTR           (_FetchFiles__timeout)
+         >>   47 LOAD_CONST           (None)
+              50 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_timeout
+ 24:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_FetchFiles__timeout)
+               6 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.__product_to_key
+ 27:           0 LOAD_CONST           ("%s.%s with esp32")
+               3 LOAD_FAST            (product)
+               6 LOAD_FAST            (product)
+               9 BUILD_TUPLE          2
+              12 BINARY_MODULO
+              13 STORE_FAST           (key)
+
+ 28:          16 LOAD_FAST            (product)
+              19 LOAD_CONST           ("lopy")
+              22 COMPARE_OP           (==)
+              25 POP_JUMP_IF_TRUE     (to 52)
+              28 LOAD_FAST            (product)
+              31 LOAD_CONST           ("fipy")
+              34 COMPARE_OP           (==)
+              37 POP_JUMP_IF_TRUE     (to 52)
+              40 LOAD_FAST            (product)
+              43 LOAD_CONST           ("lopy4")
+              46 COMPARE_OP           (==)
+              49 POP_JUMP_IF_FALSE    (to 75)
+
+ 29:     >>   52 LOAD_FAST            (key)
+              55 LOAD_CONST           (".")
+              58 LOAD_GLOBAL          (str)
+              61 LOAD_FAST            (frequency)
+              64 CALL_FUNCTION        (1 positional, 0 named)
+              67 BINARY_ADD
+              68 INPLACE_ADD
+              69 STORE_FAST           (key)
+              72 JUMP_FORWARD         (to 75)
+
+ 30:     >>   75 LOAD_FAST            (key)
+              78 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.local_file_worker
+ 33:           0 SETUP_EXCEPT         (to 48)
+
+ 34:           3 LOAD_GLOBAL          (open)
+               6 LOAD_FAST            (filename)
+               9 LOAD_CONST           ("rb")
+              12 CALL_FUNCTION        (2 positional, 0 named)
+              15 STORE_FAST           (f)
+
+ 35:          18 LOAD_FAST            (f)
+              21 LOAD_ATTR            (read)
+              24 CALL_FUNCTION        (0 positional, 0 named)
+              27 STORE_FAST           (content)
+
+ 36:          30 LOAD_FAST            (f)
+              33 LOAD_ATTR            (close)
+              36 CALL_FUNCTION        (0 positional, 0 named)
+              39 POP_TOP
+
+ 37:          40 LOAD_FAST            (content)
+              43 RETURN_VALUE
+              44 POP_BLOCK
+              45 JUMP_FORWARD         (to 77)
+
+ 38:     >>   48 DUP_TOP
+              49 LOAD_GLOBAL          (Exception)
+              52 COMPARE_OP           (exception-match)
+              55 POP_JUMP_IF_FALSE    (to 76)
+              58 POP_TOP
+              59 STORE_FAST           (e)
+              62 POP_TOP
+
+ 39:          63 LOAD_GLOBAL          (print_exception)
+              66 LOAD_FAST            (e)
+              69 CALL_FUNCTION        (1 positional, 0 named)
+              72 POP_TOP
+              73 JUMP_FORWARD         (to 77)
+         >>   76 END_FINALLY
+         >>   77 LOAD_CONST           (None)
+              80 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_file_worker
+ 42:           0 SETUP_EXCEPT         (to 235)
+
+ 43:           3 LOAD_FAST            (params)
+               6 LOAD_ATTR            (get)
+               9 LOAD_CONST           ("type")
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 LOAD_GLOBAL          (LICENSE_TYPES)
+              18 COMPARE_OP           (in)
+              21 POP_JUMP_IF_FALSE    (to 112)
+              24 LOAD_FAST            (params)
+              27 LOAD_ATTR            (get)
+              30 LOAD_CONST           ("redirect")
+              33 CALL_FUNCTION        (1 positional, 0 named)
+              36 LOAD_CONST           ("true")
+              39 COMPARE_OP           (==)
+              42 POP_JUMP_IF_FALSE    (to 112)
+
+ 44:          45 LOAD_GLOBAL          (requests)
+              48 LOAD_ATTR            (get)
+              51 LOAD_GLOBAL          (SERVER_URL)
+              54 LOAD_CONST           ("/findupgrade")
+              57 BINARY_ADD
+              58 LOAD_CONST           ("auth")
+
+ 45:          61 LOAD_GLOBAL          (HTTPBasicAuth)
+              64 LOAD_GLOBAL          (SIGFOX_CLIENT_NAME)
+              67 LOAD_GLOBAL          (binascii)
+              70 LOAD_ATTR            (a2b_base64)
+              73 LOAD_GLOBAL          (AUTH_PWD)
+              76 CALL_FUNCTION        (1 positional, 0 named)
+              79 CALL_FUNCTION        (2 positional, 0 named)
+              82 LOAD_CONST           ("params")
+
+ 46:          85 LOAD_FAST            (params)
+              88 LOAD_CONST           ("allow_redirects")
+
+ 47:          91 LOAD_GLOBAL          (True)
+              94 LOAD_CONST           ("timeout")
+
+ 48:          97 LOAD_FAST            (self)
+             100 LOAD_ATTR            (_FetchFiles__timeout)
+             103 CALL_FUNCTION        (1 positional, 4 named)
+             106 STORE_FAST           (r)
+             109 JUMP_FORWARD         (to 152)
+
+ 51:     >>  112 LOAD_GLOBAL          (requests)
+             115 LOAD_ATTR            (get)
+             118 LOAD_GLOBAL          (SERVER_URL)
+             121 LOAD_CONST           ("/findupgrade")
+             124 BINARY_ADD
+             125 LOAD_CONST           ("params")
+
+ 52:         128 LOAD_FAST            (params)
+             131 LOAD_CONST           ("allow_redirects")
+
+ 53:         134 LOAD_GLOBAL          (True)
+             137 LOAD_CONST           ("timeout")
+
+ 54:         140 LOAD_FAST            (self)
+             143 LOAD_ATTR            (_FetchFiles__timeout)
+             146 CALL_FUNCTION        (1 positional, 3 named)
+             149 STORE_FAST           (r)
+
+ 57:     >>  152 LOAD_FAST            (r)
+             155 LOAD_ATTR            (status_code)
+             158 LOAD_CONST           (200)
+             161 COMPARE_OP           (!=)
+             164 POP_JUMP_IF_FALSE    (to 224)
+             167 LOAD_FAST            (r)
+             170 LOAD_ATTR            (status_code)
+             173 LOAD_CONST           (302)
+             176 COMPARE_OP           (!=)
+             179 POP_JUMP_IF_FALSE    (to 224)
+             182 LOAD_FAST            (r)
+             185 LOAD_ATTR            (status_code)
+             188 LOAD_CONST           (412)
+             191 COMPARE_OP           (!=)
+             194 POP_JUMP_IF_FALSE    (to 224)
+
+ 58:         197 LOAD_CONST           ('{"error_code":"')
+             200 LOAD_GLOBAL          (str)
+             203 LOAD_FAST            (r)
+             206 LOAD_ATTR            (status_code)
+             209 CALL_FUNCTION        (1 positional, 0 named)
+             212 BINARY_ADD
+             213 LOAD_CONST           ('"}')
+             216 BINARY_ADD
+             217 STORE_FAST           (ret)
+
+ 59:         220 LOAD_FAST            (ret)
+             223 RETURN_VALUE
+
+ 61:     >>  224 LOAD_FAST            (r)
+             227 LOAD_ATTR            (content)
+             230 RETURN_VALUE
+             231 POP_BLOCK
+             232 JUMP_FORWARD         (to 271)
+
+ 62:     >>  235 DUP_TOP
+             236 LOAD_GLOBAL          (Exception)
+             239 COMPARE_OP           (exception-match)
+             242 POP_JUMP_IF_FALSE    (to 270)
+             245 POP_TOP
+             246 STORE_FAST           (e)
+             249 POP_TOP
+
+ 63:         250 LOAD_GLOBAL          (print_exception)
+             253 LOAD_FAST            (e)
+             256 CALL_FUNCTION        (1 positional, 0 named)
+             259 POP_TOP
+
+ 64:         260 LOAD_CONST           ('{"error_code":" -1 "}')
+             263 STORE_FAST           (ret)
+
+ 65:         266 LOAD_FAST            (ret)
+             269 RETURN_VALUE
+             270 END_FINALLY
+         >>  271 LOAD_CONST           (None)
+             274 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_license_worker
+ 68:           0 SETUP_EXCEPT         (to 137)
+
+ 69:           3 LOAD_GLOBAL          (requests)
+               6 LOAD_ATTR            (get)
+               9 LOAD_GLOBAL          (LICENSE_URL)
+              12 LOAD_CONST           ("params")
+
+ 70:          15 LOAD_FAST            (params)
+              18 LOAD_CONST           ("allow_redirects")
+
+ 71:          21 LOAD_GLOBAL          (True)
+              24 LOAD_CONST           ("timeout")
+
+ 72:          27 LOAD_FAST            (self)
+              30 LOAD_ATTR            (_FetchFiles__timeout)
+              33 CALL_FUNCTION        (1 positional, 3 named)
+              36 STORE_FAST           (r)
+
+ 74:          39 LOAD_FAST            (r)
+              42 LOAD_ATTR            (status_code)
+              45 LOAD_CONST           (200)
+              48 COMPARE_OP           (!=)
+              51 POP_JUMP_IF_FALSE    (to 126)
+              54 LOAD_FAST            (r)
+              57 LOAD_ATTR            (status_code)
+              60 LOAD_CONST           (302)
+              63 COMPARE_OP           (!=)
+              66 POP_JUMP_IF_FALSE    (to 126)
+              69 LOAD_FAST            (r)
+              72 LOAD_ATTR            (status_code)
+              75 LOAD_CONST           (412)
+              78 COMPARE_OP           (!=)
+              81 POP_JUMP_IF_FALSE    (to 126)
+              84 LOAD_FAST            (r)
+              87 LOAD_ATTR            (status_code)
+              90 LOAD_CONST           (404)
+              93 COMPARE_OP           (!=)
+              96 POP_JUMP_IF_FALSE    (to 126)
+
+ 75:          99 LOAD_CONST           ('{"error_code":"')
+             102 LOAD_GLOBAL          (str)
+             105 LOAD_FAST            (r)
+             108 LOAD_ATTR            (status_code)
+             111 CALL_FUNCTION        (1 positional, 0 named)
+             114 BINARY_ADD
+             115 LOAD_CONST           ('"}')
+             118 BINARY_ADD
+             119 STORE_FAST           (ret)
+
+ 76:         122 LOAD_FAST            (ret)
+             125 RETURN_VALUE
+
+ 78:     >>  126 LOAD_FAST            (r)
+             129 LOAD_ATTR            (content)
+             132 RETURN_VALUE
+             133 POP_BLOCK
+             134 JUMP_FORWARD         (to 173)
+
+ 79:     >>  137 DUP_TOP
+             138 LOAD_GLOBAL          (Exception)
+             141 COMPARE_OP           (exception-match)
+             144 POP_JUMP_IF_FALSE    (to 172)
+             147 POP_TOP
+             148 STORE_FAST           (e)
+             151 POP_TOP
+
+ 80:         152 LOAD_GLOBAL          (print_exception)
+             155 LOAD_FAST            (e)
+             158 CALL_FUNCTION        (1 positional, 0 named)
+             161 POP_TOP
+
+ 81:         162 LOAD_CONST           ('{"error_code":" -1 "}')
+             165 STORE_FAST           (ret)
+
+ 82:         168 LOAD_FAST            (ret)
+             171 RETURN_VALUE
+         >>  172 END_FINALLY
+         >>  173 LOAD_CONST           (None)
+             176 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_metadata_worker
+ 85:           0 SETUP_EXCEPT         (to 108)
+
+ 86:           3 LOAD_GLOBAL          (requests)
+               6 LOAD_ATTR            (get)
+               9 LOAD_GLOBAL          (SERVER_URL)
+              12 LOAD_CONST           ("/metadata.json")
+              15 BINARY_ADD
+              16 LOAD_CONST           ("auth")
+
+ 87:          19 LOAD_GLOBAL          (HTTPBasicAuth)
+              22 LOAD_GLOBAL          (SIGFOX_CLIENT_NAME)
+              25 LOAD_GLOBAL          (binascii)
+              28 LOAD_ATTR            (a2b_base64)
+              31 LOAD_GLOBAL          (AUTH_PWD)
+              34 CALL_FUNCTION        (1 positional, 0 named)
+              37 CALL_FUNCTION        (2 positional, 0 named)
+              40 LOAD_CONST           ("timeout")
+
+ 88:          43 LOAD_FAST            (self)
+              46 LOAD_ATTR            (_FetchFiles__timeout)
+              49 CALL_FUNCTION        (1 positional, 2 named)
+              52 STORE_FAST           (r)
+
+ 90:          55 LOAD_FAST            (r)
+              58 LOAD_ATTR            (status_code)
+              61 LOAD_CONST           (200)
+              64 COMPARE_OP           (!=)
+              67 POP_JUMP_IF_FALSE    (to 97)
+
+ 91:          70 LOAD_CONST           ('{"error_code":"')
+              73 LOAD_GLOBAL          (str)
+              76 LOAD_FAST            (r)
+              79 LOAD_ATTR            (status_code)
+              82 CALL_FUNCTION        (1 positional, 0 named)
+              85 BINARY_ADD
+              86 LOAD_CONST           ('"}')
+              89 BINARY_ADD
+              90 STORE_FAST           (ret)
+
+ 92:          93 LOAD_FAST            (ret)
+              96 RETURN_VALUE
+
+ 94:     >>   97 LOAD_FAST            (r)
+             100 LOAD_ATTR            (content)
+             103 RETURN_VALUE
+             104 POP_BLOCK
+             105 JUMP_FORWARD         (to 144)
+
+ 95:     >>  108 DUP_TOP
+             109 LOAD_GLOBAL          (Exception)
+             112 COMPARE_OP           (exception-match)
+             115 POP_JUMP_IF_FALSE    (to 143)
+             118 POP_TOP
+             119 STORE_FAST           (e)
+             122 POP_TOP
+
+ 96:         123 LOAD_GLOBAL          (print_exception)
+             126 LOAD_FAST            (e)
+             129 CALL_FUNCTION        (1 positional, 0 named)
+             132 POP_TOP
+
+ 97:         133 LOAD_CONST           ('{"error_code":" -1 "}')
+             136 STORE_FAST           (ret)
+
+ 98:         139 LOAD_FAST            (ret)
+             142 RETURN_VALUE
+         >>  143 END_FINALLY
+         >>  144 LOAD_CONST           (None)
+             147 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_local_file
+101:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_FetchFiles__worker)
+               6 LOAD_ATTR            (run)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (local_file_worker)
+              15 LOAD_FAST            (params)
+              18 LOAD_FAST            (callback)
+              21 CALL_FUNCTION        (3 positional, 0 named)
+              24 POP_TOP
+              25 LOAD_CONST           (None)
+              28 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_license
+104:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_FetchFiles__worker)
+               6 LOAD_ATTR            (run)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (get_license_worker)
+              15 LOAD_FAST            (params)
+              18 LOAD_FAST            (callback)
+              21 CALL_FUNCTION        (3 positional, 0 named)
+              24 POP_TOP
+              25 LOAD_CONST           (None)
+              28 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_metadata
+107:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_FetchFiles__worker)
+               6 LOAD_ATTR            (run)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (get_metadata_worker)
+              15 LOAD_FAST            (params)
+              18 LOAD_FAST            (callback)
+              21 CALL_FUNCTION        (3 positional, 0 named)
+              24 POP_TOP
+              25 LOAD_CONST           (None)
+              28 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.get_file
+110:           0 BUILD_MAP            5
+
+111:           3 LOAD_FAST            (key)
+               6 LOAD_CONST           ("key")
+               9 STORE_MAP
+
+112:          10 LOAD_GLOBAL          (str)
+              13 LOAD_FAST            (redirect)
+              16 CALL_FUNCTION        (1 positional, 0 named)
+              19 LOAD_ATTR            (lower)
+              22 CALL_FUNCTION        (0 positional, 0 named)
+              25 LOAD_CONST           ("redirect")
+              28 STORE_MAP
+
+113:          29 LOAD_GLOBAL          (str)
+              32 LOAD_FAST            (fwtype)
+              35 CALL_FUNCTION        (1 positional, 0 named)
+              38 LOAD_CONST           ("type")
+              41 STORE_MAP
+
+114:          42 LOAD_GLOBAL          (str)
+              45 LOAD_FAST            (strict)
+              48 CALL_FUNCTION        (1 positional, 0 named)
+              51 LOAD_ATTR            (lower)
+              54 CALL_FUNCTION        (0 positional, 0 named)
+              57 LOAD_CONST           ("strict")
+              60 STORE_MAP
+
+115:          61 LOAD_GLOBAL          (calc_int_version)
+              64 LOAD_GLOBAL          (TOOL_VERSION)
+              67 CALL_FUNCTION        (1 positional, 0 named)
+              70 LOAD_CONST           ("tool_version")
+              73 STORE_MAP
+              74 STORE_FAST           (params)
+
+117:          77 LOAD_FAST            (version)
+              80 LOAD_CONST           (None)
+              83 COMPARE_OP           (is-not)
+              86 POP_JUMP_IF_FALSE    (to 102)
+
+118:          89 LOAD_FAST            (version)
+              92 LOAD_FAST            (params)
+              95 LOAD_CONST           ("version")
+              98 STORE_SUBSCR
+              99 JUMP_FORWARD         (to 102)
+
+120:     >>  102 LOAD_GLOBAL          (print_debug)
+             105 LOAD_CONST           ("Get_file params: {}")
+             108 LOAD_ATTR            (format)
+             111 LOAD_FAST            (params)
+             114 CALL_FUNCTION        (1 positional, 0 named)
+             117 CALL_FUNCTION        (1 positional, 0 named)
+             120 POP_TOP
+
+122:         121 LOAD_FAST            (self)
+             124 LOAD_ATTR            (_FetchFiles__worker)
+             127 LOAD_ATTR            (run)
+             130 LOAD_FAST            (self)
+             133 LOAD_ATTR            (get_file_worker)
+             136 LOAD_FAST            (params)
+             139 LOAD_FAST            (callback)
+             142 CALL_FUNCTION        (3 positional, 0 named)
+             145 POP_TOP
+             146 LOAD_CONST           (None)
+             149 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.find_new_firmware
+125:           0 LOAD_DEREF           (key)
+               3 LOAD_CONST           (None)
+               6 COMPARE_OP           (is)
+               9 POP_JUMP_IF_FALSE    (to 78)
+              12 LOAD_FAST            (product)
+              15 LOAD_CONST           (None)
+              18 COMPARE_OP           (is-not)
+              21 POP_JUMP_IF_FALSE    (to 78)
+
+126:          24 LOAD_FAST            (product)
+              27 LOAD_CONST           ("esp32")
+              30 COMPARE_OP           (==)
+              33 POP_JUMP_IF_FALSE    (to 45)
+
+127:          36 LOAD_CONST           ("esp32")
+              39 STORE_DEREF          (key)
+              42 JUMP_ABSOLUTE        (to 78)
+
+129:     >>   45 LOAD_FAST            (product)
+              48 LOAD_ATTR            (lower)
+              51 CALL_FUNCTION        (0 positional, 0 named)
+              54 STORE_FAST           (product)
+
+130:          57 LOAD_FAST            (self)
+              60 LOAD_ATTR            (_FetchFiles__product_to_key)
+              63 LOAD_FAST            (product)
+              66 LOAD_FAST            (frequency)
+              69 CALL_FUNCTION        (2 positional, 0 named)
+              72 STORE_DEREF          (key)
+              75 JUMP_FORWARD         (to 78)
+
+131:     >>   78 LOAD_FAST            (self)
+              81 LOAD_ATTR            (get_file)
+              84 LOAD_DEREF           (key)
+              87 LOAD_GLOBAL          (False)
+              90 LOAD_DEREF           (fwtype)
+              93 LOAD_FAST            (version)
+              96 LOAD_CONST           (None)
+              99 COMPARE_OP           (is-not)
+             102 LOAD_FAST            (version)
+
+132:         105 LOAD_CLOSURE         (callback)
+             108 LOAD_CLOSURE         (fwtype)
+             111 LOAD_CLOSURE         (key)
+             114 BUILD_TUPLE          3
+             117 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 132)
+             120 MAKE_CLOSURE         0
+             123 CALL_FUNCTION        (6 positional, 0 named)
+             126 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.find_new_firmware.<lambda>
+132:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (json)
+               6 LOAD_ATTR            (loads)
+               9 LOAD_FAST            (res)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 LOAD_DEREF           (key)
+              18 LOAD_CONST           ("esp32")
+              21 COMPARE_OP           (==)
+              24 POP_JUMP_IF_FALSE    (to 33)
+              27 LOAD_DEREF           (fwtype)
+              30 JUMP_FORWARD         (to 36)
+         >>   33 LOAD_DEREF           (key)
+         >>   36 CALL_FUNCTION        (2 positional, 0 named)
+              39 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.download_new_firmware
+135:           0 LOAD_FAST            (key)
+               3 POP_JUMP_IF_TRUE     (to 39)
+
+136:           6 LOAD_FAST            (product)
+               9 LOAD_ATTR            (lower)
+              12 CALL_FUNCTION        (0 positional, 0 named)
+              15 STORE_FAST           (product)
+
+137:          18 LOAD_FAST            (self)
+              21 LOAD_ATTR            (_FetchFiles__product_to_key)
+              24 LOAD_FAST            (product)
+              27 LOAD_FAST            (frequency)
+              30 CALL_FUNCTION        (2 positional, 0 named)
+              33 STORE_FAST           (key)
+              36 JUMP_FORWARD         (to 39)
+
+138:     >>   39 LOAD_FAST            (self)
+              42 LOAD_ATTR            (get_file)
+              45 LOAD_FAST            (key)
+              48 LOAD_GLOBAL          (True)
+              51 LOAD_FAST            (fwtype)
+              54 LOAD_FAST            (version)
+              57 LOAD_CONST           (None)
+              60 COMPARE_OP           (is-not)
+              63 POP_JUMP_IF_FALSE    (to 72)
+              66 LOAD_GLOBAL          (True)
+              69 JUMP_FORWARD         (to 75)
+         >>   72 LOAD_GLOBAL          (False)
+         >>   75 LOAD_FAST            (version)
+              78 LOAD_CLOSURE         (callback)
+              81 BUILD_TUPLE          1
+              84 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 138)
+              87 MAKE_CLOSURE         0
+              90 CALL_FUNCTION        (6 positional, 0 named)
+              93 STORE_FAST           (firmware_file)
+
+139:          96 LOAD_FAST            (firmware_file)
+              99 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.download_new_firmware.<lambda>
+138:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (BytesIO)
+               6 LOAD_FAST            (res)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.load_license_text
+142:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (get_license)
+               6 LOAD_FAST            (params)
+               9 LOAD_CLOSURE         (callback)
+              12 BUILD_TUPLE          1
+              15 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 142)
+              18 MAKE_CLOSURE         0
+              21 CALL_FUNCTION        (2 positional, 0 named)
+              24 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.load_license_text.<lambda>
+142:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (str)
+               6 LOAD_FAST            (res)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.load_firmware_file
+145:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (get_local_file)
+               6 LOAD_FAST            (filename)
+               9 LOAD_CLOSURE         (callback)
+              12 BUILD_TUPLE          1
+              15 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 145)
+              18 MAKE_CLOSURE         0
+              21 CALL_FUNCTION        (2 positional, 0 named)
+              24 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.load_firmware_file.<lambda>
+145:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (BytesIO)
+               6 LOAD_FAST            (res)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_frequency_list
+148:           0 LOAD_FAST            (product)
+               3 LOAD_ATTR            (lower)
+               6 CALL_FUNCTION        (0 positional, 0 named)
+               9 STORE_FAST           (product)
+
+149:          12 LOAD_FAST            (product)
+              15 LOAD_CONST           ("lopy")
+              18 COMPARE_OP           (==)
+              21 POP_JUMP_IF_FALSE    (to 65)
+
+150:          24 LOAD_FAST            (self)
+              27 LOAD_ATTR            (get_file)
+              30 LOAD_FAST            (product)
+              33 LOAD_CONST           (".regionlist")
+              36 BINARY_ADD
+              37 LOAD_GLOBAL          (True)
+              40 LOAD_GLOBAL          (LIST_TYPE)
+              43 LOAD_GLOBAL          (False)
+              46 LOAD_CONST           (None)
+              49 LOAD_CLOSURE         (callback)
+              52 BUILD_TUPLE          1
+              55 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 150)
+              58 MAKE_CLOSURE         0
+              61 CALL_FUNCTION        (6 positional, 0 named)
+              64 RETURN_VALUE
+
+151:     >>   65 LOAD_FAST            (product)
+              68 LOAD_CONST           ("sipy")
+              71 COMPARE_OP           (==)
+              74 POP_JUMP_IF_FALSE    (to 118)
+
+152:          77 LOAD_FAST            (self)
+              80 LOAD_ATTR            (get_file)
+              83 LOAD_FAST            (product)
+              86 LOAD_CONST           (".freqlist")
+              89 BINARY_ADD
+              90 LOAD_GLOBAL          (True)
+              93 LOAD_GLOBAL          (LIST_TYPE)
+              96 LOAD_GLOBAL          (False)
+              99 LOAD_CONST           (None)
+             102 LOAD_CLOSURE         (callback)
+             105 BUILD_TUPLE          1
+             108 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 152)
+             111 MAKE_CLOSURE         0
+             114 CALL_FUNCTION        (6 positional, 0 named)
+             117 RETURN_VALUE
+         >>  118 LOAD_CONST           (None)
+             121 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_frequency_list.<lambda>
+150:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (json)
+               6 LOAD_ATTR            (loads)
+               9 LOAD_FAST            (res)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_frequency_list.<lambda>
+152:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (json)
+               6 LOAD_ATTR            (loads)
+               9 LOAD_FAST            (res)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_updater_version
+155:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (get_file)
+               6 LOAD_CONST           ("pycom-firmware-updater.")
+               9 LOAD_GLOBAL          (detectOsFamily)
+              12 CALL_FUNCTION        (0 positional, 0 named)
+              15 BINARY_ADD
+
+156:          16 LOAD_GLOBAL          (False)
+              19 LOAD_FAST            (updater_type)
+              22 LOAD_GLOBAL          (UPDATER_TYPE)
+              25 LOAD_CONST           ("internal")
+              28 COMPARE_OP           (==)
+              31 LOAD_CONST           (None)
+              34 LOAD_CLOSURE         (callback)
+              37 BUILD_TUPLE          1
+              40 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 156)
+              43 MAKE_CLOSURE         0
+              46 CALL_FUNCTION        (6 positional, 0 named)
+              49 POP_TOP
+              50 LOAD_CONST           (None)
+              53 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_updater_version.<lambda>
+156:           0 LOAD_DEREF           (callback)
+               3 LOAD_GLOBAL          (json)
+               6 LOAD_ATTR            (loads)
+               9 LOAD_FAST            (res)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_metadata
+160:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (get_metadata)
+               6 BUILD_LIST           0
+               9 LOAD_CLOSURE         (callback)
+              12 BUILD_TUPLE          1
+              15 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file FetchFiles.py>, line 160)
+              18 MAKE_CLOSURE         0
+              21 CALL_FUNCTION        (2 positional, 0 named)
+              24 POP_TOP
+              25 LOAD_CONST           (None)
+              28 RETURN_VALUE
+
+Symbol: FetchFiles.FetchFiles.fetch_metadata.<lambda>
+160:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE

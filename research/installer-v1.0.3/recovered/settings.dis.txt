@@ -1,0 +1,150 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 SETUP_FINALLY           16 (to 18)
+
+  2           2 LOAD_CONST               0 (0)
+              4 LOAD_CONST               1 (('DEBUG',))
+              6 IMPORT_NAME              0 (local_settings)
+              8 IMPORT_FROM              1 (DEBUG)
+             10 STORE_NAME               1 (DEBUG)
+             12 POP_TOP
+             14 POP_BLOCK
+             16 JUMP_FORWARD            22 (to 40)
+
+  3     >>   18 DUP_TOP
+             20 LOAD_NAME                2 (Exception)
+             22 JUMP_IF_NOT_EXC_MATCH    38
+             24 POP_TOP
+             26 POP_TOP
+             28 POP_TOP
+
+  4          30 LOAD_CONST               2 (False)
+             32 STORE_NAME               1 (DEBUG)
+             34 POP_EXCEPT
+             36 JUMP_FORWARD             2 (to 40)
+        >>   38 RERAISE
+
+  6     >>   40 SETUP_FINALLY           16 (to 58)
+
+  7          42 LOAD_CONST               0 (0)
+             44 LOAD_CONST               3 (('ENABLE_SSL',))
+             46 IMPORT_NAME              0 (local_settings)
+             48 IMPORT_FROM              3 (ENABLE_SSL)
+             50 STORE_NAME               3 (ENABLE_SSL)
+             52 POP_TOP
+             54 POP_BLOCK
+             56 JUMP_FORWARD            22 (to 80)
+
+  8     >>   58 DUP_TOP
+             60 LOAD_NAME                2 (Exception)
+             62 JUMP_IF_NOT_EXC_MATCH    78
+             64 POP_TOP
+             66 POP_TOP
+             68 POP_TOP
+
+  9          70 LOAD_CONST               4 (True)
+             72 STORE_NAME               3 (ENABLE_SSL)
+             74 POP_EXCEPT
+             76 JUMP_FORWARD             2 (to 80)
+        >>   78 RERAISE
+
+ 11     >>   80 SETUP_FINALLY           16 (to 98)
+
+ 12          82 LOAD_CONST               0 (0)
+             84 LOAD_CONST               5 (('UPDATE_HOSTS',))
+             86 IMPORT_NAME              0 (local_settings)
+             88 IMPORT_FROM              4 (UPDATE_HOSTS)
+             90 STORE_NAME               4 (UPDATE_HOSTS)
+             92 POP_TOP
+             94 POP_BLOCK
+             96 JUMP_FORWARD            22 (to 120)
+
+ 13     >>   98 DUP_TOP
+            100 LOAD_NAME                2 (Exception)
+            102 JUMP_IF_NOT_EXC_MATCH   118
+            104 POP_TOP
+            106 POP_TOP
+            108 POP_TOP
+
+ 14         110 LOAD_CONST               4 (True)
+            112 STORE_NAME               4 (UPDATE_HOSTS)
+            114 POP_EXCEPT
+            116 JUMP_FORWARD             2 (to 120)
+        >>  118 RERAISE
+
+ 16     >>  120 SETUP_FINALLY           16 (to 138)
+
+ 17         122 LOAD_CONST               0 (0)
+            124 LOAD_CONST               6 (('CERT_PEM_USERNAME',))
+            126 IMPORT_NAME              0 (local_settings)
+            128 IMPORT_FROM              5 (CERT_PEM_USERNAME)
+            130 STORE_NAME               5 (CERT_PEM_USERNAME)
+            132 POP_TOP
+            134 POP_BLOCK
+            136 JUMP_FORWARD            22 (to 160)
+
+ 18     >>  138 DUP_TOP
+            140 LOAD_NAME                2 (Exception)
+            142 JUMP_IF_NOT_EXC_MATCH   158
+            144 POP_TOP
+            146 POP_TOP
+            148 POP_TOP
+
+ 19         150 LOAD_CONST               7 ('[REDACTED]')
+            152 STORE_NAME               5 (CERT_PEM_USERNAME)
+            154 POP_EXCEPT
+            156 JUMP_FORWARD             2 (to 160)
+        >>  158 RERAISE
+
+ 21     >>  160 SETUP_FINALLY           16 (to 178)
+
+ 22         162 LOAD_CONST               0 (0)
+            164 LOAD_CONST               8 (('CERT_PEM_PASSWORD',))
+            166 IMPORT_NAME              0 (local_settings)
+            168 IMPORT_FROM              6 (CERT_PEM_PASSWORD)
+            170 STORE_NAME               6 (CERT_PEM_PASSWORD)
+            172 POP_TOP
+            174 POP_BLOCK
+            176 JUMP_FORWARD            22 (to 200)
+
+ 23     >>  178 DUP_TOP
+            180 LOAD_NAME                2 (Exception)
+            182 JUMP_IF_NOT_EXC_MATCH   198
+            184 POP_TOP
+            186 POP_TOP
+            188 POP_TOP
+
+ 24         190 LOAD_CONST               9 ('[REDACTED]')
+            192 STORE_NAME               6 (CERT_PEM_PASSWORD)
+            194 POP_EXCEPT
+            196 JUMP_FORWARD             2 (to 200)
+        >>  198 RERAISE
+
+ 26     >>  200 SETUP_FINALLY           16 (to 218)
+
+ 27         202 LOAD_CONST               0 (0)
+            204 LOAD_CONST              10 (('TMP_FOLDER_PATH',))
+            206 IMPORT_NAME              0 (local_settings)
+            208 IMPORT_FROM              7 (TMP_FOLDER_PATH)
+            210 STORE_NAME               7 (TMP_FOLDER_PATH)
+            212 POP_TOP
+            214 POP_BLOCK
+            216 JUMP_FORWARD            22 (to 240)
+
+ 28     >>  218 DUP_TOP
+            220 LOAD_NAME                2 (Exception)
+            222 JUMP_IF_NOT_EXC_MATCH   238
+            224 POP_TOP
+            226 POP_TOP
+            228 POP_TOP
+
+ 29         230 LOAD_CONST              11 ('/var/tmp/fw-updater')
+            232 STORE_NAME               7 (TMP_FOLDER_PATH)
+            234 POP_EXCEPT
+            236 JUMP_FORWARD             2 (to 240)
+        >>  238 RERAISE
+        >>  240 LOAD_CONST              12 (None)
+            242 RETURN_VALUE

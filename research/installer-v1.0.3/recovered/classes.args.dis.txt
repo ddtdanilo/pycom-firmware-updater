@@ -1,0 +1,24 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_BUILD_CLASS
+              2 LOAD_CONST               0 (<code object Args at <address omitted>, file "classes/args.py", line 1>)
+              4 LOAD_CONST               1 ('Args')
+              6 MAKE_FUNCTION            0
+              8 LOAD_CONST               1 ('Args')
+             10 LOAD_NAME                0 (object)
+             12 CALL_FUNCTION            3
+             14 STORE_NAME               1 (Args)
+             16 LOAD_CONST               2 (None)
+             18 RETURN_VALUE
+
+Disassembly of <code object Args at <address omitted>, file "classes/args.py", line 1>:
+  1           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('Args')
+              6 STORE_NAME               2 (__qualname__)
+
+  2           8 LOAD_CONST               1 (None)
+             10 RETURN_VALUE

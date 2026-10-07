@@ -1,0 +1,24 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: updater.marshal (Python 3.9)
+
+from __future__ import print_function
+from io import BytesIO
+from npy_programmer import NPyProgrammer
+from utils.pypic import exit_pycom_programming_mode
+from utils.utils import print_exception, print_debug, eprint, hr_size, check_partition
+import argparse
+import base64
+import binascii
+import json
+import os
+import struct
+import sys
+import tarfile
+import time
+from utils.constants import constants
+# WARNING: Decompyle incomplete

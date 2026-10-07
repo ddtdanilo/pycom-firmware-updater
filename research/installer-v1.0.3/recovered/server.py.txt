@@ -1,0 +1,152 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: server.marshal (Python 3.9)
+
+from tornado.platform.asyncio import AnyThreadEventLoopPolicy
+from utils.utils import wake_up, print_debug, tryToLoadJson
+from utils.constants import HOUR
+from websockets import WebSocketServerProtocol
+from settings import ENABLE_SSL, CERT_PEM_USERNAME, CERT_PEM_PASSWORD, TMP_FOLDER_PATH
+from PySide2 import QtWidgets, QtGui
+from tray import SystemTrayIcon
+from enum import Enum
+from utils.actions import actions
+import websockets
+import queue
+import pathlib
+import asyncio
+import json
+import ssl
+import urllib
+import os
+import requests
+import OpenSSL
+import datetime
+import threading
+import time
+import signal
+import sys
+
+class AppState(Enum):
+    STARTING = 'starting'
+    RUNNING = 'running'
+    ERROR = 'error'
+
+
+class Server:
+    
+    def __init__(self):
+        asyncio.set_event_loop_policy(AnyThreadEventLoopPolicy())
+        asyncio.new_event_loop()
+        self.clients = set()
+        self.queue = queue.Queue()
+        self.loop = asyncio.get_event_loop()
+        self._client_timeout = 5
+        self._wake_up_task = None
+        self.is_running = False
+        self.cert_url = 'https://software.pycom.io/signed.crt'
+        self.cert_pem_url = 'https://software.pycom.io/domain.key'
+        self.cert_dir = TMP_FOLDER_PATH
+        self.cert_name = 'fwUpdater.pem'
+        self.cert_path = os.path.join(self.cert_dir, self.cert_name)
+        self.state = AppState.STARTING
+        self.tray_icon = None
+
+    
+    def get_icon(self):
+        assets_path = pathlib.Path(__file__).with_name('assets')
+        icon = assets_path / 'py_{}.ico'.format(self.state.value)
+        return QtGui.QIcon(str(icon))
+
+    
+    def add_message(self, msg):
+        self.queue.put(msg)
+
+    
+    async def queue_processor(self):
+        pass
+    # WARNING: Decompyle incomplete
+
+    
+    async def disconnect_client(self, client):
+        await client.close()
+        self.clients.remove(client)
+    # WARNING: Decompyle incomplete
+
+    
+    def get_certificate(self):
+        if not os.path.exists(self.cert_dir):
+            os.makedirs(self.cert_dir)
+    # WARNING: Decompyle incomplete
+
+    
+    async def keep_alive(self = None, client = None):
+        await asyncio.sleep(self._client_timeout)
+    # WARNING: Decompyle incomplete
+
+    
+    async def handle_messages(self, client):
+        await client.recv()
+        message_obj = <NODE:28>
+    # WARNING: Decompyle incomplete
+
+    
+    async def connect_client(self = None, client = None, path = None):
+        self.clients.add(client)
+    # WARNING: Decompyle incomplete
+
+    
+    def stop_and_exit(self):
+        print_debug('exiting')
+        self.is_running = False
+        self._wake_up_task.cancel()
+    # WARNING: Decompyle incomplete
+
+    
+    def check_cert_expiration(self):
+        with open(self.cert_path, 'r') as cert_file:
+            cert_text = cert_file.read()
+            cert = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, cert_text)
+            cert_expiration_date = cert.get_notAfter().decode('utf8')
+            cert_date_format = '%Y%m%d%H%M%SZ'
+            cert_date_formated = datetime.datetime.strptime(cert_expiration_date, cert_date_format)
+            print_debug('Certificate will expire {}'.format(cert_date_formated))
+            cert_timestamp = cert_date_formated.timestamp()
+            now = datetime.datetime.now().timestamp()
+            if cert_timestamp < now:
+                print_debug('Certificate expired')
+                os.kill(os.getpid(), signal.SIGTERM)
+            else:
+                time.sleep(HOUR)
+            None(None, None, None)
+        with None:
+            if not None:
+                pass
+
+    
+    def set_tray_icon(self):
+        if self.tray_icon:
+            self.tray_icon.setIcon(self.get_icon())
+
+    
+    def add_tray_icon(self):
+        app = QtWidgets.QApplication(sys.argv)
+        w = QtWidgets.QWidget()
+        w.hide()
+        self.tray_icon = SystemTrayIcon(self.get_icon(), w)
+        self.tray_icon.show()
+        sys.exit(app.exec_())
+
+    
+    def listen(self, host, port = ('localhost', 8765)):
+        print_debug('listening on {}:{}  SSL:{}'.format(host, port, ENABLE_SSL))
+    # WARNING: Decompyle incomplete
+
+    
+    def start_queue_processor(self):
+        self.is_running = True
+        asyncio.run(self.queue_processor())

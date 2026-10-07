@@ -1,0 +1,720 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: DeviceUpgrade
+  1:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (('RunInWorker',))
+               6 IMPORT_NAME          (RunInWorker)
+               9 IMPORT_FROM          (RunInWorker)
+              12 STORE_NAME           (RunInWorker)
+              15 POP_TOP
+
+  2:          16 LOAD_CONST           (-1)
+              19 LOAD_CONST           (('print_debug', 'print_exception', 'DEBUG'))
+              22 IMPORT_NAME          (misc)
+              25 IMPORT_FROM          (print_debug)
+              28 STORE_NAME           (print_debug)
+              31 IMPORT_FROM          (print_exception)
+              34 STORE_NAME           (print_exception)
+              37 IMPORT_FROM          (DEBUG)
+              40 STORE_NAME           (DEBUG)
+              43 POP_TOP
+
+  3:          44 LOAD_CONST           (-1)
+              47 LOAD_CONST           (('NPyProgrammer', 'PARTITIONS'))
+              50 IMPORT_NAME          (updater)
+              53 IMPORT_FROM          (NPyProgrammer)
+              56 STORE_NAME           (NPyProgrammer)
+              59 IMPORT_FROM          (PARTITIONS)
+              62 STORE_NAME           (PARTITIONS)
+              65 POP_TOP
+
+  6:          66 LOAD_CONST           ("DeviceUpgrade")
+              69 LOAD_NAME            (object)
+              72 BUILD_TUPLE          1
+              75 LOAD_CONST           (<Code2 code object DeviceUpgrade at <address omitted>, file DeviceUpgrade.py>, line 6)
+              78 MAKE_FUNCTION        (0 default parameters)
+              81 CALL_FUNCTION        (0 positional, 0 named)
+              84 BUILD_CLASS
+              85 STORE_NAME           (DeviceUpgrade)
+              88 LOAD_CONST           (None)
+              91 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade
+  6:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+  7:           6 LOAD_CONST           (None)
+               9 STORE_NAME           (npy)
+
+  9:          12 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file DeviceUpgrade.py>, line 9)
+              15 MAKE_FUNCTION        (0 default parameters)
+              18 STORE_NAME           (__init__)
+
+ 14:          21 LOAD_CONST           (<Code2 code object __connect at <address omitted>, file DeviceUpgrade.py>, line 14)
+              24 MAKE_FUNCTION        (0 default parameters)
+              27 STORE_NAME           (_DeviceUpgrade__connect)
+
+ 24:          30 LOAD_CONST           (<Code2 code object disconnect at <address omitted>, file DeviceUpgrade.py>, line 24)
+              33 MAKE_FUNCTION        (0 default parameters)
+              36 STORE_NAME           (disconnect)
+
+ 28:          39 LOAD_CONST           (<Code2 code object __upgradeWorker at <address omitted>, file DeviceUpgrade.py>, line 28)
+              42 MAKE_FUNCTION        (0 default parameters)
+              45 STORE_NAME           (_DeviceUpgrade__upgradeWorker)
+
+ 87:          48 LOAD_CONST           (<Code2 code object upgrade at <address omitted>, file DeviceUpgrade.py>, line 87)
+              51 MAKE_FUNCTION        (0 default parameters)
+              54 STORE_NAME           (upgrade)
+
+ 90:          57 LOAD_CONST           (<Code2 code object connect at <address omitted>, file DeviceUpgrade.py>, line 90)
+              60 MAKE_FUNCTION        (0 default parameters)
+              63 STORE_NAME           (connect)
+
+ 93:          66 LOAD_CONST           (<Code2 code object get_chip_id at <address omitted>, file DeviceUpgrade.py>, line 93)
+              69 MAKE_FUNCTION        (0 default parameters)
+              72 STORE_NAME           (get_chip_id)
+              75 LOAD_LOCALS
+              76 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.__init__
+ 10:           0 LOAD_GLOBAL          (RunInWorker)
+               3 CALL_FUNCTION        (0 positional, 0 named)
+               6 LOAD_FAST            (self)
+               9 STORE_ATTR           (_DeviceUpgrade__worker)
+
+ 11:          12 LOAD_CONST           (None)
+              15 LOAD_FAST            (self)
+              18 STORE_ATTR           (_DeviceUpgrade__params)
+
+ 12:          21 LOAD_CONST           (None)
+              24 LOAD_FAST            (self)
+              27 STORE_ATTR           (npy)
+              30 LOAD_CONST           (None)
+              33 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.__connect
+ 15:           0 LOAD_GLOBAL          (str)
+               3 LOAD_FAST            (params)
+               6 LOAD_CONST           ("port")
+               9 BINARY_SUBSCR
+              10 CALL_FUNCTION        (1 positional, 0 named)
+              13 LOAD_FAST            (params)
+              16 LOAD_CONST           ("port")
+              19 STORE_SUBSCR
+
+ 16:          20 LOAD_FAST            (params)
+              23 LOAD_FAST            (self)
+              26 STORE_ATTR           (_DeviceUpgrade__params)
+
+ 17:          29 SETUP_EXCEPT         (to 143)
+
+ 18:          32 LOAD_GLOBAL          (NPyProgrammer)
+              35 LOAD_CONST           ("port")
+              38 LOAD_FAST            (self)
+              41 LOAD_ATTR            (_DeviceUpgrade__params)
+              44 LOAD_CONST           ("port")
+              47 BINARY_SUBSCR
+              48 LOAD_CONST           ("baudrate")
+              51 LOAD_FAST            (self)
+              54 LOAD_ATTR            (_DeviceUpgrade__params)
+              57 LOAD_CONST           ("speed")
+              60 BINARY_SUBSCR
+              61 LOAD_CONST           ("pypic")
+              64 LOAD_FAST            (self)
+              67 LOAD_ATTR            (_DeviceUpgrade__params)
+              70 LOAD_CONST           ("pypic")
+              73 BINARY_SUBSCR
+              74 LOAD_CONST           ("continuation")
+              77 LOAD_FAST            (params)
+              80 LOAD_ATTR            (get)
+              83 LOAD_CONST           ("continuation")
+              86 LOAD_GLOBAL          (False)
+              89 CALL_FUNCTION        (2 positional, 0 named)
+              92 LOAD_CONST           ("debug")
+              95 LOAD_GLOBAL          (DEBUG)
+              98 LOAD_CONST           ("resultUpdateList")
+             101 LOAD_FAST            (params)
+             104 LOAD_CONST           ("resultUpdateList")
+             107 BINARY_SUBSCR
+             108 LOAD_CONST           ("connect_read")
+             111 LOAD_FAST            (params)
+             114 LOAD_ATTR            (get)
+             117 LOAD_CONST           ("connect_read")
+             120 LOAD_GLOBAL          (True)
+             123 CALL_FUNCTION        (2 positional, 0 named)
+             126 CALL_FUNCTION        (0 positional, 7 named)
+             129 LOAD_FAST            (self)
+             132 STORE_ATTR           (npy)
+
+ 19:         135 LOAD_GLOBAL          (True)
+             138 RETURN_VALUE
+             139 POP_BLOCK
+             140 JUMP_FORWARD         (to 173)
+
+ 20:     >>  143 DUP_TOP
+             144 LOAD_GLOBAL          (Exception)
+             147 COMPARE_OP           (exception-match)
+             150 POP_JUMP_IF_FALSE    (to 172)
+             153 POP_TOP
+             154 STORE_FAST           (e)
+             157 POP_TOP
+
+ 21:         158 LOAD_GLOBAL          (print_exception)
+             161 LOAD_FAST            (e)
+             164 CALL_FUNCTION        (1 positional, 0 named)
+             167 POP_TOP
+
+ 22:         168 LOAD_FAST            (e)
+             171 RETURN_VALUE
+         >>  172 END_FINALLY
+         >>  173 LOAD_CONST           (None)
+             176 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.disconnect
+ 25:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (npy)
+               6 LOAD_ATTR            (exit_pycom_programming_mode)
+               9 CALL_FUNCTION        (0 positional, 0 named)
+              12 POP_TOP
+              13 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.__upgradeWorker
+ 29:           0 LOAD_CONST           (None)
+               3 STORE_FAST           (first_exception)
+
+ 30:           6 SETUP_EXCEPT         (to 967)
+
+ 31:           9 LOAD_CONST           (1)
+              12 STORE_FAST           (max_attempts)
+
+ 32:     >>   15 LOAD_GLOBAL          (False)
+              18 STORE_FAST           (script_ok)
+
+ 33:          21 LOAD_GLOBAL          (print_debug)
+              24 LOAD_CONST           ("This is __upgradeWorker params['config_block'] is not None? {} and params['force_update']? {}")
+              27 LOAD_ATTR            (format)
+              30 LOAD_FAST            (params)
+              33 LOAD_CONST           ("config_block")
+              36 BINARY_SUBSCR
+              37 LOAD_CONST           (None)
+              40 COMPARE_OP           (is-not)
+              43 LOAD_FAST            (params)
+              46 LOAD_CONST           ("force_update")
+              49 BINARY_SUBSCR
+              50 CALL_FUNCTION        (2 positional, 0 named)
+              53 CALL_FUNCTION        (1 positional, 0 named)
+              56 POP_TOP
+
+ 34:          57 LOAD_FAST            (self)
+              60 LOAD_ATTR            (_DeviceUpgrade__params)
+              63 LOAD_ATTR            (get)
+              66 LOAD_CONST           ("pypic")
+              69 LOAD_GLOBAL          (False)
+              72 CALL_FUNCTION        (2 positional, 0 named)
+              75 POP_JUMP_IF_FALSE    (to 87)
+
+ 35:          78 LOAD_CONST           (3)
+              81 STORE_FAST           (max_attempts)
+              84 JUMP_FORWARD         (to 87)
+
+ 36:     >>   87 SETUP_LOOP           (to 963)
+              90 LOAD_GLOBAL          (range)
+              93 LOAD_CONST           (0)
+              96 LOAD_FAST            (max_attempts)
+              99 CALL_FUNCTION        (2 positional, 0 named)
+             102 GET_ITER
+         >>  103 FOR_ITER             (to 962)
+             106 STORE_FAST           (x)
+
+ 37:         109 LOAD_FAST            (x)
+             112 LOAD_CONST           (0)
+             115 COMPARE_OP           (>)
+             118 POP_JUMP_IF_FALSE    (to 235)
+
+ 38:         121 SETUP_EXCEPT         (to 196)
+
+ 39:         124 LOAD_FAST            (self)
+             127 LOAD_ATTR            (npy)
+             130 LOAD_ATTR            (exit_pycom_programming_mode)
+             133 LOAD_CONST           ("reset")
+             136 LOAD_GLOBAL          (False)
+             139 CALL_FUNCTION        (0 positional, 1 named)
+             142 POP_TOP
+
+ 40:     >>  143 LOAD_GLOBAL          (False)
+             146 LOAD_FAST            (self)
+             149 LOAD_ATTR            (_DeviceUpgrade__params)
+             152 LOAD_CONST           ("connect_read")
+             155 STORE_SUBSCR
+
+ 41:         156 LOAD_FAST            (self)
+             159 LOAD_ATTR            (_DeviceUpgrade__params)
+             162 LOAD_CONST           ("resultUpdateList")
+             165 BINARY_SUBSCR
+             166 LOAD_ATTR            (append)
+             169 LOAD_CONST           ("Resetting...")
+             172 CALL_FUNCTION        (1 positional, 0 named)
+             175 POP_TOP
+
+ 42:         176 LOAD_FAST            (self)
+             179 LOAD_ATTR            (_DeviceUpgrade__connect)
+             182 LOAD_FAST            (self)
+             185 LOAD_ATTR            (_DeviceUpgrade__params)
+             188 CALL_FUNCTION        (1 positional, 0 named)
+         >>  191 POP_TOP
+             192 POP_BLOCK
+             193 JUMP_ABSOLUTE        (to 235)
+
+ 43:     >>  196 DUP_TOP
+             197 LOAD_GLOBAL          (Exception)
+             200 COMPARE_OP           (exception-match)
+             203 POP_JUMP_IF_FALSE    (to 231)
+             206 POP_TOP
+             207 STORE_FAST           (ex)
+             210 POP_TOP
+
+ 44:         211 LOAD_GLOBAL          (print_exception)
+             214 LOAD_FAST            (ex)
+             217 CALL_FUNCTION        (1 positional, 0 named)
+             220 POP_TOP
+
+ 45:         221 LOAD_GLOBAL          (str)
+             224 LOAD_FAST            (ex)
+             227 CALL_FUNCTION        (1 positional, 0 named)
+             230 RETURN_VALUE
+         >>  231 END_FINALLY
+             232 JUMP_FORWARD         (to 235)
+
+ 46:     >>  235 SETUP_EXCEPT         (to 814)
+
+ 47:         238 LOAD_FAST            (script_ok)
+             241 POP_JUMP_IF_TRUE     (to 354)
+
+ 48:         244 LOAD_GLOBAL          (print_debug)
+             247 LOAD_CONST           ("run_script with erase_nvs: {}")
+             250 LOAD_ATTR            (format)
+             253 LOAD_FAST            (params)
+             256 LOAD_CONST           ("erase_nvs")
+             259 BINARY_SUBSCR
+             260 CALL_FUNCTION        (1 positional, 0 named)
+             263 CALL_FUNCTION        (1 positional, 0 named)
+             266 POP_TOP
+
+ 49:         267 LOAD_FAST            (self)
+             270 LOAD_ATTR            (npy)
+             273 LOAD_ATTR            (run_script)
+             276 LOAD_CONST           ("script")
+             279 LOAD_FAST            (params)
+             282 LOAD_CONST           ("script")
+             285 BINARY_SUBSCR
+             286 LOAD_CONST           ("config_block")
+             289 LOAD_FAST            (params)
+             292 LOAD_CONST           ("config_block")
+             295 BINARY_SUBSCR
+             296 LOAD_CONST           ("erase_fs")
+             299 LOAD_FAST            (params)
+         >>  302 LOAD_CONST           ("erase_fs")
+             305 BINARY_SUBSCR
+             306 LOAD_CONST           ("chip_id")
+             309 LOAD_FAST            (self)
+             312 LOAD_ATTR            (npy)
+             315 LOAD_ATTR            (get_chip_id)
+             318 CALL_FUNCTION        (0 positional, 0 named)
+             321 LOAD_CONST           ("ui_label")
+             324 LOAD_FAST            (params)
+             327 LOAD_CONST           ("ui_label")
+             330 BINARY_SUBSCR
+             331 LOAD_CONST           ("erase_nvs")
+             334 LOAD_FAST            (params)
+             337 LOAD_CONST           ("erase_nvs")
+             340 BINARY_SUBSCR
+             341 CALL_FUNCTION        (0 positional, 6 named)
+             344 POP_TOP
+
+ 51:         345 LOAD_GLOBAL          (True)
+             348 STORE_FAST           (script_ok)
+             351 JUMP_FORWARD         (to 354)
+
+ 52:     >>  354 LOAD_FAST            (params)
+             357 LOAD_CONST           ("remote_config_block")
+             360 BINARY_SUBSCR
+             361 LOAD_CONST           (None)
+             364 COMPARE_OP           (is-not)
+             367 POP_JUMP_IF_FALSE    (to 659)
+
+ 53:         370 SETUP_EXCEPT         (to 620)
+
+ 54:         373 LOAD_FAST            (params)
+             376 LOAD_CONST           ("config_block")
+             379 BINARY_SUBSCR
+             380 LOAD_CONST           (None)
+             383 COMPARE_OP           (is-not)
+             386 POP_JUMP_IF_FALSE    (to 527)
+             389 LOAD_GLOBAL          (len)
+             392 LOAD_FAST            (params)
+             395 LOAD_CONST           ("config_block")
+             398 BINARY_SUBSCR
+             399 CALL_FUNCTION        (1 positional, 0 named)
+             402 LOAD_CONST           (52)
+             405 COMPARE_OP           (>)
+             408 POP_JUMP_IF_FALSE    (to 527)
+
+ 55:         411 LOAD_FAST            (self)
+             414 LOAD_ATTR            (npy)
+             417 LOAD_ATTR            (print_cb)
+             420 LOAD_FAST            (params)
+             423 LOAD_CONST           ("remote_config_block")
+             426 BINARY_SUBSCR
+             427 LOAD_CONST           (0)
+             430 LOAD_CONST           (52)
+             433 SLICE+3
+             434 LOAD_FAST            (params)
+             437 LOAD_CONST           ("config_block")
+             440 BINARY_SUBSCR
+             441 LOAD_CONST           (52)
+             444 SLICE+1
+             445 BINARY_ADD
+             446 CALL_FUNCTION        (1 positional, 0 named)
+             449 POP_TOP
+
+ 56:         450 LOAD_FAST            (self)
+             453 LOAD_ATTR            (npy)
+             456 LOAD_ATTR            (write)
+             459 LOAD_GLOBAL          (int)
+             462 LOAD_GLOBAL          (PARTITIONS)
+             465 LOAD_ATTR            (get)
+             468 LOAD_CONST           ("config")
+             471 CALL_FUNCTION        (1 positional, 0 named)
+             474 LOAD_CONST           (0)
+             477 BINARY_SUBSCR
+             478 LOAD_CONST           (16)
+             481 CALL_FUNCTION        (2 positional, 0 named)
+             484 LOAD_FAST            (params)
+             487 LOAD_CONST           ("remote_config_block")
+             490 BINARY_SUBSCR
+             491 LOAD_CONST           (0)
+             494 LOAD_CONST           (52)
+             497 SLICE+3
+             498 LOAD_FAST            (params)
+             501 LOAD_CONST           ("config_block")
+             504 BINARY_SUBSCR
+             505 LOAD_CONST           (52)
+             508 SLICE+1
+             509 BINARY_ADD
+             510 LOAD_CONST           ("ui_label")
+             513 LOAD_FAST            (params)
+             516 LOAD_CONST           ("ui_label")
+             519 BINARY_SUBSCR
+             520 CALL_FUNCTION        (2 positional, 1 named)
+             523 POP_TOP
+             524 JUMP_FORWARD         (to 616)
+
+ 58:         527 LOAD_FAST            (self)
+             530 LOAD_ATTR            (npy)
+             533 LOAD_ATTR            (print_cb)
+             536 LOAD_FAST            (params)
+             539 LOAD_CONST           ("remote_config_block")
+             542 BINARY_SUBSCR
+             543 LOAD_CONST           (0)
+             546 LOAD_CONST           (52)
+             549 SLICE+3
+             550 CALL_FUNCTION        (1 positional, 0 named)
+             553 POP_TOP
+
+ 59:         554 LOAD_FAST            (self)
+             557 LOAD_ATTR            (npy)
+             560 LOAD_ATTR            (write)
+             563 LOAD_GLOBAL          (int)
+             566 LOAD_GLOBAL          (PARTITIONS)
+             569 LOAD_ATTR            (get)
+             572 LOAD_CONST           ("config")
+             575 CALL_FUNCTION        (1 positional, 0 named)
+             578 LOAD_CONST           (0)
+             581 BINARY_SUBSCR
+             582 LOAD_CONST           (16)
+             585 CALL_FUNCTION        (2 positional, 0 named)
+             588 LOAD_FAST            (params)
+             591 LOAD_CONST           ("remote_config_block")
+             594 BINARY_SUBSCR
+             595 LOAD_CONST           (0)
+             598 LOAD_CONST           (52)
+             601 SLICE+3
+             602 LOAD_CONST           ("ui_label")
+             605 LOAD_FAST            (params)
+             608 LOAD_CONST           ("ui_label")
+             611 BINARY_SUBSCR
+             612 CALL_FUNCTION        (2 positional, 1 named)
+             615 POP_TOP
+         >>  616 POP_BLOCK
+             617 JUMP_ABSOLUTE        (to 806)
+
+ 60:     >>  620 DUP_TOP
+             621 LOAD_GLOBAL          (Exception)
+             624 COMPARE_OP           (exception-match)
+             627 POP_JUMP_IF_FALSE    (to 655)
+             630 POP_TOP
+             631 STORE_FAST           (e)
+             634 POP_TOP
+
+ 61:         635 LOAD_GLOBAL          (print_exception)
+             638 LOAD_FAST            (e)
+             641 CALL_FUNCTION        (1 positional, 0 named)
+             644 POP_TOP
+
+ 62:         645 LOAD_GLOBAL          (str)
+             648 LOAD_CONST           ("<b>Error updating config block!</b><br>")
+             651 CALL_FUNCTION        (1 positional, 0 named)
+             654 RETURN_VALUE
+             655 END_FINALLY
+             656 JUMP_FORWARD         (to 806)
+
+ 63:         659 LOAD_FAST            (params)
+             662 LOAD_CONST           ("config_block")
+             665 BINARY_SUBSCR
+             666 LOAD_CONST           (None)
+             669 COMPARE_OP           (is-not)
+             672 POP_JUMP_IF_FALSE    (to 806)
+             675 LOAD_FAST            (params)
+             678 LOAD_CONST           ("force_update")
+             681 BINARY_SUBSCR
+             682 POP_JUMP_IF_FALSE    (to 806)
+
+ 64:         685 SETUP_EXCEPT         (to 767)
+
+ 65:         688 LOAD_FAST            (self)
+             691 LOAD_ATTR            (npy)
+             694 LOAD_ATTR            (print_cb)
+             697 LOAD_FAST            (params)
+             700 LOAD_CONST           ("config_block")
+             703 BINARY_SUBSCR
+             704 CALL_FUNCTION        (1 positional, 0 named)
+             707 POP_TOP
+
+ 66:         708 LOAD_FAST            (self)
+             711 LOAD_ATTR            (npy)
+             714 LOAD_ATTR            (write)
+             717 LOAD_GLOBAL          (int)
+             720 LOAD_GLOBAL          (PARTITIONS)
+             723 LOAD_ATTR            (get)
+             726 LOAD_CONST           ("config")
+             729 CALL_FUNCTION        (1 positional, 0 named)
+             732 LOAD_CONST           (0)
+             735 BINARY_SUBSCR
+             736 LOAD_CONST           (16)
+             739 CALL_FUNCTION        (2 positional, 0 named)
+             742 LOAD_FAST            (params)
+             745 LOAD_CONST           ("config_block")
+             748 BINARY_SUBSCR
+             749 LOAD_CONST           ("ui_label")
+             752 LOAD_FAST            (params)
+             755 LOAD_CONST           ("ui_label")
+             758 BINARY_SUBSCR
+             759 CALL_FUNCTION        (2 positional, 1 named)
+             762 POP_TOP
+             763 POP_BLOCK
+             764 JUMP_ABSOLUTE        (to 806)
+
+ 67:     >>  767 DUP_TOP
+             768 LOAD_GLOBAL          (Exception)
+             771 COMPARE_OP           (exception-match)
+             774 POP_JUMP_IF_FALSE    (to 802)
+             777 POP_TOP
+             778 STORE_FAST           (e)
+             781 POP_TOP
+
+ 68:         782 LOAD_GLOBAL          (print_exception)
+             785 LOAD_FAST            (e)
+             788 CALL_FUNCTION        (1 positional, 0 named)
+             791 POP_TOP
+
+ 69:         792 LOAD_GLOBAL          (str)
+             795 LOAD_CONST           ("<b>Error updating config block!</b><br>")
+             798 CALL_FUNCTION        (1 positional, 0 named)
+             801 RETURN_VALUE
+             802 END_FINALLY
+             803 JUMP_FORWARD         (to 806)
+
+ 71:     >>  806 LOAD_CONST           (0)
+             809 RETURN_VALUE
+             810 POP_BLOCK
+             811 JUMP_ABSOLUTE        (to 103)
+
+ 72:         814 DUP_TOP
+             815 LOAD_GLOBAL          (Exception)
+             818 COMPARE_OP           (exception-match)
+             821 POP_JUMP_IF_FALSE    (to 958)
+             824 POP_TOP
+             825 STORE_FAST           (e)
+             828 POP_TOP
+
+ 73:         829 LOAD_FAST            (self)
+             832 LOAD_ATTR            (_DeviceUpgrade__params)
+             835 LOAD_CONST           ("resultUpdateList")
+             838 BINARY_SUBSCR
+             839 LOAD_ATTR            (append)
+             842 LOAD_CONST           ("<b>Exception:</b> {}")
+             845 LOAD_ATTR            (format)
+             848 LOAD_FAST            (e)
+             851 CALL_FUNCTION        (1 positional, 0 named)
+             854 CALL_FUNCTION        (1 positional, 0 named)
+             857 POP_TOP
+
+ 74:         858 LOAD_FAST            (self)
+             861 LOAD_ATTR            (_DeviceUpgrade__params)
+             864 LOAD_ATTR            (get)
+             867 LOAD_CONST           ("pypic")
+             870 LOAD_GLOBAL          (False)
+             873 CALL_FUNCTION        (2 positional, 0 named)
+             876 POP_JUMP_IF_TRUE     (to 888)
+
+ 75:         879 LOAD_FAST            (e)
+             882 RAISE_VARARGS        (exception)
+             885 JUMP_ABSOLUTE        (to 959)
+
+ 76:         888 LOAD_FAST            (x)
+             891 LOAD_CONST           (0)
+             894 COMPARE_OP           (==)
+             897 POP_JUMP_IF_FALSE    (to 909)
+
+ 77:         900 LOAD_FAST            (e)
+             903 STORE_FAST           (first_exception)
+             906 JUMP_ABSOLUTE        (to 959)
+
+ 78:         909 LOAD_FAST            (x)
+             912 LOAD_FAST            (max_attempts)
+             915 LOAD_CONST           (1)
+             918 BINARY_SUBTRACT
+             919 COMPARE_OP           (==)
+             922 POP_JUMP_IF_FALSE    (to 959)
+
+ 79:         925 LOAD_FAST            (first_exception)
+             928 LOAD_CONST           (None)
+             931 COMPARE_OP           (is-not)
+             934 POP_JUMP_IF_FALSE    (to 946)
+
+ 80:         937 LOAD_FAST            (first_exception)
+             940 RAISE_VARARGS        (exception)
+             943 JUMP_ABSOLUTE        (to 955)
+
+ 82:         946 LOAD_FAST            (e)
+             949 RAISE_VARARGS        (exception)
+             952 JUMP_ABSOLUTE        (to 959)
+             955 JUMP_ABSOLUTE        (to 103)
+             958 END_FINALLY
+             959 JUMP_ABSOLUTE        (to 103)
+             962 POP_BLOCK
+             963 POP_BLOCK
+             964 JUMP_FORWARD         (to 1003)
+
+ 83:         967 DUP_TOP
+             968 LOAD_GLOBAL          (Exception)
+             971 COMPARE_OP           (exception-match)
+             974 POP_JUMP_IF_FALSE    (to 1002)
+             977 POP_TOP
+             978 STORE_FAST           (e)
+             981 POP_TOP
+
+ 84:         982 LOAD_GLOBAL          (print_exception)
+             985 LOAD_FAST            (e)
+             988 CALL_FUNCTION        (1 positional, 0 named)
+             991 POP_TOP
+
+ 85:         992 LOAD_GLOBAL          (str)
+             995 LOAD_FAST            (e)
+             998 CALL_FUNCTION        (1 positional, 0 named)
+            1001 RETURN_VALUE
+            1002 END_FINALLY
+         >> 1003 LOAD_CONST           (None)
+            1006 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.upgrade
+ 88:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_DeviceUpgrade__worker)
+               6 LOAD_ATTR            (run)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (_DeviceUpgrade__upgradeWorker)
+              15 BUILD_MAP            8
+              18 LOAD_FAST            (script)
+              21 LOAD_CONST           ("script")
+              24 STORE_MAP
+              25 LOAD_FAST            (erase_fs)
+              28 LOAD_CONST           ("erase_fs")
+              31 STORE_MAP
+              32 LOAD_FAST            (config_block)
+              35 LOAD_CONST           ("config_block")
+              38 STORE_MAP
+              39 LOAD_FAST            (attempt_label)
+              42 LOAD_CONST           ("attempt_label")
+              45 STORE_MAP
+              46 LOAD_FAST            (remote_config_block)
+              49 LOAD_CONST           ("remote_config_block")
+              52 STORE_MAP
+              53 LOAD_FAST            (force_update)
+              56 LOAD_CONST           ("force_update")
+              59 STORE_MAP
+              60 LOAD_FAST            (ui_label)
+              63 LOAD_CONST           ("ui_label")
+              66 STORE_MAP
+              67 LOAD_FAST            (erase_nvs)
+              70 LOAD_CONST           ("erase_nvs")
+              73 STORE_MAP
+              74 LOAD_CLOSURE         (callback)
+              77 BUILD_TUPLE          1
+              80 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceUpgrade.py>, line 88)
+              83 MAKE_CLOSURE         0
+              86 CALL_FUNCTION        (3 positional, 0 named)
+              89 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.upgrade.<lambda>
+ 88:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.connect
+ 91:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_DeviceUpgrade__worker)
+               6 LOAD_ATTR            (run)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (_DeviceUpgrade__connect)
+              15 BUILD_MAP            4
+              18 LOAD_FAST            (port)
+              21 LOAD_CONST           ("port")
+              24 STORE_MAP
+              25 LOAD_FAST            (speed)
+              28 LOAD_CONST           ("speed")
+              31 STORE_MAP
+              32 LOAD_FAST            (pypic)
+              35 LOAD_CONST           ("pypic")
+              38 STORE_MAP
+              39 LOAD_FAST            (resultUpdateList)
+              42 LOAD_CONST           ("resultUpdateList")
+              45 STORE_MAP
+              46 LOAD_CLOSURE         (callback)
+              49 BUILD_TUPLE          1
+              52 LOAD_CONST           (<Code2 code object <lambda> at <address omitted>, file DeviceUpgrade.py>, line 91)
+              55 MAKE_CLOSURE         0
+              58 CALL_FUNCTION        (3 positional, 0 named)
+              61 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.connect.<lambda>
+ 91:           0 LOAD_DEREF           (callback)
+               3 LOAD_FAST            (res)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 RETURN_VALUE
+
+Symbol: DeviceUpgrade.DeviceUpgrade.get_chip_id
+ 94:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (npy)
+               6 LOAD_ATTR            (get_chip_id)
+               9 CALL_FUNCTION        (0 positional, 0 named)
+              12 LOAD_ATTR            (split)
+              15 LOAD_CONST           (" ")
+              18 CALL_FUNCTION        (1 positional, 0 named)
+              21 LOAD_CONST           (0)
+              24 BINARY_SUBSCR
+              25 RETURN_VALUE

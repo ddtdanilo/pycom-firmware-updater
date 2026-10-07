@@ -1,0 +1,69 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: misc.py
+from __future__ import print_function
+import sys
+from traceback import print_exc
+import re
+from settings import DEBUG
+
+def eprint(*args, **kwargs):
+    print(file=sys.stderr, *args, **kwargs)
+    return
+
+
+def print_exception(e):
+    if DEBUG:
+        print_exc(e)
+    else:
+        eprint(('Exception: {}').format(e))
+    return
+
+
+def print_debug(msg):
+    if DEBUG:
+        eprint(msg)
+    return
+
+
+def detectOsFamily():
+    osFamily = sys.platform.rstrip('1234567890')
+    if osFamily == 'linux':
+        osFamily = 'unix'
+    elif osFamily == 'win':
+        osFamily = 'win32'
+    elif osFamily == 'darwin':
+        osFamily = 'macos'
+    return osFamily
+
+
+def calc_int_version(version):
+    known_types = [
+     'a', 'b', 'rc', 'r']
+    version_parts = version.split('.')
+    dots = len(version_parts) - 1
+    if dots != 2 and dots != 3:
+        return None
+    else:
+        if dots == 2:
+            version_parts.append('r0')
+        release_type_number = re.match('([^0-9]+)([0-9]+)', version_parts[3])
+        release_type = known_types.index(release_type_number.group(1))
+        if release_type == -1:
+            return None
+        version_parts[3] = release_type_number.group(2)
+        for idx, val in enumerate(version_parts):
+            version_parts[idx] = int(val)
+
+        version = version_parts[0]
+        version = version << 7 | version_parts[1]
+        version = version << 10 | version_parts[2]
+        version = version << 2 | release_type
+        version = version << 7 | version_parts[3]
+        return version

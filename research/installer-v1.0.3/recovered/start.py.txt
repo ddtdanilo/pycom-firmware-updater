@@ -1,0 +1,17 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: start.marshal (Python 3.9)
+
+from server import Server
+from utils.addHost import createHost
+import threading
+if __name__ == '__main__':
+    createHost()
+    websocket_communicator = Server()
+    m = threading.Thread(websocket_communicator.start_queue_processor, **('target',))
+    m.start()
+    websocket_communicator.listen()

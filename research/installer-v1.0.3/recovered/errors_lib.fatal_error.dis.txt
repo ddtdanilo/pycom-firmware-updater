@@ -1,0 +1,71 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('hexify',))
+              4 IMPORT_NAME              0 (utils.utils)
+              6 IMPORT_FROM              1 (hexify)
+              8 STORE_NAME               1 (hexify)
+             10 POP_TOP
+
+  4          12 LOAD_BUILD_CLASS
+             14 LOAD_CONST               2 (<code object FatalError at <address omitted>, file "errors_lib/fatal_error.py", line 4>)
+             16 LOAD_CONST               3 ('FatalError')
+             18 MAKE_FUNCTION            0
+             20 LOAD_CONST               3 ('FatalError')
+             22 LOAD_NAME                2 (RuntimeError)
+             24 CALL_FUNCTION            3
+             26 STORE_NAME               3 (FatalError)
+             28 LOAD_CONST               4 (None)
+             30 RETURN_VALUE
+
+Disassembly of <code object FatalError at <address omitted>, file "errors_lib/fatal_error.py", line 4>:
+  4           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('FatalError')
+              6 STORE_NAME               2 (__qualname__)
+
+  5           8 LOAD_CONST               1 ("\n    Wrapper class for runtime errors that aren't caused by internal bugs, but by\n    ESP8266 responses or input content.\n    ")
+             10 STORE_NAME               3 (__doc__)
+
+ 10          12 LOAD_CONST               2 (<code object __init__ at <address omitted>, file "errors_lib/fatal_error.py", line 10>)
+             14 LOAD_CONST               3 ('FatalError.__init__')
+             16 MAKE_FUNCTION            0
+             18 STORE_NAME               4 (__init__)
+
+ 13          20 LOAD_NAME                5 (staticmethod)
+
+ 14          22 LOAD_CONST               4 (<code object WithResult at <address omitted>, file "errors_lib/fatal_error.py", line 13>)
+             24 LOAD_CONST               5 ('FatalError.WithResult')
+             26 MAKE_FUNCTION            0
+             28 CALL_FUNCTION            1
+             30 STORE_NAME               6 (WithResult)
+             32 LOAD_CONST               6 (None)
+             34 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "errors_lib/fatal_error.py", line 10>:
+ 11           0 LOAD_GLOBAL              0 (RuntimeError)
+              2 LOAD_METHOD              1 (__init__)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_FAST                1 (message)
+              8 CALL_METHOD              2
+             10 POP_TOP
+             12 LOAD_CONST               0 (None)
+             14 RETURN_VALUE
+
+Disassembly of <code object WithResult at <address omitted>, file "errors_lib/fatal_error.py", line 13>:
+ 19           0 LOAD_FAST                0 (message)
+              2 LOAD_CONST               1 (' (result was %s)')
+              4 LOAD_GLOBAL              0 (hexify)
+              6 LOAD_FAST                1 (result)
+              8 CALL_FUNCTION            1
+             10 BINARY_MODULO
+             12 INPLACE_ADD
+             14 STORE_FAST               0 (message)
+
+ 20          16 LOAD_GLOBAL              1 (FatalError)
+             18 LOAD_FAST                0 (message)
+             20 CALL_FUNCTION            1
+             22 RETURN_VALUE

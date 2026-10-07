@@ -1,0 +1,1031 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('ScanPort',))
+              4 IMPORT_NAME              0 (utils.scan_ports)
+              6 IMPORT_FROM              1 (ScanPort)
+              8 STORE_NAME               1 (ScanPort)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('print_debug',))
+             16 IMPORT_NAME              2 (utils.utils)
+             18 IMPORT_FROM              3 (print_debug)
+             20 STORE_NAME               3 (print_debug)
+             22 POP_TOP
+
+  3          24 LOAD_CONST               0 (0)
+             26 LOAD_CONST               3 (('Results',))
+             28 IMPORT_NAME              4 (classes.result)
+             30 IMPORT_FROM              5 (Results)
+             32 STORE_NAME               5 (Results)
+             34 POP_TOP
+
+  4          36 LOAD_CONST               0 (0)
+             38 LOAD_CONST               4 (('Programmer',))
+             40 IMPORT_NAME              6 (programmer)
+             42 IMPORT_FROM              7 (Programmer)
+             44 STORE_NAME               7 (Programmer)
+             46 POP_TOP
+
+  5          48 LOAD_CONST               0 (0)
+             50 LOAD_CONST               5 (None)
+             52 IMPORT_NAME              8 (requests)
+             54 STORE_NAME               8 (requests)
+
+  6          56 LOAD_CONST               0 (0)
+             58 LOAD_CONST               5 (None)
+             60 IMPORT_NAME              9 (os)
+             62 STORE_NAME               9 (os)
+
+  7          64 LOAD_CONST               0 (0)
+             66 LOAD_CONST               5 (None)
+             68 IMPORT_NAME             10 (json)
+             70 STORE_NAME              10 (json)
+
+  9          72 LOAD_CONST               6 (<code object scan_ports at <address omitted>, file "utils/actions.py", line 9>)
+             74 LOAD_CONST               7 ('scan_ports')
+             76 MAKE_FUNCTION            0
+             78 STORE_NAME              11 (scan_ports)
+
+ 16          80 LOAD_CONST               8 (<code object remote_config at <address omitted>, file "utils/actions.py", line 16>)
+             82 LOAD_CONST               9 ('remote_config')
+             84 MAKE_FUNCTION            0
+             86 STORE_NAME              12 (remote_config)
+
+ 23          88 LOAD_CONST              27 ((115200,))
+             90 LOAD_CONST              11 (<code object infos at <address omitted>, file "utils/actions.py", line 23>)
+             92 LOAD_CONST              12 ('infos')
+             94 MAKE_FUNCTION            1 (defaults)
+             96 STORE_NAME              13 (infos)
+
+ 44          98 LOAD_CONST              28 ((115200,))
+            100 LOAD_CONST              13 (<code object device_config at <address omitted>, file "utils/actions.py", line 44>)
+            102 LOAD_CONST              14 ('device_config')
+            104 MAKE_FUNCTION            1 (defaults)
+            106 STORE_NAME              14 (device_config)
+
+ 65         108 LOAD_CONST              29 ((115200,))
+            110 LOAD_CONST              15 (<code object erase_flash at <address omitted>, file "utils/actions.py", line 65>)
+            112 LOAD_CONST              16 ('erase_flash')
+            114 MAKE_FUNCTION            1 (defaults)
+            116 STORE_NAME              15 (erase_flash)
+
+ 89         118 LOAD_CONST              30 (('firmware.tar.gz',))
+            120 LOAD_CONST              18 (<code object dl_fw_locally at <address omitted>, file "utils/actions.py", line 89>)
+            122 LOAD_CONST              19 ('dl_fw_locally')
+            124 MAKE_FUNCTION            1 (defaults)
+            126 STORE_NAME              16 (dl_fw_locally)
+
+117         128 LOAD_CONST              10 (115200)
+            130 LOAD_CONST              20 (False)
+            132 LOAD_CONST              20 (False)
+            134 BUILD_MAP                0
+            136 LOAD_CONST               5 (None)
+
+116         138 BUILD_TUPLE              5
+            140 LOAD_CONST              21 (<code object write_firmware at <address omitted>, file "utils/actions.py", line 116>)
+            142 LOAD_CONST              22 ('write_firmware')
+            144 MAKE_FUNCTION            1 (defaults)
+            146 STORE_NAME              17 (write_firmware)
+
+134         148 LOAD_CONST              23 (<code object get_region_list at <address omitted>, file "utils/actions.py", line 134>)
+            150 LOAD_CONST              24 ('get_region_list')
+            152 MAKE_FUNCTION            0
+            154 STORE_NAME              18 (get_region_list)
+
+141         156 LOAD_CONST              25 (<code object get_sigfox_region_list at <address omitted>, file "utils/actions.py", line 141>)
+            158 LOAD_CONST              26 ('get_sigfox_region_list')
+            160 MAKE_FUNCTION            0
+            162 STORE_NAME              19 (get_sigfox_region_list)
+            164 LOAD_CONST               5 (None)
+            166 RETURN_VALUE
+
+Disassembly of <code object scan_ports at <address omitted>, file "utils/actions.py", line 9>:
+ 10           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('scan_ports')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST               3 (result)
+
+ 11          14 LOAD_GLOBAL              1 (ScanPort)
+             16 CALL_FUNCTION            0
+             18 STORE_FAST               4 (scanner)
+
+ 12          20 LOAD_FAST                4 (scanner)
+             22 LOAD_METHOD              2 (scan_port)
+             24 CALL_METHOD              0
+             26 STORE_FAST               5 (ports)
+
+ 13          28 LOAD_FAST                3 (result)
+             30 LOAD_METHOD              3 (send)
+             32 LOAD_FAST                5 (ports)
+             34 CALL_METHOD              1
+             36 POP_TOP
+             38 LOAD_CONST               0 (None)
+             40 RETURN_VALUE
+
+Disassembly of <code object remote_config at <address omitted>, file "utils/actions.py", line 16>:
+ 17           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('remote_config')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST               4 (result)
+
+ 18          14 LOAD_GLOBAL              1 (Programmer)
+             16 CALL_FUNCTION            0
+             18 STORE_FAST               5 (prog)
+
+ 19          20 LOAD_FAST                5 (prog)
+             22 LOAD_METHOD              2 (read_remote_config)
+             24 LOAD_FAST                3 (config)
+             26 CALL_METHOD              1
+             28 STORE_FAST               6 (response)
+
+ 20          30 LOAD_FAST                4 (result)
+             32 LOAD_METHOD              3 (send)
+             34 LOAD_FAST                6 (response)
+             36 CALL_METHOD              1
+             38 POP_TOP
+             40 LOAD_CONST               0 (None)
+             42 RETURN_VALUE
+
+Disassembly of <code object infos at <address omitted>, file "utils/actions.py", line 23>:
+ 24           0 LOAD_CONST               1 (False)
+              2 STORE_FAST               5 (error)
+
+ 25           4 LOAD_GLOBAL              0 (Results)
+              6 LOAD_FAST                0 (client)
+              8 LOAD_FAST                1 (add_message)
+             10 LOAD_FAST                2 (timeout_ref)
+             12 LOAD_CONST               2 ('infos')
+             14 CALL_FUNCTION            4
+             16 STORE_FAST               6 (result)
+
+ 26          18 LOAD_GLOBAL              1 (Programmer)
+             20 LOAD_FAST                3 (port)
+             22 LOAD_FAST                4 (baud_rate)
+             24 LOAD_CONST               3 (('baud_rate',))
+             26 CALL_FUNCTION_KW         2
+             28 STORE_FAST               7 (prog)
+
+ 27          30 SETUP_FINALLY          156 (to 188)
+             32 SETUP_FINALLY           34 (to 68)
+
+ 28          34 LOAD_FAST                7 (prog)
+             36 LOAD_METHOD              2 (connect)
+             38 CALL_METHOD              0
+             40 POP_TOP
+
+ 29          42 LOAD_FAST                7 (prog)
+             44 LOAD_METHOD              3 (load_info)
+             46 CALL_METHOD              0
+             48 STORE_FAST               8 (obj)
+
+ 30          50 LOAD_FAST                8 (obj)
+             52 LOAD_METHOD              4 (update)
+             54 LOAD_FAST                7 (prog)
+             56 LOAD_METHOD              5 (read_device_config)
+             58 CALL_METHOD              0
+             60 CALL_METHOD              1
+             62 POP_TOP
+             64 POP_BLOCK
+             66 JUMP_FORWARD            58 (to 126)
+
+ 31     >>   68 DUP_TOP
+             70 LOAD_GLOBAL              6 (Exception)
+             72 JUMP_IF_NOT_EXC_MATCH   124
+             74 POP_TOP
+             76 STORE_FAST               9 (e)
+             78 POP_TOP
+             80 SETUP_FINALLY           34 (to 116)
+
+ 32          82 LOAD_FAST                6 (result)
+             84 LOAD_METHOD              7 (send_error)
+             86 LOAD_CONST               4 ('error')
+             88 LOAD_GLOBAL              8 (str)
+             90 LOAD_FAST                9 (e)
+             92 CALL_FUNCTION            1
+             94 BUILD_MAP                1
+             96 CALL_METHOD              1
+             98 POP_TOP
+
+ 33         100 LOAD_CONST               5 (True)
+            102 STORE_FAST               5 (error)
+            104 POP_BLOCK
+            106 POP_EXCEPT
+            108 LOAD_CONST               0 (None)
+            110 STORE_FAST               9 (e)
+            112 DELETE_FAST              9 (e)
+            114 JUMP_FORWARD            10 (to 126)
+        >>  116 LOAD_CONST               0 (None)
+            118 STORE_FAST               9 (e)
+            120 DELETE_FAST              9 (e)
+            122 RERAISE
+        >>  124 RERAISE
+        >>  126 POP_BLOCK
+
+ 35         128 SETUP_FINALLY           12 (to 142)
+
+ 36         130 LOAD_FAST                7 (prog)
+            132 LOAD_METHOD              9 (disconnect)
+            134 CALL_METHOD              0
+            136 POP_TOP
+            138 POP_BLOCK
+            140 JUMP_ABSOLUTE          248
+
+ 37     >>  142 DUP_TOP
+            144 LOAD_GLOBAL              6 (Exception)
+            146 JUMP_IF_NOT_EXC_MATCH   184
+            148 POP_TOP
+            150 STORE_FAST               9 (e)
+            152 POP_TOP
+            154 SETUP_FINALLY           20 (to 176)
+
+ 38         156 LOAD_GLOBAL             10 (print_debug)
+            158 LOAD_FAST                9 (e)
+            160 CALL_FUNCTION            1
+            162 POP_TOP
+            164 POP_BLOCK
+            166 POP_EXCEPT
+            168 LOAD_CONST               0 (None)
+            170 STORE_FAST               9 (e)
+            172 DELETE_FAST              9 (e)
+            174 JUMP_ABSOLUTE          248
+        >>  176 LOAD_CONST               0 (None)
+            178 STORE_FAST               9 (e)
+            180 DELETE_FAST              9 (e)
+            182 RERAISE
+        >>  184 RERAISE
+            186 JUMP_FORWARD            60 (to 248)
+
+ 35     >>  188 SETUP_FINALLY           12 (to 202)
+
+ 36         190 LOAD_FAST                7 (prog)
+            192 LOAD_METHOD              9 (disconnect)
+            194 CALL_METHOD              0
+            196 POP_TOP
+            198 POP_BLOCK
+            200 JUMP_FORWARD            44 (to 246)
+
+ 37     >>  202 DUP_TOP
+            204 LOAD_GLOBAL              6 (Exception)
+            206 JUMP_IF_NOT_EXC_MATCH   244
+            208 POP_TOP
+            210 STORE_FAST               9 (e)
+            212 POP_TOP
+            214 SETUP_FINALLY           20 (to 236)
+
+ 38         216 LOAD_GLOBAL             10 (print_debug)
+            218 LOAD_FAST                9 (e)
+            220 CALL_FUNCTION            1
+            222 POP_TOP
+            224 POP_BLOCK
+            226 POP_EXCEPT
+            228 LOAD_CONST               0 (None)
+            230 STORE_FAST               9 (e)
+            232 DELETE_FAST              9 (e)
+            234 JUMP_FORWARD            10 (to 246)
+        >>  236 LOAD_CONST               0 (None)
+            238 STORE_FAST               9 (e)
+            240 DELETE_FAST              9 (e)
+            242 RERAISE
+        >>  244 RERAISE
+        >>  246 RERAISE
+
+ 40     >>  248 LOAD_FAST                5 (error)
+            250 EXTENDED_ARG             1
+            252 POP_JUMP_IF_TRUE       264
+
+ 41         254 LOAD_FAST                6 (result)
+            256 LOAD_METHOD             11 (send)
+            258 LOAD_FAST                8 (obj)
+            260 CALL_METHOD              1
+            262 POP_TOP
+        >>  264 LOAD_CONST               0 (None)
+            266 RETURN_VALUE
+
+Disassembly of <code object device_config at <address omitted>, file "utils/actions.py", line 44>:
+ 45           0 LOAD_CONST               1 (False)
+              2 STORE_FAST               5 (error)
+
+ 46           4 LOAD_GLOBAL              0 (Results)
+              6 LOAD_FAST                0 (client)
+              8 LOAD_FAST                1 (add_message)
+             10 LOAD_FAST                2 (timeout_ref)
+             12 LOAD_CONST               2 ('device_config')
+             14 CALL_FUNCTION            4
+             16 STORE_FAST               6 (result)
+
+ 47          18 LOAD_GLOBAL              1 (Programmer)
+             20 LOAD_FAST                3 (port)
+             22 LOAD_FAST                4 (baud_rate)
+             24 LOAD_CONST               3 (('baud_rate',))
+             26 CALL_FUNCTION_KW         2
+             28 STORE_FAST               7 (prog)
+
+ 48          30 SETUP_FINALLY          142 (to 174)
+             32 SETUP_FINALLY           20 (to 54)
+
+ 49          34 LOAD_FAST                7 (prog)
+             36 LOAD_METHOD              2 (connect)
+             38 CALL_METHOD              0
+             40 POP_TOP
+
+ 50          42 LOAD_FAST                7 (prog)
+             44 LOAD_METHOD              3 (read_device_config)
+             46 CALL_METHOD              0
+             48 STORE_FAST               8 (lora_region)
+             50 POP_BLOCK
+             52 JUMP_FORWARD            58 (to 112)
+
+ 51     >>   54 DUP_TOP
+             56 LOAD_GLOBAL              4 (Exception)
+             58 JUMP_IF_NOT_EXC_MATCH   110
+             60 POP_TOP
+             62 STORE_FAST               9 (e)
+             64 POP_TOP
+             66 SETUP_FINALLY           34 (to 102)
+
+ 52          68 LOAD_FAST                6 (result)
+             70 LOAD_METHOD              5 (send_error)
+             72 LOAD_CONST               4 ('error')
+             74 LOAD_GLOBAL              6 (str)
+             76 LOAD_FAST                9 (e)
+             78 CALL_FUNCTION            1
+             80 BUILD_MAP                1
+             82 CALL_METHOD              1
+             84 POP_TOP
+
+ 53          86 LOAD_CONST               5 (True)
+             88 STORE_FAST               5 (error)
+             90 POP_BLOCK
+             92 POP_EXCEPT
+             94 LOAD_CONST               0 (None)
+             96 STORE_FAST               9 (e)
+             98 DELETE_FAST              9 (e)
+            100 JUMP_FORWARD            10 (to 112)
+        >>  102 LOAD_CONST               0 (None)
+            104 STORE_FAST               9 (e)
+            106 DELETE_FAST              9 (e)
+            108 RERAISE
+        >>  110 RERAISE
+        >>  112 POP_BLOCK
+
+ 55         114 SETUP_FINALLY           12 (to 128)
+
+ 56         116 LOAD_FAST                7 (prog)
+            118 LOAD_METHOD              7 (disconnect)
+            120 CALL_METHOD              0
+            122 POP_TOP
+            124 POP_BLOCK
+            126 JUMP_ABSOLUTE          234
+
+ 57     >>  128 DUP_TOP
+            130 LOAD_GLOBAL              4 (Exception)
+            132 JUMP_IF_NOT_EXC_MATCH   170
+            134 POP_TOP
+            136 STORE_FAST               9 (e)
+            138 POP_TOP
+            140 SETUP_FINALLY           20 (to 162)
+
+ 58         142 LOAD_GLOBAL              8 (print_debug)
+            144 LOAD_FAST                9 (e)
+            146 CALL_FUNCTION            1
+            148 POP_TOP
+            150 POP_BLOCK
+            152 POP_EXCEPT
+            154 LOAD_CONST               0 (None)
+            156 STORE_FAST               9 (e)
+            158 DELETE_FAST              9 (e)
+            160 JUMP_ABSOLUTE          234
+        >>  162 LOAD_CONST               0 (None)
+            164 STORE_FAST               9 (e)
+            166 DELETE_FAST              9 (e)
+            168 RERAISE
+        >>  170 RERAISE
+            172 JUMP_FORWARD            60 (to 234)
+
+ 55     >>  174 SETUP_FINALLY           12 (to 188)
+
+ 56         176 LOAD_FAST                7 (prog)
+            178 LOAD_METHOD              7 (disconnect)
+            180 CALL_METHOD              0
+            182 POP_TOP
+            184 POP_BLOCK
+            186 JUMP_FORWARD            44 (to 232)
+
+ 57     >>  188 DUP_TOP
+            190 LOAD_GLOBAL              4 (Exception)
+            192 JUMP_IF_NOT_EXC_MATCH   230
+            194 POP_TOP
+            196 STORE_FAST               9 (e)
+            198 POP_TOP
+            200 SETUP_FINALLY           20 (to 222)
+
+ 58         202 LOAD_GLOBAL              8 (print_debug)
+            204 LOAD_FAST                9 (e)
+            206 CALL_FUNCTION            1
+            208 POP_TOP
+            210 POP_BLOCK
+            212 POP_EXCEPT
+            214 LOAD_CONST               0 (None)
+            216 STORE_FAST               9 (e)
+            218 DELETE_FAST              9 (e)
+            220 JUMP_FORWARD            10 (to 232)
+        >>  222 LOAD_CONST               0 (None)
+            224 STORE_FAST               9 (e)
+            226 DELETE_FAST              9 (e)
+            228 RERAISE
+        >>  230 RERAISE
+        >>  232 RERAISE
+
+ 60     >>  234 LOAD_FAST                5 (error)
+            236 EXTENDED_ARG             1
+            238 POP_JUMP_IF_TRUE       258
+
+ 61         240 LOAD_FAST                6 (result)
+            242 LOAD_METHOD              9 (set_result)
+            244 LOAD_FAST                8 (lora_region)
+            246 CALL_METHOD              1
+            248 POP_TOP
+
+ 62         250 LOAD_FAST                6 (result)
+            252 LOAD_METHOD             10 (send)
+            254 CALL_METHOD              0
+            256 POP_TOP
+        >>  258 LOAD_CONST               0 (None)
+            260 RETURN_VALUE
+
+Disassembly of <code object erase_flash at <address omitted>, file "utils/actions.py", line 65>:
+ 66           0 LOAD_CONST               1 (False)
+              2 STORE_FAST               5 (error)
+
+ 67           4 LOAD_GLOBAL              0 (Results)
+              6 LOAD_FAST                0 (client)
+              8 LOAD_FAST                1 (add_message)
+             10 LOAD_FAST                2 (timeout_ref)
+             12 LOAD_CONST               2 ('erase_flash')
+             14 CALL_FUNCTION            4
+             16 STORE_FAST               6 (result)
+
+ 68          18 LOAD_GLOBAL              1 (Programmer)
+             20 LOAD_FAST                3 (port)
+             22 LOAD_FAST                4 (baud_rate)
+             24 LOAD_CONST               3 (('baud_rate',))
+             26 CALL_FUNCTION_KW         2
+             28 STORE_FAST               7 (prog)
+
+ 69          30 SETUP_FINALLY          176 (to 208)
+             32 SETUP_FINALLY           54 (to 88)
+
+ 70          34 LOAD_FAST                7 (prog)
+             36 LOAD_METHOD              2 (connect)
+             38 CALL_METHOD              0
+             40 POP_TOP
+
+ 71          42 LOAD_FAST                7 (prog)
+             44 LOAD_METHOD              3 (erase_flash)
+             46 CALL_METHOD              0
+             48 STORE_FAST               8 (erase_response)
+
+ 72          50 LOAD_FAST                8 (erase_response)
+             52 LOAD_METHOD              4 (get)
+             54 LOAD_CONST               4 ('error')
+             56 CALL_METHOD              1
+             58 POP_JUMP_IF_FALSE       84
+
+ 73          60 LOAD_FAST                6 (result)
+             62 LOAD_METHOD              5 (send_error)
+             64 LOAD_CONST               4 ('error')
+             66 LOAD_FAST                8 (erase_response)
+             68 LOAD_METHOD              4 (get)
+             70 LOAD_CONST               5 ('message')
+             72 CALL_METHOD              1
+             74 BUILD_MAP                1
+             76 CALL_METHOD              1
+             78 POP_TOP
+
+ 74          80 LOAD_CONST               6 (True)
+             82 STORE_FAST               5 (error)
+        >>   84 POP_BLOCK
+             86 JUMP_FORWARD            58 (to 146)
+
+ 75     >>   88 DUP_TOP
+             90 LOAD_GLOBAL              6 (Exception)
+             92 JUMP_IF_NOT_EXC_MATCH   144
+             94 POP_TOP
+             96 STORE_FAST               9 (e)
+             98 POP_TOP
+            100 SETUP_FINALLY           34 (to 136)
+
+ 76         102 LOAD_FAST                6 (result)
+            104 LOAD_METHOD              5 (send_error)
+            106 LOAD_CONST               4 ('error')
+            108 LOAD_GLOBAL              7 (str)
+            110 LOAD_FAST                9 (e)
+            112 CALL_FUNCTION            1
+            114 BUILD_MAP                1
+            116 CALL_METHOD              1
+            118 POP_TOP
+
+ 77         120 LOAD_CONST               6 (True)
+            122 STORE_FAST               5 (error)
+            124 POP_BLOCK
+            126 POP_EXCEPT
+            128 LOAD_CONST               0 (None)
+            130 STORE_FAST               9 (e)
+            132 DELETE_FAST              9 (e)
+            134 JUMP_FORWARD            10 (to 146)
+        >>  136 LOAD_CONST               0 (None)
+            138 STORE_FAST               9 (e)
+            140 DELETE_FAST              9 (e)
+            142 RERAISE
+        >>  144 RERAISE
+        >>  146 POP_BLOCK
+
+ 79         148 SETUP_FINALLY           12 (to 162)
+
+ 80         150 LOAD_FAST                7 (prog)
+            152 LOAD_METHOD              8 (disconnect)
+            154 CALL_METHOD              0
+            156 POP_TOP
+            158 POP_BLOCK
+            160 JUMP_FORWARD            44 (to 206)
+
+ 81     >>  162 DUP_TOP
+            164 LOAD_GLOBAL              6 (Exception)
+            166 JUMP_IF_NOT_EXC_MATCH   204
+            168 POP_TOP
+            170 STORE_FAST               9 (e)
+            172 POP_TOP
+            174 SETUP_FINALLY           20 (to 196)
+
+ 82         176 LOAD_GLOBAL              9 (print_debug)
+            178 LOAD_FAST                9 (e)
+            180 CALL_FUNCTION            1
+            182 POP_TOP
+            184 POP_BLOCK
+            186 POP_EXCEPT
+            188 LOAD_CONST               0 (None)
+            190 STORE_FAST               9 (e)
+            192 DELETE_FAST              9 (e)
+            194 JUMP_FORWARD            10 (to 206)
+        >>  196 LOAD_CONST               0 (None)
+            198 STORE_FAST               9 (e)
+            200 DELETE_FAST              9 (e)
+            202 RERAISE
+        >>  204 RERAISE
+        >>  206 JUMP_FORWARD            62 (to 270)
+
+ 79     >>  208 SETUP_FINALLY           12 (to 222)
+
+ 80         210 LOAD_FAST                7 (prog)
+            212 LOAD_METHOD              8 (disconnect)
+            214 CALL_METHOD              0
+            216 POP_TOP
+            218 POP_BLOCK
+            220 JUMP_FORWARD            46 (to 268)
+
+ 81     >>  222 DUP_TOP
+            224 LOAD_GLOBAL              6 (Exception)
+            226 EXTENDED_ARG             1
+            228 JUMP_IF_NOT_EXC_MATCH   266
+            230 POP_TOP
+            232 STORE_FAST               9 (e)
+            234 POP_TOP
+            236 SETUP_FINALLY           20 (to 258)
+
+ 82         238 LOAD_GLOBAL              9 (print_debug)
+            240 LOAD_FAST                9 (e)
+            242 CALL_FUNCTION            1
+            244 POP_TOP
+            246 POP_BLOCK
+            248 POP_EXCEPT
+            250 LOAD_CONST               0 (None)
+            252 STORE_FAST               9 (e)
+            254 DELETE_FAST              9 (e)
+            256 JUMP_FORWARD            10 (to 268)
+        >>  258 LOAD_CONST               0 (None)
+            260 STORE_FAST               9 (e)
+            262 DELETE_FAST              9 (e)
+            264 RERAISE
+        >>  266 RERAISE
+        >>  268 RERAISE
+
+ 84     >>  270 LOAD_FAST                5 (error)
+            272 EXTENDED_ARG             1
+            274 POP_JUMP_IF_TRUE       298
+
+ 85         276 LOAD_FAST                6 (result)
+            278 LOAD_METHOD             10 (set_result)
+            280 LOAD_CONST               7 ('status')
+            282 LOAD_CONST               8 (200)
+            284 BUILD_MAP                1
+            286 CALL_METHOD              1
+            288 POP_TOP
+
+ 86         290 LOAD_FAST                6 (result)
+            292 LOAD_METHOD             11 (send)
+            294 CALL_METHOD              0
+            296 POP_TOP
+        >>  298 LOAD_CONST               0 (None)
+            300 RETURN_VALUE
+
+Disassembly of <code object dl_fw_locally at <address omitted>, file "utils/actions.py", line 89>:
+ 90           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('download_firmware_locally')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST               5 (result)
+
+ 91          14 LOAD_GLOBAL              1 (os)
+             16 LOAD_ATTR                2 (path)
+             18 LOAD_METHOD              3 (join)
+             20 LOAD_GLOBAL              1 (os)
+             22 LOAD_METHOD              4 (getcwd)
+             24 CALL_METHOD              0
+             26 LOAD_CONST               2 ('tmp')
+             28 LOAD_FAST                4 (filename)
+             30 LOAD_METHOD              5 (replace)
+             32 LOAD_CONST               3 ('/')
+             34 LOAD_CONST               4 ('')
+             36 CALL_METHOD              2
+             38 LOAD_METHOD              5 (replace)
+             40 LOAD_CONST               5 ('\\')
+             42 LOAD_CONST               4 ('')
+             44 CALL_METHOD              2
+             46 CALL_METHOD              3
+             48 STORE_FAST               6 (path)
+
+ 93          50 LOAD_GLOBAL              1 (os)
+             52 LOAD_ATTR                2 (path)
+             54 LOAD_METHOD              6 (exists)
+             56 LOAD_CONST               2 ('tmp')
+             58 CALL_METHOD              1
+             60 POP_JUMP_IF_TRUE        72
+
+ 94          62 LOAD_GLOBAL              1 (os)
+             64 LOAD_METHOD              7 (makedirs)
+             66 LOAD_CONST               2 ('tmp')
+             68 CALL_METHOD              1
+             70 POP_TOP
+
+ 96     >>   72 SETUP_FINALLY           14 (to 88)
+
+ 97          74 LOAD_GLOBAL              1 (os)
+             76 LOAD_METHOD              8 (remove)
+             78 LOAD_FAST                6 (path)
+             80 CALL_METHOD              1
+             82 POP_TOP
+             84 POP_BLOCK
+             86 JUMP_FORWARD            48 (to 136)
+
+ 98     >>   88 DUP_TOP
+             90 LOAD_GLOBAL              9 (Exception)
+             92 JUMP_IF_NOT_EXC_MATCH   134
+             94 POP_TOP
+             96 STORE_FAST               7 (e)
+             98 POP_TOP
+            100 SETUP_FINALLY           24 (to 126)
+
+ 99         102 LOAD_GLOBAL             10 (print_debug)
+            104 LOAD_GLOBAL             11 (str)
+            106 LOAD_FAST                7 (e)
+            108 CALL_FUNCTION            1
+            110 CALL_FUNCTION            1
+            112 POP_TOP
+            114 POP_BLOCK
+            116 POP_EXCEPT
+            118 LOAD_CONST               0 (None)
+            120 STORE_FAST               7 (e)
+            122 DELETE_FAST              7 (e)
+            124 JUMP_FORWARD            10 (to 136)
+        >>  126 LOAD_CONST               0 (None)
+            128 STORE_FAST               7 (e)
+            130 DELETE_FAST              7 (e)
+            132 RERAISE
+        >>  134 RERAISE
+
+101     >>  136 SETUP_FINALLY           68 (to 206)
+
+102         138 LOAD_GLOBAL             12 (requests)
+            140 LOAD_METHOD             13 (get)
+            142 LOAD_FAST                3 (url)
+            144 CALL_METHOD              1
+            146 STORE_FAST               8 (r)
+
+103         148 LOAD_GLOBAL             14 (open)
+            150 LOAD_FAST                6 (path)
+            152 LOAD_CONST               6 ('wb')
+            154 CALL_FUNCTION            2
+            156 SETUP_WITH              28 (to 186)
+            158 STORE_FAST               9 (f)
+
+104         160 LOAD_FAST                9 (f)
+            162 LOAD_METHOD             15 (write)
+            164 LOAD_FAST                8 (r)
+            166 LOAD_ATTR               16 (content)
+            168 CALL_METHOD              1
+            170 POP_TOP
+            172 POP_BLOCK
+            174 LOAD_CONST               0 (None)
+            176 DUP_TOP
+            178 DUP_TOP
+            180 CALL_FUNCTION            3
+            182 POP_TOP
+            184 JUMP_FORWARD            16 (to 202)
+        >>  186 WITH_EXCEPT_START
+            188 POP_JUMP_IF_TRUE       192
+            190 RERAISE
+        >>  192 POP_TOP
+            194 POP_TOP
+            196 POP_TOP
+            198 POP_EXCEPT
+            200 POP_TOP
+        >>  202 POP_BLOCK
+            204 JUMP_FORWARD            58 (to 264)
+
+105     >>  206 DUP_TOP
+            208 LOAD_GLOBAL              9 (Exception)
+            210 EXTENDED_ARG             1
+            212 JUMP_IF_NOT_EXC_MATCH   262
+            214 POP_TOP
+            216 STORE_FAST               7 (e)
+            218 POP_TOP
+            220 SETUP_FINALLY           32 (to 254)
+
+106         222 LOAD_FAST                5 (result)
+            224 LOAD_METHOD             17 (send_error)
+            226 LOAD_CONST               7 ('error')
+            228 LOAD_GLOBAL             11 (str)
+            230 LOAD_FAST                7 (e)
+            232 CALL_FUNCTION            1
+            234 BUILD_MAP                1
+            236 CALL_METHOD              1
+            238 POP_TOP
+
+107         240 POP_BLOCK
+            242 POP_EXCEPT
+            244 LOAD_CONST               0 (None)
+            246 STORE_FAST               7 (e)
+            248 DELETE_FAST              7 (e)
+            250 LOAD_CONST               0 (None)
+            252 RETURN_VALUE
+        >>  254 LOAD_CONST               0 (None)
+            256 STORE_FAST               7 (e)
+            258 DELETE_FAST              7 (e)
+            260 RERAISE
+        >>  262 RERAISE
+
+109     >>  264 LOAD_FAST                5 (result)
+            266 LOAD_METHOD             18 (set_result)
+
+110         268 LOAD_CONST               8 (200)
+
+111         270 LOAD_FAST                4 (filename)
+
+109         272 LOAD_CONST               9 (('status', 'filename'))
+            274 BUILD_CONST_KEY_MAP      2
+            276 CALL_METHOD              1
+            278 POP_TOP
+
+113         280 LOAD_FAST                5 (result)
+            282 LOAD_METHOD             19 (send)
+            284 CALL_METHOD              0
+            286 POP_TOP
+            288 LOAD_CONST               0 (None)
+            290 RETURN_VALUE
+
+Disassembly of <code object write_firmware at <address omitted>, file "utils/actions.py", line 116>:
+119           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('write_firmware')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST              10 (result)
+
+120          14 LOAD_GLOBAL              1 (os)
+             16 LOAD_ATTR                2 (path)
+             18 LOAD_METHOD              3 (join)
+             20 LOAD_GLOBAL              1 (os)
+             22 LOAD_METHOD              4 (getcwd)
+             24 CALL_METHOD              0
+             26 LOAD_CONST               2 ('tmp')
+             28 LOAD_FAST                4 (filename)
+             30 LOAD_METHOD              5 (replace)
+             32 LOAD_CONST               3 ('/')
+             34 LOAD_CONST               4 ('')
+             36 CALL_METHOD              2
+             38 LOAD_METHOD              5 (replace)
+             40 LOAD_CONST               5 ('\\')
+             42 LOAD_CONST               4 ('')
+             44 CALL_METHOD              2
+             46 CALL_METHOD              3
+             48 STORE_FAST              11 (path)
+
+121          50 LOAD_GLOBAL              6 (Programmer)
+             52 LOAD_FAST                3 (port)
+             54 LOAD_FAST               10 (result)
+             56 LOAD_FAST                5 (baud_rate)
+             58 LOAD_FAST                6 (erase_fs)
+             60 LOAD_FAST                7 (erase_nvs)
+             62 LOAD_FAST               11 (path)
+             64 CALL_FUNCTION            6
+             66 STORE_FAST              12 (prog)
+
+123          68 SETUP_FINALLY          136 (to 206)
+             70 SETUP_FINALLY           18 (to 90)
+
+124          72 LOAD_FAST               12 (prog)
+             74 LOAD_ATTR                7 (flash_firmware)
+             76 LOAD_FAST                8 (config)
+             78 LOAD_FAST                9 (remote_config)
+             80 LOAD_CONST               6 (('config', 'remote_config'))
+             82 CALL_FUNCTION_KW         2
+             84 POP_TOP
+             86 POP_BLOCK
+             88 JUMP_FORWARD            54 (to 144)
+
+125     >>   90 DUP_TOP
+             92 LOAD_GLOBAL              8 (Exception)
+             94 JUMP_IF_NOT_EXC_MATCH   142
+             96 POP_TOP
+             98 STORE_FAST              13 (e)
+            100 POP_TOP
+            102 SETUP_FINALLY           30 (to 134)
+
+126         104 LOAD_FAST               10 (result)
+            106 LOAD_METHOD              9 (send_error)
+            108 LOAD_CONST               7 ('error')
+            110 LOAD_GLOBAL             10 (str)
+            112 LOAD_FAST               13 (e)
+            114 CALL_FUNCTION            1
+            116 BUILD_MAP                1
+            118 CALL_METHOD              1
+            120 POP_TOP
+            122 POP_BLOCK
+            124 POP_EXCEPT
+            126 LOAD_CONST               0 (None)
+            128 STORE_FAST              13 (e)
+            130 DELETE_FAST             13 (e)
+            132 JUMP_FORWARD            10 (to 144)
+        >>  134 LOAD_CONST               0 (None)
+            136 STORE_FAST              13 (e)
+            138 DELETE_FAST             13 (e)
+            140 RERAISE
+        >>  142 RERAISE
+        >>  144 POP_BLOCK
+
+128         146 SETUP_FINALLY           12 (to 160)
+
+129         148 LOAD_FAST               12 (prog)
+            150 LOAD_METHOD             11 (disconnect)
+            152 CALL_METHOD              0
+            154 POP_TOP
+            156 POP_BLOCK
+            158 JUMP_FORWARD            44 (to 204)
+
+130     >>  160 DUP_TOP
+            162 LOAD_GLOBAL              8 (Exception)
+            164 JUMP_IF_NOT_EXC_MATCH   202
+            166 POP_TOP
+            168 STORE_FAST              13 (e)
+            170 POP_TOP
+            172 SETUP_FINALLY           20 (to 194)
+
+131         174 LOAD_GLOBAL             12 (print_debug)
+            176 LOAD_FAST               13 (e)
+            178 CALL_FUNCTION            1
+            180 POP_TOP
+            182 POP_BLOCK
+            184 POP_EXCEPT
+            186 LOAD_CONST               0 (None)
+            188 STORE_FAST              13 (e)
+            190 DELETE_FAST             13 (e)
+            192 JUMP_FORWARD            10 (to 204)
+        >>  194 LOAD_CONST               0 (None)
+            196 STORE_FAST              13 (e)
+            198 DELETE_FAST             13 (e)
+            200 RERAISE
+        >>  202 RERAISE
+        >>  204 JUMP_FORWARD            62 (to 268)
+
+128     >>  206 SETUP_FINALLY           12 (to 220)
+
+129         208 LOAD_FAST               12 (prog)
+            210 LOAD_METHOD             11 (disconnect)
+            212 CALL_METHOD              0
+            214 POP_TOP
+            216 POP_BLOCK
+            218 JUMP_FORWARD            46 (to 266)
+
+130     >>  220 DUP_TOP
+            222 LOAD_GLOBAL              8 (Exception)
+            224 EXTENDED_ARG             1
+            226 JUMP_IF_NOT_EXC_MATCH   264
+            228 POP_TOP
+            230 STORE_FAST              13 (e)
+            232 POP_TOP
+            234 SETUP_FINALLY           20 (to 256)
+
+131         236 LOAD_GLOBAL             12 (print_debug)
+            238 LOAD_FAST               13 (e)
+            240 CALL_FUNCTION            1
+            242 POP_TOP
+            244 POP_BLOCK
+            246 POP_EXCEPT
+            248 LOAD_CONST               0 (None)
+            250 STORE_FAST              13 (e)
+            252 DELETE_FAST             13 (e)
+            254 JUMP_FORWARD            10 (to 266)
+        >>  256 LOAD_CONST               0 (None)
+            258 STORE_FAST              13 (e)
+            260 DELETE_FAST             13 (e)
+            262 RERAISE
+        >>  264 RERAISE
+        >>  266 RERAISE
+        >>  268 LOAD_CONST               0 (None)
+            270 RETURN_VALUE
+
+Disassembly of <code object get_region_list at <address omitted>, file "utils/actions.py", line 134>:
+135           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('region_list')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST               4 (result)
+
+136          14 LOAD_GLOBAL              1 (requests)
+             16 LOAD_METHOD              2 (get)
+             18 LOAD_CONST               2 ('https://software.pycom.io/findupgrade?redirect=true&strict=false&type=stable&key=lopy.regionlist&tool_version={}')
+             20 LOAD_METHOD              3 (format)
+             22 LOAD_FAST                3 (tool_version)
+             24 CALL_METHOD              1
+             26 CALL_METHOD              1
+             28 STORE_FAST               5 (regions)
+
+137          30 LOAD_GLOBAL              4 (json)
+             32 LOAD_METHOD              5 (loads)
+             34 LOAD_FAST                5 (regions)
+             36 LOAD_ATTR                6 (content)
+             38 LOAD_METHOD              7 (decode)
+             40 LOAD_CONST               3 ('utf8')
+             42 CALL_METHOD              1
+             44 CALL_METHOD              1
+             46 STORE_FAST               6 (regions_list)
+
+138          48 LOAD_FAST                4 (result)
+             50 LOAD_METHOD              8 (send)
+             52 LOAD_FAST                6 (regions_list)
+             54 CALL_METHOD              1
+             56 POP_TOP
+             58 LOAD_CONST               0 (None)
+             60 RETURN_VALUE
+
+Disassembly of <code object get_sigfox_region_list at <address omitted>, file "utils/actions.py", line 141>:
+142           0 LOAD_GLOBAL              0 (Results)
+              2 LOAD_FAST                0 (client)
+              4 LOAD_FAST                1 (add_message)
+              6 LOAD_FAST                2 (timeout_ref)
+              8 LOAD_CONST               1 ('sigfox_region_list')
+             10 CALL_FUNCTION            4
+             12 STORE_FAST               4 (result)
+
+143          14 LOAD_GLOBAL              1 (requests)
+             16 LOAD_METHOD              2 (get)
+             18 LOAD_CONST               2 ('https://software.pycom.io/findupgrade?redirect=true&strict=false&type=stable&key=sipy.freqlist&tool_version={}')
+             20 LOAD_METHOD              3 (format)
+             22 LOAD_FAST                3 (tool_version)
+             24 CALL_METHOD              1
+             26 CALL_METHOD              1
+             28 STORE_FAST               5 (country)
+
+144          30 LOAD_GLOBAL              4 (json)
+             32 LOAD_METHOD              5 (loads)
+             34 LOAD_FAST                5 (country)
+             36 LOAD_ATTR                6 (content)
+             38 LOAD_METHOD              7 (decode)
+             40 LOAD_CONST               3 ('utf8')
+             42 CALL_METHOD              1
+             44 CALL_METHOD              1
+             46 STORE_FAST               6 (country_list)
+
+145          48 LOAD_FAST                4 (result)
+             50 LOAD_METHOD              8 (send)
+             52 LOAD_FAST                6 (country_list)
+             54 CALL_METHOD              1
+             56 POP_TOP
+             58 LOAD_CONST               0 (None)
+             60 RETURN_VALUE

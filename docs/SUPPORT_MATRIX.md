@@ -24,14 +24,19 @@ validate each revision and package against its actual layout.
 
 | Host/distribution | Priority | Current status | Minimum release evidence |
 | --- | --- | --- | --- |
-| macOS ARM native | First | Not built or tested | Clean host plus physical-device qualification |
-| macOS Intel native | Next | Not built or tested | Native Intel host plus physical-device qualification |
-| macOS universal2 | Next | Not built or tested | Binary slice audit plus both native host qualifications |
+| macOS ARM native GUI | Primary product target | Not built or tested | Complete GUI on a clean host without Rosetta plus physical-device qualification |
+| macOS Intel native | Transition support | Not built or tested | Native Intel host plus physical-device qualification |
+| macOS universal2 GUI | Transition support | Not built or tested | Full GUI/binary slice audit plus both native host qualifications |
 | Linux | Later | Not built or tested | Packaging, permissions, bridge/driver, physical device |
 | Windows | Later | Not built or tested | Packaging, driver, host security, physical device |
 
 Minimum OS and Python versions remain design decisions. Documentation CI runs on
 Linux; that does not establish Linux updater support.
+
+The [installer recovery](RECOVERY_FINDINGS.md) establishes historical x86_64
+packaging, not community Intel compatibility. Native ARM prevents dependence on
+the ending Rosetta path. Neither static recovery nor documentation CI qualifies
+an updater or GUI on any host.
 
 ## Expansion boards and connection strategies
 

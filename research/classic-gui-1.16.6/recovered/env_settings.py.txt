@@ -1,0 +1,27 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: research decoder (version recorded in manifest)
+# Embedded file name: env_settings.py
+import os, sys
+CONF_FILE = os.path.dirname(os.path.realpath(__file__)) + '/pycom_fwtool.cfg'
+if 'HOME' in os.environ:
+    if os.path.isdir(os.environ['HOME']):
+        CONF_FILE = os.environ['HOME'] + '/.pycom_fwtool.cfg'
+elif 'USERPROFILE' in os.environ:
+    if os.path.isdir(os.environ['USERPROFILE']):
+        CONF_FILE = os.environ['USERPROFILE'] + '/pycom_fwtool.cfg'
+if getattr(sys, 'frozen', False):
+    DEBUG = False
+    IMG_PATH = sys._MEIPASS + '/img'
+else:
+    HERE_PATH = os.path.dirname(os.path.realpath(__file__))
+    sys.path.append(HERE_PATH)
+    IMG_PATH = HERE_PATH + '/img'
+
+class Args(object):
+    pass

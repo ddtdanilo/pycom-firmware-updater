@@ -1,0 +1,56 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('Server',))
+              4 IMPORT_NAME              0 (server)
+              6 IMPORT_FROM              1 (Server)
+              8 STORE_NAME               1 (Server)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('createHost',))
+             16 IMPORT_NAME              2 (utils.addHost)
+             18 IMPORT_FROM              3 (createHost)
+             20 STORE_NAME               3 (createHost)
+             22 POP_TOP
+
+  3          24 LOAD_CONST               0 (0)
+             26 LOAD_CONST               3 (None)
+             28 IMPORT_NAME              4 (threading)
+             30 STORE_NAME               4 (threading)
+
+  5          32 LOAD_NAME                5 (__name__)
+             34 LOAD_CONST               4 ('__main__')
+             36 COMPARE_OP               2 (==)
+             38 POP_JUMP_IF_FALSE       82
+
+  6          40 LOAD_NAME                3 (createHost)
+             42 CALL_FUNCTION            0
+             44 POP_TOP
+
+  7          46 LOAD_NAME                1 (Server)
+             48 CALL_FUNCTION            0
+             50 STORE_NAME               6 (websocket_communicator)
+
+  8          52 LOAD_NAME                4 (threading)
+             54 LOAD_ATTR                7 (Thread)
+             56 LOAD_NAME                6 (websocket_communicator)
+             58 LOAD_ATTR                8 (start_queue_processor)
+             60 LOAD_CONST               5 (('target',))
+             62 CALL_FUNCTION_KW         1
+             64 STORE_NAME               9 (m)
+
+  9          66 LOAD_NAME                9 (m)
+             68 LOAD_METHOD             10 (start)
+             70 CALL_METHOD              0
+             72 POP_TOP
+
+ 10          74 LOAD_NAME                6 (websocket_communicator)
+             76 LOAD_METHOD             11 (listen)
+             78 CALL_METHOD              0
+             80 POP_TOP
+        >>   82 LOAD_CONST               3 (None)
+             84 RETURN_VALUE
