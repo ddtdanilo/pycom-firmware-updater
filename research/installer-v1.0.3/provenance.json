@@ -30,8 +30,8 @@
     "Two credential literals replaced on exact constant matches before export; PEM/userinfo blocks redacted if found",
     "Source filenames normalized to module-relative paths",
     "Disassembly object memory addresses omitted",
-    "Automatic source-preview trailing whitespace removed",
     "Reference-only notice added to text artifacts",
-    "Empty automatic outputs omitted; failures retained in manifest"
+    "Empty automatic outputs omitted; failures retained in manifest",
+    "Literal whitespace preserved; generated references use LF and normalized final newline"
   ]
 }

@@ -13,6 +13,6 @@ class NotImplementedInROMError(FatalError):
     Wrapper class for the error thrown when a particular ESP bootloader function
     is not implemented in the ROM bootloader.
     '''
-
+    
     def __init__(self, bootloader, func):
         FatalError.__init__(self, '%s ROM does not support function %s.' % (bootloader.CHIP_NAME, func.__name__))

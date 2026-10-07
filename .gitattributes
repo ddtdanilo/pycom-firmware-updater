@@ -6,3 +6,6 @@
 # Preserve inherited documentation bytes, including historical whitespace.
 docs/UPSTREAM_README.md -whitespace
 CHANGELOG.md -whitespace
+
+# Preserve literal whitespace in generated reference text; keep hash inputs LF.
+research/**/recovered/*.txt text eol=lf -whitespace

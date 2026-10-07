@@ -1,0 +1,17 @@
+{
+  "method": "CPython 3.9 lib2to3 permissive Python-2-compatible grammar",
+  "scope": "Grammar only; not compilation, equivalence, or execution",
+  "results": {
+    "DeviceInfoQuery.py.txt": "passed",
+    "DeviceUpgrade.py.txt": "passed",
+    "FetchFiles.py.txt": "passed",
+    "LoadingSpin.py.txt": "passed",
+    "RunInWorker.py.txt": "passed",
+    "env_settings.py.txt": "passed",
+    "misc.py.txt": "passed",
+    "pycom_fwtool.py.txt": "passed",
+    "pyconf.py.txt": "passed",
+    "pypic.py.txt": "passed",
+    "updater.py.txt": "passed"
+  }
+}

@@ -16,7 +16,7 @@ import serial
 from utils.constants import constants
 
 class Pypic:
-
+    
     def __init__(self, port, baudrate, bytesize = (115200, serial.FIVEBITS)):
         '''
         we need bytesize to be 5 bits in order for the PIC to process
@@ -30,17 +30,17 @@ class Pypic:
         self.set_serial()
         self.detect_fw_version()
 
-
+    
     def set_serial(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def detect_fw_version(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def _write(self, data, read, num_read_bytes = (True, 1)):
         self.serial.write(data)
         if read:
@@ -54,35 +54,35 @@ class Pypic:
                 return struct.unpack('B', r_data[0])[0]
             return None[0]
 
-
+    
     def _flush(self, num_read_bytes = (10,)):
         self.serial.read(num_read_bytes)
 
-
+    
     def _send_cmd(self, cmd, num_read_bytes = (1,)):
         return self._write(bytearray([
             cmd]), True, num_read_bytes)
 
-
+    
     def read_hw_version(self):
         return self._send_cmd(constants.CMD_HW_VER, 2)
 
-
+    
     def read_fw_version(self):
         return self._send_cmd(constants.CMD_FW_VER, 2)
 
-
+    
     def read_product_id(self):
         return self._send_cmd(constants.CMD_PROD_ID, 2)
 
-
+    
     def peek_memory(self, addr):
         return self._write(bytearray([
             constants.CMD_PEEK,
             addr & 255,
             addr >> 8 & 255]))
 
-
+    
     def poke_memory(self, addr, value):
         self._write(bytearray([
             constants.CMD_POKE,
@@ -90,7 +90,7 @@ class Pypic:
             addr >> 8 & 255,
             value & 255]), False)
 
-
+    
     def magic_write_read(self, addr, _and, _or, _xor = (255, 0, 0)):
         return self._write(bytearray([
             constants.CMD_MAGIC,
@@ -100,7 +100,7 @@ class Pypic:
             _or & 255,
             _xor & 255]))
 
-
+    
     def magic_write(self, addr, _and, _or, _xor = (255, 0, 0)):
         self._write(bytearray([
             constants.CMD_MAGIC,
@@ -110,19 +110,19 @@ class Pypic:
             _or & 255,
             _xor & 255]), False)
 
-
+    
     def toggle_bits_in_memory(self, addr, bits):
         self.magic_write(addr, bits, **('_xor',))
 
-
+    
     def mask_bits_in_memory(self, addr, mask):
         self.magic_write(addr, mask, **('_and',))
 
-
+    
     def set_bits_in_memory(self, addr, bits):
         self.magic_write(addr, bits, **('_or',))
 
-
+    
     def reset_pycom_module(self):
         self.mask_bits_in_memory(constants.TRISC_ADDR, -33)
         self.mask_bits_in_memory(constants.PORTC_ADDR, -33)
@@ -131,7 +131,7 @@ class Pypic:
         time.sleep(0.1)
         self.set_bits_in_memory(constants.TRISC_ADDR, 32)
 
-
+    
     def enter_pycom_programming_mode(self, reset = (True,)):
         print_debug('Entering programming mode with reset={}'.format(reset))
         self.mask_bits_in_memory(constants.TRISA_ADDR, -33)
@@ -142,7 +142,7 @@ class Pypic:
             self.reset_pycom_module()
         self._flush()
 
-
+    
     def exit_pycom_programming_mode(self, reset = (True,)):
         print_debug('Leaving programming mode with reset={}'.format(reset))
         self.mask_bits_in_memory(constants.TRISA_ADDR, -33)
@@ -152,11 +152,11 @@ class Pypic:
             self.reset_pycom_module()
         self._flush()
 
-
+    
     def isdetected(self):
         return self.detected
 
-
+    
     def close(self):
         self.serial.close()
 

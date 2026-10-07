@@ -13,11 +13,11 @@ class FatalError(RuntimeError):
     Wrapper class for runtime errors that aren't caused by internal bugs, but by
     ESP8266 responses or input content.
     """
-
+    
     def __init__(self, message):
         RuntimeError.__init__(self, message)
 
-
+    
     def WithResult(message, result):
         """
         Return a fatal error object that appends the hex values of

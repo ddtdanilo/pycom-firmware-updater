@@ -38,7 +38,7 @@ class AppState(Enum):
 
 
 class Server:
-
+    
     def __init__(self):
         asyncio.set_event_loop_policy(AnyThreadEventLoopPolicy())
         asyncio.new_event_loop()
@@ -56,57 +56,57 @@ class Server:
         self.state = AppState.STARTING
         self.tray_icon = None
 
-
+    
     def get_icon(self):
         assets_path = pathlib.Path(__file__).with_name('assets')
         icon = assets_path / 'py_{}.ico'.format(self.state.value)
         return QtGui.QIcon(str(icon))
 
-
+    
     def add_message(self, msg):
         self.queue.put(msg)
 
-
+    
     async def queue_processor(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     async def disconnect_client(self, client):
         await client.close()
         self.clients.remove(client)
     # WARNING: Decompyle incomplete
 
-
+    
     def get_certificate(self):
         if not os.path.exists(self.cert_dir):
             os.makedirs(self.cert_dir)
     # WARNING: Decompyle incomplete
 
-
+    
     async def keep_alive(self = None, client = None):
         await asyncio.sleep(self._client_timeout)
     # WARNING: Decompyle incomplete
 
-
+    
     async def handle_messages(self, client):
         await client.recv()
         message_obj = <NODE:28>
     # WARNING: Decompyle incomplete
 
-
+    
     async def connect_client(self = None, client = None, path = None):
         self.clients.add(client)
     # WARNING: Decompyle incomplete
 
-
+    
     def stop_and_exit(self):
         print_debug('exiting')
         self.is_running = False
         self._wake_up_task.cancel()
     # WARNING: Decompyle incomplete
 
-
+    
     def check_cert_expiration(self):
         with open(self.cert_path, 'r') as cert_file:
             cert_text = cert_file.read()
@@ -127,12 +127,12 @@ class Server:
             if not None:
                 pass
 
-
+    
     def set_tray_icon(self):
         if self.tray_icon:
             self.tray_icon.setIcon(self.get_icon())
 
-
+    
     def add_tray_icon(self):
         app = QtWidgets.QApplication(sys.argv)
         w = QtWidgets.QWidget()
@@ -141,12 +141,12 @@ class Server:
         self.tray_icon.show()
         sys.exit(app.exec_())
 
-
+    
     def listen(self, host, port = ('localhost', 8765)):
         print_debug('listening on {}:{}  SSL:{}'.format(host, port, ENABLE_SSL))
     # WARNING: Decompyle incomplete
 
-
+    
     def start_queue_processor(self):
         self.is_running = True
         asyncio.run(self.queue_processor())

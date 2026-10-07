@@ -5,7 +5,7 @@
 
 # uncompyle6 version 3.9.3
 # Python bytecode version base 2.7 (62211)
-# Decompiled from: Python 3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]
+# Decompiled from: research decoder (version recorded in manifest)
 # Embedded file name: FetchFiles.py
 from io import BytesIO
 import json, requests, binascii
@@ -106,10 +106,10 @@ class FetchFiles(object):
         return
 
     def get_file(self, key, redirect, fwtype, strict, version, callback):
-        params = {'key': key,
-           'redirect': (str(redirect).lower()),
-           'type': (str(fwtype)),
-           'strict': (str(strict).lower()),
+        params = {'key': key, 
+           'redirect': (str(redirect).lower()), 
+           'type': (str(fwtype)), 
+           'strict': (str(strict).lower()), 
            'tool_version': (calc_int_version(TOOL_VERSION))}
         if version is not None:
             params['version'] = version

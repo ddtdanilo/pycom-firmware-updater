@@ -9123,9 +9123,9 @@
     "Two credential literals replaced on exact constant matches before export; PEM/userinfo blocks redacted if found",
     "Source filenames normalized to module-relative paths",
     "Disassembly object memory addresses omitted",
-    "Automatic source-preview trailing whitespace removed",
     "Reference-only notice added to text artifacts",
-    "Empty automatic outputs omitted; failures retained in manifest"
+    "Empty automatic outputs omitted; failures retained in manifest",
+    "Literal whitespace preserved; generated references use LF and normalized final newline"
   ],
   "publication_transform": "tools/publish_reference.py: prepend NOTICE, omit empty text, normalize final newline, hash final bytes",
   "published_files": [
@@ -9156,8 +9156,8 @@
     },
     {
       "path": "recovered/classes.result.py.txt",
-      "sha256": "4d69c17debb716fd11f0998c700f961013096a6610d179daf92c486cc255f835",
-      "bytes": 1412
+      "sha256": "d211084b585ff7e3b91d21bda9fedddccb4a13bfc1375664362857ea0ca613ec",
+      "bytes": 1432
     },
     {
       "path": "recovered/errors_lib.dis.txt",
@@ -9171,8 +9171,8 @@
     },
     {
       "path": "recovered/errors_lib.fatal_error.py.txt",
-      "sha256": "77243e5996cae2bae46cdd602b61ae514b25f61b2f2e0713e05c19acba924540",
-      "bytes": 993
+      "sha256": "8a4468eb443cef03d7a034ab8df810dc612a95a10870096f58835932a790bce7",
+      "bytes": 1001
     },
     {
       "path": "recovered/errors_lib.no_impolemented_in_rome_error.dis.txt",
@@ -9181,8 +9181,8 @@
     },
     {
       "path": "recovered/errors_lib.no_impolemented_in_rome_error.py.txt",
-      "sha256": "ce7ab4d23464e70b82a997020a80dae65d0aa83c861f315ff651c49cb2e05f36",
-      "bytes": 810
+      "sha256": "fd3acac1afde9aa2315a6cdf2d1e06ecd6e4aff4d43cc53f01a944604350cc06",
+      "bytes": 814
     },
     {
       "path": "recovered/errors_lib.py.txt",
@@ -9201,8 +9201,8 @@
     },
     {
       "path": "recovered/npy_programmer.py.txt",
-      "sha256": "aa6103961b908fdf9c4e9eaf6c8ae9c8c425adb74e02b91727b38840f7200019",
-      "bytes": 28303
+      "sha256": "a73ab35b9d9e287f1691316c054681b345c7829d0b05a5b3785a483998b793fc",
+      "bytes": 28463
     },
     {
       "path": "recovered/programmer.diagnostics.txt",
@@ -9216,8 +9216,8 @@
     },
     {
       "path": "recovered/programmer.py.txt",
-      "sha256": "594053518de16daadef925e2ab1cc88a84a1c4be25872b9f4d0aa7e3ab1ced0b",
-      "bytes": 2706
+      "sha256": "c3ca8a5cb80129e37ecc2bbd7012f0ccb817e6b63afcdc741053918278fc2cde",
+      "bytes": 2750
     },
     {
       "path": "recovered/pypic.diagnostics.txt",
@@ -9231,8 +9231,8 @@
     },
     {
       "path": "recovered/pypic.py.txt",
-      "sha256": "739a6c16fd67f8859e45ca6c205ef8998f6836fd74c8a4aad12192ef06d5c27c",
-      "bytes": 5921
+      "sha256": "bd74b229cd98900748a579af02327c85b6256977e777397b8a524a0afb0dd9d3",
+      "bytes": 6005
     },
     {
       "path": "recovered/server.diagnostics.txt",
@@ -9246,8 +9246,8 @@
     },
     {
       "path": "recovered/server.py.txt",
-      "sha256": "180657d04ea6d828334e37d6b76093fe785fffccbe190254a487b55d535e6ec6",
-      "bytes": 4614
+      "sha256": "360988a8a78b0a9cda1a98e658bc2de71ea7aa3685fbbfc468f5733eb3838bcf",
+      "bytes": 4674
     },
     {
       "path": "recovered/settings.diagnostics.txt",
@@ -9281,8 +9281,8 @@
     },
     {
       "path": "recovered/tray.py.txt",
-      "sha256": "e403fc4bbc61a9b3a47101f966251574ec29a6c254c4ef85bd513554b948f829",
-      "bytes": 1281
+      "sha256": "b362eb6d6a7e4ba234dadd928eececdb2702c0ffe947407c93992c98442ea633",
+      "bytes": 1289
     },
     {
       "path": "recovered/updater.diagnostics.txt",
@@ -9351,8 +9351,8 @@
     },
     {
       "path": "recovered/utils.esp_utils.py.txt",
-      "sha256": "9d389299fec084acf363c0f43331f1ba993c161239d431dab7ab10e6e87ddbaa",
-      "bytes": 3804
+      "sha256": "bf8db9b5bcaf7d47e5cebc8a98559a685eb943187826eec3229bf7b3772ccb8e",
+      "bytes": 3808
     },
     {
       "path": "recovered/utils.hosts.dis.txt",
@@ -9411,8 +9411,8 @@
     },
     {
       "path": "recovered/utils.utils.py.txt",
-      "sha256": "c8fa74f927c67cf902a98f8db6eea93474832bb1523b8d0b8a14e4fb7e77ff65",
-      "bytes": 3637
+      "sha256": "5f7316b534fdafbbde7bdc4d737e3b9d4c32e98fa781b02d56ba339977def979",
+      "bytes": 3645
     }
   ]
 }

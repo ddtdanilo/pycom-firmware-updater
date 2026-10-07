@@ -28,12 +28,12 @@ def check_python_2():
     return PYTHON2
 
 if check_python_2():
-
+    
     def byte(bitstr, index):
         return ord(bitstr[index])
 
 else:
-
+    
     def byte(bitstr, index):
         return bitstr[index]
 

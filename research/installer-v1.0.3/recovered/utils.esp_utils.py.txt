@@ -44,7 +44,7 @@ def check_supported_function(func, check_func):
     software stub that runs on both. Not possible to do this cleanly
     via inheritance alone.
     """
-
+    
     def inner(*args, **kwargs):
         obj = args[0]
     # WARNING: Decompyle incomplete

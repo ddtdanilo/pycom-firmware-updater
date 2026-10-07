@@ -8,8 +8,10 @@ import io
 import json
 from pathlib import Path
 import re
+import sys
+from importlib.metadata import version as package_version
 
-from analyze_installer import parse_archive, parse_pyz, sha
+from analyze_installer import MAX_INPUT, parse_archive, parse_pyz, sha
 from xdis import iscode
 from xdis.bytecode import Bytecode
 from xdis.magics import magic2int
@@ -67,7 +69,10 @@ def walk(code, symbol):
 
 
 def inspect(executable, output):
-    version, archive, extracted = parse_archive(executable.read_bytes())
+    if executable.stat().st_size > MAX_INPUT:
+        raise ValueError("Input exceeds inspection size limit")
+    data = executable.read_bytes()
+    version, archive, extracted = parse_archive(data)
     if version != 27:
         raise ValueError("This research decoder expects Python 2.7")
     pyzs = [e["name"] for e in archive if e["type"] == "z"]
@@ -92,7 +97,8 @@ def inspect(executable, output):
             if len(blob) < 16:
                 raise ValueError("Truncated encrypted PYZ entry")
             return AES.new(key, AES.MODE_CFB, iv=blob[:16], segment_size=8).decrypt(blob[16:])
-    modules, raw = parse_pyz(pyz, decrypt=decrypt)
+    modules, raw = parse_pyz(pyz, decrypt=decrypt,
+                            table_loader=lambda blob: load_code(blob, magic, code_objects={}))
     selected = {n: b for n, b in raw.items() if n.split(".")[0] in ROOTS and b}
     selected["pycom_fwtool"] = extracted["pycom_fwtool"]
     codes = {n: load_code(b, magic, code_objects={}) for n, b in selected.items()}
@@ -125,22 +131,34 @@ def inspect(executable, output):
             # Do not publish exception contents, which may contain source literals.
             result["error_type"] = type(error).__name__
         # Portable-code decompilation can emit an invalid module-level bare return.
-        lines = [line.rstrip() for line in stream.getvalue().splitlines() if line != "return"]
+        lines = stream.getvalue().splitlines()
+        removed = 0
+        while lines and (not lines[-1] or lines[-1] == "return"):
+            if lines.pop() == "return":
+                removed += 1
+        lines = ["# Decompiled from: research decoder (version recorded in manifest)"
+                 if line.startswith("# Decompiled from:") else line for line in lines]
         source = "\n".join(lines) + "\n"
         (recovered / (name + ".py.txt")).write_text(source, encoding="utf-8")
         result["source_preview_bytes"] = len(source.encode())
+        result["terminal_module_returns_omitted"] = removed
         results.append(result)
     manifest = {"schema_version": 1, "python_version": 27,
-                "executable_sha256": sha(executable.read_bytes()),
-                "executable_bytes": executable.stat().st_size,
+                "executable_sha256": sha(data),
+                "executable_bytes": len(data),
                 "archive_entries": archive, "pyz_modules": modules,
                 "redacted_literal_count": len(secrets), "application_analysis": results,
                 "archive_encryption": "Embedded PyInstaller CFB8 key decoded as data; key not exported",
                 "normalizations": ["Module-level bare return emitted by decoder omitted",
-                                   "Source paths normalized; secret/PEM/userinfo literals redacted if found"],
+                                   "Source paths normalized; secret/PEM/userinfo literals redacted if found",
+                                   "Host build string in source-preview header normalized; literal whitespace preserved"],
+                "decoder_versions": {"uncompyle6": package_version("uncompyle6"),
+                                     "xdis": package_version("xdis"),
+                                     "pycryptodome": package_version("pycryptodome"),
+                                     "python": sys.version},
                 "scope": "Static classic-GUI research; no recovered application code executed",
                 "rights": "Pycom-derived reference artifacts: license/reuse unresolved; not MIT"}
-    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     return manifest
 
 
@@ -149,6 +167,9 @@ if __name__ == "__main__":
     parser.add_argument("executable", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    manifest = inspect(args.executable, args.output)
+    try:
+        manifest = inspect(args.executable, args.output)
+    except Exception as error:
+        parser.exit(1, f"Static decoding failed ({type(error).__name__}); inspect local inputs privately.\n")
     print(f"Statically recovered {len(manifest['application_analysis'])} classic GUI/core candidates; "
           f"redacted {manifest['redacted_literal_count']} literal values.")

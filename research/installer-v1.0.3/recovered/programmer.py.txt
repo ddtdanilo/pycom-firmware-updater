@@ -17,7 +17,7 @@ import struct
 import threading
 
 class Programmer(object):
-
+    
     def __init__(self, port, result_cls, baud_rate, erase_fs, erase_nvs, filename = (None, None, 115200, False, False, '/tmp/firmware.tar.gz')):
         self.esp_port = port
         self.baud_rate = baud_rate
@@ -26,21 +26,21 @@ class Programmer(object):
         self.erase_nvs = erase_nvs
         self.result_cls = result_cls
 
-
+    
     def connect(self):
         self.npy_prog = NPyProgrammer(self.esp_port, self.baud_rate, True, **('pypic',))
 
-
+    
     def disconnect(self):
         if hasattr(self, 'npy_prog'):
             self.npy_prog.disconnect()
             print('successfully disconnected')
 
-
+    
     def read_partitions(self):
         return self.npy_prog.read_partitions()
 
-
+    
     def load_info(self):
         self.chip = self.npy_prog.get_chip_id()
         self.flash_id = self.npy_prog.get_flash_id()
@@ -50,19 +50,19 @@ class Programmer(object):
             'flash_id': self.flash_id,
             'mac': self.mac }
 
-
+    
     def read_device_config(self):
         self.npy_prog.read_device_config()
         return {
             'lora_region': self.npy_prog.get_lora_region(),
             's_mac': self.npy_prog.get_smac() }
 
-
+    
     def read_remote_config(self, config):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def progress_fs(self, msg):
         self.result_cls.send(msg)
         msg = ' ' + msg + '               '
@@ -70,17 +70,17 @@ class Programmer(object):
         sys.stderr.write(msg + padding)
         sys.stderr.flush()
 
-
+    
     def erase_flash(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def flash_firmware(self, continuation, pypic, secureboot, reset, config, remote_config = (False, True, False, True, { }, None)):
         write_thread = threading.Thread(self.flash_firmware_thread, (pypic, continuation, reset, secureboot, config, remote_config), **('target', 'args'))
         write_thread.start()
 
-
+    
     def flash_firmware_thread(self, pypic, continuation, reset, secureboot, config, remote_config):
         pass
     # WARNING: Decompyle incomplete

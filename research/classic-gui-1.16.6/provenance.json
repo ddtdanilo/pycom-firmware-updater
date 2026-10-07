@@ -27,7 +27,7 @@
     "native_arm_build": false,
     "syntax_check": {
       "passed_modules": 11,
-      "method": "CPython 3.9.25 lib2to3 Python 2 grammar parse, no execution",
+      "method": "CPython 3.9.25 lib2to3 permissive Python-2-compatible grammar; no compilation or execution",
       "semantic_equivalence": false
     }
   }

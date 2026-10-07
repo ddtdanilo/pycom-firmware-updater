@@ -18,6 +18,8 @@ NOTICE = (
 def publish(source, output, provenance):
     manifest = json.loads((source / "manifest.json").read_text())
     metadata = json.loads(provenance.read_text())
+    if set(metadata) - {"artifact", "tools", "validation", "normalizations"}:
+        raise ValueError("Provenance cannot override generated analysis or input identity")
     output.mkdir(parents=True, exist_ok=False)
     (output / "recovered").mkdir()
     for path in sorted((source / "recovered").iterdir()):
@@ -26,7 +28,9 @@ def publish(source, output, provenance):
         content = path.read_text(encoding="utf-8")
         if content.strip():
             (output / "recovered" / path.name).write_text(NOTICE + content.rstrip("\n") + "\n", encoding="utf-8")
+    additional_normalizations = metadata.pop("normalizations", [])
     manifest.update(metadata)
+    manifest["normalizations"] = manifest.get("normalizations", []) + additional_normalizations
     manifest["schema_version"] = 2
     manifest["publication_transform"] = "tools/publish_reference.py: prepend NOTICE, omit empty text, normalize final newline, hash final bytes"
     manifest["rights"] = {

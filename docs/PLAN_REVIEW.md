@@ -46,3 +46,24 @@ Repository checks and dependency auditing are separate evidence. This review is
 not an independent human PR approval, a hardware qualification, or proof that
 an application has been built. See [the plan](MAINTENANCE_PLAN.md) and
 [support matrix](SUPPORT_MATRIX.md) for the remaining gates.
+
+## Installer and classic GUI recovery review
+
+Two additional tool-free reviews used `claude-opus-5-5 --effort medium` on
+2026-10-06. Both results confirmed that exact model in usage. The supplied scope
+included the static inspector, synthetic tests, publication/provenance checker,
+GUI recovery findings, source boundaries, and reproduction documentation. The
+classic extension was included in the second recovery review.
+
+Corrections incorporated: cumulative expansion limits, exact credential-constant
+replacement, PEM/userinfo redaction and scanning, valid unresolved-rights notices,
+case-collision rejection, normalized paths/headers, single-read input identity,
+captured decoder versions, protected analysis fields during publication, preserved
+literal whitespace, an explicit grammar-check script/report, and separate classic
+wizard/service provenance. The original credential values were checked locally
+against tracked text without disclosing them.
+
+The reviews also raised broader detector/decoder limitations. The tools are scoped
+static research decoders for identified historical inputs, not generic secret
+certification or a hardened execution sandbox. AI review did not execute the
+application, inspect hardware, clear licenses, or provide human PR approval.

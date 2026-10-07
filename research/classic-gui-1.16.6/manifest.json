@@ -5728,7 +5728,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 7364
+      "source_preview_bytes": 7327,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "DeviceUpgrade",
@@ -5927,7 +5928,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 5353
+      "source_preview_bytes": 5316,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "FetchFiles",
@@ -6423,7 +6425,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 6276
+      "source_preview_bytes": 6243,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "LoadingSpin",
@@ -6476,7 +6479,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 578
+      "source_preview_bytes": 541,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "RunInWorker",
@@ -6583,7 +6587,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 1130
+      "source_preview_bytes": 1093,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "env_settings",
@@ -6627,7 +6632,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 835
+      "source_preview_bytes": 798,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "misc",
@@ -6724,7 +6730,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 1745
+      "source_preview_bytes": 1708,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "pycom_fwtool",
@@ -10171,7 +10178,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 158311
+      "source_preview_bytes": 158299,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "pyconf",
@@ -10302,7 +10310,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 1800
+      "source_preview_bytes": 1763,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "pypic",
@@ -10770,7 +10779,8 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 5818
+      "source_preview_bytes": 5783,
+      "terminal_module_returns_omitted": 1
     },
     {
       "module": "updater",
@@ -12157,14 +12167,22 @@
         }
       ],
       "decompiler_completed": true,
-      "source_preview_bytes": 70799
+      "source_preview_bytes": 70781,
+      "terminal_module_returns_omitted": 1
     }
   ],
   "archive_encryption": "Embedded PyInstaller CFB8 key decoded as data; key not exported",
   "normalizations": [
     "Module-level bare return emitted by decoder omitted",
-    "Source paths normalized; secret/PEM/userinfo literals redacted if found"
+    "Source paths normalized; secret/PEM/userinfo literals redacted if found",
+    "Host build string in source-preview header normalized; literal whitespace preserved"
   ],
+  "decoder_versions": {
+    "uncompyle6": "3.9.3",
+    "xdis": "6.1.8",
+    "pycryptodome": "3.24.0",
+    "python": "3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
   "scope": "Static classic-GUI research; no recovered application code executed",
   "rights": {
     "community_authorship": "MIT for original manifest structure, hashes, prose, tools and tests",
@@ -12198,7 +12216,7 @@
     "native_arm_build": false,
     "syntax_check": {
       "passed_modules": 11,
-      "method": "CPython 3.9.25 lib2to3 Python 2 grammar parse, no execution",
+      "method": "CPython 3.9.25 lib2to3 permissive Python-2-compatible grammar; no compilation or execution",
       "semantic_equivalence": false
     }
   },
@@ -12211,8 +12229,8 @@
     },
     {
       "path": "recovered/DeviceInfoQuery.py.txt",
-      "sha256": "a85b847741d70e061808f7255fa906834c71d339ca3207bd1597688bc6c1996e",
-      "bytes": 7674
+      "sha256": "12c62f436e0301f4d64f9945c2279b1a3b0b66837589f94bf231145ff2ef707b",
+      "bytes": 7639
     },
     {
       "path": "recovered/DeviceUpgrade.dis.txt",
@@ -12221,8 +12239,8 @@
     },
     {
       "path": "recovered/DeviceUpgrade.py.txt",
-      "sha256": "c2cbb951459050b1d0edd853873ff8d705d963fad13183ae30dd7a9f620a2563",
-      "bytes": 5663
+      "sha256": "250888841ddf2c79158342169241a16aee5232df47a85d414cea887a0fe449f6",
+      "bytes": 5628
     },
     {
       "path": "recovered/FetchFiles.dis.txt",
@@ -12231,8 +12249,8 @@
     },
     {
       "path": "recovered/FetchFiles.py.txt",
-      "sha256": "d790dc61eb0e83cd71e613bbf4935d4fc97f3849cfed6a84d39aaba66bbe1f8a",
-      "bytes": 6586
+      "sha256": "578ee17eac2a4abd051e84c67a12a15078bde4812374fdf6f95a35686b85d4ec",
+      "bytes": 6555
     },
     {
       "path": "recovered/LoadingSpin.dis.txt",
@@ -12241,8 +12259,8 @@
     },
     {
       "path": "recovered/LoadingSpin.py.txt",
-      "sha256": "fe150eabfb6315b082bfd5a4a8fd64cfdde2260754f394de8b5e0aab018b6816",
-      "bytes": 888
+      "sha256": "915ba937989c69a7cd2c72464f4f52ec83e26576aa1b7b3012ce72507e09f955",
+      "bytes": 853
     },
     {
       "path": "recovered/RunInWorker.dis.txt",
@@ -12251,8 +12269,8 @@
     },
     {
       "path": "recovered/RunInWorker.py.txt",
-      "sha256": "8ed37d100a51e8b390f46713f050a027025acfe60a1fc7e64ad83c27dd98bf41",
-      "bytes": 1440
+      "sha256": "4eb5ad5f95a8ee9fed88d3db3d996f7fc49aa3db290bc0045b362bfe8b5a1c85",
+      "bytes": 1405
     },
     {
       "path": "recovered/env_settings.dis.txt",
@@ -12261,8 +12279,8 @@
     },
     {
       "path": "recovered/env_settings.py.txt",
-      "sha256": "e3a715773e3a4c85a1d8e7dab997cc80c56ce88f1817d6d3f57a4fe5008ee332",
-      "bytes": 1145
+      "sha256": "7fc76a314c95a4edee1b67499771b4ba740111c4810340d234f74c0f7aec3745",
+      "bytes": 1110
     },
     {
       "path": "recovered/misc.dis.txt",
@@ -12271,8 +12289,8 @@
     },
     {
       "path": "recovered/misc.py.txt",
-      "sha256": "bb4f23ec8de403f6b4d7a67d1c1b140e907b0f014936a8db4cb1554b2efed182",
-      "bytes": 2055
+      "sha256": "7523aaf467e8b4872e39a8030e8babbdb330e696fdc51eebb56c0be262409bfd",
+      "bytes": 2020
     },
     {
       "path": "recovered/pycom_fwtool.dis.txt",
@@ -12281,8 +12299,8 @@
     },
     {
       "path": "recovered/pycom_fwtool.py.txt",
-      "sha256": "a6fbdd06e14319c42bf598b97a1ebdc9390f20a45c848555a5b97466ff2cc29f",
-      "bytes": 158623
+      "sha256": "f123debece5132aafc118800b23bfe226c9b0484b18e8015f4d11294d2233055",
+      "bytes": 158611
     },
     {
       "path": "recovered/pyconf.dis.txt",
@@ -12291,8 +12309,8 @@
     },
     {
       "path": "recovered/pyconf.py.txt",
-      "sha256": "3ecd91a44a827468161666f9457a4422a7ba713fdefeb36230243f4f9d46c08d",
-      "bytes": 2110
+      "sha256": "e96a669f262ad024a3e404bc237b80765f6e5f4712bd916e0dcb5ae6f10eb969",
+      "bytes": 2075
     },
     {
       "path": "recovered/pypic.dis.txt",
@@ -12301,8 +12319,8 @@
     },
     {
       "path": "recovered/pypic.py.txt",
-      "sha256": "ecbfaaff728b584f16e92ff9478028b31bc04e40c2969e04f592d715619b9c4d",
-      "bytes": 6130
+      "sha256": "22ff268769ad1e2c55545f97796572f14a6241cde47d6477e9dae068bd37a041",
+      "bytes": 6095
     },
     {
       "path": "recovered/updater.dis.txt",
@@ -12311,8 +12329,8 @@
     },
     {
       "path": "recovered/updater.py.txt",
-      "sha256": "1e74471cbaee2142dd8a9cda67fbee49148a26eaeca2faab94b4d1ab4503101f",
-      "bytes": 71111
+      "sha256": "7e285d65d9729d11adcbeef823da533a5d2ddfd5e2a8ef4592c12c1394e76304",
+      "bytes": 71093
     }
   ]
 }

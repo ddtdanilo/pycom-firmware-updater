@@ -5,7 +5,7 @@
 
 # uncompyle6 version 3.9.3
 # Python bytecode version base 2.7 (62211)
-# Decompiled from: Python 3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]
+# Decompiled from: research decoder (version recorded in manifest)
 # Embedded file name: DeviceUpgrade.py
 from RunInWorker import RunInWorker
 from misc import print_debug, print_exception, DEBUG

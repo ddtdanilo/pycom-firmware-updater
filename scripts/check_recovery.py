@@ -27,6 +27,8 @@ def check_snapshot(ROOT):
             raise ValueError(f"Missing reference rights notice: {entry['path']}")
         if re.search(rb"-----BEGIN [A-Z ]+-----", content):
             raise ValueError(f"Unexpected PEM content: {entry['path']}")
+        if re.search(rb"[a-z]+://[^/\s]+:[^/\s]+@", content):
+            raise ValueError(f"Unexpected URL credentials: {entry['path']}")
     actual = {str(p.relative_to(ROOT)) for p in (ROOT / "recovered").rglob("*") if p.is_file()}
     if actual != expected:
         raise ValueError("Unlisted or missing recovered files")

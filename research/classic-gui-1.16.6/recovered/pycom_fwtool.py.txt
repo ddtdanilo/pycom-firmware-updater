@@ -5,7 +5,7 @@
 
 # uncompyle6 version 3.9.3
 # Python bytecode version base 2.7 (62211)
-# Decompiled from: Python 3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]
+# Decompiled from: research decoder (version recorded in manifest)
 # Embedded file name: pycom_fwtool.py
 from __future__ import print_function
 import argparse, base64, binascii, cStringIO, os, re, struct, sys, textwrap, time, json
@@ -225,11 +225,11 @@ class CustomWizard(QtGui.QWizard):
         return
 
     def get_display_name(self, name):
-        return {'wipy': 'WiPy',
-           'lopy': 'LoPy 1',
-           'sipy': 'SiPy',
-           'gpy': 'GPy',
-           'fipy': 'FiPy',
+        return {'wipy': 'WiPy', 
+           'lopy': 'LoPy 1', 
+           'sipy': 'SiPy', 
+           'gpy': 'GPy', 
+           'fipy': 'FiPy', 
            'lopy4': 'LoPy 4'}[name.split('.')[0].lower()]
 
     def get_short_name(self, name):
@@ -1067,12 +1067,12 @@ class CustomWizard(QtGui.QWizard):
         layout.addWidget(loraRegionSelection, 7, 2)
         page.setLayout(layout)
         self.__advancedPageWidgets = [
-         0, infoTypeSelector, infoTypeInput, fsTypeSelector,
-         versionLabel,
-         typeSelector, versionSelector, eraseFileSystemSelector,
-         loraRegionLabel,
-         loraCountrySelection, loraRegionSelection, horizontalRowLabelLora,
-         wifiSSIDInput,
+         0, infoTypeSelector, infoTypeInput, fsTypeSelector, 
+         versionLabel, 
+         typeSelector, versionSelector, eraseFileSystemSelector, 
+         loraRegionLabel, 
+         loraCountrySelection, loraRegionSelection, horizontalRowLabelLora, 
+         wifiSSIDInput, 
          wifiPWDInput, eraseNVSSelector, eraseCFGSelector]
         return page
 
@@ -1634,18 +1634,18 @@ class CustomWizard(QtGui.QWizard):
         return
 
     def __id2name(self):
-        return {(self.RESTART_IDX): 'RESTART_IDX', (self.WELCOME_IDX): 'WELCOME_IDX',
-           (self.SETUP_IDX): 'SETUP_IDX',
-           (self.SERIAL_IDX): 'SERIAL_IDX',
-           (self.GET_INFO_IDX): 'GET_INFO_IDX',
-           (self.BOARD_IDX): 'BOARD_IDX',
-           (self.COUNTRY_IDX): 'COUNTRY_IDX',
-           (self.REGION_IDX): 'REGION_IDX',
-           (self.ADVANCED_IDX): 'ADVANCED_IDX',
-           (self.PYBYTES_IDX): 'PYBYTES_IDX',
-           (self.LICENSE_IDX): 'LICENSE_IDX',
-           (self.DOWNLOAD_IDX): 'DOWNLOAD_IDX',
-           (self.WAIT_IDX): 'WAIT_IDX',
+        return {(self.RESTART_IDX): 'RESTART_IDX', (self.WELCOME_IDX): 'WELCOME_IDX', 
+           (self.SETUP_IDX): 'SETUP_IDX', 
+           (self.SERIAL_IDX): 'SERIAL_IDX', 
+           (self.GET_INFO_IDX): 'GET_INFO_IDX', 
+           (self.BOARD_IDX): 'BOARD_IDX', 
+           (self.COUNTRY_IDX): 'COUNTRY_IDX', 
+           (self.REGION_IDX): 'REGION_IDX', 
+           (self.ADVANCED_IDX): 'ADVANCED_IDX', 
+           (self.PYBYTES_IDX): 'PYBYTES_IDX', 
+           (self.LICENSE_IDX): 'LICENSE_IDX', 
+           (self.DOWNLOAD_IDX): 'DOWNLOAD_IDX', 
+           (self.WAIT_IDX): 'WAIT_IDX', 
            (self.RESULT_IDX): 'RESULT_IDX'}
 
     def __insert_device(self):

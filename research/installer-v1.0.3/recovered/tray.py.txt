@@ -15,7 +15,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     '''
     CREATE A SYSTEM TRAY ICON CLASS AND ADD MENU
     '''
-
+    
     def __init__(self, icon, parent = ('assets/py.ico', None)):
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
         self.setToolTip('Pycom Firmware Updater')
@@ -26,7 +26,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.setContextMenu(menu)
         self.activated.connect(self.on_tray_icon_activated)
 
-
+    
     def on_tray_icon_activated(self, reason):
         '''
         This function will trigger function on click or double click

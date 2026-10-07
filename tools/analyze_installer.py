@@ -90,14 +90,14 @@ def parse_archive(data: bytes) -> tuple[int, list[dict], dict[str, bytes]]:
     return version, entries, extracted
 
 
-def parse_pyz(data: bytes, decrypt=None) -> tuple[list[dict], dict[str, bytes]]:
+def parse_pyz(data: bytes, decrypt=None, table_loader=marshal.loads) -> tuple[list[dict], dict[str, bytes]]:
     if data[:4] != b"PYZ\0":
         raise ValueError("PYZ magic mismatch")
     offset, = struct.unpack("!i", region(data, 8, 4))
     if offset < 12:
         raise ValueError("Invalid PYZ table offset")
     # Expected input is a primitive table; marshal itself is not a hardened parser.
-    table = marshal.loads(region(data, offset, len(data) - offset))
+    table = table_loader(region(data, offset, len(data) - offset))
     if not isinstance(table, (list, dict)):
         raise ValueError("Invalid PYZ table")
     entries, extracted, total = [], {}, 0
@@ -209,7 +209,7 @@ def inspect(executable: Path, output: Path, decompiler: Path | None = None) -> d
                 proc = subprocess.run([str(decompiler.resolve()), "-c", "-v",
                                        f"{version // 100}.{version % 100}", str(intermediate)],
                                       capture_output=True, text=True, errors="replace", timeout=30)
-                source = "\n".join(line.rstrip() for line in proc.stdout.splitlines()) + "\n"
+                source = proc.stdout
                 try:
                     ast.parse(source)
                     syntax = bool(proc.stdout.strip())
@@ -243,7 +243,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         result = inspect(args.executable, args.output, args.decompiler)
-    except (ValueError, OSError, EOFError, struct.error, zlib.error) as error:
+    except (ValueError, TypeError, RecursionError, OSError, EOFError, struct.error, zlib.error) as error:
         parser.exit(1, f"Inspection failed: {error}\n")
     print(f"Inspected {len(result['archive_entries'])} archive entries, "
           f"{len(result['pyz_modules'])} PYZ modules, "

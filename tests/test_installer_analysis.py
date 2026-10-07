@@ -16,6 +16,10 @@ SPEC = importlib.util.spec_from_file_location(
     "analysis", Path(__file__).resolve().parents[1] / "tools/analyze_installer.py")
 analysis = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(analysis)
+PUBLISH_SPEC = importlib.util.spec_from_file_location(
+    "publication", Path(__file__).resolve().parents[1] / "tools/publish_reference.py")
+publication = importlib.util.module_from_spec(PUBLISH_SPEC)
+PUBLISH_SPEC.loader.exec_module(publication)
 
 
 def pyz(name, raw):
@@ -37,6 +41,18 @@ def archive(name, raw, compressed=False):
 
 
 class InspectionTests(unittest.TestCase):
+    def test_publication_cannot_override_analyzed_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.mkdir()
+            (source / "manifest.json").write_text(json.dumps({"executable_sha256": "actual"}))
+            provenance = root / "provenance.json"
+            provenance.write_text(json.dumps({"executable_sha256": "replacement"}))
+            with self.assertRaises(ValueError):
+                publication.publish(source, root / "output", provenance)
+            self.assertFalse((root / "output").exists())
+
     def test_archive_bounds_and_compression(self):
         _, entries, files = analysis.parse_archive(archive("PYZ-00.pyz", b"example", True))
         self.assertEqual(files["PYZ-00.pyz"], b"example")

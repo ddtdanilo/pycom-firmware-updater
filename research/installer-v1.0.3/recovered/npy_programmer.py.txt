@@ -29,7 +29,7 @@ finally:
 humanfriendly_available = False
 
 class NPyProgrammer(object):
-
+    
     def __init__(self, port, baudrate, continuation, pypic, reset, resultUpdateList, connect_read = (False, False, False, None, False)):
         self.esp = None
         self._NPyProgrammer__current_baudrate = baudrate
@@ -81,42 +81,42 @@ class NPyProgrammer(object):
                 esp = ESP32ROM(self.esp_port, self._NPyProgrammer__baudrate)
                 self.esp = esp.STUB_CLASS(esp)
 
-
+    
     def is_pypic(self):
         return self._NPyProgrammer__pypic
 
-
+    
     def disconnect(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def get_resultUpdateList(self):
         return self._NPyProgrammer__resultUpdateList
 
-
+    
     def get_baudrate(self, read = (False,)):
         if self._NPyProgrammer__pypic and read and self._NPyProgrammer__baudrate > constants.MAXPICREAD_BAUD_RATE:
             return constants.MAXPICREAD_BAUD_RATE
         return None._NPyProgrammer__baudrate
 
-
+    
     def set_baudrate(self, read = (False,)):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def read(self, offset, size):
         self.set_baudrate(True)
         ret_val = self.esp.read_flash(offset, size, self._NPyProgrammer__resultUpdateList, self.partition_name(offset), **('resultUpdateList', 'partition'))
         self.set_baudrate(False)
         return ret_val
 
-
+    
     def check_partition(self, partition):
         return constants.PARTITIONS.get(partition) is not None
 
-
+    
     def partition_name(self, offset):
         if offset > 0:
             for partition in constants.PARTITIONS.keys():
@@ -124,12 +124,12 @@ class NPyProgrammer(object):
                     return partition
                 return str(offset)
 
-
+    
     def read_partitions(self):
         b = self.esp.read_flash(int('0x8000', 16), int('0x1000', 16))
         return partitions_from_binary(b)
 
-
+    
     def int_flash_size(self):
         args = Args()
         args.flash_size = self._NPyProgrammer__flash_size
@@ -142,7 +142,7 @@ class NPyProgrammer(object):
             esptool.detect_flash_size(self.esp, args)
             self._NPyProgrammer__flash_size = args.flash_size
         str_flash_size = args.flash_size
-
+        
         try:
             int_flash_size = int(str_flash_size.replace('MB', '')) * 1048576
         finally:
@@ -151,7 +151,7 @@ class NPyProgrammer(object):
         int_flash_size = 4194304 if args.flash_size != '8MB' else 8388608
         return int_flash_size
 
-
+    
     def erase(self, offset, section_size, ui_label, updateList = (None, False)):
         msg = 'Erasing %s at address 0x%08X' % (hr_size(section_size), offset)
         if ui_label is None:
@@ -165,7 +165,7 @@ class NPyProgrammer(object):
         iterations = (section_size + MAX_SECTION_SIZE - 1) // MAX_SECTION_SIZE
     # WARNING: Decompyle incomplete
 
-
+    
     def erase_all(self, ui_label = (None,)):
         args = Args()
         args.flash_size = self._NPyProgrammer__flash_size
@@ -185,11 +185,11 @@ class NPyProgrammer(object):
         ret_val = self.erase_flash()
         return ret_val
 
-
+    
     def erase_flash(self):
         return self.esp.erase_flash()
 
-
+    
     def write(self, offset, contents, compress, flash_size, std_out, ui_label, file_name, updateList, progress_fs = (True, 'detect', None, None, None, True, None)):
         if progress_fs is not None:
             self._NPyProgrammer__progress_fs = progress_fs
@@ -214,7 +214,7 @@ class NPyProgrammer(object):
         first_exception = None
     # WARNING: Decompyle incomplete
 
-
+    
     def detect_flash_size(self):
         args = Args()
         args.flash_size = 'detect'
@@ -226,7 +226,7 @@ class NPyProgrammer(object):
         esptool.detect_flash_size(self.esp, args)
         return args.flash_size
 
-
+    
     def write_script(self, offset, contents, config_block, overwrite, size, ui_label, file_name = (False, None, None, None)):
         if overwrite or size is None:
             self.write(offset, contents, ui_label, file_name, **('ui_label', 'file_name'))
@@ -245,7 +245,7 @@ class NPyProgrammer(object):
             self._NPyProgrammer__flash_size = args.flash_size
         finish_addr = offset + len(contents)
         str_flash_size = args.flash_size
-
+        
         try:
             int_flash_size = int(str_flash_size.replace('MB', '')) * 1048576
         finally:
@@ -256,14 +256,14 @@ class NPyProgrammer(object):
         cb_len = int(constants.PARTITIONS.get('config')[1], 16)
         cb_end = cb_start + cb_len
 
-
+    
     def write_remote(self, contents):
         cb_start = int(constants.PARTITIONS.get('config')[0], 16)
         cb_len = int(constants.PARTITIONS.get('config')[1], 16)
         config_block = self.read(cb_start, cb_len)
         self.write(cb_start, contents[0:52] + config_block[52:])
 
-
+    
     def run_script(self, script, config_block, erase_fs, chip_id, ui_label, progress_fs, erase_nvs = (None, False, None, None, None, False)):
         self._NPyProgrammer__progress_fs = progress_fs
         print_debug('script type: {}'.format(type(script)))
@@ -334,7 +334,7 @@ class NPyProgrammer(object):
             self.erase(int(constants.PARTITIONS.get('nvs')[0], 16), int(constants.PARTITIONS.get('nvs')[1], 16), ui_label, True, **('ui_label', 'updateList'))
     # WARNING: Decompyle incomplete
 
-
+    
     def set_ota(self, ota, image_size, ui_label = (None,)):
         ota_signature = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
         crc32_header = b'\xff\xff\xff\xff'
@@ -359,11 +359,11 @@ class NPyProgrammer(object):
             print_debug('Setting otadata partition to boot from factory')
             self.write(int(constants.PARTITIONS.get('otadata')[0], 16), ota_part.ljust(int(constants.PARTITIONS.get('otadata')[1], 16), b'\xff'))
 
-
+    
     def erase_sytem_mem(self):
         self.erase(0, 51380224)
 
-
+    
     def erase_fs(self, chip_id, ui_label, progress_fs = (None, None, None)):
         if progress_fs is not None:
             self._NPyProgrammer__progress_fs = progress_fs
@@ -389,17 +389,17 @@ class NPyProgrammer(object):
                     else:
                         self._NPyProgrammer__resultUpdateList.append('Erased {} flash fs in {0:.2f} seconds'.format(hr_size(int(constants.PARTITIONS.get('fs')[1], 16)), time.time() - start_time))
 
-
+    
     def get_chip_id(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def get_flash_id(self):
         pass
     # WARNING: Decompyle incomplete
 
-
+    
     def flash_bin(self, dest_and_file_pairs, ui_label, file_name, progress_fs = (None, None, None)):
         args = Args()
         args.flash_size = self._NPyProgrammer__flash_size
@@ -416,7 +416,7 @@ class NPyProgrammer(object):
         args.addr_filename = dest_and_file
         esptool.write_flash(self.esp, args, ui_label, file_name, self._NPyProgrammer__resultUpdateList, progress_fs, **('ui_label', 'file_name', 'resultUpdateList', 'progress_fs'))
 
-
+    
     def set_wifi_config(self, config_block, wifi_ssid, wifi_pwd, wifi_on_boot = (None, None, None)):
         config_block = config_block.ljust(int(constants.PARTITIONS.get('config')[1], 16), b'\x00')
         if wifi_on_boot is not None:
@@ -437,7 +437,7 @@ class NPyProgrammer(object):
         new_config_block = config_block[0:53] + wob + ssid + pwd + config_block[152:]
         return self.set_pybytes_config(new_config_block, True, **('force_update',))
 
-
+    
     def set_lte_config(self, config_block, carrier, apn, lte_type, cid, band, reset = (None, None, None, None, None, None)):
         config_block = config_block.ljust(int(constants.PARTITIONS.get('config')[1], 16), b'\x00')
         if carrier is not None:
@@ -467,7 +467,7 @@ class NPyProgrammer(object):
         new_config_block = config_block[0:634] + cb_carrier + cb_apn + cb_lte_type + cb_cid + cb_band + cb_reset + config_block[912:]
         return self.set_pybytes_config(new_config_block, True, **('force_update',))
 
-
+    
     def set_pycom_config(self, config_block, boot_fs_type = (None,)):
         print_debug('This is set_pycom_config with boot_fs_type={} [{}]'.format(boot_fs_type, type(boot_fs_type)))
         config_block = config_block.ljust(int(constants.PARTITIONS.get('config')[1], 16), b'\x00')
@@ -484,7 +484,7 @@ class NPyProgrammer(object):
             self._NPyProgrammer__resultUpdateList.append('File system type set to <b>{}</b>'.format('LittleFS' if boot_fs_type == 'LittleFS' and boot_fs_type == 1 or boot_fs_type == '1' else 'FatFS'))
         return self.set_pybytes_config(new_config_block, True, **('force_update',))
 
-
+    
     def set_pybytes_config(self, config_block, userid, device_token, mqttServiceAddress, network_preferences, extra_preferences, force_update, auto_start = (None, None, None, None, None, None, None)):
         config_block = config_block.ljust(int(constants.PARTITIONS.get('config')[1], 16), b'\x00')
         if device_token is not None:
@@ -524,7 +524,7 @@ class NPyProgrammer(object):
         new_config_block = config_block[0:162] + token + address + uid + nwp + ep + fu + asf + config_block[499:]
         return new_config_block
 
-
+    
     def set_lpwan_config(self, config_block, lora_region = (None,)):
         config_block = config_block.ljust(int(constants.PARTITIONS.get('config')[1], 16), b'\x00')
         if lora_region is not None:
@@ -534,19 +534,19 @@ class NPyProgrammer(object):
         new_config_block = config_block[0:52] + region + config_block[53:]
         return new_config_block
 
-
+    
     def read_mac(self):
         return self.esp.read_mac()
 
-
+    
     def get_lora_region(self):
         return self._NPyProgrammer__lora_region
 
-
+    
     def get_smac(self):
         return self._NPyProgrammer__s_mac_s
 
-
+    
     def update_config(self, config):
         self._NPyProgrammer__wifi_ssid = config.get('wifi_ssid', self._NPyProgrammer__wifi_ssid)
         self._NPyProgrammer__wifi_pwd = config.get('wifi_pwd', self._NPyProgrammer__wifi_pwd)
@@ -564,7 +564,7 @@ class NPyProgrammer(object):
         self._NPyProgrammer__lora_region = config.get('lora_region', self._NPyProgrammer__lora_region)
         self._NPyProgrammer__fstype = config.get('fstype', self._NPyProgrammer__fstype)
 
-
+    
     def set_device_config(self):
         config_block = self._NPyProgrammer__config_block
         config_block = self.set_pycom_config(config_block, self._NPyProgrammer__fstype)
@@ -574,7 +574,7 @@ class NPyProgrammer(object):
         config_block = self.set_wifi_config(config_block, str(self._NPyProgrammer__wifi_ssid), str(self._NPyProgrammer__wifi_pwd))
         return config_block
 
-
+    
     def read_device_config(self):
         pass
     # WARNING: Decompyle incomplete

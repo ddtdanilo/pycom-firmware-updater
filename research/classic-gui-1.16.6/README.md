@@ -59,8 +59,9 @@ exists in the recovered historical UI. Its existence is not a current compatibil
 or preservation guarantee.
 
 All 11 were processed without a raised decompiler error by `uncompyle6 3.9.3` and
-their normalized previews passed an offline Python 2 grammar check using
-CPython 3.9.25's `lib2to3` parser. This verifies syntax only. Bytecode/control-flow
+their normalized previews passed an offline grammar check using
+CPython 3.9.25's permissive Python-2-compatible `lib2to3` parser. This verifies
+grammar only, not compilation with a Python 2 interpreter. Bytecode/control-flow
 equivalence, live GUI startup, endpoint behavior, and hardware operations remain
 unverified. An initial `pycdc` attempt failed partway through the wizard; it is not
 the source of this committed GUI preview.
@@ -123,6 +124,19 @@ Detach the read-only image after inspection. Do not execute the application,
 The publication transform prepends rights notices, omits empty text, and hashes the
 final bytes; the metadata input records the separate provenance/validation findings.
 Library/runtime updates may change generated text without changing the original input.
+
+Reproduce the grammar-only check with isolated CPython 3.9 (the Python 3.13
+decoder environment does not contain `lib2to3`):
+
+```sh
+python3.9 tools/check_legacy_syntax.py research/classic-gui-1.16.6 \
+  --report /tmp/pycom-classic-syntax.json
+```
+
+The committed [per-module grammar report](syntax-report.json) records the result
+and its scope. Decoder versions are captured from the actual analysis environment
+in the manifest. Literal whitespace is preserved; reference Git attributes keep
+LF byte identity across platforms while avoiding edits to generated expressions.
 
 The next implementation decisions are in [GUI reconstruction findings](../../docs/RECOVERY_FINDINGS.md)
 and the [maintenance plan](../../docs/MAINTENANCE_PLAN.md). Recovery supplies reference
