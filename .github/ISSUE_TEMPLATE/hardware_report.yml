@@ -1,0 +1,40 @@
+name: Hardware qualification report
+description: Share an existing, authorized result with redacted evidence.
+title: "hardware: "
+labels: [hardware, needs-validation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form does not ask you to flash a device. Share only work already
+        authorized and performed. The fork currently has no community runtime.
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Module and connection
+      description: Module/revision, flash size, expansion revision, USB bridge/driver, power/cable.
+    validations:
+      required: true
+  - type: textarea
+    id: host
+    attributes:
+      label: Host, tool, and firmware provenance
+      description: OS/version/architecture, tool commit/artifact hash, package origin/hash.
+    validations:
+      required: true
+  - type: textarea
+    id: results
+    attributes:
+      label: Operation and observed results
+      description: Backup, preservation intent, readback, boot, recovery, limitations, date, and redacted evidence.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Authorization and privacy
+      options:
+        - label: I was authorized to perform the reported operations.
+          required: true
+        - label: No raw backups, credentials, full private identifiers, or unlicensed firmware are attached.
+          required: true

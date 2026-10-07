@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a reproducible defect in this fork's current documentation or tooling.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This fork currently has no community updater binary. Identify external tools
+        clearly. Never attach credentials, raw backups, or secret-bearing logs.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem, reproduction, and expected result
+      description: Include exact steps and the affected file, command, or version.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and evidence
+      description: Host OS/architecture, tool versions, and minimal redacted output.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: This report contains no credentials, private backups, or secret-bearing logs.
+          required: true

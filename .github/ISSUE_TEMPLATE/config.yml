@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/ddtdanilo/pycom-firmware-updater/security/advisories/new
+    about: Report vulnerabilities privately. Do not include secrets in public issues.
+  - name: Contribution guide
+    url: https://github.com/ddtdanilo/pycom-firmware-updater/blob/main/CONTRIBUTING.md
+    about: Read collaboration rules, scope, and current implementation status.

@@ -1,0 +1,14 @@
+{
+  "name": "pycom-firmware-updater-repository-checks",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Documentation checks for the community maintenance fork; not an updater runtime.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "docs:lint": "node scripts/check_docs.mjs",
+    "check:repository": "python3 scripts/check_repository.py",
+    "check": "npm run docs:lint && npm run check:repository"
+  },
+  "devDependencies": { "markdownlint": "0.41.1", "yaml": "2.9.1" },
+  "overrides": { "katex": "0.18.2" }
+}
