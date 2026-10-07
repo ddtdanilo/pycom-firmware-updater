@@ -1,0 +1,32 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.pypic.marshal (Python 3.9)
+
+from pypic import Pypic
+
+def exit_pycom_programming_mode(esp_port):
+    pic = Pypic(esp_port)
+    if pic.isdetected():
+        pic.exit_pycom_programming_mode()
+        print('pic.exit_pycom_programming_mode')
+    pic.close()
+
+
+def enter_pycom_programming_mode(esp_port):
+    pic = Pypic(esp_port)
+    if pic.isdetected():
+        print('Product ID: %d HW Version: %d FW Version: 0.0.%d' % (pic.read_product_id(), pic.read_hw_version(), pic.read_fw_version()))
+        pic.enter_pycom_programming_mode()
+    pic.close()
+
+
+def reset_pycom_module(esp_port):
+    pic = Pypic(esp_port)
+    if pic.isdetected():
+        pic.reset_pycom_module()
+        print('pic.reset_pycom_module')
+    pic.close()

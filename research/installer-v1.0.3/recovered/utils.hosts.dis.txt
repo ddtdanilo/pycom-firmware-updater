@@ -1,0 +1,654 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 ('\nCopyright (c) 2012 Michael Dominice\n\nPermission is hereby granted, free of charge, to any person\nobtaining a copy of this software and associated documentation\nfiles (the "Software"), to deal in the Software without\nrestriction, including without limitation the rights to use,\ncopy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the\nSoftware is furnished to do so, subject to the following\nconditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES\nOF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT\nHOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\nWHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\nOTHER DEALINGS IN THE SOFTWARE.\n')
+              2 STORE_NAME               0 (__doc__)
+
+ 26           4 LOAD_CONST               1 (0)
+              6 LOAD_CONST               2 (('print_function',))
+              8 IMPORT_NAME              1 (__future__)
+             10 IMPORT_FROM              2 (print_function)
+             12 STORE_NAME               2 (print_function)
+             14 POP_TOP
+
+ 27          16 LOAD_CONST               1 (0)
+             18 LOAD_CONST               3 (('get_created_comment', 'normalize_ip'))
+             20 IMPORT_NAME              3 (utils.utils)
+             22 IMPORT_FROM              4 (get_created_comment)
+             24 STORE_NAME               4 (get_created_comment)
+             26 IMPORT_FROM              5 (normalize_ip)
+             28 STORE_NAME               5 (normalize_ip)
+             30 POP_TOP
+
+ 28          32 LOAD_CONST               1 (0)
+             34 LOAD_CONST               4 (None)
+             36 IMPORT_NAME              6 (os)
+             38 STORE_NAME               6 (os)
+
+ 29          40 LOAD_CONST               1 (0)
+             42 LOAD_CONST               4 (None)
+             44 IMPORT_NAME              7 (datetime)
+             46 STORE_NAME               7 (datetime)
+
+ 30          48 LOAD_CONST               1 (0)
+             50 LOAD_CONST               4 (None)
+             52 IMPORT_NAME              8 (re)
+             54 STORE_NAME               8 (re)
+
+ 31          56 LOAD_CONST               1 (0)
+             58 LOAD_CONST               4 (None)
+             60 IMPORT_NAME              9 (socket)
+             62 STORE_NAME               9 (socket)
+
+ 32          64 LOAD_CONST               1 (0)
+             66 LOAD_CONST               4 (None)
+             68 IMPORT_NAME             10 (struct)
+             70 STORE_NAME              10 (struct)
+
+ 34          72 LOAD_BUILD_CLASS
+             74 LOAD_CONST               5 (<code object Hosts at <address omitted>, file "utils/hosts.py", line 34>)
+             76 LOAD_CONST               6 ('Hosts')
+             78 MAKE_FUNCTION            0
+             80 LOAD_CONST               6 ('Hosts')
+             82 LOAD_NAME               11 (object)
+             84 CALL_FUNCTION            3
+             86 STORE_NAME              12 (Hosts)
+             88 LOAD_CONST               4 (None)
+             90 RETURN_VALUE
+
+Disassembly of <code object Hosts at <address omitted>, file "utils/hosts.py", line 34>:
+ 34           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('Hosts')
+              6 STORE_NAME               2 (__qualname__)
+
+ 36           8 LOAD_CONST               1 (<code object __init__ at <address omitted>, file "utils/hosts.py", line 36>)
+             10 LOAD_CONST               2 ('Hosts.__init__')
+             12 MAKE_FUNCTION            0
+             14 STORE_NAME               3 (__init__)
+
+ 40          16 LOAD_CONST              30 ((False,))
+             18 LOAD_CONST               4 (<code object get_one at <address omitted>, file "utils/hosts.py", line 40>)
+             20 LOAD_CONST               5 ('Hosts.get_one')
+             22 MAKE_FUNCTION            1 (defaults)
+             24 STORE_NAME               4 (get_one)
+
+ 50          26 LOAD_CONST               6 (<code object print_one at <address omitted>, file "utils/hosts.py", line 50>)
+             28 LOAD_CONST               7 ('Hosts.print_one')
+             30 MAKE_FUNCTION            0
+             32 STORE_NAME               5 (print_one)
+
+ 53          34 LOAD_CONST              31 ((None,))
+             36 LOAD_CONST               9 (<code object print_all at <address omitted>, file "utils/hosts.py", line 53>)
+             38 LOAD_CONST              10 ('Hosts.print_all')
+             40 MAKE_FUNCTION            1 (defaults)
+             42 STORE_NAME               6 (print_all)
+
+ 61          44 LOAD_CONST              11 (<code object file_contents at <address omitted>, file "utils/hosts.py", line 61>)
+             46 LOAD_CONST              12 ('Hosts.file_contents')
+             48 MAKE_FUNCTION            0
+             50 STORE_NAME               7 (file_contents)
+
+ 77          52 LOAD_CONST              13 (<code object read at <address omitted>, file "utils/hosts.py", line 77>)
+             54 LOAD_CONST              14 ('Hosts.read')
+             56 MAKE_FUNCTION            0
+             58 STORE_NAME               8 (read)
+
+ 87          60 LOAD_CONST              32 ((True,))
+             62 LOAD_CONST              16 (<code object remove_one at <address omitted>, file "utils/hosts.py", line 87>)
+             64 LOAD_CONST              17 ('Hosts.remove_one')
+             66 MAKE_FUNCTION            1 (defaults)
+             68 STORE_NAME               9 (remove_one)
+
+ 95          70 LOAD_CONST              33 ((True,))
+             72 LOAD_CONST              18 (<code object remove_all at <address omitted>, file "utils/hosts.py", line 95>)
+             74 LOAD_CONST              19 ('Hosts.remove_all')
+             76 MAKE_FUNCTION            1 (defaults)
+             78 STORE_NAME              10 (remove_all)
+
+100          80 LOAD_CONST              20 (<code object write at <address omitted>, file "utils/hosts.py", line 100>)
+             82 LOAD_CONST              21 ('Hosts.write')
+             84 MAKE_FUNCTION            0
+             86 STORE_NAME              11 (write)
+
+118          88 LOAD_CONST              22 (<code object set_one at <address omitted>, file "utils/hosts.py", line 118>)
+             90 LOAD_CONST              23 ('Hosts.set_one')
+             92 MAKE_FUNCTION            0
+             94 STORE_NAME              12 (set_one)
+
+122          96 LOAD_CONST              24 (<code object set_all at <address omitted>, file "utils/hosts.py", line 122>)
+             98 LOAD_CONST              25 ('Hosts.set_all')
+            100 MAKE_FUNCTION            0
+            102 STORE_NAME              13 (set_all)
+
+127         104 LOAD_CONST              34 ((True,))
+            106 LOAD_CONST              26 (<code object alias_all at <address omitted>, file "utils/hosts.py", line 127>)
+            108 LOAD_CONST              27 ('Hosts.alias_all')
+            110 MAKE_FUNCTION            1 (defaults)
+            112 STORE_NAME              14 (alias_all)
+
+131         114 LOAD_CONST              28 (<code object write_direct at <address omitted>, file "utils/hosts.py", line 131>)
+            116 LOAD_CONST              29 ('Hosts.write_direct')
+            118 MAKE_FUNCTION            0
+            120 STORE_NAME              15 (write_direct)
+            122 LOAD_CONST               8 (None)
+            124 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "utils/hosts.py", line 36>:
+ 37           0 BUILD_MAP                0
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (hosts)
+
+ 38           6 LOAD_FAST                0 (self)
+              8 LOAD_METHOD              1 (read)
+             10 LOAD_FAST                1 (path)
+             12 CALL_METHOD              1
+             14 POP_TOP
+             16 LOAD_CONST               0 (None)
+             18 RETURN_VALUE
+
+Disassembly of <code object get_one at <address omitted>, file "utils/hosts.py", line 40>:
+ 41           0 LOAD_FAST                1 (host_name)
+              2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (hosts)
+              6 CONTAINS_OP              0
+              8 POP_JUMP_IF_FALSE       20
+
+ 42          10 LOAD_FAST                0 (self)
+             12 LOAD_ATTR                0 (hosts)
+             14 LOAD_FAST                1 (host_name)
+             16 BINARY_SUBSCR
+             18 RETURN_VALUE
+
+ 43     >>   20 SETUP_FINALLY           14 (to 36)
+
+ 44          22 LOAD_GLOBAL              1 (socket)
+             24 LOAD_METHOD              2 (gethostbyname)
+             26 LOAD_FAST                1 (host_name)
+             28 CALL_METHOD              1
+             30 POP_TOP
+             32 POP_BLOCK
+             34 JUMP_FORWARD            38 (to 74)
+
+ 45     >>   36 DUP_TOP
+             38 LOAD_GLOBAL              1 (socket)
+             40 LOAD_ATTR                3 (gaierror)
+             42 JUMP_IF_NOT_EXC_MATCH    72
+             44 POP_TOP
+             46 POP_TOP
+             48 POP_TOP
+
+ 46          50 LOAD_FAST                2 (raise_on_not_found)
+             52 POP_JUMP_IF_FALSE       68
+
+ 47          54 LOAD_GLOBAL              4 (Exception)
+             56 LOAD_CONST               1 ('Unknown host: %s')
+             58 LOAD_FAST                1 (host_name)
+             60 BUILD_TUPLE              1
+             62 BINARY_MODULO
+             64 CALL_FUNCTION            1
+             66 RAISE_VARARGS            1
+        >>   68 POP_EXCEPT
+             70 JUMP_FORWARD             2 (to 74)
+        >>   72 RERAISE
+
+ 48     >>   74 LOAD_CONST               2 ('[Unknown]')
+             76 RETURN_VALUE
+
+Disassembly of <code object print_one at <address omitted>, file "utils/hosts.py", line 50>:
+ 51           0 LOAD_GLOBAL              0 (print)
+              2 LOAD_FAST                1 (host_name)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_METHOD              1 (get_one)
+              8 LOAD_FAST                1 (host_name)
+             10 CALL_METHOD              1
+             12 CALL_FUNCTION            2
+             14 POP_TOP
+             16 LOAD_CONST               0 (None)
+             18 RETURN_VALUE
+
+Disassembly of <code object print_all at <address omitted>, file "utils/hosts.py", line 53>:
+ 54           0 LOAD_FAST                1 (host_names)
+              2 LOAD_CONST               0 (None)
+              4 IS_OP                    0
+              6 POP_JUMP_IF_FALSE       36
+
+ 55           8 LOAD_FAST                0 (self)
+             10 LOAD_ATTR                0 (hosts)
+             12 LOAD_METHOD              1 (keys)
+             14 CALL_METHOD              0
+             16 GET_ITER
+        >>   18 FOR_ITER                14 (to 34)
+             20 STORE_FAST               2 (host_name)
+
+ 56          22 LOAD_FAST                0 (self)
+             24 LOAD_METHOD              2 (print_one)
+             26 LOAD_FAST                2 (host_name)
+             28 CALL_METHOD              1
+             30 POP_TOP
+             32 JUMP_ABSOLUTE           18
+        >>   34 JUMP_FORWARD            20 (to 56)
+
+ 58     >>   36 LOAD_FAST                1 (host_names)
+             38 GET_ITER
+        >>   40 FOR_ITER                14 (to 56)
+             42 STORE_FAST               2 (host_name)
+
+ 59          44 LOAD_FAST                0 (self)
+             46 LOAD_METHOD              2 (print_one)
+             48 LOAD_FAST                2 (host_name)
+             50 CALL_METHOD              1
+             52 POP_TOP
+             54 JUMP_ABSOLUTE           40
+        >>   56 LOAD_CONST               0 (None)
+             58 RETURN_VALUE
+
+Disassembly of <code object file_contents at <address omitted>, file "utils/hosts.py", line 61>:
+ 62           0 BUILD_MAP                0
+              2 STORE_FAST               1 (reversed_hosts)
+
+ 63           4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                0 (hosts)
+              8 LOAD_METHOD              1 (items)
+             10 CALL_METHOD              0
+             12 GET_ITER
+        >>   14 FOR_ITER                38 (to 54)
+             16 UNPACK_SEQUENCE          2
+             18 STORE_FAST               2 (host_name)
+             20 STORE_FAST               3 (ip_address)
+
+ 64          22 LOAD_FAST                3 (ip_address)
+             24 LOAD_FAST                1 (reversed_hosts)
+             26 CONTAINS_OP              1
+             28 POP_JUMP_IF_FALSE       38
+
+ 65          30 BUILD_LIST               0
+             32 LOAD_FAST                1 (reversed_hosts)
+             34 LOAD_FAST                3 (ip_address)
+             36 STORE_SUBSCR
+
+ 66     >>   38 LOAD_FAST                1 (reversed_hosts)
+             40 LOAD_FAST                3 (ip_address)
+             42 BINARY_SUBSCR
+             44 LOAD_METHOD              2 (append)
+             46 LOAD_FAST                2 (host_name)
+             48 CALL_METHOD              1
+             50 POP_TOP
+             52 JUMP_ABSOLUTE           14
+
+ 67     >>   54 BUILD_LIST               0
+             56 STORE_FAST               4 (parts)
+
+ 68          58 LOAD_GLOBAL              3 (sorted)
+             60 LOAD_FAST                1 (reversed_hosts)
+             62 LOAD_METHOD              4 (keys)
+             64 CALL_METHOD              0
+             66 CALL_FUNCTION            1
+             68 GET_ITER
+        >>   70 FOR_ITER                78 (to 150)
+             72 STORE_FAST               3 (ip_address)
+
+ 69          74 LOAD_FAST                4 (parts)
+             76 LOAD_METHOD              2 (append)
+             78 LOAD_CONST               1 ('\n# -- %s -- #')
+             80 LOAD_FAST                3 (ip_address)
+             82 BUILD_TUPLE              1
+             84 BINARY_MODULO
+             86 CALL_METHOD              1
+             88 POP_TOP
+
+ 70          90 LOAD_GLOBAL              3 (sorted)
+             92 LOAD_FAST                1 (reversed_hosts)
+             94 LOAD_FAST                3 (ip_address)
+             96 BINARY_SUBSCR
+             98 CALL_FUNCTION            1
+            100 GET_ITER
+        >>  102 FOR_ITER                28 (to 132)
+            104 STORE_FAST               2 (host_name)
+
+ 71         106 LOAD_FAST                2 (host_name)
+            108 POP_JUMP_IF_TRUE       112
+
+ 72         110 JUMP_ABSOLUTE          102
+
+ 73     >>  112 LOAD_FAST                4 (parts)
+            114 LOAD_METHOD              2 (append)
+            116 LOAD_CONST               2 ('%s\t%s')
+            118 LOAD_FAST                3 (ip_address)
+            120 LOAD_FAST                2 (host_name)
+            122 BUILD_TUPLE              2
+            124 BINARY_MODULO
+            126 CALL_METHOD              1
+            128 POP_TOP
+            130 JUMP_ABSOLUTE          102
+
+ 74     >>  132 LOAD_FAST                4 (parts)
+            134 LOAD_METHOD              2 (append)
+            136 LOAD_CONST               3 ('# -- %s -- #')
+            138 LOAD_FAST                3 (ip_address)
+            140 BUILD_TUPLE              1
+            142 BINARY_MODULO
+            144 CALL_METHOD              1
+            146 POP_TOP
+            148 JUMP_ABSOLUTE           70
+
+ 75     >>  150 LOAD_CONST               4 ('\n')
+            152 LOAD_METHOD              5 (join)
+            154 LOAD_GLOBAL              6 (get_created_comment)
+            156 CALL_FUNCTION            0
+            158 LOAD_CONST               4 ('\n')
+            160 LOAD_METHOD              5 (join)
+            162 LOAD_FAST                4 (parts)
+            164 CALL_METHOD              1
+            166 LOAD_CONST               5 ('')
+            168 BUILD_LIST               3
+            170 CALL_METHOD              1
+            172 RETURN_VALUE
+
+Disassembly of <code object read at <address omitted>, file "utils/hosts.py", line 77>:
+ 79           0 LOAD_GLOBAL              0 (open)
+              2 LOAD_FAST                1 (path)
+              4 LOAD_CONST               1 ('r')
+              6 CALL_FUNCTION            2
+              8 SETUP_WITH             112 (to 122)
+             10 STORE_FAST               2 (hosts_file)
+
+ 80          12 LOAD_FAST                2 (hosts_file)
+             14 LOAD_METHOD              1 (read)
+             16 CALL_METHOD              0
+             18 LOAD_METHOD              2 (split)
+             20 LOAD_CONST               2 ('\n')
+             22 CALL_METHOD              1
+             24 GET_ITER
+        >>   26 FOR_ITER                80 (to 108)
+             28 STORE_FAST               3 (line)
+
+ 81          30 LOAD_GLOBAL              3 (len)
+             32 LOAD_GLOBAL              4 (re)
+             34 LOAD_METHOD              5 (sub)
+             36 LOAD_CONST               3 ('\\s*')
+             38 LOAD_CONST               4 ('')
+             40 LOAD_FAST                3 (line)
+             42 CALL_METHOD              3
+             44 CALL_FUNCTION            1
+             46 POP_JUMP_IF_FALSE       26
+             48 LOAD_FAST                3 (line)
+             50 LOAD_METHOD              6 (startswith)
+             52 LOAD_CONST               5 ('#')
+             54 CALL_METHOD              1
+             56 POP_JUMP_IF_TRUE        26
+
+ 82          58 LOAD_GLOBAL              4 (re)
+             60 LOAD_METHOD              2 (split)
+             62 LOAD_CONST               6 ('\\s+')
+             64 LOAD_FAST                3 (line)
+             66 CALL_METHOD              2
+             68 STORE_FAST               4 (parts)
+
+ 83          70 LOAD_FAST                4 (parts)
+             72 LOAD_CONST               7 (0)
+             74 BINARY_SUBSCR
+             76 STORE_FAST               5 (ip_address)
+
+ 84          78 LOAD_FAST                4 (parts)
+             80 LOAD_CONST               8 (1)
+             82 LOAD_CONST               9 (None)
+             84 BUILD_SLICE              2
+             86 BINARY_SUBSCR
+             88 GET_ITER
+        >>   90 FOR_ITER                14 (to 106)
+             92 STORE_FAST               6 (host_name)
+
+ 85          94 LOAD_FAST                5 (ip_address)
+             96 LOAD_FAST                0 (self)
+             98 LOAD_ATTR                7 (hosts)
+            100 LOAD_FAST                6 (host_name)
+            102 STORE_SUBSCR
+            104 JUMP_ABSOLUTE           90
+        >>  106 JUMP_ABSOLUTE           26
+        >>  108 POP_BLOCK
+            110 LOAD_CONST               9 (None)
+            112 DUP_TOP
+            114 DUP_TOP
+            116 CALL_FUNCTION            3
+            118 POP_TOP
+            120 JUMP_FORWARD            16 (to 138)
+        >>  122 WITH_EXCEPT_START
+            124 POP_JUMP_IF_TRUE       128
+            126 RERAISE
+        >>  128 POP_TOP
+            130 POP_TOP
+            132 POP_TOP
+            134 POP_EXCEPT
+            136 POP_TOP
+        >>  138 LOAD_CONST               9 (None)
+            140 RETURN_VALUE
+
+Disassembly of <code object remove_one at <address omitted>, file "utils/hosts.py", line 87>:
+ 89           0 SETUP_FINALLY           12 (to 14)
+
+ 90           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (hosts)
+              6 LOAD_FAST                1 (host_name)
+              8 DELETE_SUBSCR
+             10 POP_BLOCK
+             12 JUMP_FORWARD            24 (to 38)
+
+ 91     >>   14 DUP_TOP
+             16 LOAD_GLOBAL              1 (KeyError)
+             18 JUMP_IF_NOT_EXC_MATCH    36
+             20 POP_TOP
+             22 POP_TOP
+             24 POP_TOP
+
+ 92          26 LOAD_FAST                2 (raise_on_not_found)
+             28 POP_JUMP_IF_FALSE       32
+
+ 93          30 RAISE_VARARGS            0
+        >>   32 POP_EXCEPT
+             34 JUMP_FORWARD             2 (to 38)
+        >>   36 RERAISE
+        >>   38 LOAD_CONST               1 (None)
+             40 RETURN_VALUE
+
+Disassembly of <code object remove_all at <address omitted>, file "utils/hosts.py", line 95>:
+ 97           0 LOAD_FAST                1 (host_names)
+              2 GET_ITER
+        >>    4 FOR_ITER                16 (to 22)
+              6 STORE_FAST               3 (host_name)
+
+ 98           8 LOAD_FAST                0 (self)
+             10 LOAD_METHOD              0 (remove_one)
+             12 LOAD_FAST                3 (host_name)
+             14 LOAD_FAST                2 (raise_on_not_found)
+             16 CALL_METHOD              2
+             18 POP_TOP
+             20 JUMP_ABSOLUTE            4
+        >>   22 LOAD_CONST               1 (None)
+             24 RETURN_VALUE
+
+Disassembly of <code object write at <address omitted>, file "utils/hosts.py", line 100>:
+102           0 SETUP_FINALLY           12 (to 14)
+
+103           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (file_contents)
+              6 CALL_METHOD              0
+              8 STORE_FAST               2 (contents)
+             10 POP_BLOCK
+             12 JUMP_FORWARD            40 (to 54)
+
+104     >>   14 DUP_TOP
+             16 LOAD_GLOBAL              1 (Exception)
+             18 JUMP_IF_NOT_EXC_MATCH    52
+             20 POP_TOP
+             22 STORE_FAST               3 (e)
+             24 POP_TOP
+             26 SETUP_FINALLY           16 (to 44)
+
+105          28 LOAD_FAST                3 (e)
+             30 RAISE_VARARGS            1
+             32 POP_BLOCK
+             34 POP_EXCEPT
+             36 LOAD_CONST               1 (None)
+             38 STORE_FAST               3 (e)
+             40 DELETE_FAST              3 (e)
+             42 JUMP_FORWARD            10 (to 54)
+        >>   44 LOAD_CONST               1 (None)
+             46 STORE_FAST               3 (e)
+             48 DELETE_FAST              3 (e)
+             50 RERAISE
+        >>   52 RERAISE
+
+107     >>   54 LOAD_CONST               2 ('{0}.tmp')
+             56 LOAD_METHOD              2 (format)
+             58 LOAD_FAST                1 (path)
+             60 CALL_METHOD              1
+             62 STORE_FAST               4 (tmp_hosts_file_path)
+
+108          64 LOAD_GLOBAL              3 (open)
+             66 LOAD_FAST                4 (tmp_hosts_file_path)
+             68 LOAD_CONST               3 ('w')
+             70 CALL_FUNCTION            2
+             72 SETUP_WITH              26 (to 100)
+             74 STORE_FAST               5 (tmp_hosts_file)
+
+109          76 LOAD_FAST                5 (tmp_hosts_file)
+             78 LOAD_METHOD              4 (write)
+             80 LOAD_FAST                2 (contents)
+             82 CALL_METHOD              1
+             84 POP_TOP
+             86 POP_BLOCK
+             88 LOAD_CONST               1 (None)
+             90 DUP_TOP
+             92 DUP_TOP
+             94 CALL_FUNCTION            3
+             96 POP_TOP
+             98 JUMP_FORWARD            16 (to 116)
+        >>  100 WITH_EXCEPT_START
+            102 POP_JUMP_IF_TRUE       106
+            104 RERAISE
+        >>  106 POP_TOP
+            108 POP_TOP
+            110 POP_TOP
+            112 POP_EXCEPT
+            114 POP_TOP
+
+111     >>  116 LOAD_GLOBAL              5 (datetime)
+            118 LOAD_ATTR                5 (datetime)
+            120 LOAD_METHOD              6 (now)
+            122 CALL_METHOD              0
+            124 STORE_FAST               6 (dt)
+
+112         126 LOAD_FAST                6 (dt)
+            128 LOAD_METHOD              7 (strftime)
+            130 LOAD_CONST               4 ('%Y%m%d%H%M%S')
+            132 CALL_METHOD              1
+            134 STORE_FAST               7 (seq)
+
+113         136 LOAD_CONST               5 ('copy ')
+            138 LOAD_FAST                1 (path)
+            140 BINARY_ADD
+            142 LOAD_CONST               6 (' ')
+            144 BINARY_ADD
+            146 LOAD_FAST                1 (path)
+            148 BINARY_ADD
+            150 LOAD_CONST               7 ('_old_')
+            152 BINARY_ADD
+            154 LOAD_FAST                7 (seq)
+            156 BINARY_ADD
+            158 STORE_FAST               8 (com)
+
+114         160 LOAD_GLOBAL              8 (os)
+            162 LOAD_METHOD              9 (system)
+            164 LOAD_FAST                8 (com)
+            166 CALL_METHOD              1
+            168 POP_TOP
+
+115         170 LOAD_GLOBAL              8 (os)
+            172 LOAD_METHOD             10 (remove)
+            174 LOAD_FAST                1 (path)
+            176 CALL_METHOD              1
+            178 POP_TOP
+            180 LOAD_CONST               1 (None)
+            182 RETURN_VALUE
+
+Disassembly of <code object set_one at <address omitted>, file "utils/hosts.py", line 118>:
+120           0 LOAD_FAST                2 (ip_address)
+              2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (hosts)
+              6 LOAD_FAST                1 (host_name)
+              8 STORE_SUBSCR
+             10 LOAD_CONST               1 (None)
+             12 RETURN_VALUE
+
+Disassembly of <code object set_all at <address omitted>, file "utils/hosts.py", line 122>:
+124           0 LOAD_FAST                1 (host_names)
+              2 GET_ITER
+        >>    4 FOR_ITER                16 (to 22)
+              6 STORE_FAST               3 (host_name)
+
+125           8 LOAD_FAST                0 (self)
+             10 LOAD_METHOD              0 (set_one)
+             12 LOAD_FAST                3 (host_name)
+             14 LOAD_FAST                2 (ip_address)
+             16 CALL_METHOD              2
+             18 POP_TOP
+             20 JUMP_ABSOLUTE            4
+        >>   22 LOAD_CONST               1 (None)
+             24 RETURN_VALUE
+
+Disassembly of <code object alias_all at <address omitted>, file "utils/hosts.py", line 127>:
+129           0 LOAD_FAST                0 (self)
+              2 LOAD_METHOD              0 (set_all)
+              4 LOAD_FAST                1 (host_names)
+              6 LOAD_FAST                0 (self)
+              8 LOAD_METHOD              1 (get_one)
+             10 LOAD_FAST                2 (target)
+             12 LOAD_FAST                3 (raise_on_not_found)
+             14 CALL_METHOD              2
+             16 CALL_METHOD              2
+             18 POP_TOP
+             20 LOAD_CONST               1 (None)
+             22 RETURN_VALUE
+
+Disassembly of <code object write_direct at <address omitted>, file "utils/hosts.py", line 131>:
+132           0 LOAD_FAST                3 (ip)
+              2 LOAD_CONST               1 ('  ')
+              4 BINARY_ADD
+              6 LOAD_FAST                2 (hostname)
+              8 BINARY_ADD
+             10 LOAD_CONST               2 ('\n')
+             12 BINARY_ADD
+             14 STORE_FAST               4 (contents)
+
+133          16 LOAD_GLOBAL              0 (open)
+             18 LOAD_FAST                1 (hosts_path)
+             20 LOAD_CONST               3 ('a')
+             22 CALL_FUNCTION            2
+             24 SETUP_WITH              26 (to 52)
+             26 STORE_FAST               5 (tmp_hosts_file)
+
+134          28 LOAD_FAST                5 (tmp_hosts_file)
+             30 LOAD_METHOD              1 (write)
+             32 LOAD_FAST                4 (contents)
+             34 CALL_METHOD              1
+             36 POP_TOP
+             38 POP_BLOCK
+             40 LOAD_CONST               0 (None)
+             42 DUP_TOP
+             44 DUP_TOP
+             46 CALL_FUNCTION            3
+             48 POP_TOP
+             50 JUMP_FORWARD            16 (to 68)
+        >>   52 WITH_EXCEPT_START
+             54 POP_JUMP_IF_TRUE        58
+             56 RERAISE
+        >>   58 POP_TOP
+             60 POP_TOP
+             62 POP_TOP
+             64 POP_EXCEPT
+             66 POP_TOP
+        >>   68 LOAD_CONST               0 (None)
+             70 RETURN_VALUE

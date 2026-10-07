@@ -1,0 +1,138 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.constants.marshal (Python 3.9)
+
+from settings import DEBUG as debug
+from settings import UPDATE_HOSTS as update_hosts
+__APP_VERSION_ = '1.0.0'
+TOOL_VERSION = '1.0.0'
+__version__ = '0.9.3'
+__esp_version__ = '2.1'
+DEBUG = debug
+UPDATE_HOSTS = update_hosts
+CMD_PEEK = 0
+CMD_POKE = 1
+CMD_MAGIC = 2
+CMD_HW_VER = 16
+CMD_FW_VER = 17
+CMD_PROD_ID = 18
+CMD_SETUP_SLEEP = 32
+CMD_GO_SLEEP = 33
+CMD_CALIBRATE = 34
+CMD_BAUD_CHANGE = 48
+CMD_DFU = 49
+ANSELA_ADDR = 396
+ANSELB_ADDR = 397
+ANSELC_ADDR = 398
+ADCON0_ADDR = 157
+ADCON1_ADDR = 158
+IOCAP_ADDR = 913
+IOCAN_ADDR = 914
+_ADCON0_CHS_POSN = 2
+_ADCON0_ADON_MASK = 1
+_ADCON1_ADCS_POSN = 4
+_ADCON0_GO_nDONE_MASK = 2
+ADRESL_ADDR = 155
+ADRESH_ADDR = 156
+TRISA_ADDR = 140
+TRISC_ADDR = 142
+PORTA_ADDR = 12
+PORTC_ADDR = 14
+WPUA_ADDR = 524
+PCON_ADDR = 150
+STATUS_ADDR = 131
+FLASH_MODE = 'dio'
+FLASH_FREQ = '80m'
+DEFAULT_BAUD_RATE = 115200
+FAST_BAUD_RATE = 921600
+MAXPICREAD_BAUD_RATE = 230400
+LORA_REGIONS = [
+    'EU868',
+    'US915',
+    'AS923',
+    'AU915',
+    'IN865']
+PIC_BOARDS = [
+    '04D8:F013',
+    '04D8:F012',
+    '04D8:EF98',
+    '04D8:EF38',
+    '04D8:ED14']
+PARTITIONS = {
+    'secureboot': [
+        '0x0',
+        '0x8000'],
+    'bootloader': [
+        '0x1000',
+        '0x7000'],
+    'partitions': [
+        '0x8000',
+        '0x1000'],
+    'nvs': [
+        '0x9000',
+        '0x7000'],
+    'factory': [
+        '0x10000',
+        '0x180000'],
+    'otadata': [
+        '0x190000',
+        '0x1000'],
+    'ota_0': [
+        '0x1a0000',
+        '0x180000'],
+    'fs': [
+        '0x380000',
+        '0x7F000'],
+    'config': [
+        '0x3FF000',
+        '0x1000'],
+    'fs1': [
+        '0x400000',
+        '0x400000'],
+    'all': [
+        '0x0',
+        '0x800000'] }
+PARTITIONS_NEW = {
+    'factory': [
+        '0x10000',
+        '0x1AE000'],
+    'otadata': [
+        '0x1BE000',
+        '0x1000'],
+    'ota_0': [
+        '0x1a0000',
+        '0x1AE000'] }
+LORAMAC_REGION_AS923 = 0
+LORAMAC_REGION_AU915 = 1
+LORAMAC_REGION_CN470 = 2
+LORAMAC_REGION_CN779 = 3
+LORAMAC_REGION_EU433 = 4
+LORAMAC_REGION_EU868 = 5
+LORAMAC_REGION_KR920 = 6
+LORAMAC_REGION_IN865 = 7
+LORAMAC_REGION_US915 = 8
+LORAMAC_REGION_US915_HYBRID = 9
+size_table = [
+    (1073741824, ' gb'),
+    (1048576, ' mb'),
+    (1024, ' kb'),
+    (1, ' bytes')]
+MAX_UINT32 = 0xFFFFFFFF
+MAX_UINT24 = 16777215
+DEFAULT_TIMEOUT = 3
+START_FLASH_TIMEOUT = 20
+CHIP_ERASE_TIMEOUT = 120
+SYNC_TIMEOUT = 0.1
+DETECTED_FLASH_SIZES = {
+    18: '256KB',
+    19: '512KB',
+    20: '1MB',
+    21: '2MB',
+    22: '4MB',
+    23: '8MB',
+    24: '16MB' }
+HOUR = 3600

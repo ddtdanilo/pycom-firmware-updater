@@ -1,0 +1,172 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.utils.marshal (Python 3.9)
+
+from traceback import print_exc
+from utils.constants import constants
+import sys
+import binascii
+import asyncio
+import json
+import socket
+import struct
+import datetime
+
+try:
+    import humanfriendly
+    humanfriendly_available = True
+finally:
+    pass
+humanfriendly_available = False
+
+def check_python_2():
+    PYTHON2 = sys.version_info[0] < 3
+    return PYTHON2
+
+if check_python_2():
+
+    def byte(bitstr, index):
+        return ord(bitstr[index])
+
+else:
+
+    def byte(bitstr, index):
+        return bitstr[index]
+
+
+
+def eprint(*args, **kwargs):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def log(*args):
+    print(' '.join((lambda .0: for a in .0:
+str(a))(args)))
+
+
+def error(msg):
+    eprint('error:', msg)
+
+
+def exit_with_error(code, msg):
+    error(msg)
+    sys.exit(code)
+
+
+def warn(msg):
+    eprint('warning:', msg)
+
+
+def print_debug(msg):
+    if constants.DEBUG:
+        eprint(msg)
+
+
+def print_cb(config_block):
+    if constants.DEBUG:
+        for x in range(0, 30):
+            print(binascii.hexlify(config_block[x * 32:x * 32 + 32]))
+
+
+def print_exception(e):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def hr_size(size):
+    if humanfriendly_available:
+        return humanfriendly.format_size(size, True, **('binary',))
+# WARNING: Decompyle incomplete
+
+
+def hexify(s):
+    if not check_python_2():
+        return ''.join((lambda .0: for c in .0:
+'%02X' % c)(s))
+    return None.join((lambda .0: for c in .0:
+'%02X' % ord(c))(s))
+
+
+def check_partition(partition):
+    if constants.PARTITIONS.get(partition) is None:
+        return False
+    return None
+
+
+def unhexify(hs):
+    s = bytes()
+    for i in range(0, len(hs) - 1, 2):
+        hex_string = hs[i:i + 2]
+        if not check_python_2():
+            s += bytes([
+                int(hex_string, 16)])
+            continue
+        s += chr(int(hex_string, 16))
+    return s
+
+
+def arg_auto_int(x):
+    return int(x, 0)
+
+
+def pad_to(data, alignment, pad_character = (b'\xff',)):
+    ''' Pad to the next alignment boundary '''
+    pad_mod = len(data) % alignment
+    if pad_mod != 0:
+        data += pad_character * (alignment - pad_mod)
+    return data
+
+
+async def wake_up():
+    await asyncio.sleep(1)
+    continue
+
+
+def tryToLoadJson(json_str):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def str2region(lora_region_str):
+    if lora_region_str is not None:
+        return {
+            'EU868': constants.LORAMAC_REGION_EU868,
+            'US915': constants.LORAMAC_REGION_US915,
+            'AU915': constants.LORAMAC_REGION_AU915,
+            'AS923': constants.LORAMAC_REGION_AS923 }.get(lora_region_str, 255)
+    return None
+
+
+def region2str(lora_region_int):
+    if lora_region_int is not None:
+        return {
+            constants.LORAMAC_REGION_AS923: 'AS923',
+            constants.LORAMAC_REGION_AU915: 'AU915',
+            constants.LORAMAC_REGION_US915: 'US915',
+            constants.LORAMAC_REGION_EU868: 'EU868' }.get(lora_region_int, 'NONE')
+    return None
+
+
+def normalize_ipv4(ip):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def normalize_ipv6(ip):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def normalize_ip(ip):
+    pass
+# WARNING: Decompyle incomplete
+
+
+def get_created_comment():
+    return '\n'.join([
+        '# Updated: %s' % datetime.datetime.now()])

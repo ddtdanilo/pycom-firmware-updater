@@ -1,0 +1,969 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: pypic
+  3:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (('print_function',))
+               6 IMPORT_NAME          (__future__)
+               9 IMPORT_FROM          (print_function)
+              12 STORE_NAME           (print_function)
+              15 POP_TOP
+
+  5:          16 LOAD_CONST           (-1)
+              19 LOAD_CONST           (None)
+              22 IMPORT_NAME          (argparse)
+              25 STORE_NAME           (argparse)
+
+  6:          28 LOAD_CONST           (-1)
+              31 LOAD_CONST           (None)
+              34 IMPORT_NAME          (struct)
+              37 STORE_NAME           (struct)
+
+  7:          40 LOAD_CONST           (-1)
+              43 LOAD_CONST           (None)
+              46 IMPORT_NAME          (sys)
+              49 STORE_NAME           (sys)
+
+  8:          52 LOAD_CONST           (-1)
+              55 LOAD_CONST           (None)
+              58 IMPORT_NAME          (time)
+              61 STORE_NAME           (time)
+
+ 10:          64 LOAD_CONST           (-1)
+              67 LOAD_CONST           (None)
+              70 IMPORT_NAME          (serial)
+              73 STORE_NAME           (serial)
+
+ 12:          76 SETUP_EXCEPT         (to 99)
+
+ 13:          79 LOAD_CONST           (-1)
+              82 LOAD_CONST           (('DEBUG',))
+              85 IMPORT_NAME          (local_settings)
+              88 IMPORT_FROM          (DEBUG)
+              91 STORE_NAME           (DEBUG)
+              94 POP_TOP
+              95 POP_BLOCK
+              96 JUMP_FORWARD         (to 112)
+
+ 14:     >>   99 POP_TOP
+             100 POP_TOP
+             101 POP_TOP
+
+ 15:         102 LOAD_NAME            (False)
+             105 STORE_NAME           (DEBUG)
+             108 JUMP_FORWARD         (to 112)
+             111 END_FINALLY
+
+ 16:     >>  112 LOAD_CONST           ("0.9.2")
+             115 STORE_NAME           (__version__)
+
+ 18:         118 LOAD_CONST           (0)
+             121 STORE_NAME           (CMD_PEEK)
+
+ 19:         124 LOAD_CONST           (1)
+             127 STORE_NAME           (CMD_POKE)
+
+ 20:         130 LOAD_CONST           (2)
+             133 STORE_NAME           (CMD_MAGIC)
+
+ 21:         136 LOAD_CONST           (16)
+             139 STORE_NAME           (CMD_HW_VER)
+
+ 22:         142 LOAD_CONST           (17)
+             145 STORE_NAME           (CMD_FW_VER)
+
+ 23:         148 LOAD_CONST           (18)
+             151 STORE_NAME           (CMD_PROD_ID)
+
+ 24:         154 LOAD_CONST           (32)
+             157 STORE_NAME           (CMD_SETUP_SLEEP)
+
+ 25:         160 LOAD_CONST           (33)
+             163 STORE_NAME           (CMD_GO_SLEEP)
+
+ 26:         166 LOAD_CONST           (34)
+             169 STORE_NAME           (CMD_CALIBRATE)
+
+ 27:         172 LOAD_CONST           (48)
+             175 STORE_NAME           (CMD_BAUD_CHANGE)
+
+ 28:         178 LOAD_CONST           (49)
+             181 STORE_NAME           (CMD_DFU)
+
+ 30:         184 LOAD_CONST           (396)
+             187 STORE_NAME           (ANSELA_ADDR)
+
+ 31:         190 LOAD_CONST           (397)
+             193 STORE_NAME           (ANSELB_ADDR)
+
+ 32:         196 LOAD_CONST           (398)
+             199 STORE_NAME           (ANSELC_ADDR)
+
+ 34:         202 LOAD_CONST           (157)
+             205 STORE_NAME           (ADCON0_ADDR)
+
+ 35:         208 LOAD_CONST           (158)
+             211 STORE_NAME           (ADCON1_ADDR)
+
+ 37:         214 LOAD_CONST           (913)
+             217 STORE_NAME           (IOCAP_ADDR)
+
+ 38:         220 LOAD_CONST           (914)
+             223 STORE_NAME           (IOCAN_ADDR)
+
+ 40:         226 LOAD_CONST           (2)
+             229 STORE_NAME           (_ADCON0_CHS_POSN)
+
+ 41:         232 LOAD_CONST           (1)
+             235 STORE_NAME           (_ADCON0_ADON_MASK)
+
+ 42:         238 LOAD_CONST           (4)
+             241 STORE_NAME           (_ADCON1_ADCS_POSN)
+
+ 43:         244 LOAD_CONST           (2)
+             247 STORE_NAME           (_ADCON0_GO_nDONE_MASK)
+
+ 45:         250 LOAD_CONST           (155)
+             253 STORE_NAME           (ADRESL_ADDR)
+
+ 46:         256 LOAD_CONST           (156)
+             259 STORE_NAME           (ADRESH_ADDR)
+
+ 48:         262 LOAD_CONST           (140)
+             265 STORE_NAME           (TRISA_ADDR)
+
+ 49:         268 LOAD_CONST           (142)
+             271 STORE_NAME           (TRISC_ADDR)
+
+ 51:         274 LOAD_CONST           (12)
+             277 STORE_NAME           (PORTA_ADDR)
+
+ 52:         280 LOAD_CONST           (14)
+             283 STORE_NAME           (PORTC_ADDR)
+
+ 54:         286 LOAD_CONST           (524)
+             289 STORE_NAME           (WPUA_ADDR)
+
+ 56:         292 LOAD_CONST           (150)
+             295 STORE_NAME           (PCON_ADDR)
+
+ 57:         298 LOAD_CONST           (131)
+             301 STORE_NAME           (STATUS_ADDR)
+
+ 61:         304 LOAD_CONST           (<Code2 code object eprint at <address omitted>, file pypic.py>, line 61)
+             307 MAKE_FUNCTION        (0 default parameters)
+             310 STORE_NAME           (eprint)
+
+ 65:         313 LOAD_CONST           (<Code2 code object log at <address omitted>, file pypic.py>, line 65)
+             316 MAKE_FUNCTION        (0 default parameters)
+             319 STORE_NAME           (log)
+
+ 69:         322 LOAD_CONST           (<Code2 code object error at <address omitted>, file pypic.py>, line 69)
+             325 MAKE_FUNCTION        (0 default parameters)
+             328 STORE_NAME           (error)
+
+ 73:         331 LOAD_CONST           (<Code2 code object exit_with_error at <address omitted>, file pypic.py>, line 73)
+             334 MAKE_FUNCTION        (0 default parameters)
+             337 STORE_NAME           (exit_with_error)
+
+ 78:         340 LOAD_CONST           (<Code2 code object warn at <address omitted>, file pypic.py>, line 78)
+             343 MAKE_FUNCTION        (0 default parameters)
+             346 STORE_NAME           (warn)
+
+ 82:         349 LOAD_CONST           (<Code2 code object print_debug at <address omitted>, file pypic.py>, line 82)
+             352 MAKE_FUNCTION        (0 default parameters)
+             355 STORE_NAME           (print_debug)
+
+ 87:         358 LOAD_CONST           ("Pypic")
+             361 LOAD_CONST           (())
+             364 LOAD_CONST           (<Code2 code object Pypic at <address omitted>, file pypic.py>, line 87)
+             367 MAKE_FUNCTION        (0 default parameters)
+             370 CALL_FUNCTION        (0 positional, 0 named)
+             373 BUILD_CLASS
+             374 STORE_NAME           (Pypic)
+
+200:         377 LOAD_CONST           (<Code2 code object main at <address omitted>, file pypic.py>, line 200)
+             380 MAKE_FUNCTION        (0 default parameters)
+             383 STORE_NAME           (main)
+
+225:         386 LOAD_NAME            (__name__)
+             389 LOAD_CONST           ("__main__")
+             392 COMPARE_OP           (==)
+             395 POP_JUMP_IF_FALSE    (to 427)
+
+226:         398 LOAD_NAME            (sys)
+             401 LOAD_ATTR            (exit)
+             404 LOAD_NAME            (main)
+             407 LOAD_NAME            (sys)
+             410 LOAD_ATTR            (argv)
+             413 LOAD_CONST           (1)
+             416 SLICE+1
+             417 CALL_FUNCTION        (1 positional, 0 named)
+             420 CALL_FUNCTION        (1 positional, 0 named)
+             423 POP_TOP
+             424 JUMP_FORWARD         (to 427)
+         >>  427 LOAD_CONST           (None)
+             430 RETURN_VALUE
+
+Symbol: pypic.eprint
+ 62:           0 LOAD_GLOBAL          (print)
+               3 LOAD_CONST           ("file")
+               6 LOAD_GLOBAL          (sys)
+               9 LOAD_ATTR            (stderr)
+              12 LOAD_FAST            (args)
+              15 LOAD_FAST            (kwargs)
+              18 CALL_FUNCTION_VAR_KW (0 positional, 1 named)
+              21 POP_TOP
+              22 LOAD_CONST           (None)
+              25 RETURN_VALUE
+
+Symbol: pypic.log
+ 66:           0 LOAD_GLOBAL          (print)
+               3 LOAD_CONST           (" ")
+               6 LOAD_ATTR            (join)
+               9 LOAD_CONST           (<Code2 code object <genexpr> at <address omitted>, file pypic.py>, line 66)
+              12 MAKE_FUNCTION        (0 default parameters)
+              15 LOAD_FAST            (args)
+              18 GET_ITER
+              19 CALL_FUNCTION        (1 positional, 0 named)
+              22 CALL_FUNCTION        (1 positional, 0 named)
+              25 CALL_FUNCTION        (1 positional, 0 named)
+              28 POP_TOP
+              29 LOAD_CONST           (None)
+              32 RETURN_VALUE
+
+Symbol: pypic.log.<genexpr>
+ 66:           0 LOAD_FAST            (.0)
+         >>    3 FOR_ITER             (to 23)
+
+ 66:           6 STORE_FAST           (a)
+               9 LOAD_GLOBAL          (str)
+              12 LOAD_FAST            (a)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 YIELD_VALUE
+              19 POP_TOP
+              20 JUMP_ABSOLUTE        (to 3)
+         >>   23 LOAD_CONST           (None)
+              26 RETURN_VALUE
+
+Symbol: pypic.error
+ 70:           0 LOAD_GLOBAL          (eprint)
+               3 LOAD_CONST           ("error:")
+               6 LOAD_FAST            (msg)
+               9 CALL_FUNCTION        (2 positional, 0 named)
+              12 POP_TOP
+              13 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+Symbol: pypic.exit_with_error
+ 74:           0 LOAD_GLOBAL          (error)
+               3 LOAD_FAST            (msg)
+               6 CALL_FUNCTION        (1 positional, 0 named)
+               9 POP_TOP
+
+ 75:          10 LOAD_GLOBAL          (sys)
+              13 LOAD_ATTR            (exit)
+              16 LOAD_FAST            (code)
+              19 CALL_FUNCTION        (1 positional, 0 named)
+              22 POP_TOP
+              23 LOAD_CONST           (None)
+              26 RETURN_VALUE
+
+Symbol: pypic.warn
+ 79:           0 LOAD_GLOBAL          (eprint)
+               3 LOAD_CONST           ("warning:")
+               6 LOAD_FAST            (msg)
+               9 CALL_FUNCTION        (2 positional, 0 named)
+              12 POP_TOP
+              13 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+Symbol: pypic.print_debug
+ 83:           0 LOAD_GLOBAL          (DEBUG)
+               3 POP_JUMP_IF_FALSE    (to 19)
+
+ 84:           6 LOAD_GLOBAL          (eprint)
+               9 LOAD_FAST            (msg)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 POP_TOP
+              16 JUMP_FORWARD         (to 19)
+         >>   19 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+Symbol: pypic.Pypic
+ 87:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+ 89:           6 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file pypic.py>, line 89)
+               9 MAKE_FUNCTION        (0 default parameters)
+              12 STORE_NAME           (__init__)
+
+113:          15 LOAD_NAME            (True)
+              18 LOAD_CONST           (<Code2 code object _write at <address omitted>, file pypic.py>, line 113)
+              21 MAKE_FUNCTION        (1 default parameters)
+              24 STORE_NAME           (_write)
+
+121:          27 LOAD_CONST           (<Code2 code object _send_cmd at <address omitted>, file pypic.py>, line 121)
+              30 MAKE_FUNCTION        (0 default parameters)
+              33 STORE_NAME           (_send_cmd)
+
+124:          36 LOAD_CONST           (<Code2 code object read_hw_version at <address omitted>, file pypic.py>, line 124)
+              39 MAKE_FUNCTION        (0 default parameters)
+              42 STORE_NAME           (read_hw_version)
+
+127:          45 LOAD_CONST           (<Code2 code object read_fw_version at <address omitted>, file pypic.py>, line 127)
+              48 MAKE_FUNCTION        (0 default parameters)
+              51 STORE_NAME           (read_fw_version)
+
+130:          54 LOAD_CONST           (<Code2 code object read_product_id at <address omitted>, file pypic.py>, line 130)
+              57 MAKE_FUNCTION        (0 default parameters)
+              60 STORE_NAME           (read_product_id)
+
+133:          63 LOAD_CONST           (<Code2 code object peek_memory at <address omitted>, file pypic.py>, line 133)
+              66 MAKE_FUNCTION        (0 default parameters)
+              69 STORE_NAME           (peek_memory)
+
+136:          72 LOAD_CONST           (<Code2 code object poke_memory at <address omitted>, file pypic.py>, line 136)
+              75 MAKE_FUNCTION        (0 default parameters)
+              78 STORE_NAME           (poke_memory)
+
+139:          81 LOAD_CONST           (255)
+              84 LOAD_CONST           (0)
+              87 LOAD_CONST           (0)
+              90 LOAD_CONST           (<Code2 code object magic_write_read at <address omitted>, file pypic.py>, line 139)
+              93 MAKE_FUNCTION        (3 default parameters)
+              96 STORE_NAME           (magic_write_read)
+
+142:          99 LOAD_CONST           (255)
+             102 LOAD_CONST           (0)
+             105 LOAD_CONST           (0)
+             108 LOAD_CONST           (<Code2 code object magic_write at <address omitted>, file pypic.py>, line 142)
+             111 MAKE_FUNCTION        (3 default parameters)
+             114 STORE_NAME           (magic_write)
+
+145:         117 LOAD_CONST           (<Code2 code object toggle_bits_in_memory at <address omitted>, file pypic.py>, line 145)
+             120 MAKE_FUNCTION        (0 default parameters)
+             123 STORE_NAME           (toggle_bits_in_memory)
+
+148:         126 LOAD_CONST           (<Code2 code object mask_bits_in_memory at <address omitted>, file pypic.py>, line 148)
+             129 MAKE_FUNCTION        (0 default parameters)
+             132 STORE_NAME           (mask_bits_in_memory)
+
+151:         135 LOAD_CONST           (<Code2 code object set_bits_in_memory at <address omitted>, file pypic.py>, line 151)
+             138 MAKE_FUNCTION        (0 default parameters)
+             141 STORE_NAME           (set_bits_in_memory)
+
+154:         144 LOAD_CONST           (<Code2 code object reset_pycom_module at <address omitted>, file pypic.py>, line 154)
+             147 MAKE_FUNCTION        (0 default parameters)
+             150 STORE_NAME           (reset_pycom_module)
+
+166:         153 LOAD_NAME            (True)
+             156 LOAD_CONST           (<Code2 code object enter_pycom_programming_mode at <address omitted>, file pypic.py>, line 166)
+             159 MAKE_FUNCTION        (1 default parameters)
+             162 STORE_NAME           (enter_pycom_programming_mode)
+
+182:         165 LOAD_NAME            (True)
+             168 LOAD_CONST           (<Code2 code object exit_pycom_programming_mode at <address omitted>, file pypic.py>, line 182)
+             171 MAKE_FUNCTION        (1 default parameters)
+             174 STORE_NAME           (exit_pycom_programming_mode)
+
+193:         177 LOAD_CONST           (<Code2 code object isdetected at <address omitted>, file pypic.py>, line 193)
+             180 MAKE_FUNCTION        (0 default parameters)
+             183 STORE_NAME           (isdetected)
+
+196:         186 LOAD_CONST           (<Code2 code object close at <address omitted>, file pypic.py>, line 196)
+             189 MAKE_FUNCTION        (0 default parameters)
+             192 STORE_NAME           (close)
+             195 LOAD_LOCALS
+             196 RETURN_VALUE
+
+Symbol: pypic.Pypic.__init__
+ 91:           0 SETUP_EXCEPT         (to 68)
+
+ 92:           3 LOAD_GLOBAL          (serial)
+               6 LOAD_ATTR            (Serial)
+               9 LOAD_FAST            (port)
+              12 LOAD_CONST           ("baudrate")
+              15 LOAD_CONST           (115200)
+              18 LOAD_CONST           ("bytesize")
+              21 LOAD_GLOBAL          (serial)
+              24 LOAD_ATTR            (FIVEBITS)
+              27 LOAD_CONST           ("timeout")
+              30 LOAD_CONST           (0.25)
+              33 LOAD_CONST           ("exclusive")
+              36 LOAD_GLOBAL          (True)
+              39 CALL_FUNCTION        (1 positional, 4 named)
+              42 LOAD_FAST            (self)
+              45 STORE_ATTR           (serial)
+
+ 93:          48 LOAD_GLOBAL          (print_debug)
+              51 LOAD_CONST           ("Connected in exclusive mode")
+              54 CALL_FUNCTION        (1 positional, 0 named)
+              57 POP_TOP
+
+ 94:          58 LOAD_GLOBAL          (True)
+              61 STORE_FAST           (connected)
+              64 POP_BLOCK
+              65 JUMP_FORWARD         (to 93)
+
+ 95:     >>   68 DUP_TOP
+              69 LOAD_GLOBAL          (Exception)
+              72 COMPARE_OP           (exception-match)
+              75 POP_JUMP_IF_FALSE    (to 92)
+              78 POP_TOP
+              79 STORE_FAST           (e)
+              82 POP_TOP
+
+ 96:          83 LOAD_GLOBAL          (False)
+              86 STORE_FAST           (connected)
+              89 JUMP_FORWARD         (to 93)
+         >>   92 END_FINALLY
+
+ 97:     >>   93 LOAD_FAST            (connected)
+              96 POP_JUMP_IF_TRUE     (to 193)
+
+ 98:          99 LOAD_GLOBAL          (print_debug)
+             102 LOAD_CONST           ("Not connecting in exclusive mode because: %s")
+             105 LOAD_GLOBAL          (str)
+             108 LOAD_FAST            (e)
+             111 CALL_FUNCTION        (1 positional, 0 named)
+             114 BINARY_MODULO
+             115 CALL_FUNCTION        (1 positional, 0 named)
+             118 POP_TOP
+
+ 99:         119 SETUP_EXCEPT         (to 165)
+
+100:         122 LOAD_GLOBAL          (serial)
+             125 LOAD_ATTR            (Serial)
+             128 LOAD_FAST            (port)
+             131 LOAD_CONST           ("baudrate")
+             134 LOAD_CONST           (115200)
+             137 LOAD_CONST           ("bytesize")
+             140 LOAD_GLOBAL          (serial)
+             143 LOAD_ATTR            (FIVEBITS)
+             146 LOAD_CONST           ("timeout")
+             149 LOAD_CONST           (0.25)
+             152 CALL_FUNCTION        (1 positional, 3 named)
+             155 LOAD_FAST            (self)
+             158 STORE_ATTR           (serial)
+             161 POP_BLOCK
+             162 JUMP_ABSOLUTE        (to 193)
+
+101:     >>  165 DUP_TOP
+             166 LOAD_GLOBAL          (Exception)
+             169 COMPARE_OP           (exception-match)
+             172 POP_JUMP_IF_FALSE    (to 189)
+             175 POP_TOP
+             176 STORE_FAST           (e)
+             179 POP_TOP
+
+102:         180 LOAD_FAST            (e)
+             183 RAISE_VARARGS        (exception)
+             186 JUMP_ABSOLUTE        (to 193)
+         >>  189 END_FINALLY
+             190 JUMP_FORWARD         (to 193)
+
+103:     >>  193 LOAD_GLOBAL          (False)
+             196 LOAD_FAST            (self)
+             199 STORE_ATTR           (detected)
+
+105:         202 SETUP_EXCEPT         (to 251)
+
+106:         205 LOAD_FAST            (self)
+             208 LOAD_ATTR            (read_fw_version)
+             211 CALL_FUNCTION        (0 positional, 0 named)
+             214 LOAD_CONST           (6)
+             217 COMPARE_OP           (<)
+             220 POP_JUMP_IF_FALSE    (to 238)
+
+107:         223 LOAD_GLOBAL          (ValueError)
+             226 LOAD_CONST           ("PIC firmware out of date")
+             229 CALL_FUNCTION        (1 positional, 0 named)
+             232 RAISE_VARARGS        (exception)
+             235 JUMP_FORWARD         (to 247)
+
+109:     >>  238 LOAD_GLOBAL          (True)
+             241 LOAD_FAST            (self)
+             244 STORE_ATTR           (detected)
+         >>  247 POP_BLOCK
+             248 JUMP_FORWARD         (to 268)
+
+110:     >>  251 DUP_TOP
+             252 LOAD_GLOBAL          (Exception)
+             255 COMPARE_OP           (exception-match)
+             258 POP_JUMP_IF_FALSE    (to 267)
+             261 POP_TOP
+             262 POP_TOP
+             263 POP_TOP
+
+111:         264 JUMP_FORWARD         (to 268)
+             267 END_FINALLY
+         >>  268 LOAD_CONST           (None)
+             271 RETURN_VALUE
+
+Symbol: pypic.Pypic._write
+114:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (serial)
+               6 LOAD_ATTR            (write)
+               9 LOAD_FAST            (data)
+              12 CALL_FUNCTION        (1 positional, 0 named)
+              15 POP_TOP
+
+115:          16 LOAD_FAST            (read)
+              19 POP_JUMP_IF_FALSE    (to 85)
+
+116:          22 LOAD_FAST            (self)
+              25 LOAD_ATTR            (serial)
+              28 LOAD_ATTR            (read)
+              31 LOAD_CONST           (2)
+              34 CALL_FUNCTION        (1 positional, 0 named)
+              37 STORE_FAST           (r_data)
+
+117:          40 LOAD_FAST            (r_data)
+              43 POP_JUMP_IF_TRUE     (to 61)
+
+118:          46 LOAD_GLOBAL          (Exception)
+              49 LOAD_CONST           ("Timeout while waiting for Rx data")
+              52 CALL_FUNCTION        (1 positional, 0 named)
+              55 RAISE_VARARGS        (exception)
+              58 JUMP_FORWARD         (to 61)
+
+119:     >>   61 LOAD_GLOBAL          (struct)
+              64 LOAD_ATTR            (unpack)
+              67 LOAD_CONST           ("B")
+              70 LOAD_FAST            (r_data)
+              73 LOAD_CONST           (0)
+              76 BINARY_SUBSCR
+              77 CALL_FUNCTION        (2 positional, 0 named)
+              80 LOAD_CONST           (0)
+              83 BINARY_SUBSCR
+              84 RETURN_VALUE
+         >>   85 LOAD_CONST           (None)
+              88 RETURN_VALUE
+
+Symbol: pypic.Pypic._send_cmd
+122:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_write)
+               6 LOAD_GLOBAL          (bytearray)
+               9 LOAD_FAST            (cmd)
+              12 BUILD_LIST           1
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 CALL_FUNCTION        (1 positional, 0 named)
+              21 RETURN_VALUE
+
+Symbol: pypic.Pypic.read_hw_version
+125:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_send_cmd)
+               6 LOAD_GLOBAL          (CMD_HW_VER)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 RETURN_VALUE
+
+Symbol: pypic.Pypic.read_fw_version
+128:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_send_cmd)
+               6 LOAD_GLOBAL          (CMD_FW_VER)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 RETURN_VALUE
+
+Symbol: pypic.Pypic.read_product_id
+131:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_send_cmd)
+               6 LOAD_GLOBAL          (CMD_PROD_ID)
+               9 CALL_FUNCTION        (1 positional, 0 named)
+              12 RETURN_VALUE
+
+Symbol: pypic.Pypic.peek_memory
+134:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_write)
+               6 LOAD_GLOBAL          (bytearray)
+               9 LOAD_GLOBAL          (CMD_PEEK)
+              12 LOAD_FAST            (addr)
+              15 LOAD_CONST           (255)
+              18 BINARY_AND
+              19 LOAD_FAST            (addr)
+              22 LOAD_CONST           (8)
+              25 BINARY_RSHIFT
+              26 LOAD_CONST           (255)
+              29 BINARY_AND
+              30 BUILD_LIST           3
+              33 CALL_FUNCTION        (1 positional, 0 named)
+              36 CALL_FUNCTION        (1 positional, 0 named)
+              39 RETURN_VALUE
+
+Symbol: pypic.Pypic.poke_memory
+137:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_write)
+               6 LOAD_GLOBAL          (bytearray)
+               9 LOAD_GLOBAL          (CMD_POKE)
+              12 LOAD_FAST            (addr)
+              15 LOAD_CONST           (255)
+              18 BINARY_AND
+              19 LOAD_FAST            (addr)
+              22 LOAD_CONST           (8)
+              25 BINARY_RSHIFT
+              26 LOAD_CONST           (255)
+              29 BINARY_AND
+              30 LOAD_FAST            (value)
+              33 LOAD_CONST           (255)
+              36 BINARY_AND
+              37 BUILD_LIST           4
+              40 CALL_FUNCTION        (1 positional, 0 named)
+              43 LOAD_GLOBAL          (False)
+              46 CALL_FUNCTION        (2 positional, 0 named)
+              49 POP_TOP
+              50 LOAD_CONST           (None)
+              53 RETURN_VALUE
+
+Symbol: pypic.Pypic.magic_write_read
+140:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_write)
+               6 LOAD_GLOBAL          (bytearray)
+               9 LOAD_GLOBAL          (CMD_MAGIC)
+              12 LOAD_FAST            (addr)
+              15 LOAD_CONST           (255)
+              18 BINARY_AND
+              19 LOAD_FAST            (addr)
+              22 LOAD_CONST           (8)
+              25 BINARY_RSHIFT
+              26 LOAD_CONST           (255)
+              29 BINARY_AND
+              30 LOAD_FAST            (_and)
+              33 LOAD_CONST           (255)
+              36 BINARY_AND
+              37 LOAD_FAST            (_or)
+              40 LOAD_CONST           (255)
+              43 BINARY_AND
+              44 LOAD_FAST            (_xor)
+              47 LOAD_CONST           (255)
+              50 BINARY_AND
+              51 BUILD_LIST           6
+              54 CALL_FUNCTION        (1 positional, 0 named)
+              57 CALL_FUNCTION        (1 positional, 0 named)
+              60 RETURN_VALUE
+
+Symbol: pypic.Pypic.magic_write
+143:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_write)
+               6 LOAD_GLOBAL          (bytearray)
+               9 LOAD_GLOBAL          (CMD_MAGIC)
+              12 LOAD_FAST            (addr)
+              15 LOAD_CONST           (255)
+              18 BINARY_AND
+              19 LOAD_FAST            (addr)
+              22 LOAD_CONST           (8)
+              25 BINARY_RSHIFT
+              26 LOAD_CONST           (255)
+              29 BINARY_AND
+              30 LOAD_FAST            (_and)
+              33 LOAD_CONST           (255)
+              36 BINARY_AND
+              37 LOAD_FAST            (_or)
+              40 LOAD_CONST           (255)
+              43 BINARY_AND
+              44 LOAD_FAST            (_xor)
+              47 LOAD_CONST           (255)
+              50 BINARY_AND
+              51 BUILD_LIST           6
+              54 CALL_FUNCTION        (1 positional, 0 named)
+              57 LOAD_GLOBAL          (False)
+              60 CALL_FUNCTION        (2 positional, 0 named)
+              63 POP_TOP
+              64 LOAD_CONST           (None)
+              67 RETURN_VALUE
+
+Symbol: pypic.Pypic.toggle_bits_in_memory
+146:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (magic_write)
+               6 LOAD_FAST            (addr)
+               9 LOAD_CONST           ("_xor")
+              12 LOAD_FAST            (bits)
+              15 CALL_FUNCTION        (1 positional, 1 named)
+              18 POP_TOP
+              19 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+Symbol: pypic.Pypic.mask_bits_in_memory
+149:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (magic_write)
+               6 LOAD_FAST            (addr)
+               9 LOAD_CONST           ("_and")
+              12 LOAD_FAST            (mask)
+              15 CALL_FUNCTION        (1 positional, 1 named)
+              18 POP_TOP
+              19 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+Symbol: pypic.Pypic.set_bits_in_memory
+152:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (magic_write)
+               6 LOAD_FAST            (addr)
+               9 LOAD_CONST           ("_or")
+              12 LOAD_FAST            (bits)
+              15 CALL_FUNCTION        (1 positional, 1 named)
+              18 POP_TOP
+              19 LOAD_CONST           (None)
+              22 RETURN_VALUE
+
+Symbol: pypic.Pypic.reset_pycom_module
+156:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (mask_bits_in_memory)
+               6 LOAD_GLOBAL          (TRISC_ADDR)
+               9 LOAD_CONST           (-33)
+              12 CALL_FUNCTION        (2 positional, 0 named)
+              15 POP_TOP
+
+158:          16 LOAD_FAST            (self)
+              19 LOAD_ATTR            (mask_bits_in_memory)
+              22 LOAD_GLOBAL          (PORTC_ADDR)
+              25 LOAD_CONST           (-33)
+              28 CALL_FUNCTION        (2 positional, 0 named)
+              31 POP_TOP
+
+159:          32 LOAD_GLOBAL          (time)
+              35 LOAD_ATTR            (sleep)
+              38 LOAD_CONST           (0.2)
+              41 CALL_FUNCTION        (1 positional, 0 named)
+              44 POP_TOP
+
+161:          45 LOAD_FAST            (self)
+              48 LOAD_ATTR            (set_bits_in_memory)
+              51 LOAD_GLOBAL          (PORTC_ADDR)
+              54 LOAD_CONST           (32)
+              57 CALL_FUNCTION        (2 positional, 0 named)
+              60 POP_TOP
+
+162:          61 LOAD_GLOBAL          (time)
+              64 LOAD_ATTR            (sleep)
+              67 LOAD_CONST           (0.1)
+              70 CALL_FUNCTION        (1 positional, 0 named)
+              73 POP_TOP
+
+164:          74 LOAD_FAST            (self)
+              77 LOAD_ATTR            (set_bits_in_memory)
+              80 LOAD_GLOBAL          (TRISC_ADDR)
+              83 LOAD_CONST           (32)
+              86 CALL_FUNCTION        (2 positional, 0 named)
+              89 POP_TOP
+              90 LOAD_CONST           (None)
+              93 RETURN_VALUE
+
+Symbol: pypic.Pypic.enter_pycom_programming_mode
+168:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (mask_bits_in_memory)
+               6 LOAD_GLOBAL          (TRISA_ADDR)
+               9 LOAD_CONST           (-33)
+              12 CALL_FUNCTION        (2 positional, 0 named)
+              15 POP_TOP
+
+170:          16 LOAD_FAST            (self)
+              19 LOAD_ATTR            (mask_bits_in_memory)
+              22 LOAD_GLOBAL          (PORTA_ADDR)
+              25 LOAD_CONST           (-33)
+              28 CALL_FUNCTION        (2 positional, 0 named)
+              31 POP_TOP
+
+172:          32 LOAD_FAST            (self)
+              35 LOAD_ATTR            (mask_bits_in_memory)
+              38 LOAD_GLOBAL          (TRISC_ADDR)
+              41 LOAD_CONST           (-2)
+              44 CALL_FUNCTION        (2 positional, 0 named)
+              47 POP_TOP
+
+174:          48 LOAD_FAST            (self)
+              51 LOAD_ATTR            (mask_bits_in_memory)
+              54 LOAD_GLOBAL          (PORTC_ADDR)
+              57 LOAD_CONST           (-2)
+              60 CALL_FUNCTION        (2 positional, 0 named)
+              63 POP_TOP
+
+176:          64 LOAD_FAST            (reset)
+              67 POP_JUMP_IF_FALSE    (to 83)
+
+177:          70 LOAD_FAST            (self)
+              73 LOAD_ATTR            (reset_pycom_module)
+              76 CALL_FUNCTION        (0 positional, 0 named)
+              79 POP_TOP
+              80 JUMP_FORWARD         (to 83)
+         >>   83 LOAD_CONST           (None)
+              86 RETURN_VALUE
+
+Symbol: pypic.Pypic.exit_pycom_programming_mode
+184:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (mask_bits_in_memory)
+               6 LOAD_GLOBAL          (TRISA_ADDR)
+               9 LOAD_CONST           (-33)
+              12 CALL_FUNCTION        (2 positional, 0 named)
+              15 POP_TOP
+
+186:          16 LOAD_FAST            (self)
+              19 LOAD_ATTR            (set_bits_in_memory)
+              22 LOAD_GLOBAL          (PORTA_ADDR)
+              25 LOAD_CONST           (32)
+              28 CALL_FUNCTION        (2 positional, 0 named)
+              31 POP_TOP
+
+189:          32 LOAD_FAST            (self)
+              35 LOAD_ATTR            (set_bits_in_memory)
+              38 LOAD_GLOBAL          (TRISC_ADDR)
+              41 LOAD_CONST           (1)
+              44 CALL_FUNCTION        (2 positional, 0 named)
+              47 POP_TOP
+
+190:          48 LOAD_FAST            (reset)
+              51 POP_JUMP_IF_FALSE    (to 67)
+
+191:          54 LOAD_FAST            (self)
+              57 LOAD_ATTR            (reset_pycom_module)
+              60 CALL_FUNCTION        (0 positional, 0 named)
+              63 POP_TOP
+              64 JUMP_FORWARD         (to 67)
+         >>   67 LOAD_CONST           (None)
+              70 RETURN_VALUE
+
+Symbol: pypic.Pypic.isdetected
+194:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (detected)
+               6 RETURN_VALUE
+
+Symbol: pypic.Pypic.close
+197:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (serial)
+               6 LOAD_ATTR            (close)
+               9 CALL_FUNCTION        (0 positional, 0 named)
+              12 POP_TOP
+              13 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+Symbol: pypic.main
+201:           0 LOAD_GLOBAL          (argparse)
+               3 LOAD_ATTR            (ArgumentParser)
+               6 LOAD_CONST           ("description")
+               9 LOAD_CONST           ("Sends internal commands to put the Pycom module in programming mode")
+         >>   12 CALL_FUNCTION        (0 positional, 1 named)
+              15 STORE_FAST           (parser)
+
+202:          18 LOAD_FAST            (parser)
+              21 LOAD_ATTR            (add_argument)
+              24 LOAD_CONST           ("-p")
+              27 LOAD_CONST           ("--port")
+              30 LOAD_CONST           ("metavar")
+              33 LOAD_CONST           ("PORT")
+              36 LOAD_CONST           ("help")
+              39 LOAD_CONST           ("the serial port used to communicate with the PIC")
+              42 CALL_FUNCTION        (2 positional, 2 named)
+              45 POP_TOP
+
+203:          46 LOAD_FAST            (parser)
+              49 LOAD_ATTR            (add_argument)
+              52 LOAD_CONST           ("--enter")
+              55 LOAD_CONST           ("action")
+              58 LOAD_CONST           ("store_true")
+              61 LOAD_CONST           ("help")
+              64 LOAD_CONST           ("enter programming mode")
+              67 CALL_FUNCTION        (1 positional, 2 named)
+              70 POP_TOP
+
+204:          71 LOAD_FAST            (parser)
+              74 LOAD_ATTR            (add_argument)
+              77 LOAD_CONST           ("--exit")
+              80 LOAD_CONST           ("action")
+              83 LOAD_CONST           ("store_true")
+              86 LOAD_CONST           ("help")
+              89 LOAD_CONST           ("exit programming mode")
+              92 CALL_FUNCTION        (1 positional, 2 named)
+              95 POP_TOP
+
+205:          96 LOAD_FAST            (parser)
+              99 LOAD_ATTR            (add_argument)
+             102 LOAD_CONST           ("--noreset")
+             105 LOAD_CONST           ("action")
+             108 LOAD_CONST           ("store_true")
+             111 LOAD_CONST           ("help")
+             114 LOAD_CONST           ("do not reset esp32")
+             117 CALL_FUNCTION        (1 positional, 2 named)
+             120 POP_TOP
+
+206:         121 LOAD_FAST            (parser)
+             124 LOAD_ATTR            (parse_args)
+             127 CALL_FUNCTION        (0 positional, 0 named)
+             130 STORE_FAST           (args)
+
+208:         133 LOAD_FAST            (args)
+             136 LOAD_ATTR            (port)
+             139 POP_JUMP_IF_TRUE     (to 158)
+
+209:         142 LOAD_GLOBAL          (exit_with_error)
+             145 LOAD_CONST           (1)
+             148 LOAD_CONST           ("no serial port specified")
+             151 CALL_FUNCTION        (2 positional, 0 named)
+             154 POP_TOP
+             155 JUMP_FORWARD         (to 158)
+
+211:     >>  158 LOAD_FAST            (args)
+             161 LOAD_ATTR            (enter)
+             164 POP_JUMP_IF_FALSE    (to 176)
+             167 LOAD_FAST            (args)
+             170 LOAD_ATTR            (exit)
+             173 POP_JUMP_IF_TRUE     (to 196)
+         >>  176 LOAD_FAST            (args)
+             179 LOAD_ATTR            (enter)
+             182 UNARY_NOT
+             183 POP_JUMP_IF_FALSE    (to 212)
+             186 LOAD_FAST            (args)
+             189 LOAD_ATTR            (exit)
+             192 UNARY_NOT
+             193 POP_JUMP_IF_FALSE    (to 212)
+
+212:     >>  196 LOAD_GLOBAL          (exit_with_error)
+             199 LOAD_CONST           (1)
+             202 LOAD_CONST           ("invalid action requested")
+             205 CALL_FUNCTION        (2 positional, 0 named)
+             208 POP_TOP
+             209 JUMP_FORWARD         (to 212)
+
+214:     >>  212 LOAD_GLOBAL          (Pypic)
+             215 LOAD_FAST            (args)
+             218 LOAD_ATTR            (port)
+             221 CALL_FUNCTION        (1 positional, 0 named)
+             224 STORE_FAST           (pic)
+
+216:         227 LOAD_FAST            (pic)
+             230 LOAD_ATTR            (isdetected)
+             233 CALL_FUNCTION        (0 positional, 0 named)
+             236 POP_JUMP_IF_FALSE    (to 300)
+
+217:         239 LOAD_FAST            (args)
+             242 LOAD_ATTR            (enter)
+             245 POP_JUMP_IF_FALSE    (to 268)
+
+218:         248 LOAD_FAST            (pic)
+             251 LOAD_ATTR            (enter_pycom_programming_mode)
+             254 LOAD_FAST            (args)
+             257 LOAD_ATTR            (noreset)
+             260 UNARY_NOT
+             261 CALL_FUNCTION        (1 positional, 0 named)
+             264 POP_TOP
+             265 JUMP_ABSOLUTE        (to 300)
+
+219:         268 LOAD_FAST            (args)
+             271 LOAD_ATTR            (exit)
+             274 POP_JUMP_IF_FALSE    (to 300)
+
+220:         277 LOAD_FAST            (pic)
+             280 LOAD_ATTR            (exit_pycom_programming_mode)
+             283 LOAD_FAST            (args)
+             286 LOAD_ATTR            (noreset)
+             289 UNARY_NOT
+             290 CALL_FUNCTION        (1 positional, 0 named)
+             293 POP_TOP
+             294 JUMP_ABSOLUTE        (to 300)
+             297 JUMP_FORWARD         (to 300)
+
+222:     >>  300 LOAD_FAST            (pic)
+             303 LOAD_ATTR            (close)
+             306 CALL_FUNCTION        (0 positional, 0 named)
+             309 POP_TOP
+             310 LOAD_CONST           (None)
+             313 RETURN_VALUE

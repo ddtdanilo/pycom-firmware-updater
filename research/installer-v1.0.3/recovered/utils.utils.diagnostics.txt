@@ -1,0 +1,12 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Unsupported opcode: DICT_MERGE (213)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)
+Unsupported opcode: JUMP_IF_NOT_EXC_MATCH (210)

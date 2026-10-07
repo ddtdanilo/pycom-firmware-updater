@@ -1,0 +1,117 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (None)
+              4 IMPORT_NAME              0 (sys)
+              6 STORE_NAME               0 (sys)
+
+  3           8 SETUP_FINALLY           22 (to 32)
+
+  4          10 LOAD_CONST               0 (0)
+             12 LOAD_CONST               1 (None)
+             14 IMPORT_NAME              1 (serial.tools.list_ports)
+             16 IMPORT_FROM              2 (tools)
+             18 ROT_TWO
+             20 POP_TOP
+             22 IMPORT_FROM              3 (list_ports)
+             24 STORE_NAME               3 (list_ports)
+             26 POP_TOP
+             28 POP_BLOCK
+             30 JUMP_FORWARD            40 (to 72)
+
+  5     >>   32 DUP_TOP
+             34 LOAD_NAME                4 (ImportError)
+             36 JUMP_IF_NOT_EXC_MATCH    70
+             38 POP_TOP
+             40 POP_TOP
+             42 POP_TOP
+
+  6          44 LOAD_NAME                5 (print)
+             46 LOAD_CONST               2 ('The installed version (%s) of pyserial appears to be too old for esptool.py (Python interpreter %s). Check the README for installation instructions.')
+
+  7          48 LOAD_NAME                0 (sys)
+             50 LOAD_ATTR                6 (version)
+             52 LOAD_NAME                0 (sys)
+             54 LOAD_ATTR                7 (executable)
+             56 BUILD_TUPLE              2
+
+  6          58 BINARY_MODULO
+             60 CALL_FUNCTION            1
+             62 POP_TOP
+
+  8          64 RAISE_VARARGS            0
+             66 POP_EXCEPT
+             68 JUMP_FORWARD             2 (to 72)
+        >>   70 RERAISE
+
+ 11     >>   72 LOAD_BUILD_CLASS
+             74 LOAD_CONST               3 (<code object ScanPort at <address omitted>, file "utils/scan_ports.py", line 11>)
+             76 LOAD_CONST               4 ('ScanPort')
+             78 MAKE_FUNCTION            0
+             80 LOAD_CONST               4 ('ScanPort')
+             82 CALL_FUNCTION            2
+             84 STORE_NAME               8 (ScanPort)
+             86 LOAD_CONST               1 (None)
+             88 RETURN_VALUE
+
+Disassembly of <code object ScanPort at <address omitted>, file "utils/scan_ports.py", line 11>:
+ 11           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('ScanPort')
+              6 STORE_NAME               2 (__qualname__)
+
+ 13           8 LOAD_CONST               1 (<code object __init__ at <address omitted>, file "utils/scan_ports.py", line 13>)
+             10 LOAD_CONST               2 ('ScanPort.__init__')
+             12 MAKE_FUNCTION            0
+             14 STORE_NAME               3 (__init__)
+
+ 16          16 LOAD_CONST               3 (<code object scan_port at <address omitted>, file "utils/scan_ports.py", line 16>)
+             18 LOAD_CONST               4 ('ScanPort.scan_port')
+             20 MAKE_FUNCTION            0
+             22 STORE_NAME               4 (scan_port)
+             24 LOAD_CONST               5 (None)
+             26 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "utils/scan_ports.py", line 13>:
+ 14           0 LOAD_CONST               0 (None)
+              2 RETURN_VALUE
+
+Disassembly of <code object scan_port at <address omitted>, file "utils/scan_ports.py", line 16>:
+ 17           0 LOAD_GLOBAL              0 (sorted)
+              2 LOAD_CONST               1 (<code object <genexpr> at <address omitted>, file "utils/scan_ports.py", line 17>)
+              4 LOAD_CONST               2 ('ScanPort.scan_port.<locals>.<genexpr>')
+              6 MAKE_FUNCTION            0
+              8 LOAD_GLOBAL              1 (list_ports)
+             10 LOAD_METHOD              2 (comports)
+             12 CALL_METHOD              0
+             14 GET_ITER
+             16 CALL_FUNCTION            1
+             18 CALL_FUNCTION            1
+             20 STORE_FAST               1 (ser_list)
+
+ 18          22 LOAD_GLOBAL              3 (print)
+             24 LOAD_CONST               3 ('Found %d serial ports')
+             26 LOAD_GLOBAL              4 (len)
+             28 LOAD_FAST                1 (ser_list)
+             30 CALL_FUNCTION            1
+             32 BINARY_MODULO
+             34 CALL_FUNCTION            1
+             36 POP_TOP
+
+ 19          38 LOAD_FAST                1 (ser_list)
+             40 RETURN_VALUE
+
+Disassembly of <code object <genexpr> at <address omitted>, file "utils/scan_ports.py", line 17>:
+ 17           0 LOAD_FAST                0 (.0)
+        >>    2 FOR_ITER                12 (to 16)
+              4 STORE_FAST               1 (ports)
+              6 LOAD_FAST                1 (ports)
+              8 LOAD_ATTR                0 (device)
+             10 YIELD_VALUE
+             12 POP_TOP
+             14 JUMP_ABSOLUTE            2
+        >>   16 LOAD_CONST               0 (None)
+             18 RETURN_VALUE

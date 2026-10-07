@@ -1,0 +1,2874 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# uncompyle6 version 3.9.3
+# Python bytecode version base 2.7 (62211)
+# Decompiled from: Python 3.13.13 (main, Apr  7 2026, 18:19:01) [Clang 21.0.0 (clang-2100.0.123.102)]
+# Embedded file name: pycom_fwtool.py
+from __future__ import print_function
+import argparse, base64, binascii, cStringIO, os, re, struct, sys, textwrap, time, json
+from PyQt4 import QtGui, QtCore
+from PyQt4.Qt import QFileDialog
+from PyQt4.QtCore import Qt
+import humanfriendly
+from DeviceInfoQuery import DeviceInfoQuery
+from DeviceUpgrade import DeviceUpgrade
+from FetchFiles import FetchFiles
+from LoadingSpin import LoadingSpin
+from misc import print_debug, detectOsFamily, calc_int_version, eprint, print_exception
+from pyconf import Settings
+from settings import DEBUG, UPDATER_TYPE, PYBYTES_TOKEN_PATTERN, FIRMWARE_TYPES, TOOL_VERSION, SERVER_URL, BAUDRATES, FILESYSTEM_TYPES, INFO_TYPES, PYBYTES_URL, SKIP_PORTS, LICENSE_TYPES, SIGFOX_REGISTRATION, PYBYTES_FIRMWARES
+from env_settings import IMG_PATH, CONF_FILE
+from updater import FAST_BAUD_RATE, LORA_REGIONS, PARTITIONS, check_usbid, load_tar
+from traceback import print_exc
+try:
+    from raven import Client
+    client = Client('[REDACTED]', version=TOOL_VERSION)
+except:
+    client = None
+
+countryList = []
+regionList = []
+
+class CustomWizardPage(QtGui.QWizardPage):
+
+    def __init__(self, nextTabMethod=None, isCompleteMethod=None):
+        super(self.__class__, self).__init__()
+        self.__isCompleteMethod = isCompleteMethod
+        self.__nextTabMethod = nextTabMethod
+        self.__nextPage = None
+        return
+
+    def nextId(self):
+        if self.__nextPage != None:
+            n = self.__nextPage
+            self.__nextPage = None
+            return n
+        else:
+            if self.__nextTabMethod:
+                return self.__nextTabMethod()
+            return wizard.currentId() + 1
+
+    def validatePage(self):
+        if self.__isCompleteMethod:
+            return self.__isCompleteMethod()
+        return True
+
+    def jumpPage(self, page):
+        self.__nextPage = page
+        self.wizard().next()
+        return
+
+
+class CustomWizard(QtGui.QWizard):
+    RESTART_IDX = -1
+    WELCOME_IDX = RESTART_IDX + 1
+    SETUP_IDX = WELCOME_IDX + 1
+    SERIAL_IDX = SETUP_IDX + 1
+    GET_INFO_IDX = SERIAL_IDX + 1
+    BOARD_IDX = GET_INFO_IDX + 1
+    COUNTRY_IDX = BOARD_IDX + 1
+    REGION_IDX = COUNTRY_IDX + 1
+    PYBYTES_IDX = REGION_IDX + 1
+    ADVANCED_IDX = PYBYTES_IDX + 1
+    LICENSE_IDX = ADVANCED_IDX + 1
+    DOWNLOAD_IDX = LICENSE_IDX + 1
+    WAIT_IDX = DOWNLOAD_IDX + 1
+    RESULT_IDX = WAIT_IDX + 1
+    WIPY_IDX = 1
+    LOPY_IDX = 2
+    SIPY_IDX = 3
+    GPY_IDX = 4
+    FIPY_IDX = 5
+    LOPY4_IDX = 6
+
+    def __init__(self):
+        super(self.__class__, self).__init__()
+        self.__settings = Settings(CONF_FILE)
+        self.setWizardStyle(QtGui.QWizard.MacStyle)
+        self.__onlineFirmwareVersions = {}
+        self.__onlineFirmwareVersionTypes = {}
+        self.__optionalCountryWidgets = []
+        self.__resultUpdateList = []
+        self.__upgrade = None
+        self.__backgroundFetch = FetchFiles()
+        self.__deviceInfoQuery = DeviceInfoQuery()
+        self.__res_json = None
+        self.__res_pybytes_json = None
+        self.__skip_pybytes = False
+        self.__res_status = None
+        self.__res_pybytes_status = None
+        self.__info_requested = False
+        self.__info_obtained = False
+        self.__pybytes_info_obtained = False
+        self.__w_mac_s = ''
+        self.__s_mac_s = None
+        self.__loramac_s = None
+        self.__wifi_on_boot = None
+        self.__wifi_ssid = None
+        self.__wifi_pwd = None
+        self.__pybytes_device_token = None
+        self.__pybytes_mqttServiceAddress = None
+        self.__pybytes_userId = None
+        self.__pybytes_nwprefs = None
+        self.__pybytes_eprefs = None
+        self.__lora_region = None
+        self.__boardType = None
+        self.__sigfox_zone = 0
+        self.__firmwareScript = None
+        self.__board_connection_failed = False
+        self.__server_connection_failed = False
+        self.__client_tool_oudated = False
+        self.__config_block = None
+        self.__isFrequencySelectorVisible = False
+        self.__localFileFlash = False
+        self.__remote_info_obtained = False
+        self.__localFileUpgradeFailed = False
+        self.__wizard_retry = False
+        self.__timeout = 5
+        self.__error_message = None
+        self.__espbaudrate = FAST_BAUD_RATE
+        self.__pypic = False
+        self.__serialportdescriptions = {}
+        self.__forceUpdateConfigBlock = False
+        self.__legacy_frequency = '868'
+        self.__restoreLoRaCountryIndex = None
+        self.__restoreLoRaRegionIndex = None
+        self.__offline_mode_enabled = False
+        self.__forceNewPybytesRegSelector = None
+        self.__pybytesAdvLabel = None
+        self.__restoreNewPybytesRegSelector = None
+        self.__restoreNewLoRaRegionSelector = False
+        self.__start_time = None
+        self.__updater_type = UPDATER_TYPE
+        self.__forceupdate_pybytes = False
+        self.__enable_pybytes = self.__settings.get('enablePybytesRegSelectorChecked', True)
+        self.__setupPageSize = None
+        self.__flashAdvancedFirmwareVersion = None
+        self.__forceAdvancedSettingsPage = None
+        self.__downgrade_versions_types = {}
+        self.__downgrade_versions = {}
+        self.__update_fstype = None
+        self.__advancedSettingsPageShown = False
+        self.__deviceInsertAttempted = False
+        self.__sigfox_registration_attempted = False
+        self.__restoreAdvancedSettingsSelector = None
+        self.__fromPybytes = False
+        self.__fromDownloads = False
+        self.__fromAdvanced = False
+        self.__pybytes_page_shown = False
+        self.__license_downloaded = False
+        self.__postlicense_page = None
+        self.__sigfox_registration_required = False
+        self.__localFileName = self.__settings.get('LastLocalFileFlashed', '', not self.check_file_exists(self.__settings.get('LastLocalFileFlashed', None)))
+        self.__lastSerialPortUsed = self.__settings.get('LastSerialPortUsed', None)
+        self.__updaterVersions = {}
+        self.__firmware_types = FIRMWARE_TYPES
+        self.__sigfox_registration = SIGFOX_REGISTRATION
+        self.__pybytes_firmwares = PYBYTES_FIRMWARES
+        self.setPage(CustomWizard.WELCOME_IDX, self.__createIntroPage())
+        self.setPage(CustomWizard.SETUP_IDX, self.__createSetupPage())
+        self.setPage(CustomWizard.SERIAL_IDX, self.__createSerialPage())
+        self.setPage(CustomWizard.GET_INFO_IDX, self.__createGetInfoPage())
+        self.setPage(CustomWizard.BOARD_IDX, self.__createBoardPage())
+        self.setPage(CustomWizard.COUNTRY_IDX, self.__createCountrySelectionPage())
+        self.setPage(CustomWizard.REGION_IDX, self.__createRegionSelectionPage())
+        self.setPage(CustomWizard.ADVANCED_IDX, self.__createAdvancedSettingsPage())
+        self.setPage(CustomWizard.LICENSE_IDX, self.__createLicensePage())
+        self.setPage(CustomWizard.PYBYTES_IDX, self.__createPybytesRegistrationPage())
+        self.setPage(CustomWizard.DOWNLOAD_IDX, self.__createDownloadWaitPage())
+        self.setPage(CustomWizard.WAIT_IDX, self.__createWaitPage())
+        self.setPage(CustomWizard.RESULT_IDX, self.__createConclusionPage())
+        self.currentIdChanged.connect(self.__wizardPageShown)
+        self.customButtonClicked.connect(self.__customButtonClicked)
+        self.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+        return
+
+    def print_exception(self, ex):
+        global client
+        if DEBUG:
+            print_exc(ex)
+            self.__resultUpdateList.append(('{}').format(sys.exc_info()))
+        else:
+            eprint(('Exception: {}').format(ex))
+            self.__resultUpdateList.append(('Exception: {}').format(ex))
+        if self.__settings.get('ConsentSelectorChecked', self.__consentSelector.isChecked(), self.__consentSelector.isChecked()):
+            if client is not None:
+                client.captureException()
+        return
+
+    def get_setupPageSize(self):
+        return self.__setupPageSize
+
+    def check_pybytes_settings(self, token):
+        if token is not None:
+            token_pattern = re.compile(PYBYTES_TOKEN_PATTERN)
+            if token_pattern.match(token):
+                return True
+        return False
+
+    def check_lora_region(self, board_type, lora_region):
+        if board_type is not None:
+            board = str(board_type).lower()
+            if board.find('lopy') >= 0 or board.find('fipy') >= 0:
+                if lora_region is None or lora_region == 'None':
+                    return False
+                if lora_region in LORA_REGIONS:
+                    return True
+                return False
+            else:
+                return True
+        else:
+            return False
+        return
+
+    def get_display_name(self, name):
+        return {'wipy': 'WiPy',
+           'lopy': 'LoPy 1',
+           'sipy': 'SiPy',
+           'gpy': 'GPy',
+           'fipy': 'FiPy',
+           'lopy4': 'LoPy 4'}[name.split('.')[0].lower()]
+
+    def get_short_name(self, name):
+        return str(name.split('.')[0].lower())
+
+    def __loadLoPyCountryList(self, result):
+        global countryList
+        countryList = result
+        widget = self.__countrySelectorLoPy
+        widget.addItem('Manual Selection')
+        widget.insertSeparator(widget.count())
+        for e in countryList:
+            widget.addItem(e[0])
+
+        self.__countrySelectorSpinLoPy.hide()
+        return
+
+    def __loadAdvancedLoPyCountryList(self):
+        widget = self.__advancedPageWidgets[9]
+        widget.addItem('Manual Selection')
+        widget.insertSeparator(widget.count())
+        for e in countryList:
+            widget.addItem(e[0])
+
+        return
+
+    def __loadSiPyCountryList(self, result):
+        global regionList
+        regionList = result
+        widget = self.__countrySelectorSiPy
+        for e in regionList:
+            widget.addItem(e[0])
+
+        widget.insertSeparator(widget.count())
+        self.__countrySelectorSpinSiPy.hide()
+        return
+
+    def __rx_downgrade_versions(self, result, key):
+        if 'error_code' in result:
+            print_debug(('ERROR received in __rx_downgrade_versions! {}').format(result))
+            self.__server_connection_failed = True
+            self.__finishedUpgrade(1, 'Cannot download firmware list from update server.')
+            self.next()
+        else:
+            self.__advancedPageWidgets[6].clear()
+            try:
+                self.__downgrade_versions_types[result[0]['type']] = result
+                for item in result:
+                    self.__downgrade_versions[item.get('version')] = item
+                    self.__advancedPageWidgets[6].addItem(item.get('version'))
+
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+            except Exception as ex:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+
+        return
+
+    def __refresh_downgrade_versions(self, key):
+        self.__advancedPageWidgets[6].clear()
+        try:
+            for item in self.__downgrade_versions_types[str(key)]:
+                self.__downgrade_versions[item.get('version')] = item
+                self.__advancedPageWidgets[6].addItem(item.get('version'))
+
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        except Exception as ex:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+
+        return
+
+    def __rx_firmware_version(self, result, key):
+        if 'error_code' in result:
+            self.__server_connection_failed = True
+        elif key in self.__firmware_types:
+            self.___onlineFirmwareVersions = {}
+            for firmwareFile in result:
+                self.___onlineFirmwareVersions[firmwareFile.get('key')] = firmwareFile
+
+            self.__onlineFirmwareVersionTypes[key] = self.___onlineFirmwareVersions
+            self.__remote_info_obtained = True
+        else:
+            self.__onlineFirmwareVersions[key] = result
+            self.__remote_info_obtained = True
+        self.__newBoardSelected(0)
+        return
+
+    def __get_pybytes_activation(self, token):
+        self.__deviceInfoQuery.get_pybytes_activation(token, self.__w_mac_s, PYBYTES_URL, self.__get_pybytes_activation_callback)
+        return
+
+    def __rx_metadata(self, result):
+        try:
+            result = json.loads(result)
+        except:
+            result = '{"error_code":" -2 "}'
+
+        print_debug(('METADATA[{}]: {}').format(type(result), result))
+        if 'error_code' in result:
+            self.__server_connection_failed = True
+            self.__rx_tool_version(result)
+        else:
+            for entry in result:
+                try:
+                    if entry[u'name'] == u'firmware_types':
+                        print_debug(('value={}').format(entry['value'].split(',')))
+                        self.__firmware_types = entry['value'].split(',')
+                        print_debug(('entry: {}').format(entry))
+                        print_debug(('FIRMWARE_TYPES from metadata: {}').format(self.__firmware_types))
+                        self.__firmwareTypeSelector.clear()
+                        self.__firmwareTypeSelector.addItems(self.__firmware_types)
+                        self.__advancedPageWidgets[5].clear()
+                        self.__advancedPageWidgets[5].addItems(self.__firmware_types)
+                except:
+                    pass
+
+                try:
+                    if entry[u'name'] == u'sigfox_registration':
+                        print_debug(('value={}').format(entry['value'].split(',')))
+                        self.__sigfox_registration = entry['value'] == u'true'
+                        print_debug(('entry: {}').format(entry))
+                        print_debug(('__sigfox_registration from metadata: {}').format(self.__sigfox_registration))
+                except Exception as e:
+                    print_debug(('Exception fetching metadata: {}').format(e))
+
+                try:
+                    if entry[u'name'] == u'pybytes_firmwares':
+                        print_debug(('value={}').format(entry['value'].split(',')))
+                        self.__pybytes_firmwares = [x.decode('UTF-8') for x in entry['value'].split(',')]
+                        print_debug(('entry: {}').format(entry))
+                        print_debug(('PYBYTES_FIRMWARES from metadata: {}').format(self.__pybytes_firmwares))
+                except Exception as e:
+                    print_exc(e)
+
+            self.__backgroundFetch.fetch_updater_version(self.__updater_type, self.__rx_tool_version)
+        return
+
+    def __rx_tool_version(self, result):
+        if 'error_code' in result:
+            self.__server_connection_failed = True
+            msg = '<b>Could not connect to the update server!</b>'
+        else:
+            self.__fetchLastVersion = {}
+            for el in self.__firmware_types:
+                self.__backgroundFetch.find_new_firmware(self.__rx_firmware_version, el, 'esp32')
+
+            self.__backgroundFetch.fetch_frequency_list(self.__loadLoPyCountryList, 'LoPy')
+            self.__backgroundFetch.fetch_frequency_list(self.__loadSiPyCountryList, 'SiPy')
+            msg = self.__set_fwversion_msg(result)
+        if self.__server_connection_failed:
+            self.__findNewVersionMsg[5].setVisible(False)
+            self.__findNewVersionMsg[3].setVisible(True)
+            self.__consentSelector.setVisible(False)
+            self.__consentLabel.setVisible(False)
+            self.__privacyLabel.setVisible(False)
+            self.__restoreAdvancedSettingsSelector = self.__showAdvancedSettingsSelector.isChecked()
+            self.__showAdvancedSettingsSelector.setChecked(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Retry')
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        else:
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Restart')
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            self.__findNewVersionMsg[3].setVisible(False)
+            self.__findNewVersionMsg[5].setVisible(UPDATER_TYPE != 'internal')
+            self.__consentSelector.setVisible(True)
+            self.__consentLabel.setVisible(True)
+            self.__privacyLabel.setVisible(True)
+            if self.__restoreAdvancedSettingsSelector is not None:
+                self.__showAdvancedSettingsSelector.setChecked(self.__restoreAdvancedSettingsSelector)
+        self.__findNewVersionMsg[0].setOpenExternalLinks(True)
+        self.__findNewVersionMsg[0].setText(msg)
+        self.__findNewVersionMsg[1].hide()
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        return
+
+    def __rx_tool_only_version(self, result):
+        if 'error_code' in result:
+            self.__server_connection_failed = True
+            msg = '<b>Could not connect to the update server!</b>'
+        else:
+            self.__updaterVersions[self.__updater_type] = result
+            msg = self.__set_fwversion_msg(result)
+        if self.__server_connection_failed:
+            self.__findNewVersionMsg[3].setVisible(True)
+            self.__findNewVersionMsg[5].setVisible(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Retry')
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+            self.__consentSelector.setVisible(False)
+            self.__consentLabel.setVisible(True)
+        else:
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Restart')
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            self.__findNewVersionMsg[3].setVisible(False)
+            self.__findNewVersionMsg[5].setVisible(UPDATER_TYPE != 'internal')
+            self.__consentSelector.setVisible(True)
+            self.__consentLabel.setVisible(True)
+        self.__findNewVersionMsg[0].setOpenExternalLinks(True)
+        self.__checkDevelopmentSelector.setEnabled(True)
+        self.__findNewVersionMsg[0].setText(msg)
+        self.__findNewVersionMsg[1].hide()
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        return
+
+    def __set_fwversion_msg(self, result):
+        print_debug(("This is fwversion_msg with result['intVersion']={} and calc_int_version(TOOL_VERSION)={} and result['minVersion']={} and check {}").format(result['intVersion'], calc_int_version(TOOL_VERSION), result['minVersion'], result['intVersion'] > calc_int_version(TOOL_VERSION)))
+        print_debug(('RESULT: {}').format(result))
+        wizard.setWindowTitle('Pycom Upgrade')
+        msg = ''
+        if result['intVersion'] > calc_int_version(TOOL_VERSION):
+            if result['minVersion'] > calc_int_version(TOOL_VERSION):
+                msg = 'This firmware updater is outdated and <b>must be updated!</b>'
+                msg += '<br><br> There is a new ' + result['type'] + ' version <b>' + result['version']
+                msg += '</b><br><br><b>We recommend you <a href="' + SERVER_URL
+                msg += '/findupgrade?product=strict=true&pycom-firmware-updater&type=' + result['type'] + '&platform='
+                msg += detectOsFamily().lstrip() + '&redirect=true" target="_new">download it here.</a>'
+                self.__server_connection_failed = True
+            else:
+                msg = '<b>Note:</b> There is a new ' + result['type'] + ' version <b>'
+                msg += result['version'] + '</b><br><br>We recommend you <a href="' + SERVER_URL
+                msg += '/findupgrade?strict=true&product=pycom-firmware-updater&type=' + result['type']
+                msg += '&platform=' + detectOsFamily().lstrip() + '&redirect=true" target="_new">download it here.</a>'
+        elif result['intVersion'] == calc_int_version(TOOL_VERSION):
+            if result['minVersion'] > calc_int_version(TOOL_VERSION):
+                msg = 'This firmware updater is outdated and <b>must be updated!</b>'
+                msg += '<br><br> However, the server claims that this is the latest version.'
+                msg += '<br><br> This is obviously a bug! Please try again in a few minutes.'
+                msg += '<br><br> If the problem persists please email <a href="mailto:support@pycom.io">support@pycom.io</a><br><br>'
+                self.__server_connection_failed = True
+            else:
+                msg = 'This is the latest version <b>' + result['version'] + '</b> [' + result['type'] + ']'
+        elif result['intVersion'] < calc_int_version(TOOL_VERSION):
+            msg = ('This is a pre-release <b>{}</b> [{}]').format(TOOL_VERSION, UPDATER_TYPE)
+            if result['minVersion'] > calc_int_version(TOOL_VERSION):
+                msg = '<b>This firmware updater is outdated!</b>'
+                msg += '<br><br> The latest version [' + result['type'] + '] available is still outdated.'
+                msg += '<br><br> This is obviously a bug! Please try again in a few minutes.'
+                msg += '<br><br> If the problem persists please email <a href="mailto:support@pycom.io">support@pycom.io</a><br><br>'
+                self.__server_connection_failed = True
+        else:
+            self.__server_connection_failed = True
+        return msg
+
+    def __firmwareDownloadCompleted(self, result):
+        sha1_file = None
+        if self.__res_json and not self.__localFileFlash:
+            try:
+                try:
+                    import hashlib
+                    sha1_file = str(hashlib.sha1(result.read()).hexdigest())
+                    if self.__flashAdvancedFirmwareVersion is not None:
+                        sha1_server = self.__downgrade_versions[self.__flashAdvancedFirmwareVersion].get('hash', None)
+                    else:
+                        sha1_server = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('hash')
+                    if sha1_server is not None:
+                        sha1ok = sha1_file == sha1_server
+                        if not sha1ok:
+                            print_debug('SHA1SUM check failed!')
+                            print_debug(('Expected: {}').format(self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('hash')))
+                            print_debug(('File: {}').format(sha1_file))
+                            self.__server_connection_failed = True
+                            self.__finishedUpgrade(1, 'Firmware file has unexpected sha1 checksum.')
+                            return CustomWizard.RESULT_IDX
+                    else:
+                        print_debug('SHA1 CHECK OMITTED BECAUSE I HAVE NO CHECKSUM FROM ThE SERVER!')
+                except Exception as e:
+                    self.print_exception(e)
+
+            finally:
+                result.seek(0)
+
+        if result is not None:
+            if self.__upgrade is not None:
+                try:
+                    self.__firmwareScript = load_tar(result, self.__upgrade.npy)
+                    print_debug('self.__firmwareScript has type: %s' % str(type(self.__firmwareScript)))
+                    if type(self.__firmwareScript) is list:
+                        if self.currentId() != self.DOWNLOAD_IDX:
+                            wizard.button(QtGui.QWizard.NextButton).setVisible(True)
+                            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+                        self.next()
+                    else:
+                        self.__localFileUpgradeFailed = True
+                        self.__finishedUpgrade(2, str(self.__firmwareScript))
+                        return CustomWizard.RESULT_IDX
+                except Exception as e:
+                    self.__localFileUpgradeFailed = True
+                    self.__finishedUpgrade(2, 'Your hardware is not supported by this firmware package!')
+                    return CustomWizard.RESULT_IDX
+
+            else:
+                self.__server_connection_failed = True
+                self.__finishedUpgrade(1, 'self.__upgrade.npy is None!')
+                return CustomWizard.RESULT_IDX
+        else:
+            self.__server_connection_failed = True
+            self.__finishedUpgrade(1, 'Failed to download firmware file.')
+            return CustomWizard.RESULT_IDX
+        return
+
+    def __createIntroPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Welcome')
+        introLabel = QtGui.QLabel('This wizard will help you upgrade your Pycom board firmware.')
+        introLabel.setWordWrap(True)
+        spin = LoadingSpin(img_path=IMG_PATH)
+        searchMsg = QtGui.QLabel('Fetching updates for this tool...')
+        searchMsg.adjustSize()
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        offlineLabel = QtGui.QLabel('You can <b>Retry</b> or continue in <b>offline mode</b>...')
+        offlineLabel.setWordWrap(True)
+        offlineLabel.setVisible(False)
+        checkDevelopmentSelector = QtGui.QCheckBox('Include development releases')
+        checkDevelopmentSelector.setChecked(self.__settings.get('CheckDevelopmentReleases', UPDATER_TYPE == 'development', UPDATER_TYPE == 'development'))
+        self.__newUpdaterTypeSelected(self.__settings.get('CheckDevelopmentReleases', UPDATER_TYPE == 'development', UPDATER_TYPE == 'development'))
+        self.__updater_type = 'development' if self.__settings.get('CheckDevelopmentReleases', UPDATER_TYPE == 'development', UPDATER_TYPE == 'development') else 'stable'
+        checkDevelopmentSelector.clicked.connect(self.__newUpdaterTypeSelected)
+        self.__checkDevelopmentSelector = checkDevelopmentSelector
+        checkDevelopmentSelector.setVisible(UPDATER_TYPE != 'internal')
+        timeoutLable = QtGui.QLabel('Server connection timeout: <b> 5 seconds </b>')
+        timeoutLable.setWordWrap(False)
+        consentSelector = QtGui.QCheckBox()
+        consentLabel = QtGui.QLabel()
+        if client is None:
+            consentLabel.setText('Send anonymous usage statistics')
+        else:
+            consentLabel.setText('Send anonymous error reports and usage statistics')
+        consentLabel.setWordWrap(True)
+        consentLabel.setOpenExternalLinks(True)
+        privacyLabel = QtGui.QLabel()
+        if client is None:
+            privacyLabel.setText('<a href="https://pycom.io/privacy-security">Pycom Privacy Policy</a>')
+        else:
+            privacyLabel.setText('<a href="https://pycom.io/privacy-security">Pycom Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://sentry.io/privacy/">Sentry.io Privacy Policy</a>')
+        privacyLabel.setWordWrap(True)
+        privacyLabel.setOpenExternalLinks(True)
+        self.__privacyLabel = privacyLabel
+        consentSelector.setChecked(self.__settings.get('ConsentSelectorChecked', True))
+        consentSelector.clicked.connect(self.__consentSelectorChanged)
+        self.__consentLabel = consentLabel
+        self.__consentSelector = consentSelector
+        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        layout = QtGui.QGridLayout()
+        layout.setVerticalSpacing(30)
+        layout.addWidget(introLabel, 0, 0, 1, 3)
+        layout.addWidget(searchMsg, 1, 0, 1, 3)
+        layout.addWidget(spin, 1, 2, 1, 3, Qt.AlignCenter)
+        layout.addItem(spacerItem1, 1, 1)
+        layout.addWidget(checkDevelopmentSelector, 3, 0, 1, 3)
+        layout.addWidget(offlineLabel, 3, 1, 1, 3)
+        layout.addItem(spacerItem2, 4, 2)
+        layout.addWidget(consentSelector, 7, 0)
+        layout.addWidget(consentLabel, 7, 1, 1, 3)
+        layout.addWidget(privacyLabel, 8, 0, 1, 3)
+        page.setLayout(layout)
+        self.__findNewVersionMsg = [searchMsg, spin, layout, offlineLabel, timeoutLable, checkDevelopmentSelector]
+        self.__backgroundFetch.fetch_metadata(self.__rx_metadata)
+        return page
+
+    def __createBoardPage(self):
+        page = CustomWizardPage(self.__skipCountryIfNeeded)
+        page.setTitle('Device type')
+        page.setSubTitle('Please select the type of device to upgrade from the list.')
+        boardLabel = QtGui.QLabel('Board:')
+        boardLabel.adjustSize()
+        boardSelector = QtGui.QComboBox()
+        boardSelector.addItem('Please select your board')
+        boardSelector.addItems([5, 6, 7, 8, 9, 10])
+        boardSelector.setMinimumSize(QtCore.QSize(80, 0))
+        boardSelector.currentIndexChanged.connect(self.__newBoardSelected)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        versionString = QtGui.QLabel('')
+        layout = QtGui.QGridLayout()
+        layout.addWidget(boardLabel, 0, 0)
+        layout.addWidget(boardSelector, 0, 1)
+        layout.addItem(spacerItem, 0, 2)
+        layout.addWidget(versionString, 1, 1, 1, 2)
+        layout.setVerticalSpacing(30)
+        page.setLayout(layout)
+        self.__firmwareVersionLabel1 = versionString
+        page.registerField('board_selector', boardSelector)
+        return page
+
+    def __createCountrySelectionPage(self):
+        page = CustomWizardPage(self.__skipRegion)
+        page.setTitle('LoRa region selection')
+        page.setSubTitle('Please select country or region:')
+        self.__countrySelectionPage = page
+        countryLabel = QtGui.QLabel('Country:')
+        countryLabel.adjustSize()
+        intfrequencyLabel = QtGui.QLabel('<b>OR</b>')
+        intfrequencyLabel.adjustSize()
+        self.__intfrequencyLabel = intfrequencyLabel
+        frequencyLabel = QtGui.QLabel('Region:')
+        frequencyLabel.adjustSize()
+        countrySelector = QtGui.QComboBox()
+        frequencySelector = QtGui.QComboBox()
+        countrySelector.setMinimumSize(QtCore.QSize(160, 0))
+        frequencySelector.setMinimumSize(QtCore.QSize(60, 0))
+        frequencySelector.addItem('Please select...')
+        frequencySelector.addItems(LORA_REGIONS)
+        self.__frequencySelectorLoPy = frequencySelector
+        self.__frequencySelectorLoPy.activated.connect(self.__newLoRaRegionSelected)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.__countrySelectorLoPy = countrySelector
+        self.__countrySelectorLoPy.activated.connect(self.__newCountrySelected)
+        self.__optionalCountryWidgets.append(frequencyLabel)
+        self.__optionalCountryWidgets.append(frequencySelector)
+        self.__countryLabel = countryLabel
+        spin = LoadingSpin(img_path=IMG_PATH)
+        self.__countrySelectorSpinLoPy = spin
+        freqLayout = QtGui.QHBoxLayout()
+        freqLayout.addWidget(frequencySelector)
+        freqLayout.setSpacing(5)
+        layout = QtGui.QGridLayout()
+        layout.addWidget(countryLabel, 0, 0)
+        layout.addWidget(countrySelector, 0, 1)
+        layout.addWidget(spin, 0, 2)
+        layout.addItem(spacerItem1, 0, 3)
+        layout.addWidget(intfrequencyLabel, 1, 0)
+        layout.addWidget(frequencyLabel, 2, 0)
+        layout.addItem(freqLayout, 2, 1, 1, 2)
+        page.setLayout(layout)
+        return page
+
+    def __createRegionSelectionPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Sigfox region selection')
+        page.setSubTitle('Please select your Sigfox region:')
+        countryLabel = QtGui.QLabel('Sigfox Region:')
+        countryLabel.adjustSize()
+        countrySelector = QtGui.QComboBox()
+        countrySelector.setMinimumSize(QtCore.QSize(160, 0))
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.__countrySelectorSiPy = countrySelector
+        self.__countrySelectorSiPy.currentIndexChanged.connect(self.__newRegionSelected)
+        spin = LoadingSpin(img_path=IMG_PATH)
+        self.__countrySelectorSpinSiPy = spin
+        layout = QtGui.QGridLayout()
+        layout.addWidget(countryLabel, 0, 0)
+        layout.addWidget(countrySelector, 0, 1)
+        layout.addWidget(spin, 0, 2)
+        layout.addItem(spacerItem1, 0, 3)
+        page.setLayout(layout)
+        return page
+
+    def __createSetupPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Setup Instructions')
+        setupLabel = QtGui.QLabel('<h3><b>Attention!</b></h3><br>Please <b>close</b> Atom, Visual Studio Code and any other program that might be using the serial port!</b><br><br><br><b>Pytrack / Pysense:</b><br>You may need to manually <a href="https://docs.pycom.io/chapter/pytrackpysense/installation/firmware.html">update the firmware</a> of your Pytrack / Pysense before using this tool.<br><br><br><b>Expansion Board 2.0:</b> <br>Please make sure your Pycom module is in <a href="https://docs.pycom.io/chapter/gettingstarted/installation/firmwaretool.html#first"> firmware update mode</a> and you <b>press the reset button</b> on the Pycom module (next to the LED) before you continue.')
+        setupLabel.setOpenExternalLinks(True)
+        setupLabel.setWordWrap(True)
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(setupLabel)
+        page.setLayout(layout)
+        self.__setupPageSize = page.size()
+        return page
+
+    def __skipBoardPage(self):
+        if self.__localFileFlash:
+            self.__downloadWaitLabel.setText(('Please wait while preparing firmware file <br><br>{}').format(humanfriendly.format_path(self.__localFileName)))
+            self.__downloadWaitPage.setTitle('Reading local file')
+            self.__set_firmware_wait_label(None)
+            self.__firmwareVersionLabel2.setText('Updating from file: <b>' + self.__localFileName.split('/')[-1] + '</b>')
+            if os.path.isfile(self.__localFileName):
+                if self.__forceNewLoRaRegionSelector.isChecked():
+                    return CustomWizard.COUNTRY_IDX
+                else:
+                    return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+
+            else:
+                self.__finishedUpgrade(2)
+                return CustomWizard.RESULT_IDX
+        else:
+            self.__downloadWaitLabel.setText('Please wait, firmware download in progress...')
+            self.__downloadWaitPage.setTitle('Download')
+            self.__firmwareVersionLabel2.setText('')
+        if self.__res_json:
+            if self.check_lora_region(self.__res_json['firmware_type'], self.__lora_region):
+                print_debug('We have check_lora_region=True')
+                print_debug(('self.__firmwareTypeSelector.currentText()={}').format(self.__firmwareTypeSelector.currentText()))
+                print_debug(('self.__forceupdate_pybytes? {}').format(self.__forceupdate_pybytes))
+                print_debug(('self.check_pybytes_settings(self.__pybytes_device_token)? = {}').format(self.check_pybytes_settings(self.__pybytes_device_token)))
+                print_debug(('str(self.__firmwareTypeSelector.currentText) in self.__pybytes_firmwares? {}').format(str(self.__firmwareTypeSelector.currentText) in self.__pybytes_firmwares))
+                print_debug(('self.__forceupdate_pybytes or not self.check_pybytes_settings(self.__pybytes_device_token)? {}').format(self.__forceupdate_pybytes or not self.check_pybytes_settings(self.__pybytes_device_token)))
+                print_debug(('str(self.__firmwareTypeSelector.currentText) in self.__pybytes_firmwares and (self.__forceupdate_pybytes or not self.check_pybytes_settings(self.__pybytes_device_token))? {}').format(str(self.__firmwareTypeSelector.currentText) in self.__pybytes_firmwares and (self.__forceupdate_pybytes or not self.check_pybytes_settings(self.__pybytes_device_token))))
+                if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 5 or self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 6 or self.__checkSigfoxCredentials():
+                    return CustomWizard.REGION_IDX
+                if not self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares and (self.__forceupdate_pybytes or not self.check_pybytes_settings(self.__pybytes_device_token)):
+                    return CustomWizard.PYBYTES_IDX
+                if not self.__info_obtained:
+                    print_debug('Return self.__check_advanced_page(WAIT_IDX) from __skipBoardPage')
+                    return self.__check_advanced_page(CustomWizard.WAIT_IDX)
+                print_debug('Return self.__check_advanced_page(DOWNLOAD_IDX) from __skipBoardPage')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+            else:
+                print_debug('Return COUNTRY_IDX from __skipBoardPage')
+                return CustomWizard.COUNTRY_IDX
+        else:
+            print_debug('We do not have self.__res_json, BOARD_IDX from __skipBoardPage')
+            if self.__wizard_retry:
+                return CustomWizard.SERIAL_IDX
+            return CustomWizard.BOARD_IDX
+        return
+
+    def __reset_from_pybytes(self):
+        print_debug('This is __reset_from_pybytes')
+        if self.__pybytes_page_shown:
+            self.__set_buttons(True, True, True)
+            self.next()
+        return
+
+    def __skipPybytesPage(self):
+        print_debug('-->-->-->-->-->-->-->-->-->-->-->-->    This is __skipPybytesPage   <--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--<--')
+        print_debug('self.__info_obtained? %s' % self.__info_obtained)
+        print_debug('self.__pybytes_info_obtained: %s' % str(self.__pybytes_info_obtained))
+        print_debug('Firmware Type: ' + self.__firmwareTypeSelector.currentText())
+        print_debug(('Board COnnection: {}').format(self.__board_connection_failed))
+        print_debug(('str(self.__firmwareTypeSelector.currentText()) not in self.__pybytes_firmwares = {}').format(str(self.__firmwareTypeSelector.currentText()) not in self.__pybytes_firmwares))
+        print_debug(('str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares = {}').format(str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares))
+        if self.__board_connection_failed:
+            self.__finishedUpgrade(1)
+            return CustomWizard.RESULT_IDX
+        else:
+            if self.__localFileFlash or self.__skip_pybytes or self.__pybytes_info_obtained or str(self.__firmwareTypeSelector.currentText()) not in self.__pybytes_firmwares or self.check_pybytes_settings(self.__pybytes_device_token) and not self.__forceNewPybytesRegSelector.isChecked():
+                print_debug('Return self.__check_advanced_page(DOWNLOAD_IDX) from __skipPybytesPage')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+            if not self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares:
+                print_debug('Return self.__check_advanced_page(DOWNLOAD_IDX) from __skipPybytesPage')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+            if not self.__info_obtained:
+                self.__fromPybytes = True
+                self.__insert_device()
+            elif self.__checkSigfoxCredentials():
+                self.__fromPybytes = True
+                print_debug('Invoking self.__register_sigfox from __skipPybytesPage')
+                self.__register_sigfox()
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Skip')
+            print_debug('Returning PYBYTES_IDX from __skipPybytesPage (set button to Skip!)')
+            return CustomWizard.PYBYTES_IDX
+
+        return
+
+    def __createLicensePage(self):
+        page = CustomWizardPage(None, self.__skipLicensePage)
+        page.setTitle('License Terms')
+        acceptSelector = QtGui.QCheckBox('I accept these license terms')
+        acceptSelector.clicked.connect(self.__pymesh_license_accepted)
+        self.__acceptSelector = acceptSelector
+        licenseLabel = QtGui.QPlainTextEdit()
+        licenseLabel.setReadOnly(True)
+        self.__licenseLabel = licenseLabel
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(licenseLabel)
+        layout.addWidget(acceptSelector)
+        page.setLayout(layout)
+        return page
+
+    def __skipLicensePage(self):
+        print_debug('This is __skipLicensePage()')
+        if self.__acceptSelector.isChecked():
+            if self.__postlicense_page is not None:
+                print_debug(('Return: {}').format(self.__id2name()[self.__postlicense_page]))
+                return self.__postlicense_page
+        print_debug('Return False')
+        return False
+
+    def __pymesh_license_accepted(self, param):
+        print_debug(('This is __pymesh_license_accepted(param={}').format(param))
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(self.__acceptSelector.isChecked())
+        return
+
+    def __createSerialPage(self):
+        page = CustomWizardPage(None, self.__getBoardInfo)
+        page.setTitle('Communication')
+        page.setSubTitle('Please select the serial port to use:')
+        portLabel = QtGui.QLabel('Port:')
+        portLabel.adjustSize()
+        portSelector = QtGui.QComboBox()
+        portSelector.activated.connect(self.__newSerialPortSelected)
+        speedSelector = QtGui.QCheckBox('High speed transfer')
+        speedSelector.setChecked(self.__settings.get('SpeedSelectorChecked', True, self.__settings.get('ManualBaudRate', 0) == 921600))
+        speedSelector.setVisible(self.__settings.get('SpeedSelectorChecked', True, self.__settings.get('ManualBaudRate', 0) == 921600))
+        speedSelector.clicked.connect(self.__speedSelectorClicked)
+        baudLabel = QtGui.QLabel('Speed:')
+        baudLabel.adjustSize()
+        baudSelector = QtGui.QComboBox()
+        baudSelector.addItems(BAUDRATES)
+        baudSelector.setCurrentIndex(2)
+        baudSelector.activated.connect(self.__newBaudRateSelected)
+        eraseFileSystemSelector = QtGui.QCheckBox('Erase flash file system')
+        eraseFileSystemSelector.setChecked(False)
+        eraseFileSystemSelector.setVisible(False)
+        showAdvancedSettingsSelector = QtGui.QCheckBox('Show Advanced Settings')
+        showAdvancedSettingsSelector.setChecked(self.__settings.get('Advanced_Selected', self.__settings.get('LastSelectedFirmware') == 'development', self.__settings.get('LastSelectedFirmware') == 'development'))
+        self.__restoreAdvancedSettingsSelector = showAdvancedSettingsSelector.isChecked()
+        showAdvancedSettingsSelector.clicked.connect(self.__advancedSettingsSelected)
+        forceNewLoRaRegionSelector = QtGui.QCheckBox('Force update LoRa region')
+        forceNewLoRaRegionSelector.setChecked(False)
+        forceNewLoRaRegionSelector.setVisible(False)
+        localFileSelector = QtGui.QCheckBox('Flash from local file')
+        localFileSelector.setChecked(False)
+        localFileSelector.clicked.connect(self.__localFileSelectorClicked)
+        typeLabel = QtGui.QLabel('Type:')
+        self.__firmwareTypeLabel = typeLabel
+        firmwareTypeSelector = QtGui.QComboBox()
+        firmwareTypeSelector.addItems(self.__firmware_types)
+        try:
+            firmwareTypeSelector.setCurrentIndex(self.__firmware_types.index(self.__settings.get('LastSelectedFirmware', self.__firmware_types[0])))
+        except:
+            pass
+
+        firmwareTypeSelector.currentIndexChanged.connect(self.__firmwareTypeSelectorChanged)
+        self.__firmwareTypeSelector = firmwareTypeSelector
+        fsLabel = QtGui.QLabel('FS:')
+        fsLabel.setVisible(False)
+        fswLabel = QtGui.QLabel('(if supported)')
+        fswLabel.setVisible(False)
+        fsTypeSelector = QtGui.QComboBox()
+        fsTypeSelector.addItems(FILESYSTEM_TYPES)
+        fsTypeSelector.setCurrentIndex(FILESYSTEM_TYPES.index(self.__settings.get('LastSelectedFilesystem', FILESYSTEM_TYPES[0])))
+        fsTypeSelector.adjustSize()
+        fsTypeSelector.setVisible(False)
+        self.__fsTypeSelector = fsTypeSelector
+        self.__fsLabel = fsLabel
+        self.__fswLabel = fswLabel
+        localFileInput = QtGui.QLineEdit()
+        localFileInput.setMaxLength(4096)
+        localFileInput.setMinimumSize(QtCore.QSize(20, 0))
+        localFileInput.setAlignment(Qt.AlignLeft)
+        localFileInput.setVisible(False)
+        localFileInput.setReadOnly(True)
+        localFileInput.setText(self.__localFileName)
+        localFileInput.textChanged.connect(self.__localFileInputTextChanged)
+        localFileSelect = QtGui.QPushButton('...')
+        localFileSelect.setMaximumHeight(20)
+        localFileSelect.setMaximumWidth(20)
+        localFileSelect.adjustSize()
+        localFileSelect.setToolTip('Select the file to flash!')
+        localFileSelect.clicked.connect(self.__localFileSelectDialog)
+        localFileSelect.setVisible(False)
+        self.__localFileSelector = localFileSelector
+        self.__localFileSelect = localFileSelect
+        self.__localFileInput = localFileInput
+        self.__portSelector = portSelector
+        self.__baudselector = baudSelector
+        self.__eraseFileSystemSelector = eraseFileSystemSelector
+        self.__fillPortList()
+        forceNewPybytesRegSelector = QtGui.QCheckBox('Force update Pybytes registration')
+        forceNewPybytesRegSelector.setChecked(False)
+        forceNewPybytesRegSelector.setVisible(str(firmwareTypeSelector.currentText()) in self.__pybytes_firmwares)
+        forceNewPybytesRegSelector.clicked.connect(self.__forceNewPybytesRegSelectorClicked)
+        enablePybytesRegSelector = QtGui.QCheckBox('Enable Pybytes / SmartConfig support')
+        enablePybytesRegSelector.setChecked(self.__settings.get('enablePybytesRegSelectorChecked', True))
+        enablePybytesRegSelector.setVisible(str(firmwareTypeSelector.currentText()) in self.__pybytes_firmwares)
+        enablePybytesRegSelector.clicked.connect(self.__enablePybytesRegSelectorClicked)
+        pybytesAdvLabel = QtGui.QLabel('Please visit our new <a href="https://pybytes.io">Pybytes</a> platform!')
+        pybytesAdvLabel.setVisible(self.__settings.get('LastSelectedFirmware', str(self.__firmware_types[0])) not in self.__pybytes_firmwares)
+        pybytesAdvLabel.setOpenExternalLinks(True)
+        self.__forceNewLoRaRegionSelector = forceNewLoRaRegionSelector
+        self.__forceNewPybytesRegSelector = forceNewPybytesRegSelector
+        self.__showAdvancedSettingsSelector = showAdvancedSettingsSelector
+        self.__enablePybytesRegSelector = enablePybytesRegSelector
+        self.__pybytesAdvLabel = pybytesAdvLabel
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Minimum)
+        spacerLabel = QtGui.QLabel('')
+        spacerLabel.setVisible(True)
+        self.__serialWindowSpacerLabel = spacerLabel
+        layout = QtGui.QGridLayout()
+        layout.addWidget(portLabel, 0, 0)
+        layout.addWidget(portSelector, 0, 1, 1, 2)
+        layout.addItem(spacerItem1, 0, 2)
+        layout.addWidget(speedSelector, 1, 1)
+        layout.addWidget(eraseFileSystemSelector, 2, 1)
+        layout.addWidget(spacerLabel, 2, 1)
+        layout.addWidget(showAdvancedSettingsSelector, 3, 1)
+        layout.addWidget(forceNewLoRaRegionSelector, 3, 1)
+        layout.addItem(spacerItem, 4, 1)
+        layout.addWidget(localFileSelector, 5, 1)
+        layout.addWidget(typeLabel, 6, 0)
+        layout.addWidget(firmwareTypeSelector, 6, 1, 1, 2)
+        layout.addItem(spacerItem, 5, 1)
+        layout.addWidget(localFileInput, 6, 1, 1, 2)
+        layout.addWidget(localFileSelect, 6, 3)
+        layout.addWidget(forceNewPybytesRegSelector, 7, 1)
+        layout.addWidget(pybytesAdvLabel, 7, 1, 1, 3)
+        layout.addWidget(fsLabel, 8, 0)
+        layout.addWidget(fsTypeSelector, 8, 1)
+        layout.addWidget(enablePybytesRegSelector, 9, 1)
+        layout.addWidget(fswLabel, 8, 2)
+        page.setLayout(layout)
+        portSelector.setObjectName('port_selector')
+        page.registerField('speed_selector', speedSelector)
+        self.__serialspeedwidgets = [
+         layout, speedSelector, baudLabel, baudSelector, spacerItem1]
+        if not self.__settings.get('SpeedSelectorChecked', True, self.__settings.get('ManualBaudRate', 0) == 921600):
+            self.__speedSelectorClicked()
+            baudSelector.setCurrentIndex(BAUDRATES.index(str(self.__settings.get('ManualBaudRate', 115200))))
+        return page
+
+    def __advancedSettingsSelected(self, status):
+        print_debug(('This is __advancedSettingsSelected({})').format(status))
+        if self.__firmwareTypeSelector.currentText() == 'development':
+            self.__showAdvancedSettingsSelector.setChecked(True)
+            status = True
+        else:
+            self.__restoreAdvancedSettingsSelector = status
+            self.__settings.set('Advanced_Selected', status)
+        if status:
+            self.__restoreNewLoRaRegionSelector = self.__forceNewLoRaRegionSelector.isChecked()
+            self.__forceNewLoRaRegionSelector.setChecked(False)
+        else:
+            self.__forceNewLoRaRegionSelector.setChecked(self.__restoreNewLoRaRegionSelector)
+        return
+
+    def __createGetInfoPage(self):
+        page = CustomWizardPage(self.__skipBoardPage)
+        page.setTitle('Getting board information...')
+        waitLabel = QtGui.QLabel('Please wait, reading information about the board...')
+        spin = LoadingSpin(img_path=IMG_PATH)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        layout = QtGui.QHBoxLayout()
+        layout.addWidget(waitLabel)
+        layout.addWidget(spin)
+        layout.addItem(spacerItem1)
+        self.__getInfoItems = [
+         waitLabel, spin]
+        page.setLayout(layout)
+        return page
+
+    def __createPybytesRegistrationPage(self):
+        page = CustomWizardPage(self.__skipPybytesPage)
+        page.setTitle('Pybytes registration')
+        tokenLabel = QtGui.QLabel('<b>Paste your Pybytes activation token into the box below:</b><br>')
+        tokenLabel.adjustSize()
+        tokenInput = QtGui.QLineEdit()
+        tokenInput.setMaxLength(39)
+        tokenInput.setMinimumSize(QtCore.QSize(40, 20))
+        tokenInput.setAlignment(Qt.AlignLeft)
+        tokenInput.textChanged.connect(self.__newTokenInputText)
+        spacerItem = QtGui.QSpacerItem(0, 0, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        resultString = QtGui.QLabel('<br><br><b></b><br><br>')
+        descriptionString = 'You can register your device on Pybytes at any time by running<br>'
+        descriptionString += 'this tool again,  or by manually transferring the pybytes_config.json<br>'
+        descriptionString += 'from the Pybytes library onto your board.'
+        newdescriptionString = 'You can register your device on Pybytes at any time by running<br>'
+        newdescriptionString += 'this tool again, by using the pybytes.activate method<br>'
+        newdescriptionString += 'or by using the SmartConfig feature.<br>'
+        descriptionLabel = QtGui.QLabel(newdescriptionString)
+        layout = QtGui.QGridLayout()
+        layout.addWidget(tokenLabel, 0, 0, 1, 3)
+        layout.addWidget(tokenInput, 1, 0, 1, 0)
+        layout.addItem(spacerItem, 1, 1, 1, 3)
+        layout.addWidget(resultString, 2, 0, 1, 3)
+        layout.addWidget(descriptionLabel, 3, 0, 1, 3)
+        page.setLayout(layout)
+        self.__pybytes_registration_result = resultString
+        self.__pybytes_registration_tokenInput = tokenInput
+        return page
+
+    def __createAdvancedSettingsPage(self):
+        page = CustomWizardPage(self.__skipAdvancedSettingsPage)
+        page.setTitle('Advanced Settings')
+        infoLabel = QtGui.QLabel('Information:')
+        infoLabel.adjustSize()
+        infoTypeSelector = QtGui.QComboBox()
+        infoTypeSelector.activated.connect(self.__newInfoTypeSelected)
+        infoTypeInput = QtGui.QLineEdit()
+        infoTypeInput.setMaxLength(39)
+        infoTypeInput.setMinimumSize(QtCore.QSize(40, 20))
+        infoTypeInput.setAlignment(Qt.AlignLeft)
+        infoTypeInput.setReadOnly(True)
+        fsLabel = QtGui.QLabel('File System:')
+        fsLabel.adjustSize()
+        eraseFileSystemSelector = QtGui.QCheckBox('Erase during update')
+        eraseFileSystemSelector.setChecked(False)
+        versionLabel = QtGui.QLabel('Type / Version:')
+        typeSelector = QtGui.QComboBox()
+        typeSelector.addItems(self.__firmware_types)
+        typeSelector.setCurrentIndex(self.__firmwareTypeSelector.currentIndex())
+        typeSelector.currentIndexChanged.connect(self.__newAdvancedTypeSelected)
+        versionSelector = QtGui.QComboBox()
+        versionSelector.addItem('Loading...')
+        versionSelector.currentIndexChanged.connect(self.__newAdvancedVersionSelected)
+        fsTypeSelector = QtGui.QComboBox()
+        fsTypeSelector.addItems(FILESYSTEM_TYPES)
+        fsTypeSelector.activated.connect(self.__newAdvancedfsTypeSelected)
+        loraRegionLabel = QtGui.QLabel('LoRa Region:')
+        loraRegionLabel.setVisible(False)
+        eraseLabel = QtGui.QLabel('RESET:')
+        eraseNVSSelector = QtGui.QCheckBox('NVS partition')
+        eraseNVSSelector.setChecked(False)
+        eraseCFGSelector = QtGui.QCheckBox('CONFIG partition')
+        eraseCFGSelector.setChecked(False)
+        loraCountrySelection = QtGui.QComboBox()
+        loraCountrySelection.activated.connect(self.__newAdvancedCountrySelected)
+        loraCountrySelection.setVisible(False)
+        loraRegionSelection = QtGui.QComboBox()
+        loraRegionSelection.addItem('Please select...')
+        loraRegionSelection.addItems(LORA_REGIONS)
+        loraRegionSelection.activated.connect(self.__newAdvancedLoRaRegionSelected)
+        loraRegionSelection.setVisible(False)
+        horizontalRowLabel = QtGui.QLabel('<hr>')
+        horizontalRowLabelLora = QtGui.QLabel('<hr>')
+        horizontalRowLabelLora.setVisible(False)
+        ssidLable = QtGui.QLabel('Wifi SSID:')
+        wifiSSIDInput = QtGui.QLineEdit()
+        wifiSSIDInput.setMaxLength(39)
+        wifiSSIDInput.setMinimumSize(QtCore.QSize(40, 20))
+        wifiSSIDInput.setAlignment(Qt.AlignLeft)
+        wifiSSIDInput.textChanged.connect(self.__wifiSSIDInputTextChanged)
+        pwdLable = QtGui.QLabel('Wifi PWD:')
+        wifiPWDInput = QtGui.QLineEdit()
+        wifiPWDInput.setEchoMode(wifiPWDInput.PasswordEchoOnEdit)
+        wifiPWDInput.setMaxLength(39)
+        wifiPWDInput.setMinimumSize(QtCore.QSize(40, 20))
+        wifiPWDInput.setAlignment(Qt.AlignLeft)
+        wifiPWDInput.textChanged.connect(self.__wifiPWDInputTextChanged)
+        layout = QtGui.QGridLayout()
+        layout.addWidget(infoLabel, 0, 0)
+        layout.addWidget(infoTypeSelector, 0, 1)
+        layout.addWidget(infoTypeInput, 0, 2)
+        layout.addWidget(versionLabel, 1, 0)
+        layout.addWidget(typeSelector, 1, 1)
+        layout.addWidget(versionSelector, 1, 2)
+        layout.addWidget(fsLabel, 2, 0)
+        layout.addWidget(fsTypeSelector, 2, 1)
+        layout.addWidget(eraseFileSystemSelector, 2, 2)
+        layout.addWidget(horizontalRowLabel, 3, 0, 1, 3)
+        layout.addWidget(eraseLabel, 4, 0)
+        layout.addWidget(eraseCFGSelector, 4, 1)
+        layout.addWidget(eraseNVSSelector, 4, 2)
+        layout.addWidget(horizontalRowLabelLora, 6, 0, 1, 3)
+        layout.addWidget(loraRegionLabel, 7, 0)
+        layout.addWidget(loraCountrySelection, 7, 1)
+        layout.addWidget(loraRegionSelection, 7, 2)
+        page.setLayout(layout)
+        self.__advancedPageWidgets = [
+         0, infoTypeSelector, infoTypeInput, fsTypeSelector,
+         versionLabel,
+         typeSelector, versionSelector, eraseFileSystemSelector,
+         loraRegionLabel,
+         loraCountrySelection, loraRegionSelection, horizontalRowLabelLora,
+         wifiSSIDInput,
+         wifiPWDInput, eraseNVSSelector, eraseCFGSelector]
+        return page
+
+    def __newAdvancedfsTypeSelected(self):
+        if self.__advancedPageWidgets[3].isEnabled():
+            self.__update_fstype = True
+        return
+
+    def __wifiSSIDInputTextChanged(self, text):
+        self.__wifi_ssid = str(text)
+        return
+
+    def __wifiPWDInputTextChanged(self, text):
+        self.__wifi_pwd = str(text)
+        return
+
+    def __newInfoTypeSelected(self):
+        if self.__res_json:
+            config_block = base64.b64decode(self.__res_json['binary'])
+        else:
+            config_block = self.__config_block
+        try:
+            sigfox_id = str(binascii.hexlify(config_block[8:12]).upper())
+            sigfox_pac = str(binascii.hexlify(config_block[12:20]).upper())
+        except:
+            sigfox_id = 'FFFFFFFF'
+
+        try:
+            self.__loramac_s = '%02X%02X%02X%02X%02X%02X%02X%02X' % struct.unpack('BBBBBBBB', config_block[:8])
+        except:
+            self.__loramac_s = 'FFFFFFFFFFFFFFFF'
+
+        adv_text = self.__advancedPageWidgets[1].currentText()
+        if adv_text == INFO_TYPES[0]:
+            if self.__res_json:
+                self.__advancedPageWidgets[2].setText(self.get_display_name(self.__res_json['firmware_type']))
+            else:
+                self.__advancedPageWidgets[2].setText(self.__upgrade.get_chip_id())
+        if adv_text == INFO_TYPES[1]:
+            self.__advancedPageWidgets[2].setText(self.__w_mac_s)
+        if adv_text == INFO_TYPES[2]:
+            self.__advancedPageWidgets[2].setText(self.__loramac_s)
+        if adv_text == INFO_TYPES[3]:
+            self.__advancedPageWidgets[2].setText(sigfox_id)
+        if adv_text == INFO_TYPES[4]:
+            self.__advancedPageWidgets[2].setText(sigfox_pac)
+        return
+
+    def __newAdvancedTypeSelected(self):
+        self.__firmwareTypeSelector.setCurrentIndex(self.__advancedPageWidgets[5].currentIndex())
+        if self.__firmwareTypeSelector.currentText() in LICENSE_TYPES:
+            if not self.__license_downloaded:
+                print_debug('=====>>>>> Initiating License download')
+                self.__backgroundFetch.load_license_text(self.__licenseTextLoaded)
+        if self.__res_json and self.__downgrade_versions_types.get(str(self.__advancedPageWidgets[5].currentText())) is None:
+            self.__backgroundFetch.find_new_firmware(self.__rx_downgrade_versions, self.__advancedPageWidgets[5].currentText(), key=self.__res_json['firmware_type'], version='list')
+        elif self.__downgrade_versions_types.get(str(self.__advancedPageWidgets[5].currentText())) is not None:
+            self.__refresh_downgrade_versions(self.__advancedPageWidgets[5].currentText())
+        return
+
+    def __newAdvancedVersionSelected(self):
+        selected_version = str(self.__advancedPageWidgets[6].currentText())
+        downgrade_details = self.__downgrade_versions.get(selected_version, None)
+        if downgrade_details is not None:
+            self.__flashAdvancedFirmwareVersion = selected_version
+            fwtype = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('type')
+            if fwtype == 'unstable':
+                fwtype = 'development'
+            version = 'Version: <b>' + selected_version + '</b> [' + fwtype + ']'
+            self.__firmwareVersionLabel1.setText(version)
+            self.__firmwareVersionLabel2.setText(version)
+            fatfs = downgrade_details.get('fatfs', None)
+            lfs = downgrade_details.get('lfs', None)
+            if fatfs is not None and lfs is not None:
+                if fatfs == 1 and lfs == 1:
+                    self.__advancedPageWidgets[3].setEnabled(True)
+                    self.__advancedPageWidgets[3].setCurrentIndex(1 if self.__fstype == 0 else 0)
+                else:
+                    self.__update_fstype = None
+                    self.__advancedPageWidgets[3].setEnabled(False)
+                    self.__advancedPageWidgets[3].setCurrentIndex(lfs)
+        return
+
+    def __validateAdvancedSettingsPage(self):
+        if self.__localFileFlash or self.__server_connection_failed:
+            return False
+        if self.__forceAdvancedSettingsPage is not None:
+            return not self.__forceAdvancedSettingsPage
+        else:
+            return True
+            return
+
+    def __skipAdvancedSettingsPage(self):
+        print_debug('This is __skipAdvancedSettingsPage()')
+        if self.__server_connection_failed:
+            return CustomWizard.RESULT_IDX
+        if self.__showAdvancedSettingsSelector.isChecked() and not self.__validateAdvancedSettingsPage():
+            print_debug(('Returning {} from {}').format('CustomWizard.ADVANCED_IDX', '__skipAdvancedSettingsPage'))
+            self.__forceAdvancedSettingsPage = False
+            self.__set_firmware_wait_label(self.__res_json)
+            return CustomWizard.ADVANCED_IDX
+        if not self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or self.__skip_pybytes or self.__pybytes_info_obtained or str(self.__firmwareTypeSelector.currentText()) not in self.__pybytes_firmwares or self.check_pybytes_settings(self.__pybytes_device_token) and not self.__forceNewPybytesRegSelector.isChecked():
+            if self.__info_obtained:
+                print_debug(('Returning {} from {}').format('CustomWizard.DOWNLOAD_IDX', '__skipAdvancedSettingsPage'))
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+            else:
+                print_debug(('Returning {} from {}').format('CustomWizard.WAIT_IDX', '__skipAdvancedSettingsPage'))
+                return self.__check_advanced_page(CustomWizard.WAIT_IDX)
+
+        else:
+            print_debug(('Returning {} from {}').format('CustomWizard.PYBYTES_IDX', '__skipAdvancedSettingsPage'))
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Skip')
+            return CustomWizard.PYBYTES_IDX
+        return
+
+    def __createDownloadWaitPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Downloading...')
+        waitLabel = QtGui.QLabel('Please wait, firmware download in progress...')
+        spin = LoadingSpin(img_path=IMG_PATH)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        layout = QtGui.QHBoxLayout()
+        layout.addWidget(waitLabel)
+        layout.addWidget(spin)
+        layout.addItem(spacerItem1)
+        self.__downloadWaitPage = page
+        self.__downloadWaitLabel = waitLabel
+        page.setLayout(layout)
+        return page
+
+    def __createWaitPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Upgrading...')
+        waitLabel = QtGui.QLabel('Please be patient while your device is being updated.')
+        spin = LoadingSpin(img_path=IMG_PATH)
+        versionString = QtGui.QLabel('')
+        attemptLabel = QtGui.QLabel('')
+        progressLabel = QtGui.QLabel('')
+        layout = QtGui.QGridLayout()
+        layout.setVerticalSpacing(30)
+        layout.addWidget(waitLabel, 0, 0, 1, 3)
+        layout.addWidget(spin, 1, 0, 1, 3, Qt.AlignCenter)
+        layout.addWidget(versionString, 2, 0, 1, 2)
+        layout.addWidget(progressLabel, 3, 0, 1, 2)
+        page.setLayout(layout)
+        waitLabel.setWordWrap(True)
+        self.__firmwareWaitLabel = waitLabel
+        self.__firmwareVersionLabel2 = versionString
+        self.__progressLabel = progressLabel
+        self.__attemptLabel = attemptLabel
+        return page
+
+    def __createConclusionPage(self):
+        page = QtGui.QWizardPage()
+        page.setTitle('Result')
+        label = QtGui.QLabel('You should not be seeing this message. If you do, the firmware updater either crashed or is still running in the background. If this message does not change within 2-3 minutes, it has likely crashed. Sorry about that :(')
+        resultText = label
+        self.__resultText = resultText
+        label.setWordWrap(True)
+        stayofflineSelector = QtGui.QCheckBox('Stay in offline mode after restart')
+        stayofflineSelector.setChecked(True)
+        stayofflineSelector.setVisible(False)
+        self.__stayofflineSelector = stayofflineSelector
+        resultLabel = QtGui.QPlainTextEdit()
+        resultLabel.setReadOnly(True)
+        self.__resultLabel = resultLabel
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(label)
+        layout.addWidget(resultLabel)
+        layout.addWidget(stayofflineSelector)
+        page.setLayout(layout)
+        page.setFinalPage(True)
+        return page
+
+    def __getBoardInfo(self):
+        print_debug('This is __getBoardInfo with __info_requested? %s' % self.__info_requested)
+        print_debug(('Baud rate is: {}').format(self.__espbaudrate))
+        if self.__firmwareTypeSelector.currentText() in LICENSE_TYPES:
+            if not self.__license_downloaded:
+                print_debug('=====>>>>> Initiating License download')
+                self.__backgroundFetch.load_license_text(self.__licenseTextLoaded)
+        if not self.__info_requested:
+            port = self.page(CustomWizard.SERIAL_IDX).findChild(QtGui.QComboBox, 'port_selector').currentText()
+            try:
+                self.__lastSerialPortUsed = str(port)
+                self.__upgrade = DeviceUpgrade()
+                self.__upgrade.connect(port, self.__espbaudrate, self.__pypic, self.__resultUpdateList, self.__read_device_config)
+                self.__settings.set('LastSerialPortUsed', self.__lastSerialPortUsed)
+            except Exception as e:
+                print_debug('Exception in __getBoardInfo... calling self.__finishedUpgrade(1, str(e))')
+                print_exception(e)
+                self.__finishedUpgrade(1, str(e))
+
+            if self.__server_connection_failed:
+                return CustomWizard.RESULT_IDX
+            self.__info_requested = True
+        return True
+
+    def __skipCountryIfNeeded(self):
+        if self.__localFileFlash:
+            if self.__forceNewLoRaRegionSelector.isChecked():
+                print_debug('Returning COUNTRY_IDX from __skipCountryIfNeeded')
+                return CustomWizard.COUNTRY_IDX
+            else:
+                print_debug('Returning check_advanced_page(CustomWizard.DOWNLOAD_IDX) from __skipCountryIfNeeded')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.WIPY_IDX:
+            if self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares:
+                print_debug('Returning PYBYTES_IDX from __skipCountryIfNeeded')
+                return CustomWizard.PYBYTES_IDX
+            print_debug('Returning check_advanced_page(CustomWizard.DOWNLOAD_IDX) from __skipCountryIfNeeded')
+            return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+        elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY_IDX:
+            print_debug('Returning COUNTRY_IDX from __skipCountryIfNeeded')
+            return CustomWizard.COUNTRY_IDX
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.SIPY_IDX:
+            print_debug('Returning REGION_IDX from __skipCountryIfNeeded')
+            return CustomWizard.REGION_IDX
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.GPY_IDX:
+            if self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares:
+                print_debug('Returning PYBYTES_IDX from __skipCountryIfNeeded')
+                return CustomWizard.PYBYTES_IDX
+            else:
+                print_debug('Returning check_advanced_page(CustomWizard.DOWNLOAD_IDX) from __skipCountryIfNeeded')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+
+        elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.FIPY_IDX:
+            print_debug('Returning COUNTRY_IDX from __skipCountryIfNeeded')
+            return CustomWizard.COUNTRY_IDX
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY4_IDX:
+            print_debug('Returning COUNTRY_IDX from __skipCountryIfNeeded')
+            return CustomWizard.COUNTRY_IDX
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 0:
+            print_debug('Returning BOARD_IDX from __skipCountryIfNeeded')
+            return CustomWizard.BOARD_IDX
+        return
+
+    def __checkSigfoxCredentials(self):
+        print_debug(('<++==><++==><++==><++==><++==><++==>__sigfox_registration={} and res_jeson in __checkSigfoxCredentials={}').format(self.__sigfox_registration, self.__res_json))
+        if self.__sigfox_registration and self.__res_json and not self.__localFileSelector.isChecked():
+            if self.__res_json['firmware_type'].split('.')[0] in ('fipy', 'lopy4') and self.__res_json['sig_id'] is None and self.__res_json['sig_pac'] is None:
+                return True
+        return False
+
+    def __skipRegion(self):
+        print_debug('This is __skipRegion')
+        if self.__server_connection_failed:
+            self.__countrySelectionPage.setSubTitle('Please select the region:')
+            self.__countrySelectorLoPy.setVisible(False)
+            self.__countryLabel.setVisible(False)
+            self.__intfrequencyLabel.setVisible(False)
+            self.__countrySelectorSpinLoPy.hide()
+        else:
+            self.__countrySelectionPage.setSubTitle('Please select country or region:')
+            self.__countrySelectorLoPy.setVisible(True)
+            self.__countryLabel.setVisible(True)
+            self.__intfrequencyLabel.setVisible(True)
+        if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 5 or self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 6 or self.__checkSigfoxCredentials():
+            print_debug('Returning: CustomWizard.REGION_IDX')
+            return CustomWizard.REGION_IDX
+        if self.__res_json and not self.__localFileSelector.isChecked():
+            if self.check_lora_region(self.__res_json['firmware_type'], self.__lora_region):
+                if self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or self.__forceNewPybytesRegSelector.isChecked() or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares and not (self.__skip_pybytes or self.__pybytes_info_obtained or self.check_pybytes_settings(self.__pybytes_device_token)):
+                    print_debug('Returning: CustomWizard.PYBYTES_IDX')
+                    return CustomWizard.PYBYTES_IDX
+                else:
+                    if not self.__info_obtained:
+                        print_debug('Return self.__check_advanced_page(WAIT_IDX)')
+                        return self.__check_advanced_page(CustomWizard.WAIT_IDX)
+                    print_debug('Return self.__check_advanced_page(DOWNLOAD_IDX)')
+                    return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+
+            else:
+                print_debug('Returning: CustomWizard.COUNTRY_IDX because self.__lora_region=%s' % self.__lora_region)
+                return CustomWizard.COUNTRY_IDX
+        else:
+            if self.__localFileFlash:
+                print_debug('Returning: self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+            else:
+                if not self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or self.__forceNewPybytesRegSelector.isChecked() or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares and not (self.__skip_pybytes or self.__pybytes_info_obtained):
+                    print_debug('Returning: CustomWizard.PYBYTES_IDX')
+                    return CustomWizard.PYBYTES_IDX
+                print_debug('Returning: self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)')
+                return self.__check_advanced_page(CustomWizard.DOWNLOAD_IDX)
+
+        if self.__countrySelectorLoPy.currentIndex() == 0 and self.__frequencySelectorLoPy.currentIndex() == 0:
+            print_debug('Returning CustomWizard.COUNTRY_IDX because %d and %d' % (self.__countrySelectorLoPy.currentIndex(), self.__frequencySelectorLoPy.currentIndex()))
+            return CustomWizard.COUNTRY_IDX
+        return
+
+    def __speedSelectorClicked(self):
+        layout = self.__serialspeedwidgets[0]
+        speedSelector = self.__serialspeedwidgets[1]
+        baudLabel = self.__serialspeedwidgets[2]
+        baudselector = self.__serialspeedwidgets[3]
+        self.__settings.set('SpeedSelectorChecked', speedSelector.isChecked())
+        if not speedSelector.isChecked():
+            speedSelector.setVisible(False)
+            baudLabel.setVisible(True)
+            baudselector.setVisible(True)
+            layout.removeWidget(speedSelector)
+            layout.addWidget(baudLabel, 1, 0)
+            layout.addWidget(baudselector, 1, 1)
+            self.__espbaudrate = int(baudselector.currentText())
+        else:
+            baudLabel.setVisible(False)
+            layout.removeWidget(baudLabel)
+            baudselector.setVisible(False)
+            layout.removeWidget(baudselector)
+            baudselector.setCurrentIndex(2)
+            layout.addWidget(speedSelector, 1, 1)
+            speedSelector.setVisible(True)
+            self.__espbaudrate = 921600
+        return
+
+    def __localFileSelectorClicked(self, status):
+        if self.__server_connection_failed:
+            status = True
+            self.__localFileSelector.setChecked(True)
+        if status:
+            self.__eraseFileSystemSelector.setVisible(True)
+            self.__serialWindowSpacerLabel.setVisible(False)
+            self.__forceNewLoRaRegionSelector.setVisible(True)
+            self.__forceNewLoRaRegionSelector.setChecked(self.__restoreNewLoRaRegionSelector)
+            self.__restoreAdvancedSettingsSelector = self.__showAdvancedSettingsSelector.isChecked()
+            self.__showAdvancedSettingsSelector.setChecked(False)
+            self.__showAdvancedSettingsSelector.setVisible(False)
+            self.__firmwareTypeSelector.setVisible(False)
+            self.__firmwareTypeLabel.setText('File:')
+            self.__fsTypeSelector.setVisible(True)
+            self.__fsLabel.setVisible(True)
+            self.__fswLabel.setVisible(True)
+        else:
+            self.__restoreNewLoRaRegionSelector = self.__forceNewLoRaRegionSelector.isChecked()
+            self.__forceNewLoRaRegionSelector.setVisible(False)
+            self.__forceNewLoRaRegionSelector.setChecked(False)
+            self.__eraseFileSystemSelector.setVisible(False)
+            self.__serialWindowSpacerLabel.setVisible(True)
+            if self.__restoreAdvancedSettingsSelector is not None:
+                self.__showAdvancedSettingsSelector.setChecked(self.__restoreAdvancedSettingsSelector)
+            self.__showAdvancedSettingsSelector.setVisible(True)
+            self.__firmwareTypeSelector.setVisible(True)
+            self.__firmwareTypeLabel.setText('Type:')
+            self.__fsTypeSelector.setVisible(False)
+            self.__fsLabel.setVisible(False)
+            self.__fswLabel.setVisible(False)
+        self.__localFileFlash = status
+        self.__localFileInput.setVisible(status)
+        self.__localFileSelect.setVisible(status)
+        if status:
+            self.__forceNewPybytesRegSelector.setVisible(False)
+            self.__enablePybytesRegSelector.setVisible(status)
+            self.__pybytesAdvLabel.setVisible(False)
+            self.__restoreNewPybytesRegSelector = self.__forceNewPybytesRegSelector.isChecked()
+            self.__forceNewPybytesRegSelector.setChecked(False)
+            if self.__localFileName is not None or self.__localFileName == '':
+                if os.path.isfile(self.__localFileName):
+                    wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+            else:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(True)
+        else:
+            if str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares:
+                if self.__restoreNewPybytesRegSelector is not None:
+                    self.__forceNewPybytesRegSelector.setChecked(self.__restoreNewPybytesRegSelector)
+                self.__forceNewPybytesRegSelector.setVisible(True)
+                self.__enablePybytesRegSelector.setVisible(self.__enablePybytesRegSelector.setVisible(str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares))
+                self.__pybytesAdvLabel.setVisible(False)
+            else:
+                self.__pybytesAdvLabel.setVisible(True)
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        return
+
+    def __localFileSelectorsetChecked(self):
+        self.__firmwareTypeLabel.setText('File:')
+        self.__eraseFileSystemSelector.setVisible(True)
+        self.__serialWindowSpacerLabel.setVisible(False)
+        self.__forceNewLoRaRegionSelector.setVisible(True)
+        self.__showAdvancedSettingsSelector.setVisible(False)
+        self.__firmwareTypeSelector.setVisible(False)
+        self.__localFileInput.setVisible(True)
+        self.__localFileSelect.setVisible(True)
+        self.__localFileFlash = True
+        self.__restoreNewPybytesRegSelector = self.__forceNewPybytesRegSelector.isChecked()
+        self.__forceNewPybytesRegSelector.setVisible(False)
+        self.__enablePybytesRegSelector.setVisible(True)
+        self.__pybytesAdvLabel.setVisible(False)
+        self.__restoreNewPybytesRegSelector = self.__forceNewPybytesRegSelector.isChecked()
+        self.__forceNewPybytesRegSelector.setChecked(False)
+        self.__fsTypeSelector.setVisible(True)
+        self.__fsLabel.setVisible(True)
+        self.__fswLabel.setVisible(True)
+        self.__eraseFileSystemSelector.setVisible(True)
+        self.__showAdvancedSettingsSelector.setVisible(False)
+        return
+
+    def __firmwareTypeSelectorChanged(self):
+        self.__settings.set('LastSelectedFirmware', str(self.__firmwareTypeSelector.currentText()))
+        self.__showAdvancedSettingsSelector.setChecked(self.__restoreAdvancedSettingsSelector)
+        if self.__firmwareTypeSelector.currentText() == 'development':
+            self.__showAdvancedSettingsSelector.setChecked(True)
+        elif self.__restoreAdvancedSettingsSelector is not None:
+            self.__showAdvancedSettingsSelector.setChecked(self.__restoreAdvancedSettingsSelector)
+        if str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares:
+            self.__forceNewPybytesRegSelector.setVisible(True)
+            self.__enablePybytesRegSelector.setVisible(str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares)
+            self.__pybytesAdvLabel.setVisible(False)
+            if self.__restoreNewPybytesRegSelector is not None:
+                self.__forceNewPybytesRegSelector.setChecked(self.__restoreNewPybytesRegSelector)
+        else:
+            self.__restoreNewPybytesRegSelector = self.__forceNewPybytesRegSelector.isChecked()
+            self.__forceNewPybytesRegSelector.setVisible(False)
+            self.__enablePybytesRegSelector.setVisible(False)
+            self.__pybytesAdvLabel.setVisible(True)
+            self.__forceNewPybytesRegSelector.setChecked(False)
+        return
+
+    def __licenseTextLoaded(self, result):
+        print_debug(('This is __licenseTextLoaded(result[{}]={}').format(type(result), result))
+        if 'error_code' not in result:
+            self.__license_downloaded = True
+            self.__licenseLabel.appendHtml(result)
+        return
+
+    def __localFileInputTextChanged(self):
+        if self.__localFileName is not None:
+            if os.path.isfile(self.__localFileName):
+                self.__settings.set('LastLocalFileFlashed', self.__localFileName)
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        else:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+        return
+
+    def __customButtonClicked(self, bid):
+        print_debug(('This is __customButtonClicked({} [{}])').format(str(bid), str(type(bid))))
+        text = wizard.button(QtGui.QWizard.CustomButton1).text()
+        print_debug(('Button Text: {}').format(text))
+        if text == 'Rescan Ports':
+            self.__fillPortList()
+        elif text == 'Skip':
+            self.__skip_pybytes = True
+            if self.__info_obtained:
+                self.next()
+            else:
+                print_debug('Jumping to self.WAIT_IDX')
+                self.currentPage().jumpPage(self.__check_advanced_page(CustomWizard.WAIT_IDX))
+        else:
+            self.__reset_wizard(text == 'Retry', 1)
+        return
+
+    def __reset_wizard(self, retry, start_id=None):
+        print_debug(('This is __reset_wizard(retry={}, start_id={})').format(retry, start_id))
+        if retry:
+            self.__offline_mode_enabled = False
+            self.__deviceInfoQuery.add_timeout(5)
+            self.__backgroundFetch.add_timeout(5)
+            self.__findNewVersionMsg[4].setText('Server connection timeout: <b> ' + str(self.__backgroundFetch.get_timeout()) + ' seconds </b>')
+            self.__consentSelector.setVisible(True)
+            self.__consentLabel.setVisible(True)
+            self.__server_connection_failed = False
+            self.__backgroundFetch.fetch_metadata(self.__rx_metadata)
+            self.__findNewVersionMsg[3].setVisible(False)
+            self.__findNewVersionMsg[5].setVisible(UPDATER_TYPE != 'internal')
+            self.__findNewVersionMsg[0].setText('Fetching updates for this tool...')
+            self.__findNewVersionMsg[1].show()
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+        else:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+            if self.__server_connection_failed and not self.__stayofflineSelector.isChecked():
+                self.__remote_info_obtained = False
+                self.__downgrade_versions_types = {}
+                self.__consentSelector.setVisible(True)
+                self.__consentLabel.setVisible(True)
+                self.__offline_mode_enabled = False
+                self.__deviceInfoQuery.add_timeout(5)
+                self.__backgroundFetch.add_timeout(5)
+                self.__findNewVersionMsg[4].setText('Server connection timeout: <b> ' + str(self.__backgroundFetch.get_timeout()) + ' seconds </b>')
+                self.__server_connection_failed = False
+                self.__backgroundFetch.fetch_metadata(self.__rx_metadata)
+                self.__findNewVersionMsg[3].setVisible(False)
+                self.__findNewVersionMsg[5].setVisible(UPDATER_TYPE != 'internal')
+                self.__findNewVersionMsg[0].setText('Fetching updates for this tool...')
+                self.__findNewVersionMsg[1].show()
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            self.__countrySelectorLoPy.setCurrentIndex(0)
+            self.__frequencySelectorLoPy.setCurrentIndex(0)
+            self.__upgrade = None
+            self.__skip_pybytes = False
+            self.__res_pybytes_status = None
+            self.__res_pybytes_json = None
+            self.__pybytes_info_obtained = False
+            self.__pybytes_device_token = None
+            self.__pybytes_registration_tokenInput.setReadOnly(False)
+            self.__pybytes_registration_tokenInput.setText('')
+            self.__pybytes_registration_result.setText('')
+            self.__res_json = None
+            self.__res_status = None
+            self.__info_requested = False
+            self.__info_obtained = False
+            self.__error_message = None
+            self.__w_mac_s = ''
+            self.__s_mac_s = None
+            self.__loramac_s = None
+            self.__firmwareScript = None
+            self.__board_connection_failed = False
+            self.__config_block = None
+            self.__lora_region = None
+            self.__localFileUpgradeFailed = False
+            self.__forceupdate_pybytes = self.__forceNewPybytesRegSelector.isChecked()
+            self.__pybytes_page_shown = False
+            self.__acceptSelector.setChecked(False)
+            self.__postlicense_page = None
+            if self.__remote_info_obtained or self.__stayofflineSelector.isChecked():
+                wizard.setStartId(start_id if start_id is not None else 1)
+            else:
+                wizard.setStartId(0)
+            new_stream.truncate(0)
+            self.__set_buttons(True, False, False)
+            self.__firmwareVersionLabel1.setText('The firmware being flashed is: ' + '<b>none</b>')
+            self.__firmwareVersionLabel2.setText('The firmware being flashed is: ' + '<b>none</b>')
+            self.__start_time = None
+            self.__resultUpdateList = []
+            self.__resultLabel.clear()
+            self.__resultLabel.adjustSize()
+            self.__resultLabel.setCenterOnScroll(False)
+            self.__resultLabel.repaint()
+            self.__licenseLabel.clear()
+            self.__licenseLabel.adjustSize()
+            self.__licenseLabel.setCenterOnScroll(False)
+            self.__licenseLabel.repaint()
+            self.__flashAdvancedFirmwareVersion = None
+            self.__forceAdvancedSettingsPage = None
+            self.__update_fstype = None
+            self.__advancedPageWidgets[1].clear()
+            self.__advancedPageWidgets[1].addItem(INFO_TYPES[0])
+            self.__advancedPageWidgets[1].addItem(INFO_TYPES[1])
+            self.__advancedSettingsPageShown = False
+            self.__deviceInsertAttempted = False
+            self.__fromPybytes = False
+            self.__fromDownloads = False
+            self.__fromAdvanced = False
+            self.__license_downloaded = False
+            self.__sigfox_registration_attempted = False
+            self.__sigfox_registration_required = False
+            self.__attemptLabel.setText('')
+            if self.__espbaudrate == 921600:
+                self.__serialspeedwidgets[1].setChecked(True)
+            wizard.restart()
+        return
+
+    def __id2name(self):
+        return {(self.RESTART_IDX): 'RESTART_IDX', (self.WELCOME_IDX): 'WELCOME_IDX',
+           (self.SETUP_IDX): 'SETUP_IDX',
+           (self.SERIAL_IDX): 'SERIAL_IDX',
+           (self.GET_INFO_IDX): 'GET_INFO_IDX',
+           (self.BOARD_IDX): 'BOARD_IDX',
+           (self.COUNTRY_IDX): 'COUNTRY_IDX',
+           (self.REGION_IDX): 'REGION_IDX',
+           (self.ADVANCED_IDX): 'ADVANCED_IDX',
+           (self.PYBYTES_IDX): 'PYBYTES_IDX',
+           (self.LICENSE_IDX): 'LICENSE_IDX',
+           (self.DOWNLOAD_IDX): 'DOWNLOAD_IDX',
+           (self.WAIT_IDX): 'WAIT_IDX',
+           (self.RESULT_IDX): 'RESULT_IDX'}
+
+    def __insert_device(self):
+        if not self.__deviceInsertAttempted:
+            self.__deviceInsertAttempted = True
+            print_debug('INSERT!!! NEED TO CHECK IF self.__legacy_frequency==%s' % self.__legacy_frequency)
+            if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.WIPY_IDX:
+                self.__deviceInfoQuery.insert('wipy.wipy with esp32', self.__w_mac_s, self.__s_mac_s, self.__insert_callback)
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY_IDX:
+                self.__deviceInfoQuery.insert('lopy.lopy with esp32.' + self.__legacy_frequency, self.__w_mac_s, self.__s_mac_s, self.__insert_callback)
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.SIPY_IDX:
+                self.__deviceInfoQuery.insert_sigfox('sipy.sipy with esp32', self.__w_mac_s, self.__s_mac_s, self.__sigfox_zone, self.__insert_callback)
+            if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.GPY_IDX:
+                self.__deviceInfoQuery.insert('gpy.gpy with esp32', self.__w_mac_s, self.__s_mac_s, self.__insert_callback)
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.FIPY_IDX:
+                self.__deviceInfoQuery.insert_sigfox('fipy.fipy with esp32.' + self.__legacy_frequency, self.__w_mac_s, self.__s_mac_s, self.__sigfox_zone, self.__insert_callback)
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY4_IDX:
+                self.__deviceInfoQuery.insert_sigfox('lopy4.lopy4 with esp32.' + self.__legacy_frequency, self.__w_mac_s, self.__s_mac_s, self.__sigfox_zone, self.__insert_callback)
+        return
+
+    def __register_sigfox(self):
+        print_debug(('This is self.__register_sigfox with {} and {} and attempted? {}').format(self.__w_mac_s, self.__sigfox_zone, self.__sigfox_registration_attempted))
+        if not self.__sigfox_registration_attempted:
+            print_debug('Attempting Sigfox registration...')
+            self.__sigfox_registration_attempted = True
+            self.__deviceInfoQuery.register_sigfox(self.__w_mac_s, self.__sigfox_zone, self.__insert_callback)
+        return
+
+    def __set_buttons(self, next_button, back_button, custom_button1):
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(next_button)
+        wizard.button(QtGui.QWizard.BackButton).setEnabled(back_button)
+        wizard.button(QtGui.QWizard.CustomButton1).setEnabled(custom_button1)
+        return
+
+    def __wizardPageShown(self, wid):
+        print_debug('This is __wizardPageShown:CustomWizard.' + self.__id2name()[wid] + ' [%d]' % wid)
+        print_debug(('Current window size is: {}/{}').format(self.width(), self.height()))
+        if wid == CustomWizard.RESTART_IDX:
+            pass
+        elif wid == CustomWizard.LICENSE_IDX:
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(self.__acceptSelector.isChecked())
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        elif wid == CustomWizard.WELCOME_IDX:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(self.__remote_info_obtained)
+            wizard.button(QtGui.QWizard.CustomButton2).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton2).setVisible(False)
+            if self.__board_connection_failed:
+                self.__finishedUpgrade(1)
+                wizard.button(QtGui.QWizard.BackButton).setVisible(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setVisible(False)
+                self.next()
+        elif wid == CustomWizard.SETUP_IDX:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(self.__remote_info_obtained)
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Restart')
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton2).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton2).setVisible(False)
+            if self.__board_connection_failed:
+                self.__finishedUpgrade(1)
+                self.next()
+            elif self.__server_connection_failed:
+                self.__localFileSelector.setChecked(True)
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                self.__localFileSelectorsetChecked()
+                wizard.setWindowTitle('Pycom Upgrade [offline mode]')
+                self.__offline_mode_enabled = True
+        elif wid == CustomWizard.SERIAL_IDX:
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(True)
+            if self.__server_connection_failed and (self.__localFileName is None or not os.path.isfile(self.__localFileName)):
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            self.__fillPortList()
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Rescan Ports')
+        elif wid == CustomWizard.GET_INFO_IDX:
+            if self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                try:
+                    self.currentPage().jumpPage(self.RESULT_IDX)
+                except Exception as e:
+                    self.print_exception(e)
+                    self.next()
+
+            if not self.__info_obtained and not self.__localFileFlash:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+            else:
+                self.next()
+        elif wid == CustomWizard.BOARD_IDX:
+            if self.__board_connection_failed or self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                try:
+                    self.currentPage().jumpPage(self.RESULT_IDX)
+                except Exception as e:
+                    self.print_exception(e)
+                    self.next()
+
+            else:
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        elif wid == CustomWizard.COUNTRY_IDX:
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            if self.__frequencySelectorLoPy.currentIndex() > 0:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+            else:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+            if self.__board_connection_failed or self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                self.currentPage().jumpPage(self.RESULT_IDX)
+        elif wid == CustomWizard.REGION_IDX:
+            if self.__checkSigfoxCredentials():
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            if self.__board_connection_failed or self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                self.currentPage().jumpPage(self.RESULT_IDX)
+        elif wid == CustomWizard.ADVANCED_IDX:
+            self.__advancedSettingsPageShown = True
+            if self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                self.next()
+            self.__advancedPageWidgets[1].clear()
+            self.__advancedPageWidgets[1].addItems(INFO_TYPES[0:2])
+            self.__advancedPageWidgets[5].setCurrentIndex(self.__firmwareTypeSelector.currentIndex())
+            self.__advancedPageWidgets[12].setText(self.__wifi_ssid)
+            self.__advancedPageWidgets[13].setText(self.__wifi_pwd)
+            print_debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CustomWizard.ADVANCED_IDX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+            if not self.__info_obtained:
+                self.__insert_device()
+            elif self.__checkSigfoxCredentials():
+                print_debug('Invoking self.__register_sigfox from CustomWizard.ADVANCED_IDX')
+                self.__register_sigfox()
+            print_debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CustomWizard.ADVANCED_IDX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+            if self.__lora_region is not None:
+                try:
+                    idx = LORA_REGIONS.index(self.__lora_region)
+                    self.__advancedPageWidgets[10].clear()
+                    self.__advancedPageWidgets[10].addItems(LORA_REGIONS)
+                    self.__advancedPageWidgets[10].setCurrentIndex(idx)
+                    print_debug(('Success setting default LORA REGION based on {}').format(self.__lora_region))
+                except Exception as ex:
+                    print_debug(('ERROR setting default LORA REGION based on {}').format(self.__lora_region))
+                    self.print_exception(ex)
+
+            if not self.__server_connection_failed:
+                if self.__advancedPageWidgets[9].count() <= 1:
+                    self.__loadAdvancedLoPyCountryList()
+                if self.__res_json:
+                    if self.get_short_name(self.__res_json['firmware_type']) in ('lopy',
+                                                                                 'fipy',
+                                                                                 'lopy4'):
+                        self.__advancedPageWidgets[8].setVisible(True)
+                        self.__advancedPageWidgets[9].setVisible(True)
+                        self.__advancedPageWidgets[10].setVisible(True)
+                        self.__advancedPageWidgets[11].setVisible(True)
+                    else:
+                        self.__advancedPageWidgets[8].setVisible(False)
+                        self.__advancedPageWidgets[9].setVisible(False)
+                        self.__advancedPageWidgets[10].setVisible(False)
+                        self.__advancedPageWidgets[11].setVisible(False)
+            elif self.__advancedPageWidgets[9].count() == 0:
+                self.__advancedPageWidgets[9].addItem('[Not available]')
+                self.__advancedPageWidgets[9].setEnabled(False)
+            self.__advancedPageWidgets[9].setVisible(True)
+            self.__advancedPageWidgets[10].setVisible(True)
+            self.__advancedPageWidgets[11].setVisible(True)
+            print_debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CustomWizard.ADVANCED_IDX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+            if self.__res_json:
+                config_block = base64.b64decode(self.__res_json['binary'])
+                self.__advancedPageWidgets[2].setText(self.get_display_name(self.__res_json['firmware_type']))
+            else:
+                config_block = self.__config_block
+                if self.__upgrade is not None:
+                    self.__advancedPageWidgets[2].setText(self.__upgrade.get_chip_id())
+            try:
+                sigfox_id = str(binascii.hexlify(config_block[8:12]).upper())
+            except:
+                sigfox_id = 'FFFFFFFF'
+
+            try:
+                self.__loramac_s = '%02X%02X%02X%02X%02X%02X%02X%02X' % struct.unpack('BBBBBBBB', config_block[:8])
+            except:
+                self.__loramac_s = 'FFFFFFFFFFFFFFFF'
+
+            if self.__loramac_s != 'FFFFFFFFFFFFFFFF' and self.__loramac_s != '0000000000000000':
+                self.__advancedPageWidgets[1].addItem(INFO_TYPES[2])
+            if sigfox_id != 'FFFFFFFF':
+                self.__advancedPageWidgets[1].addItem(INFO_TYPES[3])
+                self.__advancedPageWidgets[1].addItem(INFO_TYPES[4])
+            if self.__res_json:
+                if self.__downgrade_versions_types.get(str(self.__advancedPageWidgets[5].currentText())) is None:
+                    self.__backgroundFetch.find_new_firmware(self.__rx_downgrade_versions, self.__advancedPageWidgets[5].currentText(), key=self.__res_json['firmware_type'], version='list')
+                else:
+                    self.__refresh_downgrade_versions(self.__advancedPageWidgets[5].currentText())
+        elif wid == CustomWizard.DOWNLOAD_IDX:
+            if self.__localFileFlash:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                self.__backgroundFetch.load_firmware_file(self.__firmwareDownloadCompleted, self.__localFileName)
+            elif self.__board_connection_failed or self.__server_connection_failed and not self.__localFileFlash:
+                self.__finishedUpgrade(1)
+                try:
+                    self.currentPage().jumpPage(self.RESULT_IDX)
+                except:
+                    self.next()
+
+            else:
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                if not self.__sigfox_registration_attempted and self.__checkSigfoxCredentials():
+                    self.__fromDownloads = True
+                    print_debug('Invoking self.__register_sigfox from downloads')
+                    self.__register_sigfox()
+                elif not self.__info_obtained:
+                    self.__fromDownloads = True
+                    self.__insert_device()
+                else:
+                    self.__backgroundFetch.download_new_firmware(self.__firmwareDownloadCompleted, key=self.__res_json['firmware_type'], fwtype=str(self.__firmwareTypeSelector.currentText()), version=self.__flashAdvancedFirmwareVersion)
+                    try:
+                        if self.check_lora_region(self.__res_json['firmware_type'], self.__lora_region):
+                            if self.__forceNewPybytesRegSelector.isChecked() or str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares and not (self.__skip_pybytes or self.__pybytes_info_obtained or self.check_pybytes_settings(self.__pybytes_device_token)):
+                                print_debug("->->->->->->->->->->->->->->-> DOES THIS EVENT EVER OCCUR??? Jumping to PYBYTES_IDX (which shouldn't really be possible here) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-")
+                                self.currentPage().jumpPage(self.PYBYTES_IDX)
+                        else:
+                            print_debug("->->->->->->->->->->->->->->-> DOES THIS EVENT EVER OCCUR??? Jumping to COUNTRY_IDX (which shouldn't really be possible here)<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-")
+                            self.currentPage().jumpPage(self.COUNTRY_IDX)
+                    except AttributeError:
+                        pass
+
+                print_debug('Done...')
+        elif wid == CustomWizard.PYBYTES_IDX:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+            wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+            if not self.__enablePybytesRegSelector.isChecked() and str(self.__firmwareTypeSelector.currentText()) in self.__pybytes_firmwares or str(self.__firmwareTypeSelector.currentText()) not in self.__pybytes_firmwares or self.check_pybytes_settings(self.__pybytes_device_token) and not self.__forceNewPybytesRegSelector.isChecked():
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+                self.next()
+            else:
+                self.__pybytes_page_shown = True
+                if not self.__info_obtained:
+                    wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                    self.__pybytes_registration_tokenInput.setText('Creating device, please wait...')
+                    self.__pybytes_registration_tokenInput.setEnabled(False)
+                    self.__fromPybytes = True
+                    self.__insert_device()
+                else:
+                    wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+                    wizard.button(QtGui.QWizard.CustomButton1).setText('Skip')
+        elif wid == CustomWizard.WAIT_IDX:
+            if self.__localFileUpgradeFailed:
+                print_debug('!!!!!!------ __localFileUpgradeFailed=True!!!!!')
+                self.next()
+            elif self.__localFileFlash or self.__res_json and not self.__server_connection_failed:
+                print_debug('!!!!!!------ __localFileUpgradeFailed=False!!!!!')
+                wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                self.__start_time = time.time()
+                self.__beginBoardUpgrade()
+            else:
+                print_debug('!!!!!!------  Ummmm WTF?!????!!!!!')
+                self.next()
+        elif wid == CustomWizard.RESULT_IDX:
+            wizard.button(QtGui.QWizard.CustomButton1).setText('Restart')
+            if self.__server_connection_failed:
+                self.__stayofflineSelector.setVisible(True)
+                if self.__offline_mode_enabled:
+                    self.__stayofflineSelector.setText('Stay in offline mode after restart')
+                    self.__stayofflineSelector.setChecked(True)
+                else:
+                    self.__stayofflineSelector.setText('Switch to offline mode after restart')
+                    self.__stayofflineSelector.setChecked(False)
+            else:
+                self.__stayofflineSelector.setVisible(False)
+                self.__stayofflineSelector.setChecked(True)
+            wizard.button(QtGui.QWizard.BackButton).setVisible(False)
+            wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+        return
+
+    def __insert_callback(self, res):
+        self.__deviceInsertAttempted = True
+        self.__sigfox_registration_attempted = True
+        print_debug('This is __insert_callback...')
+        self.__forceAdvancedSettingsPage = True
+        if res is not None:
+            self.__res_status = res[0]
+            if self.__res_status == 200:
+                print_debug('self.__res_status==%s' % str(self.__res_status))
+                self.__deviceInfoQuery.get_info(self.__w_mac_s, self.__loramac_s, self.__get_info_callback)
+            else:
+                print_debug('self.__res_status==%s' % str(self.__res_status))
+                self.__server_connection_failed = True
+                self.__finishedUpgrade(1, ('Code: [{}]').format(self.__res_status))
+                try:
+                    self.currentPage().jumpPage(self.RESULT_IDX)
+                except Exception as e:
+                    self.print_exception(e)
+                    self.next()
+
+        else:
+            print_debug('res==None!')
+            self.__server_connection_failed = True
+            self.__finishedUpgrade(1)
+            self.next()
+        return
+
+    def __read_device_config(self, res):
+        if type(res) != bool and self.__upgrade is None or self.__upgrade.npy is None:
+            self.__board_connection_failed = True
+            self.__finishedUpgrade(1, str(res))
+        else:
+            try:
+                print_debug('Trying to read the mac & config block...')
+                w_mac = self.__upgrade.npy.read_mac()
+                self.__w_mac_s = ''
+                for n in w_mac:
+                    self.__w_mac_s += ('{:02X}').format(n)
+
+                self.__config_block = self.__upgrade.npy.read(int(PARTITIONS.get('config')[0], 16), int(PARTITIONS.get('config')[1], 16))
+                self.__loramac_s = '%02X%02X%02X%02X%02X%02X%02X%02X' % struct.unpack('BBBBBBBB', self.__config_block[:8])
+                if self.__loramac_s != 'FFFFFFFFFFFFFFFF' and self.__loramac_s != '0000000000000000':
+                    self.__s_mac_s = [{'id': (self.__loramac_s), 'type': 'lpwan'}]
+                else:
+                    self.__s_mac_s = []
+                try:
+                    self.__wifi_on_boot = self.__config_block[88]
+                except:
+                    self.__wifi_on_boot = 1
+
+                try:
+                    self.__lora_region = ord(self.__config_block[52])
+                except:
+                    self.__lora_region = None
+
+                if self.__lora_region == 255 or self.__forceNewLoRaRegionSelector.isChecked():
+                    self.__lora_region = None
+                else:
+                    self.__lora_region = self.__upgrade.npy.region2str(self.__lora_region)
+                try:
+                    self.__wifi_ssid = self.__config_block[54:86].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__wifi_ssid = ''
+
+                try:
+                    self.__wifi_pwd = self.__config_block[87:151].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__wifi_pwd = ''
+
+                try:
+                    self.__pybytes_device_token = self.__config_block[162:201].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_device_token = None
+
+                try:
+                    self.__pybytes_mqttServiceAddress = self.__config_block[202:241].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_mqttServiceAddress = None
+
+                try:
+                    self.__pybytes_userId = self.__config_block[242:341].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_userId = None
+
+                try:
+                    self.__pybytes_nwprefs = self.__config_block[342:397].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_nwprefs = None
+
+                try:
+                    self.__pybytes_eprefs = self.__config_block[397:496].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_eprefs = None
+
+                try:
+                    self.__fstype = ord(self.__config_block[533])
+                except:
+                    self.__fstype = None
+
+                try:
+                    self.__pybytes_lte_carrier = self.__config_block[634:763].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_lte_carrier = None
+
+                try:
+                    self.__pybytes_lte_apn = self.__config_block[763:892].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_lte_apn = None
+
+                try:
+                    self.__pybytes_lte_type = self.__config_block[892:909].split('\x00')[0].decode('utf-8')
+                except:
+                    self.__pybytes_lte_type = None
+
+                try:
+                    self.__pybytes_lte_cid = ord(self.__config_block[909])
+                except:
+                    self.__pybytes_lte_cid = None
+
+                try:
+                    self.__pybytes_lte_band = ord(self.__config_block[910])
+                except:
+                    self.__pybytes_lte_band = None
+
+                try:
+                    self.__pybytes_lte_reset = ord(self.__config_block[911] == 1)
+                except:
+                    self.__pybytes_lte_reset = None
+
+                print_debug('Config block read complete: ')
+                print_debug(('wmac: {}').format(self.__w_mac_s))
+                print_debug(('smac: {}').format(self.__loramac_s))
+                print_debug(('region: {}').format(self.__lora_region))
+                print_debug(('ssid: {}').format(self.__wifi_ssid))
+                print_debug(('pwd: {}').format(self.__wifi_pwd))
+                print_debug(('wob: {}').format(ord(self.__wifi_on_boot)))
+                print_debug(('device_token: {}').format(self.__pybytes_device_token))
+                print_debug(('mqttServiceAddress: {}').format(self.__pybytes_mqttServiceAddress))
+                print_debug(('userId: {}').format(self.__pybytes_userId))
+                print_debug(('nwprefs: {}').format(self.__pybytes_nwprefs))
+                print_debug(('eprefs: {}').format(self.__pybytes_eprefs))
+                print_debug(('fstype: {}').format(self.__fstype))
+                print_debug(('lte_carrier: {}').format(self.__pybytes_lte_carrier))
+                print_debug(('lte_apn: {}').format(self.__pybytes_lte_apn))
+                print_debug(('lte_type: {}').format(self.__pybytes_lte_type))
+                print_debug(('lte_cid: {}').format(self.__pybytes_lte_cid))
+                print_debug(('lte_band: {}').format(self.__pybytes_lte_band))
+                print_debug(('lte_reset: {}').format(self.__pybytes_lte_reset))
+                if self.__forceNewPybytesRegSelector.isChecked():
+                    print_debug('Unsetting pybytes config block variables...')
+                    self.__pybytes_device_token = None
+                    self.__pybytes_mqttServiceAddress = None
+                    self.__pybytes_userId = None
+                    self.__pybytes_nwprefs = None
+                    self.__pybytes_eprefs = None
+                    self.__pybytes_lte_carrier = None
+                    self.__pybytes_lte_apn = None
+                    self.__pybytes_lte_type = None
+                    self.__pybytes_lte_cid = None
+                    self.__pybytes_lte_band = None
+                    self.__pybytes_lte_reset = None
+                if not self.__server_connection_failed:
+                    try:
+                        self.__deviceInfoQuery.get_info(self.__w_mac_s, self.__loramac_s, self.__get_info_callback)
+                    except Exception as e:
+                        self.print_exception(e)
+                        self.__finishedUpgrade(1, e)
+                        self.__server_connection_failed = True
+
+            except Exception as e:
+                self.__board_connection_failed = True
+                self.__finishedUpgrade(1, e)
+
+        return
+
+    def __set_firmware_wait_label(self, res_json):
+        try:
+            devname = 'device' if res_json is None else '<b>' + self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][res_json['firmware_type']].get('prefix') + '</b>'
+        except:
+            devname = 'device'
+
+        msg = 'Please be patient while your ' + devname + ' is being updated.<br><br>'
+        if self.__espbaudrate <= 115200:
+            msg += '<b>This can take several minutes at ' + str(self.__espbaudrate) + ' bps!</b>'
+        elif self.__eraseFileSystemSelector.isChecked() or self.__espbaudrate > 115200 and self.__espbaudrate < FAST_BAUD_RATE:
+            msg += 'This can take more than a minutes.'
+        else:
+            msg += 'This can take up to a minute.'
+        print_debug('self.__firmwareWaitLabel.setText(%s)' % msg)
+        self.__firmwareWaitLabel.setText(msg)
+        return
+
+    def __get_pybytes_activation_callback(self, res):
+        self.__pybytes_info_obtained = False
+        if res is not None:
+            self.__res_pybytes_status = res[0]
+            if self.__res_pybytes_status == 200:
+                self.__res_pybytes_json = res[1]
+                result = '<br><br><b>Registration successful!</b><br><br>'
+                print_debug(('Pybytes registration result: {}').format(self.__res_pybytes_json))
+                try:
+                    self.__pybytes_device_token = self.__res_pybytes_json['deviceToken']
+                    self.__pybytes_userId = self.__res_pybytes_json['userId']
+                    self.__pybytes_mqttServiceAddress = str(self.__res_pybytes_json['mqttServiceAddress'])
+                    self.__pybytes_nwprefs = self.__res_pybytes_json['network_preferences']
+                    if 'lte' in self.__pybytes_nwprefs:
+                        try:
+                            self.__pybytes_lte_carrier = self.__res_pybytes_json.get('lte', {}).get('carrier').lower()
+                            self.__pybytes_lte_apn = self.__res_pybytes_json.get('lte', {}).get('apn')
+                            self.__pybytes_lte_type = self.__res_pybytes_json.get('lte', {}).get('protocol')
+                            self.__pybytes_lte_cid = self.__res_pybytes_json.get('lte', {}).get('cid')
+                            self.__pybytes_lte_band = self.__res_pybytes_json.get('lte', {}).get('band')
+                            self.__pybytes_lte_reset = self.__res_pybytes_json.get('lte', {}).get('reset')
+                        except:
+                            pass
+
+                    if 'wifi' in self.__pybytes_nwprefs:
+                        self.__wifi_ssid = self.__res_pybytes_json['wifi']['ssid']
+                        self.__wifi_pwd = self.__res_pybytes_json['wifi']['password']
+                    try:
+                        self.__pybytes_eprefs = self.__res_pybytes_json['extra_preferences']
+                    except:
+                        self.__pybytes_eprefs = None
+
+                    self.__pybytes_info_obtained = True
+                    wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                    wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                    wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                    self.__pybytes_registration_tokenInput.setReadOnly(True)
+                    self.__forceupdate_pybytes = True
+                except Exception as e:
+                    self.print_exception(e)
+                    result = '<br><br><b>Invalid activation details!</b><br><br>'
+                    self.__pybytes_registration_tokenInput.setText('')
+
+            else:
+                result = '<br><br><b>' + ('<br>').join(textwrap.wrap(str(res[1]), 48)) + '</b><br><br>'
+                self.__pybytes_registration_tokenInput.setText('')
+            self.__pybytes_registration_result.setText(result)
+        else:
+            self.__pybytes_registration_result.setText('<br><br><b>Could not connect to the Pybytes activation server!</b><br><br>Please try again in a few minutes...<br><br>')
+            self.__pybytes_registration_tokenInput.setText('')
+        return
+
+    def __get_info_callback(self, res):
+        print_debug('This is __get_info_callback')
+        if res is not None:
+            print_debug('res is not None')
+            self.__res_status = res[0]
+            print_debug('res_status=%s' % str(self.__res_status))
+            if self.__res_status is not None:
+                if self.__localFileFlash:
+                    fname = humanfriendly.format_path(self.__localFileName)
+                    if len(fname) < 50:
+                        version = 'Filename : <b>' + fname + '</b>'
+                    else:
+                        version = 'Filename : <b>' + fname.split('/')[-1] + '</b>'
+                    self.__firmwareVersionLabel1.setText(version)
+                    self.__firmwareVersionLabel2.setText(version)
+                    if self.__res_status == 200:
+                        self.__res_json = res[1]
+                        eprint(('JSON: {}').format(self.__res_json))
+                        print_debug(('I have self.__res_json={}').format(self.__res_json))
+                    self.__set_firmware_wait_label(self.__res_json)
+                    print_debug('self.next() in __get_info_callback')
+                    if not self.__localFileFlash:
+                        self.next()
+                elif self.__res_status == 412:
+                    version = 'You need to upgrade the firmware update tool!'
+                    self.__client_tool_oudated = True
+                    self.__server_connection_failed = True
+                    self.next()
+                elif self.__res_status == 200:
+                    self.__pybytes_registration_tokenInput.clear()
+                    self.__pybytes_registration_tokenInput.setEnabled(True)
+                    if self.__fromPybytes:
+                        wizard.button(QtGui.QWizard.CustomButton1).setEnabled(True)
+                        wizard.button(QtGui.QWizard.CustomButton1).setText('Skip')
+                    self.__advancedPageWidgets[1].clear()
+                    self.__advancedPageWidgets[1].addItem(INFO_TYPES[0])
+                    self.__advancedPageWidgets[1].addItem(INFO_TYPES[1])
+                    self.__res_json = res[1]
+                    print_debug(('I have self.__res_json={}').format(self.__res_json))
+                    self.__set_firmware_wait_label(self.__res_json)
+                    self.__info_obtained = True
+                    try:
+                        fwtype = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('type')
+                    except Exception as ex:
+                        self.__finishedUpgrade(1, ('Your {} is not supported by this firmware!').format(self.get_display_name(self.__res_json['firmware_type'])))
+                        wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                        wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                        wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                        try:
+                            self.currentPage().jumpPage(self.RESULT_IDX)
+                        except Exception as e:
+                            self.print_exception(e)
+                            self.next()
+
+                        return
+
+                    if fwtype == 'unstable':
+                        fwtype = 'development'
+                    print_debug(('Setting fwversion and other stuff based on {}').format(self.__flashAdvancedFirmwareVersion))
+                    if self.__flashAdvancedFirmwareVersion is not None:
+                        fwversion = self.__flashAdvancedFirmwareVersion
+                    else:
+                        fwversion = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('version')
+                    if self.__showAdvancedSettingsSelector.isChecked():
+                        config_block = base64.b64decode(self.__res_json['binary'])
+                        self.__advancedPageWidgets[2].setText(self.get_display_name(self.__res_json['firmware_type']))
+                        try:
+                            sigfox_id = str(binascii.hexlify(config_block[8:12]).upper())
+                        except:
+                            sigfox_id = 'FFFFFFFF'
+
+                        try:
+                            self.__loramac_s = '%02X%02X%02X%02X%02X%02X%02X%02X' % struct.unpack('BBBBBBBB', config_block[:8])
+                        except:
+                            self.__loramac_s = 'FFFFFFFFFFFFFFFF'
+
+                        if self.__loramac_s != 'FFFFFFFFFFFFFFFF':
+                            self.__advancedPageWidgets[1].addItem(INFO_TYPES[2])
+                        if sigfox_id != 'FFFFFFFF':
+                            self.__advancedPageWidgets[1].addItem(INFO_TYPES[3])
+                            self.__advancedPageWidgets[1].addItem(INFO_TYPES[4])
+                            print_debug(('self.__downgrade_versions_types={}').format(self.__downgrade_versions_types.keys()))
+                            print_debug(('[O][O][O][O][O][O][O][O] self.__res_json is None? {} and self.__advancedPageWidgets[5].currentText()= {} and self.__downgrade_versions_types.get(self.__advancedPageWidgets[5].currentText())={} [O][O][O][O][O][O][O][O]').format(self.__res_json is None, self.__advancedPageWidgets[5].currentText(), self.__downgrade_versions_types.get(self.__advancedPageWidgets[5].currentText())))
+                        if self.__downgrade_versions_types.get(str(self.__advancedPageWidgets[5].currentText())) is None:
+                            self.__backgroundFetch.find_new_firmware(self.__rx_downgrade_versions, self.__advancedPageWidgets[5].currentText(), key=self.__res_json['firmware_type'], version='list')
+                        else:
+                            self.__refresh_downgrade_versions(self.__advancedPageWidgets[5].currentText())
+                        print_debug(('Firmware type is: {}').format(self.get_short_name(self.__res_json['firmware_type'])))
+                        if self.get_short_name(self.__res_json['firmware_type']) in ('lopy',
+                                                                                     'fipy',
+                                                                                     'lopy4'):
+                            print_debug('Show LoRa Region stuff ...')
+                            self.__advancedPageWidgets[8].setVisible(True)
+                            self.__advancedPageWidgets[9].setVisible(True)
+                            self.__advancedPageWidgets[10].setVisible(True)
+                            self.__advancedPageWidgets[11].setVisible(True)
+                            if self.__lora_region is not None:
+                                try:
+                                    print_debug(('Trying to set default LORA REGION based on {}').format(self.__lora_region))
+                                    idx = LORA_REGIONS.index(self.__lora_region)
+                                    self.__advancedPageWidgets[10].clear()
+                                    self.__advancedPageWidgets[10].addItems(LORA_REGIONS)
+                                    self.__advancedPageWidgets[10].setCurrentIndex(idx)
+                                    print_debug(('Success setting default LORA REGION based on {}').format(self.__lora_region))
+                                except Exception as ex:
+                                    print_debug(('ERROR setting default LORA REGION based on {}').format(self.__lora_region))
+                                    print_debug(('Exception: {}').format(ex))
+
+                        else:
+                            print_debug('No... hide it! ...')
+                            self.__advancedPageWidgets[8].setVisible(False)
+                            self.__advancedPageWidgets[9].setVisible(False)
+                            self.__advancedPageWidgets[10].setVisible(False)
+                            self.__advancedPageWidgets[11].setVisible(False)
+                    version = 'Version: <b>' + fwversion + '</b> [' + fwtype + ']'
+                    self.__firmwareVersionLabel1.setText(version)
+                    self.__firmwareVersionLabel2.setText(version)
+                    print_debug('self.next() in __get_info_callback')
+                    if self.__fromDownloads:
+                        self.__backgroundFetch.download_new_firmware(self.__firmwareDownloadCompleted, key=self.__res_json['firmware_type'], fwtype=str(self.__firmwareTypeSelector.currentText()), version=self.__flashAdvancedFirmwareVersion)
+                    elif not self.__fromPybytes:
+                        self.next()
+                elif self.__res_status == 404:
+                    wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                    wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                    wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                    if not self.__deviceInsertAttempted:
+                        try:
+                            self.currentPage().jumpPage(self.BOARD_IDX)
+                        except Exception as e:
+                            self.print_exception(e)
+                            self.next()
+
+                    else:
+                        self.__server_connection_failed = True
+                        self.__finishedUpgrade(1, 'Error creating Device record.')
+                        self.next()
+                else:
+                    self.__finishedUpgrade(1, 'Error requesting board details...')
+                    wizard.button(QtGui.QWizard.CustomButton1).setEnabled(False)
+                    wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+                    wizard.button(QtGui.QWizard.BackButton).setEnabled(False)
+                    self.__server_connection_failed = True
+                    try:
+                        self.currentPage().jumpPage(self.RESULT_IDX)
+                    except Exception as e:
+                        self.print_exception(e)
+                        self.next()
+
+        if res is None or self.__res_status is None:
+            print_debug('res is None or self.__res_status is None')
+            self.__server_connection_failed = True
+            self.__remote_info_obtained = False
+            print_debug('__server_connection_failed? %s __remote_info_obtained? %s' % (str(self.__server_connection_failed), str(self.__remote_info_obtained)))
+            self.next()
+        return
+
+    def __setFrequencySelectorVisible(self, visible):
+        for i in self.__optionalCountryWidgets:
+            i.setVisible(visible)
+
+        self.__isFrequencySelectorVisible = visible
+        return
+
+    def __newSerialPortSelected(self):
+        if self.page(CustomWizard.SERIAL_IDX) is not None:
+            self.__pypic = False
+            try:
+                port = str(self.page(CustomWizard.SERIAL_IDX).findChild(QtGui.QComboBox, 'port_selector').currentText())
+                self.__pypic = check_usbid(port)
+                print_debug('Device mode: ' + ('PIC' if self.__pypic else 'FTDI'))
+            except ValueError:
+                pass
+            except Exception as e:
+                self.print_exception(e)
+
+        return
+
+    def __newBaudRateSelected(self):
+        print_debug(('This is __newBaudRateSelected {} ').format(self.__baudselector.currentText()))
+        self.__espbaudrate = int(self.__baudselector.currentText())
+        self.__settings.set('ManualBaudRate', self.__espbaudrate)
+        if self.__espbaudrate == 921600:
+            self.__serialspeedwidgets[1].setChecked(True)
+            self.__speedSelectorClicked()
+        return
+
+    def __consentSelectorChanged(self):
+        print_debug(('This is __consentSelectorChanged with {}').format(self.__consentSelector.isChecked()))
+        self.__settings.set('ConsentSelectorChecked', self.__consentSelector.isChecked())
+        return
+
+    def __newUpdaterTypeSelected(self, status):
+        if not status and UPDATER_TYPE == 'development':
+            self.__checkDevelopmentSelector.setChecked(True)
+        else:
+            print_debug(('This is __newUpdaterTypeSelected({})').format(status))
+            self.__settings.set('CheckDevelopmentReleases', status)
+            if status:
+                self.__updater_type = 'development'
+            else:
+                self.__updater_type = 'stable'
+            print_debug(('Updater type is {}, fetching ...').format(self.__updater_type))
+            if self.__updater_type in self.__updaterVersions.keys():
+                self.__rx_tool_only_version(self.__updaterVersions[self.__updater_type])
+            else:
+                self.__backgroundFetch.fetch_updater_version(self.__updater_type, self.__rx_tool_only_version)
+        return
+
+    def __forceNewPybytesRegSelectorClicked(self):
+        self.__forceupdate_pybytes = self.__forceNewPybytesRegSelector.isChecked()
+        return
+
+    def __enablePybytesRegSelectorClicked(self):
+        self.__settings.set('enablePybytesRegSelectorChecked', self.__enablePybytesRegSelector.isChecked())
+        self.__enable_pybytes = self.__enablePybytesRegSelector.isChecked()
+        return
+
+    def __localFileSelectDialog(self):
+        default_path = os.path.dirname(os.path.realpath(__file__))
+        if 'HOME' in os.environ:
+            if os.path.isdir(os.environ['HOME']):
+                default_path = os.environ['HOME']
+        elif 'USERPROFILE' in os.environ:
+            if os.path.isdir(os.environ['USERPROFILE']):
+                default_path = os.environ['USERPROFILE']
+        default_path = self.__settings.get('LastLocalFileSelectDir', default_path)
+        file_dialog = QtGui.QFileDialog()
+        file_dialog.setFileMode(QFileDialog.ExistingFile)
+        self.__localFileName = str(file_dialog.getOpenFileName(self, 'Open File', default_path, 'GZ files (*.tar *.gz)'))
+        wizard.setFocus()
+        wizard.activateWindow()
+        if os.path.isfile(self.__localFileName):
+            self.__localFileInput.setText(humanfriendly.format_path(self.__localFileName))
+            self.__settings.set('LastLocalFileSelectDir', os.path.dirname(self.__localFileName))
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        else:
+            self.__localFileInput.setText('Invalid File!')
+            self.__localFileName = None
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+        return
+
+    def __generatePybytesActivacationJson(self, token):
+        if self.__res_json is None:
+            raise ValueError('The requested operation has failed. Error (15293)')
+        return {'activationToken': token, 'deviceMacAddress': (self.__res_json['wmac'])}
+
+    def __newTokenInputText(self, token):
+        if token is not None:
+            token = str(token).lstrip().rstrip()
+            self.__pybytes_token_pattern = re.compile(PYBYTES_TOKEN_PATTERN)
+            if self.__pybytes_token_pattern.match(token):
+                self.__deviceInfoQuery.post_pybytes_activation(self.__generatePybytesActivacationJson(token), PYBYTES_URL, self.__get_pybytes_activation_callback)
+        return
+
+    def __newBoardSelected(self, index):
+        print_debug(('This is __newBoardSelected({})').format(index))
+        try:
+            if self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.WIPY_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['wipy.wipy with esp32'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['lopy.lopy with esp32.915'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.SIPY_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['sipy.sipy with esp32'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.GPY_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['gpy.gpy with esp32'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.FIPY_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['fipy.fipy with esp32.915'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == self.LOPY4_IDX:
+                version = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())]['lopy4.lopy4 with esp32.915'].get('version')
+            elif self.page(CustomWizard.BOARD_IDX).field('board_selector').toInt()[0] == 0:
+                version = 'none'
+            version = 'The firmware version being flashed is: ' + '<b>' + version + '</b>'
+        except:
+            version = ''
+
+        self.__firmwareVersionLabel1.setText(version)
+        self.__firmwareVersionLabel2.setText(version)
+        return
+
+    def __newLoRaRegionSelected(self):
+        print_debug('This is __newLoRaRegionSelected       <<<<<<<<<<<<<<<<<<<<<')
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        if not self.__server_connection_failed:
+            print_debug('Setting __countrySelectorLoPy to 0')
+            self.__countrySelectorLoPy.setCurrentIndex(0)
+        if self.__frequencySelectorLoPy.currentText() != 'Please select...':
+            self.__lora_region = self.__frequencySelectorLoPy.currentText()
+            print_debug('<<<<< WARNING >>>>>> self.__lora_region is now %s' % self.__lora_region)
+            self.__restoreLoRaRegionIndex = self.__frequencySelectorLoPy.currentIndex()
+            self.__restoreLoRaCountryIndex = 0
+            print_debug('Setting __legacy_frequency based on %s' % self.__frequencySelectorLoPy.currentText())
+            if self.__frequencySelectorLoPy.currentText() == 'EU868':
+                self.__legacy_frequency = '868'
+            else:
+                self.__legacy_frequency = '915'
+        else:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+        return
+
+    def __newCountrySelected(self):
+        index = self.__countrySelectorLoPy.currentIndex()
+        print_debug('This is __newCountrySelected(%d)' % index)
+        if index > 0:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        elif self.__frequencySelectorLoPy.currentText() == 'Please select...':
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+        try:
+            freq = countryList[index - 2][1]
+            print_debug('Country: %s  -  Region: %s  - Index:%d' % (countryList[index - 2][0], freq, LORA_REGIONS.index(freq) + 1))
+            self.__restoreLoRaRegionIndex = self.__frequencySelectorLoPy.currentIndex()
+            self.__restoreLoRaCountryIndex = index
+            self.__frequencySelectorLoPy.setCurrentIndex(LORA_REGIONS.index(freq) + 1)
+            self.__lora_region = self.__frequencySelectorLoPy.currentText()
+            print_debug('<<<<< WARNING >>>>>> self.__lora_region is now %s' % self.__lora_region)
+            if freq == 'EU868':
+                self.__legacy_frequency = '868'
+            else:
+                self.__legacy_frequency = '915'
+        except Exception as e:
+            self.print_exception(e)
+
+        return
+
+    def __newAdvancedLoRaRegionSelected(self):
+        print_debug('This is __newAdvancedLoRaRegionSelected       <<<<<<<<<<<<<<<<<<<<<')
+        wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        if self.__advancedPageWidgets[10].currentText() != 'Please select...':
+            if not self.__server_connection_failed:
+                print_debug('Setting __advancedPageWidgets[9] to 0')
+                self.__advancedPageWidgets[9].setCurrentIndex(0)
+            print_debug(('IMPORTANT: I have {} items !').format(self.__advancedPageWidgets[10].count()))
+            if self.__advancedPageWidgets[10].count() > len(LORA_REGIONS):
+                self.__advancedPageWidgets[10].removeItem(0)
+            self.__lora_region = self.__advancedPageWidgets[10].currentText()
+            print_debug('<<<<< WARNING >>>>>> self.__lora_region is now %s' % self.__lora_region)
+            self.__restoreAdvancedLoRaRegionIndex = self.__advancedPageWidgets[10].currentIndex()
+            self.__restoreAdvancedLoRaCountryIndex = 0
+            print_debug('Setting __legacy_frequency based on %s' % self.__advancedPageWidgets[10].currentText())
+            if self.__advancedPageWidgets[10].currentText() == 'EU868':
+                self.__legacy_frequency = '868'
+            else:
+                self.__legacy_frequency = '915'
+        else:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+        return
+
+    def __newAdvancedCountrySelected(self):
+        index = self.__advancedPageWidgets[9].currentIndex()
+        print_debug('This is __newAdvancedCountrySelected(%d)' % index)
+        if index > 0:
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(True)
+        elif self.__advancedPageWidgets[10].currentText() == 'Please select...':
+            wizard.button(QtGui.QWizard.NextButton).setEnabled(False)
+            return
+        try:
+            if self.__advancedPageWidgets[10].count() > len(LORA_REGIONS):
+                self.__advancedPageWidgets[10].removeItem(0)
+            freq = countryList[index - 2][1]
+            print_debug('Country: %s  -  Region: %s  - Index:%d' % (countryList[index - 2][0], freq, LORA_REGIONS.index(freq)))
+            self.__restoreAdvancedLoRaRegionIndex = self.__frequencySelectorLoPy.currentIndex()
+            self.__restoreAdvancedLoRaCountryIndex = index
+            self.__advancedPageWidgets[10].setCurrentIndex(LORA_REGIONS.index(freq))
+            self.__lora_region = self.__advancedPageWidgets[10].currentText()
+            print_debug('<<<<< WARNING >>>>>> self.__lora_region is now %s' % self.__lora_region)
+            if freq == 'EU868':
+                self.__legacy_frequency = '868'
+            else:
+                self.__legacy_frequency = '915'
+        except Exception as e:
+            self.print_exception(e)
+
+        return
+
+    def __newRegionSelected(self, index):
+        try:
+            if index < len(regionList):
+                self.__sigfox_zone = regionList[index][1]
+        except:
+            pass
+
+        return
+
+    def __fillPortList(self):
+        try:
+            try:
+                import serial.tools.list_ports
+                self.__portSelector.clear()
+                topUsb = 0
+                portList = []
+                for n, (portname, desc, hwid) in enumerate(sorted(serial.tools.list_ports.comports(), reverse=True)):
+                    if portname in SKIP_PORTS:
+                        pass
+                    elif check_usbid(portname):
+                        print_debug('Port: %s Desc: %s HWID: %s' % (portname, desc, hwid))
+                        portList.insert(topUsb, portname)
+                        topUsb += 1
+                    else:
+                        portList.append(portname)
+
+                self.__portSelector.addItems(portList)
+                print_debug(('Trying to set self.__lastSerialPortUsed={}').format(self.__lastSerialPortUsed))
+                try:
+                    print_debug(('Do we have an index? {}').format(portList.index(self.__lastSerialPortUsed)))
+                    self.__portSelector.setCurrentIndex(portList.index(self.__lastSerialPortUsed))
+                except ValueError:
+                    print_debug('Nope got ValueError')
+                except Exception as e:
+                    pass
+
+            except Exception as e:
+                self.print_exception(e)
+
+        finally:
+            self.__newSerialPortSelected()
+
+        return
+
+    def __beginBoardUpgrade(self):
+        if self.__localFileFlash:
+            try:
+                self.__upgradeBoard()
+            except Exception as e:
+                print_debug('Exception in __beginBoardUpgrade...')
+                print_exception(e)
+                self.next()
+
+        else:
+            try:
+                self.__deviceInfoQuery.update_firmware_info(self.__w_mac_s, self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('version'), self.__beginBoardUpgradeCallback)
+            except:
+                pass
+
+        return
+
+    def __beginBoardUpgradeCallback(self, res):
+        self.__upgradeBoard(res)
+        return
+
+    def __sendUpdateSatusCallback(self, res):
+        if res[0] == 200:
+            print_debug('Updating the remote log was successful')
+        else:
+            print_debug('RES: ' + str(res))
+        return
+
+    def __check_update_fstype(self):
+        print_debug('-> -> -> -> -> This is __check_update_fstype...')
+        if self.__localFileFlash:
+            return self.__fsTypeSelector.currentIndex()
+        else:
+            if self.__flashAdvancedFirmwareVersion is not None:
+                return self.__advancedPageWidgets[3].currentIndex()
+            else:
+                return self.__fsTypeSelector.currentIndex()
+
+            return
+
+    def __upgradeBoard(self, res=None):
+        if self.__forceNewLoRaRegionSelector.isChecked() and self.__localFileFlash:
+            self.__lora_region = self.__frequencySelectorLoPy.currentText()
+        if self.__res_json:
+            remote_config_block = base64.b64decode(self.__res_json['binary'])
+        print_debug('Setting config_block based on lora_region=%s' % self.__lora_region)
+        if not self.__advancedPageWidgets[15].isChecked():
+            config_block = self.__config_block
+        else:
+            config_block = self.__config_block[0:52].ljust(4096, b'\xff')
+        config_block = self.__upgrade.npy.set_pycom_config(config_block, self.__check_update_fstype())
+        config_block = self.__upgrade.npy.set_lpwan_config(config_block, str(self.__lora_region))
+        if self.__pybytes_info_obtained:
+            print_debug(('Updating pybytes_config: self.__enable_pybytes={}').format(self.__enable_pybytes))
+            config_block = self.__upgrade.npy.set_pybytes_config(config_block, self.__pybytes_userId, self.__pybytes_device_token, self.__pybytes_mqttServiceAddress, self.__pybytes_nwprefs, self.__pybytes_eprefs, self.__forceupdate_pybytes, self.__enable_pybytes)
+            config_block = self.__upgrade.npy.set_lte_config(config_block, self.__pybytes_lte_carrier, self.__pybytes_lte_apn, self.__pybytes_lte_type, self.__pybytes_lte_cid, self.__pybytes_lte_band, self.__pybytes_lte_reset)
+        print_debug(('Updating pybytes_config: self.__enable_pybytes={}').format(self.__enable_pybytes))
+        config_block = self.__upgrade.npy.set_pybytes_config(config_block, auto_start=self.__enable_pybytes)
+        if self.__pybytes_info_obtained or self.__showAdvancedSettingsSelector.isChecked() and not self.__advancedPageWidgets[15].isChecked():
+            print_debug(('!!!!!!!!! UPDATING WIFI CONFIG {}/{}').format(str(self.__wifi_ssid), str(self.__wifi_pwd)))
+            config_block = self.__upgrade.npy.set_wifi_config(config_block, str(self.__wifi_ssid), str(self.__wifi_pwd))
+        self.__upgrade.upgrade(self.__firmwareScript, self.__advancedPageWidgets[7].isChecked() if self.__showAdvancedSettingsSelector.isChecked() else self.__eraseFileSystemSelector.isChecked(), config_block, remote_config_block if self.__res_json else None, True, self.__progressLabel, self.__attemptLabel, self.__advancedPageWidgets[14].isChecked(), self.__finishedUpgrade)
+        return
+
+    def __check_advanced_page(self, original_return):
+        if self.__showAdvancedSettingsSelector.isChecked() and not self.__advancedSettingsPageShown:
+            print_debug('Returning CustomWizard.ADVANCED_IDX from __check_advanced_page')
+            return CustomWizard.ADVANCED_IDX
+        else:
+            if self.__firmwareTypeSelector.currentText() in LICENSE_TYPES:
+                self.__postlicense_page = original_return
+                return CustomWizard.LICENSE_IDX
+            return original_return
+
+        return
+
+    def __finishedUpgrade(self, res, error_msg=None):
+        print_debug(('This is __finishedUpgrade({}, {})').format(res, error_msg))
+        if type(res) is str:
+            self.__error_message = res
+            res = 1
+        if error_msg is not None:
+            self.__error_message = str(error_msg)
+        if self.__error_message is not None:
+            print_debug('ERROR MSG: ' + self.__error_message)
+        self.__resultText.setWordWrap(True)
+        self.__resultText.setOpenExternalLinks(True)
+        success = False
+        remote_msg = None
+        if res == 0 or res > 10:
+            self.__resultLabel.clear()
+            self.__resultLabel.adjustSize()
+            self.__resultLabel.setCenterOnScroll(False)
+            self.__resultLabel.repaint()
+            self.__resultLabel.setVisible(True)
+            success = True
+            print_debug(('self.__onlineFirmwareVersionTypes={}').format(self.__onlineFirmwareVersionTypes))
+            if not self.__res_json:
+                devname = 'device' if 1 else '<b>' + self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('prefix') + '</b>'
+                final_text = 'Your ' + devname + ' was successfully updated.'
+                if self.__res_json and not self.__localFileFlash:
+                    fwtype = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('type')
+                    if fwtype == 'unstable':
+                        fwtype = 'development'
+                    if self.__flashAdvancedFirmwareVersion is not None:
+                        fwversion = self.__flashAdvancedFirmwareVersion
+                    else:
+                        fwversion = self.__onlineFirmwareVersionTypes[str(self.__firmwareTypeSelector.currentText())][self.__res_json['firmware_type']].get('version')
+                    final_text += '<br><br>Version: <b> ' + fwversion + '</b> [' + fwtype + ']'
+                else:
+                    final_text += '<br><br>File: <b> ' + self.__localFileName.split('/')[-1] + '</b>'
+                if self.__start_time is not None:
+                    final_text += '<br><br>Total time: <b>' + humanfriendly.format_timespan(time.time() - self.__start_time) + '</b>'
+                if self.__res_json:
+                    config_block = base64.b64decode(self.__res_json['binary'])
+                else:
+                    config_block = self.__config_block
+                try:
+                    sigfox_id = str(binascii.hexlify(config_block[8:12]).upper())
+                    sigfox_pac = str(binascii.hexlify(config_block[12:20]).upper())
+                except:
+                    sigfox_id = 'FFFFFFFF'
+
+                self.__pypic or self.__resultUpdateList.append('<br><br>Please remove the wire and <b>reset</b> the board.<br>')
+            else:
+                try:
+                    self.__upgrade.npy.exit_pycom_programming_mode()
+                except:
+                    success = False
+                    remote_msg = 'Could not exit programming mode'
+                    self.__resultUpdateList.append(('<b>{}!</b><br><br>').format(remote_msg))
+
+            self.__resultText.setText(final_text)
+            for item in self.__resultUpdateList:
+                self.__resultLabel.appendHtml(item + '<br>')
+
+            if self.__w_mac_s is not None and len(self.__w_mac_s) >= 6:
+                self.__resultLabel.appendHtml(('<b>Device ID</b>: {}').format(self.__w_mac_s.upper()))
+                try:
+                    self.__loramac_s = '%02X%02X%02X%02X%02X%02X%02X%02X' % struct.unpack('BBBBBBBB', config_block[:8])
+                except:
+                    self.__loramac_s = None
+
+                if self.__loramac_s is not None and self.__loramac_s != 'FFFFFFFFFFFFFFFF' and self.__loramac_s != '0000000000000000':
+                    self.__resultLabel.appendHtml(('<br><b>LoRa MAC</b>: {}').format(self.__loramac_s.upper()))
+                if sigfox_id != 'FFFFFFFF':
+                    self.__resultLabel.appendHtml('<br><b>Sigfox ID</b>: ' + sigfox_id + '<br>')
+                    self.__resultLabel.appendHtml('<b>Sigfox PAC</b>: ' + sigfox_pac)
+            new_stream.truncate(0)
+        elif res == 1:
+            self.__resultLabel.setVisible(False)
+            if len(self.__resultUpdateList) > 0:
+                for item in self.__resultUpdateList:
+                    self.__resultLabel.appendHtml(item + '<br>')
+
+                self.__resultLabel.moveCursor(QtGui.QTextCursor().atStart())
+                self.__resultLabel.ensureCursorVisible()
+                self.__resultLabel.setVisible(True)
+                self.__resultLabel.adjustSize()
+            if self.__w_mac_s is not None and len(self.__w_mac_s) >= 6:
+                self.__resultLabel.appendHtml(('<b>Device ID </b>: {}').format(self.__w_mac_s.upper()))
+                self.__resultLabel.moveCursor(QtGui.QTextCursor().atStart())
+                self.__resultLabel.ensureCursorVisible()
+                self.__resultLabel.setVisible(True)
+                self.__resultLabel.adjustSize()
+            if self.__upgrade or self.__board_connection_failed:
+                if self.__error_message is not None:
+                    if self.__error_message.startswith('Code'):
+                        remote_msg = self.__error_message
+                    else:
+                        remote_msg = self.__error_message.split(']')[-1].replace("'", '')
+                    final_msg = 'The upgrade failed due to the following error:<br><br>'
+                    final_msg += '<b>' + remote_msg + '</b>'
+                else:
+                    remote_msg = 'Could not connect to the board'
+                    final_msg = '<b>' + remote_msg + '.</b><br><br>'
+                self.__resultText.setWordWrap(True)
+                self.__resultText.setText(final_msg)
+            elif self.__server_connection_failed:
+                if self.__client_tool_oudated:
+                    remote_msg = 'Client tool outdated'
+                    self.__resultText.setText('<b>Your firmware update tool is too old!</b><br><br>Please download the latest version!\n                                                 <a href="' + SERVER_URL + '/findupgrade?strict=true&product=pycom-firmware-updater&type=' + self.__updater_type + '&platform=\n                                                 ' + detectOsFamily().lstrip() + '&redirect=true"> at this link </a><br><br>\n                                                 If you see this message after upgrading please email\n                                                 <a href="mailto:support@pycom.io">support@pycom.io')
+                else:
+                    if self.__error_message is not None:
+                        remote_msg = self.__error_message
+                    else:
+                        remote_msg = 'Could not connect to the upgrade server!'
+                    self.__resultText.setText('<b>' + remote_msg + '</b> <br><br>You can <b>Restart</b> to try again.<br><br>\n                                                 If the problem persists please email <a href="mailto:support@pycom.io">support@pycom.io</a><br><br>')
+            else:
+                remote_msg = 'Generic server-side error'
+                self.__resultText.setText('<b>The upgrade failed due to a server side error.</b><br> Please try again in a few minutes. <br>\n                                             If the problem persists please email <a href="mailto:support@pycom.io">support@pycom.io</a><br><br>')
+        elif res == 2:
+            self.__resultLabel.setVisible(False)
+            if len(self.__resultUpdateList) > 0:
+                for item in self.__resultUpdateList:
+                    self.__resultLabel.appendHtml(item + '<br>')
+
+                self.__resultLabel.moveCursor(QtGui.QTextCursor().atStart())
+                self.__resultLabel.ensureCursorVisible()
+                self.__resultLabel.setVisible(True)
+                self.__resultLabel.adjustSize()
+            if self.__w_mac_s is not None and len(self.__w_mac_s) >= 6:
+                self.__resultLabel.appendHtml(('<b>Device ID </b>: {}').format(self.__w_mac_s.upper()))
+                self.__resultLabel.moveCursor(QtGui.QTextCursor().atStart())
+                self.__resultLabel.ensureCursorVisible()
+                self.__resultLabel.setVisible(True)
+                self.__resultLabel.adjustSize()
+            if self.__error_message is not None:
+                remote_msg = self.__error_message.replace('"', '').replace("u'", '').replace("'", '')
+            else:
+                remote_msg = 'unknown error'
+            self.__resultText.setText('The upgrade failed because the firmware file could not be read.<br><br><b>' + remote_msg + '</b>')
+        try:
+            if not self.__server_connection_failed and self.__consentSelector.isChecked():
+                self.__deviceInfoQuery.send_update_status(self.__w_mac_s, success, remote_msg, self.__sendUpdateSatusCallback)
+        except Exception as e:
+            self.print_exception(e)
+
+        self.next()
+        return
+
+    def check_file_exists(self, filename):
+        if filename is not None:
+            return os.path.isfile(filename)
+        else:
+            return False
+
+
+def handler(msg_type, msg_string):
+    return
+
+
+def process_arguments():
+    cmd_parser = argparse.ArgumentParser(description='Update your Pycom device')
+    cmd_parser.add_argument('-v', '--verbose', default=False, action='store_true')
+    cmd_parser.add_argument('-s', '--server', default=None)
+    if UPDATER_TYPE == 'internal':
+        cmd_parser.add_argument('-d', '--swserver', default=None)
+    args = cmd_parser.parse_args()
+    return args
+
+
+if __name__ == '__main__':
+    args = process_arguments()
+    new_stream = cStringIO.StringIO()
+    old_stdout = sys.stdout
+    if hasattr(args, 'server') and args.server is not None:
+        PYBYTES_URL = args.server
+    if hasattr(args, 'swserver') and args.swserver is not None:
+        SERVER_URL = args.swserver
+    if not (DEBUG or args.verbose):
+        sys.stdout = new_stream
+    app = QtGui.QApplication(sys.argv)
+    QtCore.qInstallMsgHandler(handler)
+    wizard = CustomWizard()
+    if detectOsFamily() == 'win32':
+        if sys.getwindowsversion()[0] > 6:
+            wizard.setFixedWidth(888)
+            wizard.setFixedHeight(489)
+    if detectOsFamily() == 'unix':
+        wizard.setFixedWidth(780)
+        wizard.setFixedHeight(410)
+    if detectOsFamily() == 'macos':
+        wizard.setFixedWidth(626)
+        wizard.setFixedHeight(375)
+    wizard.setOption(wizard.NoCancelButton)
+    wizard.setOption(wizard.NoBackButtonOnLastPage)
+    wizard.setOption(wizard.NoBackButtonOnStartPage)
+    wizard.setButtonText(wizard.CustomButton1, 'Restart')
+    wizard.setOption(wizard.HaveCustomButton1)
+    wizard.setButtonText(wizard.CustomButton2, 'Retry')
+    wizard.setOption(wizard.HaveCustomButton2)
+    wizard.setWindowTitle('Pycom Upgrade')
+    wizard.show()
+    wizard.raise_()
+    sys.exit(wizard.exec_())

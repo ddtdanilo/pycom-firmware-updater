@@ -16,6 +16,8 @@ assignment is required. Contributors must have the right to contribute their wor
 | `docs/UPSTREAM_README.md` and root `CHANGELOG.md` | Inherited Pycom documentation; no license file was published in the original updater repository. Original rights are retained; this fork does not relicense it. |
 | Historical upstream commits and tags | Retain their original rights and notices. |
 | Pycom installers and firmware | Not included in the new community work; no redistribution rights are asserted here. |
+| `research/*/recovered/*.txt` | Pycom-derived research references; `LicenseRef-Pycom-Unresolved`, original rights unresolved; excluded from MIT and not runtime source. |
+| `research/*/manifest.json` | Community-authored structure/hashes are MIT; derived code-object symbol/name inventories retain unresolved original rights. |
 | Candidate engine in a separate repository | Not imported; file-specific GPL and Pycom terms require review. |
 | Third-party dependencies and their license texts | Retain their own licenses; see package metadata and lockfile. |
 | Names and trademarks | Retain their owners' rights; no endorsement is implied. |
@@ -25,6 +27,12 @@ history or external artifacts. The license of a future runtime must be selected
 after its dependencies and reused source are reviewed. See
 [source provenance](docs/SOURCE_PROVENANCE.md) and milestone M0 in the
 [maintenance plan](docs/MAINTENANCE_PLAN.md).
+
+The research directory's original community README, inspection tool, tests, and
+metadata/report authorship fall within the community MIT scope. Its recovered code,
+disassembly, and derived symbol/name inventories do not. [ADR 0001](docs/decisions/0001-installer-reference-recovery.md)
+records the requested reference publication boundary; it is not rights-holder
+permission or a completed redistribution review for a derivative application.
 
 A future binary that combines GPL-licensed components must satisfy the applicable
 terms for that combination, including corresponding-source obligations. MIT on

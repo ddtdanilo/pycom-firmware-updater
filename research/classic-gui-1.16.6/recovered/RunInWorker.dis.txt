@@ -1,0 +1,154 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: RunInWorker
+  2:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (('QThread', 'pyqtSignal', 'QObject'))
+               6 IMPORT_NAME          (PyQt4.QtCore)
+               9 IMPORT_FROM          (QThread)
+              12 STORE_NAME           (QThread)
+              15 IMPORT_FROM          (pyqtSignal)
+              18 STORE_NAME           (pyqtSignal)
+              21 IMPORT_FROM          (QObject)
+              24 STORE_NAME           (QObject)
+              27 POP_TOP
+
+  5:          28 LOAD_CONST           ("RunInWorker")
+              31 LOAD_NAME            (QObject)
+              34 BUILD_TUPLE          1
+              37 LOAD_CONST           (<Code2 code object RunInWorker at <address omitted>, file RunInWorker.py>, line 5)
+              40 MAKE_FUNCTION        (0 default parameters)
+              43 CALL_FUNCTION        (0 positional, 0 named)
+              46 BUILD_CLASS
+              47 STORE_NAME           (RunInWorker)
+              50 LOAD_CONST           (None)
+              53 RETURN_VALUE
+
+Symbol: RunInWorker.RunInWorker
+  5:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+  6:           6 LOAD_NAME            (pyqtSignal)
+               9 LOAD_NAME            (object)
+              12 LOAD_NAME            (object)
+              15 LOAD_NAME            (object)
+              18 CALL_FUNCTION        (3 positional, 0 named)
+              21 STORE_NAME           (_RunInWorker__run_signal)
+
+  7:          24 LOAD_NAME            (pyqtSignal)
+              27 LOAD_NAME            (object)
+              30 LOAD_NAME            (object)
+              33 LOAD_NAME            (object)
+              36 CALL_FUNCTION        (3 positional, 0 named)
+              39 STORE_NAME           (_RunInWorker__done_signal)
+
+  8:          42 LOAD_CONST           (None)
+              45 STORE_NAME           (_RunInWorker__workerThread)
+
+ 10:          48 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file RunInWorker.py>, line 10)
+              51 MAKE_FUNCTION        (0 default parameters)
+              54 STORE_NAME           (__init__)
+
+ 20:          57 LOAD_CONST           (<Code2 code object __do_work at <address omitted>, file RunInWorker.py>, line 20)
+              60 MAKE_FUNCTION        (0 default parameters)
+              63 STORE_NAME           (_RunInWorker__do_work)
+
+ 23:          66 LOAD_CONST           (<Code2 code object __after at <address omitted>, file RunInWorker.py>, line 23)
+              69 MAKE_FUNCTION        (0 default parameters)
+              72 STORE_NAME           (_RunInWorker__after)
+
+ 26:          75 LOAD_CONST           (<Code2 code object run at <address omitted>, file RunInWorker.py>, line 26)
+              78 MAKE_FUNCTION        (0 default parameters)
+              81 STORE_NAME           (run)
+              84 LOAD_LOCALS
+              85 RETURN_VALUE
+
+Symbol: RunInWorker.RunInWorker.__init__
+ 11:           0 LOAD_GLOBAL          (super)
+               3 LOAD_FAST            (self)
+               6 LOAD_ATTR            (__class__)
+               9 LOAD_FAST            (self)
+              12 CALL_FUNCTION        (2 positional, 0 named)
+              15 LOAD_ATTR            (__init__)
+              18 CALL_FUNCTION        (0 positional, 0 named)
+              21 POP_TOP
+
+ 12:          22 LOAD_GLOBAL          (RunInWorker)
+              25 LOAD_ATTR            (_RunInWorker__workerThread)
+              28 LOAD_CONST           (None)
+              31 COMPARE_OP           (==)
+              34 POP_JUMP_IF_FALSE    (to 52)
+
+ 13:          37 LOAD_GLOBAL          (QThread)
+              40 CALL_FUNCTION        (0 positional, 0 named)
+              43 LOAD_GLOBAL          (RunInWorker)
+              46 STORE_ATTR           (_RunInWorker__workerThread)
+              49 JUMP_FORWARD         (to 52)
+
+ 15:     >>   52 LOAD_FAST            (self)
+              55 LOAD_ATTR            (_RunInWorker__done_signal)
+              58 LOAD_ATTR            (connect)
+              61 LOAD_FAST            (self)
+              64 LOAD_ATTR            (_RunInWorker__after)
+              67 CALL_FUNCTION        (1 positional, 0 named)
+              70 POP_TOP
+
+ 16:          71 LOAD_FAST            (self)
+              74 LOAD_ATTR            (moveToThread)
+              77 LOAD_FAST            (self)
+              80 LOAD_ATTR            (_RunInWorker__workerThread)
+              83 CALL_FUNCTION        (1 positional, 0 named)
+              86 POP_TOP
+
+ 17:          87 LOAD_FAST            (self)
+              90 LOAD_ATTR            (_RunInWorker__run_signal)
+              93 LOAD_ATTR            (connect)
+              96 LOAD_FAST            (self)
+              99 LOAD_ATTR            (_RunInWorker__do_work)
+             102 CALL_FUNCTION        (1 positional, 0 named)
+             105 POP_TOP
+
+ 18:         106 LOAD_FAST            (self)
+             109 LOAD_ATTR            (_RunInWorker__workerThread)
+             112 LOAD_ATTR            (start)
+             115 CALL_FUNCTION        (0 positional, 0 named)
+             118 POP_TOP
+             119 LOAD_CONST           (None)
+             122 RETURN_VALUE
+
+Symbol: RunInWorker.RunInWorker.__do_work
+ 21:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_RunInWorker__done_signal)
+               6 LOAD_ATTR            (emit)
+               9 LOAD_FAST            (callback)
+              12 LOAD_FAST            (func)
+              15 LOAD_FAST            (param)
+              18 CALL_FUNCTION        (1 positional, 0 named)
+              21 LOAD_FAST            (param)
+              24 CALL_FUNCTION        (3 positional, 0 named)
+              27 POP_TOP
+              28 LOAD_CONST           (None)
+              31 RETURN_VALUE
+
+Symbol: RunInWorker.RunInWorker.__after
+ 24:           0 LOAD_FAST            (callback)
+               3 LOAD_FAST            (result)
+               6 LOAD_FAST            (param)
+               9 CALL_FUNCTION        (2 positional, 0 named)
+              12 POP_TOP
+              13 LOAD_CONST           (None)
+              16 RETURN_VALUE
+
+Symbol: RunInWorker.RunInWorker.run
+ 27:           0 LOAD_FAST            (self)
+               3 LOAD_ATTR            (_RunInWorker__run_signal)
+               6 LOAD_ATTR            (emit)
+               9 LOAD_FAST            (func)
+              12 LOAD_FAST            (param)
+              15 LOAD_FAST            (callback)
+              18 CALL_FUNCTION        (3 positional, 0 named)
+              21 POP_TOP
+              22 LOAD_CONST           (None)
+              25 RETURN_VALUE

@@ -1,0 +1,704 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('print_debug',))
+              4 IMPORT_NAME              0 (utils.utils)
+              6 IMPORT_FROM              1 (print_debug)
+              8 STORE_NAME               1 (print_debug)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (None)
+             16 IMPORT_NAME              2 (utils.constants)
+             18 IMPORT_FROM              3 (constants)
+             20 STORE_NAME               3 (constants)
+             22 POP_TOP
+
+  3          24 LOAD_CONST               0 (0)
+             26 LOAD_CONST               3 (('NPyProgrammer',))
+             28 IMPORT_NAME              4 (npy_programmer)
+             30 IMPORT_FROM              5 (NPyProgrammer)
+             32 STORE_NAME               5 (NPyProgrammer)
+             34 POP_TOP
+
+  4          36 LOAD_CONST               0 (0)
+             38 LOAD_CONST               2 (None)
+             40 IMPORT_NAME              6 (sys)
+             42 STORE_NAME               6 (sys)
+
+  5          44 LOAD_CONST               0 (0)
+             46 LOAD_CONST               2 (None)
+             48 IMPORT_NAME              7 (base64)
+             50 STORE_NAME               7 (base64)
+
+  6          52 LOAD_CONST               0 (0)
+             54 LOAD_CONST               2 (None)
+             56 IMPORT_NAME              8 (binascii)
+             58 STORE_NAME               8 (binascii)
+
+  7          60 LOAD_CONST               0 (0)
+             62 LOAD_CONST               2 (None)
+             64 IMPORT_NAME              9 (updater)
+             66 STORE_NAME               9 (updater)
+
+  8          68 LOAD_CONST               0 (0)
+             70 LOAD_CONST               2 (None)
+             72 IMPORT_NAME             10 (struct)
+             74 STORE_NAME              10 (struct)
+
+  9          76 LOAD_CONST               0 (0)
+             78 LOAD_CONST               2 (None)
+             80 IMPORT_NAME             11 (threading)
+             82 STORE_NAME              11 (threading)
+
+ 12          84 LOAD_BUILD_CLASS
+             86 LOAD_CONST               4 (<code object Programmer at <address omitted>, file "programmer.py", line 12>)
+             88 LOAD_CONST               5 ('Programmer')
+             90 MAKE_FUNCTION            0
+             92 LOAD_CONST               5 ('Programmer')
+             94 LOAD_NAME               12 (object)
+             96 CALL_FUNCTION            3
+             98 STORE_NAME              13 (Programmer)
+            100 LOAD_CONST               2 (None)
+            102 RETURN_VALUE
+
+Disassembly of <code object Programmer at <address omitted>, file "programmer.py", line 12>:
+ 12           0 LOAD_NAME                0 (__name__)
+              2 STORE_NAME               1 (__module__)
+              4 LOAD_CONST               0 ('Programmer')
+              6 STORE_NAME               2 (__qualname__)
+
+ 14           8 LOAD_CONST              28 ((None, None, 115200, False, False, '/tmp/firmware.tar.gz'))
+             10 LOAD_CONST               5 (<code object __init__ at <address omitted>, file "programmer.py", line 14>)
+             12 LOAD_CONST               6 ('Programmer.__init__')
+             14 MAKE_FUNCTION            1 (defaults)
+             16 STORE_NAME               3 (__init__)
+
+ 22          18 LOAD_CONST               7 (<code object connect at <address omitted>, file "programmer.py", line 22>)
+             20 LOAD_CONST               8 ('Programmer.connect')
+             22 MAKE_FUNCTION            0
+             24 STORE_NAME               4 (connect)
+
+ 25          26 LOAD_CONST               9 (<code object disconnect at <address omitted>, file "programmer.py", line 25>)
+             28 LOAD_CONST              10 ('Programmer.disconnect')
+             30 MAKE_FUNCTION            0
+             32 STORE_NAME               5 (disconnect)
+
+ 30          34 LOAD_CONST              11 (<code object read_partitions at <address omitted>, file "programmer.py", line 30>)
+             36 LOAD_CONST              12 ('Programmer.read_partitions')
+             38 MAKE_FUNCTION            0
+             40 STORE_NAME               6 (read_partitions)
+
+ 33          42 LOAD_CONST              13 (<code object load_info at <address omitted>, file "programmer.py", line 33>)
+             44 LOAD_CONST              14 ('Programmer.load_info')
+             46 MAKE_FUNCTION            0
+             48 STORE_NAME               7 (load_info)
+
+ 46          50 LOAD_CONST              15 (<code object read_device_config at <address omitted>, file "programmer.py", line 46>)
+             52 LOAD_CONST              16 ('Programmer.read_device_config')
+             54 MAKE_FUNCTION            0
+             56 STORE_NAME               8 (read_device_config)
+
+ 53          58 LOAD_CONST              17 (<code object read_remote_config at <address omitted>, file "programmer.py", line 53>)
+             60 LOAD_CONST              18 ('Programmer.read_remote_config')
+             62 MAKE_FUNCTION            0
+             64 STORE_NAME               9 (read_remote_config)
+
+ 75          66 LOAD_CONST              19 (<code object progress_fs at <address omitted>, file "programmer.py", line 75>)
+             68 LOAD_CONST              20 ('Programmer.progress_fs')
+             70 MAKE_FUNCTION            0
+             72 STORE_NAME              10 (progress_fs)
+
+ 82          74 LOAD_CONST              21 (<code object erase_flash at <address omitted>, file "programmer.py", line 82>)
+             76 LOAD_CONST              22 ('Programmer.erase_flash')
+             78 MAKE_FUNCTION            0
+             80 STORE_NAME              11 (erase_flash)
+
+ 96          82 LOAD_CONST               3 (False)
+             84 LOAD_CONST              23 (True)
+             86 LOAD_CONST               3 (False)
+             88 LOAD_CONST              23 (True)
+             90 BUILD_MAP                0
+             92 LOAD_CONST               1 (None)
+             94 BUILD_TUPLE              6
+             96 LOAD_CONST              24 (<code object flash_firmware at <address omitted>, file "programmer.py", line 96>)
+             98 LOAD_CONST              25 ('Programmer.flash_firmware')
+            100 MAKE_FUNCTION            1 (defaults)
+            102 STORE_NAME              12 (flash_firmware)
+
+104         104 LOAD_CONST              26 (<code object flash_firmware_thread at <address omitted>, file "programmer.py", line 104>)
+            106 LOAD_CONST              27 ('Programmer.flash_firmware_thread')
+            108 MAKE_FUNCTION            0
+            110 STORE_NAME              13 (flash_firmware_thread)
+            112 LOAD_CONST               1 (None)
+            114 RETURN_VALUE
+
+Disassembly of <code object __init__ at <address omitted>, file "programmer.py", line 14>:
+ 15           0 LOAD_FAST                1 (port)
+              2 LOAD_FAST                0 (self)
+              4 STORE_ATTR               0 (esp_port)
+
+ 16           6 LOAD_FAST                3 (baud_rate)
+              8 LOAD_FAST                0 (self)
+             10 STORE_ATTR               1 (baud_rate)
+
+ 17          12 LOAD_FAST                6 (filename)
+             14 LOAD_FAST                0 (self)
+             16 STORE_ATTR               2 (filename)
+
+ 18          18 LOAD_FAST                4 (erase_fs)
+             20 LOAD_FAST                0 (self)
+             22 STORE_ATTR               3 (erase_fs)
+
+ 19          24 LOAD_FAST                5 (erase_nvs)
+             26 LOAD_FAST                0 (self)
+             28 STORE_ATTR               4 (erase_nvs)
+
+ 20          30 LOAD_FAST                2 (result_cls)
+             32 LOAD_FAST                0 (self)
+             34 STORE_ATTR               5 (result_cls)
+             36 LOAD_CONST               0 (None)
+             38 RETURN_VALUE
+
+Disassembly of <code object connect at <address omitted>, file "programmer.py", line 22>:
+ 23           0 LOAD_GLOBAL              0 (NPyProgrammer)
+              2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                1 (esp_port)
+              6 LOAD_FAST                0 (self)
+              8 LOAD_ATTR                2 (baud_rate)
+             10 LOAD_CONST               1 (True)
+             12 LOAD_CONST               2 (('pypic',))
+             14 CALL_FUNCTION_KW         3
+             16 LOAD_FAST                0 (self)
+             18 STORE_ATTR               3 (npy_prog)
+             20 LOAD_CONST               0 (None)
+             22 RETURN_VALUE
+
+Disassembly of <code object disconnect at <address omitted>, file "programmer.py", line 25>:
+ 26           0 LOAD_GLOBAL              0 (hasattr)
+              2 LOAD_FAST                0 (self)
+              4 LOAD_CONST               1 ('npy_prog')
+              6 CALL_FUNCTION            2
+              8 POP_JUMP_IF_FALSE       28
+
+ 27          10 LOAD_FAST                0 (self)
+             12 LOAD_ATTR                1 (npy_prog)
+             14 LOAD_METHOD              2 (disconnect)
+             16 CALL_METHOD              0
+             18 POP_TOP
+
+ 28          20 LOAD_GLOBAL              3 (print)
+             22 LOAD_CONST               2 ('successfully disconnected')
+             24 CALL_FUNCTION            1
+             26 POP_TOP
+        >>   28 LOAD_CONST               0 (None)
+             30 RETURN_VALUE
+
+Disassembly of <code object read_partitions at <address omitted>, file "programmer.py", line 30>:
+ 31           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (npy_prog)
+              4 LOAD_METHOD              1 (read_partitions)
+              6 CALL_METHOD              0
+              8 RETURN_VALUE
+
+Disassembly of <code object load_info at <address omitted>, file "programmer.py", line 33>:
+ 34           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (npy_prog)
+              4 LOAD_METHOD              1 (get_chip_id)
+              6 CALL_METHOD              0
+              8 LOAD_FAST                0 (self)
+             10 STORE_ATTR               2 (chip)
+
+ 35          12 LOAD_FAST                0 (self)
+             14 LOAD_ATTR                0 (npy_prog)
+             16 LOAD_METHOD              3 (get_flash_id)
+             18 CALL_METHOD              0
+             20 LOAD_FAST                0 (self)
+             22 STORE_ATTR               4 (flash_id)
+
+ 36          24 LOAD_CONST               1 ('')
+             26 LOAD_METHOD              5 (join)
+
+ 37          28 LOAD_GLOBAL              6 (map)
+             30 LOAD_CONST               2 (<code object <lambda> at <address omitted>, file "programmer.py", line 37>)
+             32 LOAD_CONST               3 ('Programmer.load_info.<locals>.<lambda>')
+             34 MAKE_FUNCTION            0
+             36 LOAD_FAST                0 (self)
+             38 LOAD_ATTR                0 (npy_prog)
+             40 LOAD_METHOD              7 (read_mac)
+             42 CALL_METHOD              0
+             44 CALL_FUNCTION            2
+
+ 36          46 CALL_METHOD              1
+
+ 38          48 LOAD_CONST               4 (0)
+             50 LOAD_CONST               5 (-1)
+             52 BUILD_SLICE              2
+
+ 36          54 BINARY_SUBSCR
+             56 LOAD_FAST                0 (self)
+             58 STORE_ATTR               8 (mac)
+
+ 41          60 LOAD_FAST                0 (self)
+             62 LOAD_ATTR                2 (chip)
+
+ 42          64 LOAD_FAST                0 (self)
+             66 LOAD_ATTR                4 (flash_id)
+
+ 43          68 LOAD_FAST                0 (self)
+             70 LOAD_ATTR                8 (mac)
+
+ 40          72 LOAD_CONST               6 (('chip', 'flash_id', 'mac'))
+             74 BUILD_CONST_KEY_MAP      3
+             76 RETURN_VALUE
+
+Disassembly of <code object <lambda> at <address omitted>, file "programmer.py", line 37>:
+ 37           0 LOAD_CONST               1 ('%02x:')
+              2 LOAD_FAST                0 (x)
+              4 BINARY_MODULO
+              6 RETURN_VALUE
+
+Disassembly of <code object read_device_config at <address omitted>, file "programmer.py", line 46>:
+ 47           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (npy_prog)
+              4 LOAD_METHOD              1 (read_device_config)
+              6 CALL_METHOD              0
+              8 POP_TOP
+
+ 49          10 LOAD_FAST                0 (self)
+             12 LOAD_ATTR                0 (npy_prog)
+             14 LOAD_METHOD              2 (get_lora_region)
+             16 CALL_METHOD              0
+
+ 50          18 LOAD_FAST                0 (self)
+             20 LOAD_ATTR                0 (npy_prog)
+             22 LOAD_METHOD              3 (get_smac)
+             24 CALL_METHOD              0
+
+ 48          26 LOAD_CONST               1 (('lora_region', 's_mac'))
+             28 BUILD_CONST_KEY_MAP      2
+             30 RETURN_VALUE
+
+Disassembly of <code object read_remote_config at <address omitted>, file "programmer.py", line 53>:
+ 54           0 SETUP_FINALLY          158 (to 160)
+
+ 55           2 LOAD_GLOBAL              0 (base64)
+              4 LOAD_METHOD              1 (b64decode)
+              6 LOAD_FAST                1 (config)
+              8 CALL_METHOD              1
+             10 STORE_FAST               2 (config_block)
+
+ 56          12 LOAD_CONST               1 ('%02X%02X%02X%02X%02X%02X%02X%02X')
+             14 LOAD_GLOBAL              2 (struct)
+             16 LOAD_METHOD              3 (unpack)
+             18 LOAD_CONST               2 ('BBBBBBBB')
+             20 LOAD_FAST                2 (config_block)
+             22 LOAD_CONST               0 (None)
+             24 LOAD_CONST               3 (8)
+             26 BUILD_SLICE              2
+             28 BINARY_SUBSCR
+             30 CALL_METHOD              2
+             32 BINARY_MODULO
+             34 STORE_FAST               3 (loramac_s)
+
+ 57          36 LOAD_GLOBAL              4 (str)
+             38 LOAD_GLOBAL              5 (binascii)
+             40 LOAD_METHOD              6 (hexlify)
+             42 LOAD_FAST                2 (config_block)
+             44 LOAD_CONST               3 (8)
+             46 LOAD_CONST               4 (12)
+             48 BUILD_SLICE              2
+             50 BINARY_SUBSCR
+             52 CALL_METHOD              1
+             54 LOAD_METHOD              7 (upper)
+             56 CALL_METHOD              0
+             58 CALL_FUNCTION            1
+             60 STORE_FAST               4 (sigfox_id)
+
+ 58          62 LOAD_GLOBAL              4 (str)
+             64 LOAD_GLOBAL              5 (binascii)
+             66 LOAD_METHOD              6 (hexlify)
+             68 LOAD_FAST                2 (config_block)
+             70 LOAD_CONST               4 (12)
+             72 LOAD_CONST               5 (20)
+             74 BUILD_SLICE              2
+             76 BINARY_SUBSCR
+             78 CALL_METHOD              1
+             80 LOAD_METHOD              7 (upper)
+             82 CALL_METHOD              0
+             84 CALL_FUNCTION            1
+             86 STORE_FAST               5 (sigfox_pac)
+
+ 59          88 LOAD_GLOBAL              4 (str)
+             90 LOAD_GLOBAL              5 (binascii)
+             92 LOAD_METHOD              6 (hexlify)
+             94 LOAD_FAST                2 (config_block)
+             96 LOAD_CONST               5 (20)
+             98 LOAD_CONST               6 (36)
+            100 BUILD_SLICE              2
+            102 BINARY_SUBSCR
+            104 CALL_METHOD              1
+            106 LOAD_METHOD              7 (upper)
+            108 CALL_METHOD              0
+            110 CALL_FUNCTION            1
+            112 STORE_FAST               6 (sigfox_private_key)
+
+ 60         114 LOAD_GLOBAL              4 (str)
+            116 LOAD_GLOBAL              5 (binascii)
+            118 LOAD_METHOD              6 (hexlify)
+            120 LOAD_FAST                2 (config_block)
+            122 LOAD_CONST               6 (36)
+            124 LOAD_CONST               7 (52)
+            126 BUILD_SLICE              2
+            128 BINARY_SUBSCR
+            130 CALL_METHOD              1
+            132 LOAD_METHOD              7 (upper)
+            134 CALL_METHOD              0
+            136 CALL_FUNCTION            1
+            138 STORE_FAST               7 (sigfox_public_key)
+
+ 62         140 LOAD_CONST               8 (200)
+
+ 63         142 LOAD_FAST                3 (loramac_s)
+
+ 64         144 LOAD_FAST                4 (sigfox_id)
+
+ 65         146 LOAD_FAST                5 (sigfox_pac)
+
+ 66         148 LOAD_FAST                6 (sigfox_private_key)
+
+ 67         150 LOAD_FAST                7 (sigfox_public_key)
+
+ 61         152 LOAD_CONST               9 (('status', 'loramac_s', 'sigfox_id', 'sigfox_pac', 'sigfox_private_key', 'sigfox_public_key'))
+            154 BUILD_CONST_KEY_MAP      6
+            156 POP_BLOCK
+            158 RETURN_VALUE
+
+ 69     >>  160 DUP_TOP
+            162 LOAD_GLOBAL              8 (Exception)
+            164 JUMP_IF_NOT_EXC_MATCH   208
+            166 POP_TOP
+            168 STORE_FAST               8 (e)
+            170 POP_TOP
+            172 SETUP_FINALLY           26 (to 200)
+
+ 71         174 LOAD_CONST              10 (500)
+
+ 72         176 LOAD_GLOBAL              4 (str)
+            178 LOAD_FAST                8 (e)
+            180 CALL_FUNCTION            1
+
+ 70         182 LOAD_CONST              11 (('status', 'error'))
+            184 BUILD_CONST_KEY_MAP      2
+            186 POP_BLOCK
+            188 ROT_FOUR
+            190 POP_EXCEPT
+            192 LOAD_CONST               0 (None)
+            194 STORE_FAST               8 (e)
+            196 DELETE_FAST              8 (e)
+            198 RETURN_VALUE
+        >>  200 LOAD_CONST               0 (None)
+            202 STORE_FAST               8 (e)
+            204 DELETE_FAST              8 (e)
+            206 RERAISE
+        >>  208 RERAISE
+            210 LOAD_CONST               0 (None)
+            212 RETURN_VALUE
+
+Disassembly of <code object progress_fs at <address omitted>, file "programmer.py", line 75>:
+ 76           0 LOAD_FAST                0 (self)
+              2 LOAD_ATTR                0 (result_cls)
+              4 LOAD_METHOD              1 (send)
+              6 LOAD_FAST                1 (msg)
+              8 CALL_METHOD              1
+             10 POP_TOP
+
+ 77          12 LOAD_CONST               1 (' ')
+             14 LOAD_FAST                1 (msg)
+             16 BINARY_ADD
+             18 LOAD_CONST               2 ('               ')
+             20 BINARY_ADD
+             22 STORE_FAST               1 (msg)
+
+ 78          24 LOAD_CONST               3 ('\x08')
+             26 LOAD_GLOBAL              2 (len)
+             28 LOAD_FAST                1 (msg)
+             30 CALL_FUNCTION            1
+             32 BINARY_MULTIPLY
+             34 STORE_FAST               2 (padding)
+
+ 79          36 LOAD_GLOBAL              3 (sys)
+             38 LOAD_ATTR                4 (stderr)
+             40 LOAD_METHOD              5 (write)
+             42 LOAD_FAST                1 (msg)
+             44 LOAD_FAST                2 (padding)
+             46 BINARY_ADD
+             48 CALL_METHOD              1
+             50 POP_TOP
+
+ 80          52 LOAD_GLOBAL              3 (sys)
+             54 LOAD_ATTR                4 (stderr)
+             56 LOAD_METHOD              6 (flush)
+             58 CALL_METHOD              0
+             60 POP_TOP
+             62 LOAD_CONST               0 (None)
+             64 RETURN_VALUE
+
+Disassembly of <code object erase_flash at <address omitted>, file "programmer.py", line 82>:
+ 83           0 SETUP_FINALLY           22 (to 24)
+
+ 84           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (npy_prog)
+              6 LOAD_METHOD              1 (erase_flash)
+              8 CALL_METHOD              0
+             10 POP_TOP
+
+ 86          12 LOAD_CONST               1 (False)
+
+ 87          14 LOAD_CONST               2 ('')
+
+ 85          16 LOAD_CONST               3 (('error', 'message'))
+             18 BUILD_CONST_KEY_MAP      2
+             20 POP_BLOCK
+             22 RETURN_VALUE
+
+ 89     >>   24 DUP_TOP
+             26 LOAD_GLOBAL              2 (Exception)
+             28 JUMP_IF_NOT_EXC_MATCH    84
+             30 POP_TOP
+             32 STORE_FAST               1 (e)
+             34 POP_TOP
+             36 SETUP_FINALLY           38 (to 76)
+
+ 90          38 LOAD_GLOBAL              3 (print_debug)
+             40 LOAD_GLOBAL              4 (str)
+             42 LOAD_FAST                1 (e)
+             44 CALL_FUNCTION            1
+             46 CALL_FUNCTION            1
+             48 POP_TOP
+
+ 92          50 LOAD_CONST               4 (True)
+
+ 93          52 LOAD_GLOBAL              4 (str)
+             54 LOAD_FAST                1 (e)
+             56 CALL_FUNCTION            1
+
+ 91          58 LOAD_CONST               3 (('error', 'message'))
+             60 BUILD_CONST_KEY_MAP      2
+             62 POP_BLOCK
+             64 ROT_FOUR
+             66 POP_EXCEPT
+             68 LOAD_CONST               0 (None)
+             70 STORE_FAST               1 (e)
+             72 DELETE_FAST              1 (e)
+             74 RETURN_VALUE
+        >>   76 LOAD_CONST               0 (None)
+             78 STORE_FAST               1 (e)
+             80 DELETE_FAST              1 (e)
+             82 RERAISE
+        >>   84 RERAISE
+             86 LOAD_CONST               0 (None)
+             88 RETURN_VALUE
+
+Disassembly of <code object flash_firmware at <address omitted>, file "programmer.py", line 96>:
+ 97           0 LOAD_GLOBAL              0 (threading)
+              2 LOAD_ATTR                1 (Thread)
+
+ 98           4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                2 (flash_firmware_thread)
+
+ 99           8 LOAD_FAST                2 (pypic)
+             10 LOAD_FAST                1 (continuation)
+             12 LOAD_FAST                4 (reset)
+             14 LOAD_FAST                3 (secureboot)
+             16 LOAD_FAST                5 (config)
+             18 LOAD_FAST                6 (remote_config)
+             20 BUILD_TUPLE              6
+
+ 97          22 LOAD_CONST               1 (('target', 'args'))
+             24 CALL_FUNCTION_KW         2
+             26 STORE_FAST               7 (write_thread)
+
+101          28 LOAD_FAST                7 (write_thread)
+             30 LOAD_METHOD              3 (start)
+             32 CALL_METHOD              0
+             34 POP_TOP
+
+102          36 LOAD_CONST               0 (None)
+             38 RETURN_VALUE
+
+Disassembly of <code object flash_firmware_thread at <address omitted>, file "programmer.py", line 104>:
+105           0 SETUP_FINALLY          206 (to 208)
+
+106           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (connect)
+              6 CALL_METHOD              0
+              8 POP_TOP
+
+107          10 LOAD_FAST                0 (self)
+             12 LOAD_METHOD              1 (read_device_config)
+             14 CALL_METHOD              0
+             16 POP_TOP
+
+108          18 LOAD_FAST                0 (self)
+             20 LOAD_ATTR                2 (npy_prog)
+             22 LOAD_METHOD              3 (update_config)
+             24 LOAD_FAST                5 (config)
+             26 CALL_METHOD              1
+             28 POP_TOP
+
+109          30 LOAD_FAST                0 (self)
+             32 LOAD_ATTR                2 (npy_prog)
+             34 LOAD_METHOD              4 (set_device_config)
+             36 CALL_METHOD              0
+             38 STORE_FAST               7 (config_block)
+
+110          40 LOAD_GLOBAL              5 (updater)
+             42 LOAD_METHOD              6 (load_tar)
+             44 LOAD_FAST                0 (self)
+             46 LOAD_ATTR                7 (filename)
+             48 LOAD_FAST                0 (self)
+             50 LOAD_ATTR                2 (npy_prog)
+             52 LOAD_FAST                4 (secureboot)
+             54 CALL_METHOD              3
+             56 STORE_FAST               8 (load_resp)
+
+111          58 LOAD_FAST                8 (load_resp)
+             60 LOAD_METHOD              8 (get)
+             62 LOAD_CONST               1 ('valid')
+             64 CALL_METHOD              1
+             66 POP_JUMP_IF_TRUE       100
+
+112          68 LOAD_FAST                0 (self)
+             70 LOAD_ATTR                9 (result_cls)
+             72 LOAD_METHOD             10 (send_error)
+             74 LOAD_CONST               2 ('error: %s')
+             76 LOAD_GLOBAL             11 (str)
+             78 LOAD_FAST                8 (load_resp)
+             80 LOAD_METHOD              8 (get)
+             82 LOAD_CONST               3 ('error')
+             84 CALL_METHOD              1
+             86 CALL_FUNCTION            1
+             88 BINARY_MODULO
+             90 CALL_METHOD              1
+             92 POP_TOP
+
+113          94 LOAD_CONST               4 (False)
+             96 STORE_FAST               9 (valid)
+             98 JUMP_FORWARD           104 (to 204)
+
+115     >>  100 LOAD_FAST                8 (load_resp)
+            102 LOAD_METHOD              8 (get)
+            104 LOAD_CONST               5 ('script')
+            106 CALL_METHOD              1
+            108 STORE_FAST              10 (script)
+
+116         110 LOAD_FAST                0 (self)
+            112 LOAD_ATTR                2 (npy_prog)
+            114 LOAD_ATTR               12 (run_script)
+            116 LOAD_FAST               10 (script)
+            118 LOAD_FAST                7 (config_block)
+            120 LOAD_FAST                0 (self)
+            122 LOAD_ATTR               13 (progress_fs)
+            124 LOAD_FAST                0 (self)
+            126 LOAD_ATTR               14 (erase_fs)
+            128 LOAD_FAST                0 (self)
+            130 LOAD_ATTR               15 (erase_nvs)
+            132 LOAD_CONST               6 (('config_block', 'progress_fs', 'erase_fs', 'erase_nvs'))
+            134 CALL_FUNCTION_KW         5
+            136 POP_TOP
+
+117         138 LOAD_FAST                0 (self)
+            140 LOAD_ATTR                2 (npy_prog)
+            142 LOAD_METHOD             16 (write)
+            144 LOAD_GLOBAL             17 (int)
+            146 LOAD_GLOBAL             18 (constants)
+            148 LOAD_ATTR               19 (PARTITIONS)
+            150 LOAD_METHOD              8 (get)
+            152 LOAD_CONST               7 ('config')
+            154 CALL_METHOD              1
+            156 LOAD_CONST               8 (0)
+            158 BINARY_SUBSCR
+            160 LOAD_CONST               9 (16)
+            162 CALL_FUNCTION            2
+            164 LOAD_FAST                7 (config_block)
+            166 CALL_METHOD              2
+            168 POP_TOP
+
+118         170 LOAD_FAST                0 (self)
+            172 LOAD_ATTR                2 (npy_prog)
+            174 LOAD_METHOD             20 (write_remote)
+            176 LOAD_GLOBAL             21 (base64)
+            178 LOAD_METHOD             22 (b64decode)
+            180 LOAD_FAST                6 (remote_config)
+            182 CALL_METHOD              1
+            184 CALL_METHOD              1
+            186 POP_TOP
+
+119         188 LOAD_FAST                0 (self)
+            190 LOAD_ATTR                9 (result_cls)
+            192 LOAD_METHOD             23 (send)
+            194 LOAD_CONST              10 ('%COMPLETED%')
+            196 CALL_METHOD              1
+            198 POP_TOP
+
+120         200 LOAD_CONST              11 (True)
+            202 STORE_FAST               9 (valid)
+        >>  204 POP_BLOCK
+            206 JUMP_FORWARD            82 (to 290)
+
+121     >>  208 DUP_TOP
+            210 LOAD_GLOBAL             24 (Exception)
+            212 EXTENDED_ARG             1
+            214 JUMP_IF_NOT_EXC_MATCH   288
+            216 POP_TOP
+            218 STORE_FAST              11 (ex)
+            220 POP_TOP
+            222 SETUP_FINALLY           56 (to 280)
+
+122         224 LOAD_GLOBAL             25 (print_debug)
+            226 LOAD_CONST              12 ('error: {}')
+            228 LOAD_METHOD             26 (format)
+            230 LOAD_GLOBAL             11 (str)
+            232 LOAD_FAST               11 (ex)
+            234 CALL_FUNCTION            1
+            236 CALL_METHOD              1
+            238 CALL_FUNCTION            1
+            240 POP_TOP
+
+123         242 LOAD_FAST                0 (self)
+            244 LOAD_ATTR                9 (result_cls)
+            246 LOAD_METHOD             10 (send_error)
+            248 LOAD_CONST              12 ('error: {}')
+            250 LOAD_METHOD             26 (format)
+            252 LOAD_GLOBAL             11 (str)
+            254 LOAD_FAST               11 (ex)
+            256 CALL_FUNCTION            1
+            258 CALL_METHOD              1
+            260 CALL_METHOD              1
+            262 POP_TOP
+
+124         264 LOAD_CONST               4 (False)
+            266 STORE_FAST               9 (valid)
+            268 POP_BLOCK
+            270 POP_EXCEPT
+            272 LOAD_CONST               0 (None)
+            274 STORE_FAST              11 (ex)
+            276 DELETE_FAST             11 (ex)
+            278 JUMP_FORWARD            10 (to 290)
+        >>  280 LOAD_CONST               0 (None)
+            282 STORE_FAST              11 (ex)
+            284 DELETE_FAST             11 (ex)
+            286 RERAISE
+        >>  288 RERAISE
+
+125     >>  290 LOAD_FAST                0 (self)
+            292 LOAD_METHOD             27 (disconnect)
+            294 CALL_METHOD              0
+            296 POP_TOP
+
+126         298 LOAD_FAST                9 (valid)
+            300 RETURN_VALUE

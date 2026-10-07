@@ -1,0 +1,47 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: classes.result.marshal (Python 3.9)
+
+import json
+
+class Results(object):
+
+    def __init__(self, client, add_message, reference, action):
+        self.client = client
+        self.add_message = add_message
+        self.action = action
+        self.result = None
+        self.reference = reference
+
+
+    def set_result(self, result):
+        self.result = result
+
+
+    def set_action(self, action):
+        self.action = action
+
+
+    def send(self, result = (None,)):
+        self.result = result if result is not None else self.result
+        resp = {
+            'client': self.client,
+            'message': json.dumps({
+                'action': self.action,
+                'results': self.result,
+                'timeoutRef': self.reference }) }
+        self.add_message(resp)
+
+
+    def send_error(self, error):
+        resp = {
+            'client': self.client,
+            'message': json.dumps({
+                'action': 'error',
+                'results': error,
+                'timeoutRef': self.reference }) }
+        self.add_message(resp)

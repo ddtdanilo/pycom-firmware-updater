@@ -1,7 +1,7 @@
 # Repository tooling
 
-These tools check the documentation-only repository. They neither build an updater
-nor access connected hardware.
+These tools check documentation, research provenance, and the static inspector.
+They neither build an updater nor access connected hardware.
 
 ## Checks
 
@@ -13,6 +13,9 @@ nor access connected hardware.
   and trailing whitespace.
 - SHA-256 preservation of the two inherited documentation artifacts.
 - Full-SHA action pinning and Conventional Commit PR titles when `PR_TITLE` is set.
+- Synthetic static-inspection tests for malformed archives, unsafe paths,
+  credential redaction, and non-execution of recovered code.
+- Hashes and completeness of committed research references against their manifest.
 
 External HTTP links are source references, not checked for availability by offline
 CI. Review them when their content is used. The link checker handles this repository's
@@ -41,3 +44,22 @@ Inherited `CHANGELOG.md` and `docs/UPSTREAM_README.md` are excluded from style/l
 changes and Git whitespace normalization/checks, and protected by content hashes.
 They preserve historical upstream material
 whose licensing differs from new community work.
+
+## Static installer research
+
+[tools/analyze_installer.py](../tools/analyze_installer.py) inventories an extracted
+PyInstaller executable and disassembles selected application candidates without
+importing/executing them. Its decoder must match the archive's Python version;
+the historical asset needs isolated Python 3.9. The optional external `pycdc`
+produces incomplete previews, not a trusted application source tree.
+
+[Reproduction instructions](../research/installer-v1.0.3/README.md) describe hashes,
+tools, normalization, and rights boundaries. The installer/application and original
+credentials are never executed or used. Raw research intermediates belong outside
+the checkout, not in public commits. Automatic redaction does not replace review.
+
+[Classic GUI research](../research/classic-gui-1.16.6/README.md) uses a separate
+cross-version decoder and pinned isolated dependencies. Neither legacy Python 2.7
+nor Qt4 is adopted as the future application runtime. The publication transform in
+`tools/publish_reference.py` distinguishes raw inspection schema 1 from reference
+snapshot schema 2 and computes final text hashes.

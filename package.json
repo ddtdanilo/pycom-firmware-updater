@@ -7,7 +7,9 @@
   "scripts": {
     "docs:lint": "node scripts/check_docs.mjs",
     "check:repository": "python3 scripts/check_repository.py",
-    "check": "npm run docs:lint && npm run check:repository"
+    "test:inspection": "python3 -m unittest discover -s tests -v",
+    "check:recovery": "python3 scripts/check_recovery.py",
+    "check": "npm run docs:lint && npm run check:repository && npm run test:inspection && npm run check:recovery"
   },
   "devDependencies": { "markdownlint": "0.41.1", "yaml": "2.9.1" },
   "overrides": { "katex": "0.18.2" }

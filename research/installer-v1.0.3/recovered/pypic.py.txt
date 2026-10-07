@@ -1,0 +1,189 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: pypic.marshal (Python 3.9)
+
+from __future__ import print_function
+from utils.utils import exit_with_error, print_debug
+import argparse
+import struct
+import sys
+import time
+import serial
+from utils.constants import constants
+
+class Pypic:
+
+    def __init__(self, port, baudrate, bytesize = (115200, serial.FIVEBITS)):
+        '''
+        we need bytesize to be 5 bits in order for the PIC to process
+        the commands
+        '''
+        self.detected = False
+        self.serial = None
+        self.baudrate = baudrate
+        self.bytesize = bytesize
+        self.port = port
+        self.set_serial()
+        self.detect_fw_version()
+
+
+    def set_serial(self):
+        pass
+    # WARNING: Decompyle incomplete
+
+
+    def detect_fw_version(self):
+        pass
+    # WARNING: Decompyle incomplete
+
+
+    def _write(self, data, read, num_read_bytes = (True, 1)):
+        self.serial.write(data)
+        if read:
+            r_data = self.serial.read(2)
+            if not r_data:
+                raise Exception('Timeout while waiting for Rx data')
+            if num_read_bytes == 2:
+                (b1, b2) = struct.unpack('BB', r_data)
+                return 256 * b2 + b1
+            if None.version_info[0] < 3:
+                return struct.unpack('B', r_data[0])[0]
+            return None[0]
+
+
+    def _flush(self, num_read_bytes = (10,)):
+        self.serial.read(num_read_bytes)
+
+
+    def _send_cmd(self, cmd, num_read_bytes = (1,)):
+        return self._write(bytearray([
+            cmd]), True, num_read_bytes)
+
+
+    def read_hw_version(self):
+        return self._send_cmd(constants.CMD_HW_VER, 2)
+
+
+    def read_fw_version(self):
+        return self._send_cmd(constants.CMD_FW_VER, 2)
+
+
+    def read_product_id(self):
+        return self._send_cmd(constants.CMD_PROD_ID, 2)
+
+
+    def peek_memory(self, addr):
+        return self._write(bytearray([
+            constants.CMD_PEEK,
+            addr & 255,
+            addr >> 8 & 255]))
+
+
+    def poke_memory(self, addr, value):
+        self._write(bytearray([
+            constants.CMD_POKE,
+            addr & 255,
+            addr >> 8 & 255,
+            value & 255]), False)
+
+
+    def magic_write_read(self, addr, _and, _or, _xor = (255, 0, 0)):
+        return self._write(bytearray([
+            constants.CMD_MAGIC,
+            addr & 255,
+            addr >> 8 & 255,
+            _and & 255,
+            _or & 255,
+            _xor & 255]))
+
+
+    def magic_write(self, addr, _and, _or, _xor = (255, 0, 0)):
+        self._write(bytearray([
+            constants.CMD_MAGIC,
+            addr & 255,
+            addr >> 8 & 255,
+            _and & 255,
+            _or & 255,
+            _xor & 255]), False)
+
+
+    def toggle_bits_in_memory(self, addr, bits):
+        self.magic_write(addr, bits, **('_xor',))
+
+
+    def mask_bits_in_memory(self, addr, mask):
+        self.magic_write(addr, mask, **('_and',))
+
+
+    def set_bits_in_memory(self, addr, bits):
+        self.magic_write(addr, bits, **('_or',))
+
+
+    def reset_pycom_module(self):
+        self.mask_bits_in_memory(constants.TRISC_ADDR, -33)
+        self.mask_bits_in_memory(constants.PORTC_ADDR, -33)
+        time.sleep(0.2)
+        self.set_bits_in_memory(constants.PORTC_ADDR, 32)
+        time.sleep(0.1)
+        self.set_bits_in_memory(constants.TRISC_ADDR, 32)
+
+
+    def enter_pycom_programming_mode(self, reset = (True,)):
+        print_debug('Entering programming mode with reset={}'.format(reset))
+        self.mask_bits_in_memory(constants.TRISA_ADDR, -33)
+        self.mask_bits_in_memory(constants.PORTA_ADDR, -33)
+        self.mask_bits_in_memory(constants.TRISC_ADDR, -2)
+        self.mask_bits_in_memory(constants.PORTC_ADDR, -2)
+        if reset:
+            self.reset_pycom_module()
+        self._flush()
+
+
+    def exit_pycom_programming_mode(self, reset = (True,)):
+        print_debug('Leaving programming mode with reset={}'.format(reset))
+        self.mask_bits_in_memory(constants.TRISA_ADDR, -33)
+        self.set_bits_in_memory(constants.PORTA_ADDR, 32)
+        self.set_bits_in_memory(constants.TRISC_ADDR, 1)
+        if reset:
+            self.reset_pycom_module()
+        self._flush()
+
+
+    def isdetected(self):
+        return self.detected
+
+
+    def close(self):
+        self.serial.close()
+
+
+
+def main(args):
+    description = 'Sends internal commands to put the Pycom module '
+    parser = argparse.ArgumentParser(description, **('description',))
+    parser.add_argument('-p', '--port', 'PORT', 'the serial port used to communicate with the PIC', **('metavar', 'help'))
+    parser.add_argument('--enter', 'store_true', 'enter programming mode', **('action', 'help'))
+    parser.add_argument('--exit', 'store_true', 'exit programming mode', **('action', 'help'))
+    parser.add_argument('--noreset', 'store_true', 'do not reset esp32', **('action', 'help'))
+    args = parser.parse_args()
+    if not args.port:
+        exit_with_error(1, 'no serial port specified')
+    if not (args.enter or args.exit or args.enter) and args.exit:
+        exit_with_error(1, 'invalid action requested')
+    pic = Pypic(args.port)
+    if pic.isdetected():
+        if args.enter:
+            pic.enter_pycom_programming_mode(not (args.noreset))
+        elif args.exit:
+            pic.exit_pycom_programming_mode(not (args.noreset))
+        print_debug('read_product_id(): 0x%X' % pic.read_product_id())
+        print_debug('read_hw_version(): 0x%X' % pic.read_hw_version())
+        print_debug('read_fw_version(): 0x%X' % pic.read_fw_version())
+    pic.close()
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))

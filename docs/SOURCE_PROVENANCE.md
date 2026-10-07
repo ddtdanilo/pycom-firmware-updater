@@ -65,6 +65,42 @@ effect on the intended reuse/distribution, including applicable GPLv3 Section 7
 questions. Record the exact text/version, copyright holder, reviewer, and decision.
 Do not infer a right to remove terms or a combined-work license from this plan.
 
+## Historical installer recovery
+
+The public `v1.0.3` macOS asset was downloaded and expanded without installation or
+application execution. Its SHA-256 is
+`0dbdb6f3fce501627303f117d1b1cbefcddbcc4261305811faaa80b93a41bf3e`.
+The asset contains an x86_64 Python 3.9 PyInstaller service and Qt tray code, but
+no complete graphical frontend was found in this inspected package.
+
+[Reference research](../research/installer-v1.0.3/README.md) contains input/output
+hashes, 24 candidate application-module disassemblies, 23 partial Python previews,
+and tool diagnostics. Two credential literals were redacted before text export;
+no binary, original credential, or raw bytecode is committed. The
+[findings](RECOVERY_FINDINGS.md) distinguish observed behavior from frontend inference.
+
+The installer references a missing `LICENSE.txt`; the bundled Pybytes service terms
+do not establish an open-source grant for the local code. The references retain
+unresolved rights and are excluded from MIT. [ADR 0001](decisions/0001-installer-reference-recovery.md)
+records the maintainer-requested research exception; runtime reuse remains gated
+by M0. Partial decompilation is not recovery of an original, licensed build project.
+
+### Separate classic desktop application
+
+The [official device update documentation](https://docs.pycom.io/updatefirmware/device/)
+links a separate updater download. Its macOS link redirected to
+`pycom_firmware_updater_1.16.6.dmg`, SHA-256
+`af75690904870ffd3a4a76348712a374bc4a3eb063d0be111e029ad4e100b473`.
+The public executable matches the inspected installed desktop application's hash.
+Recovery was performed on the public download, without launching it or reading
+user configuration. It contains a Python 2.7/PyQt4 wizard, unlike the service package.
+
+[Classic GUI references](../research/classic-gui-1.16.6/README.md) include eleven
+normalized source previews/disassemblies and 275 code-object records. An embedded
+PyInstaller archive key was decoded as data to unpack modules and was not published.
+Syntax checks passed; equivalence, runtime startup, hardware, and ARM builds remain
+unverified. The same unresolved-rights/runtime boundary applies to both snapshots.
+
 ## Import and redistribution checklist
 
 1. Record immutable source revision, per-file hashes, copyright, and exact terms.
@@ -75,8 +111,9 @@ Do not infer a right to remove terms or a combined-work license from this plan.
 6. Exclude unresolved source/binaries from imports and release artifacts.
 
 Do not treat extracting an installed application as permission to relicense or
-redistribute it. No Pycom executable, firmware, or engine code is included in this
-documentation-only community change.
+redistribute it. No Pycom executable, firmware, or runnable engine is included.
+The explicitly requested recovered reference texts have a separate unresolved
+rights boundary and do not change the future runtime import checklist.
 
 ## Primary implementation references
 

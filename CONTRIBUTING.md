@@ -7,10 +7,17 @@ investigation, reviews, and careful hardware reports all matter. Read the
 
 ## Current phase
 
-This repository currently contains a plan and repository tooling, not an updater.
+This repository contains a plan, tooling, and redacted installer-reference research,
+not a runnable updater. The end product is a native Apple Silicon desktop GUI;
+the CLI is supporting infrastructure, not a replacement for that deliverable.
 Do not run unimplemented commands or present planned features as available.
 Discuss runtime source imports and major design changes before implementing them;
 the provenance and license gate must be resolved first.
+
+The [reference recovery decision](docs/decisions/0001-installer-reference-recovery.md)
+allows the explicitly requested historical research snapshot. It does not clear
+runtime reuse or grant a license over the recovered text. Keep raw intermediates
+outside the checkout and review any research export for secrets and rights scope.
 
 ## Where to contribute
 

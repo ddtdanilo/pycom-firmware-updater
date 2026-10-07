@@ -1,0 +1,137 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: env_settings
+  1:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (None)
+               6 IMPORT_NAME          (os)
+               9 STORE_NAME           (os)
+              12 LOAD_CONST           (-1)
+              15 LOAD_CONST           (None)
+              18 IMPORT_NAME          (sys)
+              21 STORE_NAME           (sys)
+
+  3:          24 LOAD_NAME            (os)
+              27 LOAD_ATTR            (path)
+              30 LOAD_ATTR            (dirname)
+              33 LOAD_NAME            (os)
+              36 LOAD_ATTR            (path)
+              39 LOAD_ATTR            (realpath)
+              42 LOAD_NAME            (__file__)
+              45 CALL_FUNCTION        (1 positional, 0 named)
+              48 CALL_FUNCTION        (1 positional, 0 named)
+              51 LOAD_CONST           ("/pycom_fwtool.cfg")
+              54 BINARY_ADD
+              55 STORE_NAME           (CONF_FILE)
+
+  5:          58 LOAD_CONST           ("HOME")
+              61 LOAD_NAME            (os)
+              64 LOAD_ATTR            (environ)
+              67 COMPARE_OP           (in)
+              70 POP_JUMP_IF_FALSE    (to 121)
+
+  6:          73 LOAD_NAME            (os)
+              76 LOAD_ATTR            (path)
+              79 LOAD_ATTR            (isdir)
+              82 LOAD_NAME            (os)
+              85 LOAD_ATTR            (environ)
+              88 LOAD_CONST           ("HOME")
+              91 BINARY_SUBSCR
+              92 CALL_FUNCTION        (1 positional, 0 named)
+              95 POP_JUMP_IF_FALSE    (to 184)
+
+  7:          98 LOAD_NAME            (os)
+             101 LOAD_ATTR            (environ)
+             104 LOAD_CONST           ("HOME")
+             107 BINARY_SUBSCR
+             108 LOAD_CONST           ("/.pycom_fwtool.cfg")
+             111 BINARY_ADD
+             112 STORE_NAME           (CONF_FILE)
+             115 JUMP_ABSOLUTE        (to 184)
+             118 JUMP_FORWARD         (to 184)
+
+  8:     >>  121 LOAD_CONST           ("USERPROFILE")
+             124 LOAD_NAME            (os)
+             127 LOAD_ATTR            (environ)
+             130 COMPARE_OP           (in)
+             133 POP_JUMP_IF_FALSE    (to 184)
+
+  9:         136 LOAD_NAME            (os)
+             139 LOAD_ATTR            (path)
+             142 LOAD_ATTR            (isdir)
+             145 LOAD_NAME            (os)
+             148 LOAD_ATTR            (environ)
+             151 LOAD_CONST           ("USERPROFILE")
+             154 BINARY_SUBSCR
+             155 CALL_FUNCTION        (1 positional, 0 named)
+             158 POP_JUMP_IF_FALSE    (to 184)
+
+ 10:         161 LOAD_NAME            (os)
+             164 LOAD_ATTR            (environ)
+             167 LOAD_CONST           ("USERPROFILE")
+             170 BINARY_SUBSCR
+             171 LOAD_CONST           ("/pycom_fwtool.cfg")
+             174 BINARY_ADD
+             175 STORE_NAME           (CONF_FILE)
+             178 JUMP_ABSOLUTE        (to 184)
+             181 JUMP_FORWARD         (to 184)
+
+ 12:     >>  184 LOAD_NAME            (getattr)
+             187 LOAD_NAME            (sys)
+             190 LOAD_CONST           ("frozen")
+             193 LOAD_NAME            (False)
+             196 CALL_FUNCTION        (3 positional, 0 named)
+             199 POP_JUMP_IF_FALSE    (to 224)
+
+ 13:         202 LOAD_NAME            (False)
+             205 STORE_NAME           (DEBUG)
+
+ 14:         208 LOAD_NAME            (sys)
+             211 LOAD_ATTR            (_MEIPASS)
+             214 LOAD_CONST           ("/img")
+             217 BINARY_ADD
+             218 STORE_NAME           (IMG_PATH)
+             221 JUMP_FORWARD         (to 280)
+
+ 16:     >>  224 LOAD_NAME            (os)
+             227 LOAD_ATTR            (path)
+             230 LOAD_ATTR            (dirname)
+             233 LOAD_NAME            (os)
+             236 LOAD_ATTR            (path)
+             239 LOAD_ATTR            (realpath)
+             242 LOAD_NAME            (__file__)
+             245 CALL_FUNCTION        (1 positional, 0 named)
+             248 CALL_FUNCTION        (1 positional, 0 named)
+             251 STORE_NAME           (HERE_PATH)
+
+ 17:         254 LOAD_NAME            (sys)
+             257 LOAD_ATTR            (path)
+             260 LOAD_ATTR            (append)
+             263 LOAD_NAME            (HERE_PATH)
+             266 CALL_FUNCTION        (1 positional, 0 named)
+             269 POP_TOP
+
+ 18:         270 LOAD_NAME            (HERE_PATH)
+             273 LOAD_CONST           ("/img")
+             276 BINARY_ADD
+             277 STORE_NAME           (IMG_PATH)
+
+ 20:     >>  280 LOAD_CONST           ("Args")
+             283 LOAD_NAME            (object)
+             286 BUILD_TUPLE          1
+             289 LOAD_CONST           (<Code2 code object Args at <address omitted>, file env_settings.py>, line 20)
+             292 MAKE_FUNCTION        (0 default parameters)
+             295 CALL_FUNCTION        (0 positional, 0 named)
+             298 BUILD_CLASS
+             299 STORE_NAME           (Args)
+             302 LOAD_CONST           (None)
+             305 RETURN_VALUE
+
+Symbol: env_settings.Args
+ 20:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+ 21:           6 LOAD_LOCALS
+               7 RETURN_VALUE

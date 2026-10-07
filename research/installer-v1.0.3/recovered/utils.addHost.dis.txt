@@ -1,0 +1,106 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('Hosts',))
+              4 IMPORT_NAME              0 (utils.hosts)
+              6 IMPORT_FROM              1 (Hosts)
+              8 STORE_NAME               1 (Hosts)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('UPDATE_HOSTS',))
+             16 IMPORT_NAME              2 (utils.constants)
+             18 IMPORT_FROM              3 (UPDATE_HOSTS)
+             20 STORE_NAME               3 (UPDATE_HOSTS)
+             22 POP_TOP
+
+  3          24 LOAD_CONST               0 (0)
+             26 LOAD_CONST               3 (None)
+             28 IMPORT_NAME              4 (os)
+             30 STORE_NAME               4 (os)
+
+  6          32 LOAD_CONST               4 (<code object createHost at <address omitted>, file "utils/addHost.py", line 6>)
+             34 LOAD_CONST               5 ('createHost')
+             36 MAKE_FUNCTION            0
+             38 STORE_NAME               5 (createHost)
+             40 LOAD_CONST               3 (None)
+             42 RETURN_VALUE
+
+Disassembly of <code object createHost at <address omitted>, file "utils/addHost.py", line 6>:
+  7           0 LOAD_GLOBAL              0 (UPDATE_HOSTS)
+              2 POP_JUMP_IF_TRUE         8
+
+  8           4 LOAD_CONST               0 (None)
+              6 RETURN_VALUE
+
+  9     >>    8 LOAD_CONST               0 (None)
+             10 STORE_FAST               0 (hosts_path)
+
+ 10          12 LOAD_GLOBAL              1 (os)
+             14 LOAD_ATTR                2 (name)
+             16 LOAD_CONST               1 ('nt')
+             18 COMPARE_OP               2 (==)
+             20 POP_JUMP_IF_FALSE       44
+
+ 11          22 LOAD_GLOBAL              1 (os)
+             24 LOAD_ATTR                3 (path)
+             26 LOAD_METHOD              4 (join)
+             28 LOAD_GLOBAL              1 (os)
+             30 LOAD_ATTR                5 (environ)
+             32 LOAD_CONST               2 ('SYSTEMROOT')
+             34 BINARY_SUBSCR
+             36 LOAD_CONST               3 ('system32\\drivers\\etc\\hosts')
+             38 CALL_METHOD              2
+             40 STORE_FAST               0 (hosts_path)
+             42 JUMP_FORWARD            14 (to 58)
+
+ 12     >>   44 LOAD_GLOBAL              1 (os)
+             46 LOAD_ATTR                2 (name)
+             48 LOAD_CONST               4 ('posix')
+             50 COMPARE_OP               2 (==)
+             52 POP_JUMP_IF_FALSE       58
+
+ 13          54 LOAD_CONST               5 ('/etc/hosts')
+             56 STORE_FAST               0 (hosts_path)
+
+ 15     >>   58 LOAD_FAST                0 (hosts_path)
+             60 LOAD_CONST               0 (None)
+             62 IS_OP                    1
+             64 POP_JUMP_IF_FALSE      120
+
+ 16          66 LOAD_GLOBAL              6 (Hosts)
+             68 LOAD_FAST                0 (hosts_path)
+             70 CALL_FUNCTION            1
+             72 STORE_FAST               1 (hosts)
+
+ 17          74 LOAD_FAST                1 (hosts)
+             76 LOAD_METHOD              7 (get_one)
+             78 LOAD_CONST               6 ('fwupdater.pycom.io')
+             80 CALL_METHOD              1
+             82 STORE_FAST               2 (exists)
+
+ 18          84 LOAD_FAST                2 (exists)
+             86 LOAD_CONST               7 ('[Unknown]')
+             88 COMPARE_OP               2 (==)
+             90 POP_JUMP_IF_FALSE      120
+
+ 19          92 LOAD_FAST                1 (hosts)
+             94 LOAD_METHOD              8 (write_direct)
+             96 LOAD_FAST                0 (hosts_path)
+             98 LOAD_CONST               6 ('fwupdater.pycom.io')
+            100 LOAD_CONST               8 ('127.0.0.1')
+            102 CALL_METHOD              3
+            104 POP_TOP
+
+ 20         106 LOAD_FAST                1 (hosts)
+            108 LOAD_METHOD              8 (write_direct)
+            110 LOAD_FAST                0 (hosts_path)
+            112 LOAD_CONST               6 ('fwupdater.pycom.io')
+            114 LOAD_CONST               9 ('0.0.0.0')
+            116 CALL_METHOD              3
+            118 POP_TOP
+        >>  120 LOAD_CONST               0 (None)
+            122 RETURN_VALUE

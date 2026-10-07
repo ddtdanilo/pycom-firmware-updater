@@ -1,0 +1,191 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (None)
+              4 IMPORT_NAME              0 (hashlib)
+              6 STORE_NAME               0 (hashlib)
+
+  2           8 LOAD_CONST               0 (0)
+             10 LOAD_CONST               1 (None)
+             12 IMPORT_NAME              1 (struct)
+             14 STORE_NAME               1 (struct)
+
+  3          16 LOAD_CONST               0 (0)
+             18 LOAD_CONST               1 (None)
+             20 IMPORT_NAME              2 (binascii)
+             22 STORE_NAME               2 (binascii)
+
+  9          24 LOAD_CONST               2 (b'\xeb\xeb\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff')
+             26 STORE_NAME               3 (MD5_PARTITION_BEGIN)
+
+ 12          28 LOAD_CONST               3 (<code object _partition_from_binary at <address omitted>, file "utils/partitions.py", line 12>)
+             30 LOAD_CONST               4 ('_partition_from_binary')
+             32 MAKE_FUNCTION            0
+             34 STORE_NAME               4 (_partition_from_binary)
+
+ 26          36 LOAD_CONST               5 (<code object partitions_from_binary at <address omitted>, file "utils/partitions.py", line 26>)
+             38 LOAD_CONST               6 ('partitions_from_binary')
+             40 MAKE_FUNCTION            0
+             42 STORE_NAME               5 (partitions_from_binary)
+             44 LOAD_CONST               1 (None)
+             46 RETURN_VALUE
+
+Disassembly of <code object _partition_from_binary at <address omitted>, file "utils/partitions.py", line 12>:
+ 13           0 LOAD_GLOBAL              0 (struct)
+              2 LOAD_METHOD              1 (unpack)
+
+ 14           4 LOAD_CONST               1 (b'<2sBBLL16sL')
+              6 LOAD_FAST                0 (data)
+
+ 13           8 CALL_METHOD              2
+             10 UNPACK_SEQUENCE          7
+             12 STORE_FAST               1 (magic)
+             14 STORE_FAST               2 (type)
+             16 STORE_FAST               3 (subtype)
+             18 STORE_FAST               4 (offset)
+             20 STORE_FAST               5 (size)
+             22 STORE_FAST               6 (name)
+             24 STORE_FAST               7 (flags)
+
+ 16          26 LOAD_FAST                1 (magic)
+
+ 17          28 LOAD_FAST                2 (type)
+
+ 18          30 LOAD_FAST                3 (subtype)
+
+ 19          32 LOAD_GLOBAL              2 (hex)
+             34 LOAD_FAST                4 (offset)
+             36 CALL_FUNCTION            1
+
+ 20          38 LOAD_GLOBAL              2 (hex)
+             40 LOAD_FAST                5 (size)
+             42 CALL_FUNCTION            1
+
+ 21          44 LOAD_FAST                6 (name)
+             46 LOAD_METHOD              3 (rstrip)
+             48 LOAD_CONST               2 (b'\x00')
+             50 CALL_METHOD              1
+
+ 22          52 LOAD_FAST                7 (flags)
+
+ 15          54 LOAD_CONST               3 (('magic', 'type', 'subtype', 'offset', 'size', 'name', 'flags'))
+             56 BUILD_CONST_KEY_MAP      7
+             58 RETURN_VALUE
+
+Disassembly of <code object partitions_from_binary at <address omitted>, file "utils/partitions.py", line 26>:
+ 27           0 LOAD_GLOBAL              0 (hashlib)
+              2 LOAD_METHOD              1 (md5)
+              4 CALL_METHOD              0
+              6 STORE_FAST               1 (md5)
+
+ 28           8 BUILD_LIST               0
+             10 STORE_FAST               2 (result)
+
+ 29          12 LOAD_GLOBAL              2 (range)
+             14 LOAD_CONST               1 (0)
+             16 LOAD_GLOBAL              3 (len)
+             18 LOAD_FAST                0 (b)
+             20 CALL_FUNCTION            1
+             22 LOAD_CONST               2 (32)
+             24 CALL_FUNCTION            3
+             26 GET_ITER
+        >>   28 FOR_ITER               160 (to 190)
+             30 STORE_FAST               3 (o)
+
+ 30          32 LOAD_FAST                0 (b)
+             34 LOAD_FAST                3 (o)
+             36 LOAD_FAST                3 (o)
+             38 LOAD_CONST               2 (32)
+             40 BINARY_ADD
+             42 BUILD_SLICE              2
+             44 BINARY_SUBSCR
+             46 STORE_FAST               4 (data)
+
+ 31          48 LOAD_GLOBAL              3 (len)
+             50 LOAD_FAST                4 (data)
+             52 CALL_FUNCTION            1
+             54 LOAD_CONST               2 (32)
+             56 COMPARE_OP               3 (!=)
+             58 POP_JUMP_IF_FALSE       68
+
+ 32          60 LOAD_GLOBAL              4 (ValueError)
+             62 LOAD_CONST               3 ('Partition table length must be a multiple of 32 bytes')
+             64 CALL_FUNCTION            1
+             66 RAISE_VARARGS            1
+
+ 33     >>   68 LOAD_FAST                4 (data)
+             70 LOAD_CONST               4 (b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff')
+             72 COMPARE_OP               2 (==)
+             74 POP_JUMP_IF_FALSE       80
+
+ 34          76 POP_TOP
+             78 JUMP_ABSOLUTE          190
+
+ 36     >>   80 LOAD_FAST                4 (data)
+             82 LOAD_CONST               0 (None)
+             84 LOAD_CONST               5 (2)
+             86 BUILD_SLICE              2
+             88 BINARY_SUBSCR
+             90 LOAD_GLOBAL              5 (MD5_PARTITION_BEGIN)
+             92 LOAD_CONST               0 (None)
+             94 LOAD_CONST               5 (2)
+             96 BUILD_SLICE              2
+             98 BINARY_SUBSCR
+            100 COMPARE_OP               2 (==)
+            102 POP_JUMP_IF_FALSE      164
+
+ 37         104 LOAD_FAST                4 (data)
+            106 LOAD_CONST               6 (16)
+            108 LOAD_CONST               0 (None)
+            110 BUILD_SLICE              2
+            112 BINARY_SUBSCR
+            114 LOAD_FAST                1 (md5)
+            116 LOAD_METHOD              6 (digest)
+            118 CALL_METHOD              0
+            120 COMPARE_OP               2 (==)
+            122 POP_JUMP_IF_FALSE      128
+
+ 39         124 JUMP_ABSOLUTE           28
+            126 JUMP_ABSOLUTE          174
+
+ 41     >>  128 LOAD_GLOBAL              4 (ValueError)
+            130 LOAD_CONST               7 ("MD5 checksums don't match! (computed: 0x%s, parsed: 0x%s)")
+
+ 42         132 LOAD_FAST                1 (md5)
+            134 LOAD_METHOD              7 (hexdigest)
+            136 CALL_METHOD              0
+            138 LOAD_GLOBAL              8 (binascii)
+            140 LOAD_METHOD              9 (hexlify)
+            142 LOAD_FAST                4 (data)
+            144 LOAD_CONST               6 (16)
+            146 LOAD_CONST               0 (None)
+            148 BUILD_SLICE              2
+            150 BINARY_SUBSCR
+            152 CALL_METHOD              1
+
+ 41         154 BUILD_TUPLE              2
+            156 BINARY_MODULO
+            158 CALL_FUNCTION            1
+            160 RAISE_VARARGS            1
+            162 JUMP_FORWARD            10 (to 174)
+
+ 44     >>  164 LOAD_FAST                1 (md5)
+            166 LOAD_METHOD             10 (update)
+            168 LOAD_FAST                4 (data)
+            170 CALL_METHOD              1
+            172 POP_TOP
+
+ 45     >>  174 LOAD_FAST                2 (result)
+            176 LOAD_METHOD             11 (append)
+            178 LOAD_GLOBAL             12 (_partition_from_binary)
+            180 LOAD_FAST                4 (data)
+            182 CALL_FUNCTION            1
+            184 CALL_METHOD              1
+            186 POP_TOP
+            188 JUMP_ABSOLUTE           28
+
+ 46     >>  190 LOAD_FAST                2 (result)
+            192 RETURN_VALUE

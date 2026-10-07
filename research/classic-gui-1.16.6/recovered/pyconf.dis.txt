@@ -1,0 +1,286 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+Symbol: pyconf
+  3:           0 LOAD_CONST           (-1)
+               3 LOAD_CONST           (None)
+               6 IMPORT_NAME          (json)
+               9 STORE_NAME           (json)
+
+  5:          12 LOAD_CONST           (-1)
+              15 LOAD_CONST           (('print_debug',))
+              18 IMPORT_NAME          (updater)
+              21 IMPORT_FROM          (print_debug)
+              24 STORE_NAME           (print_debug)
+              27 POP_TOP
+
+  7:          28 SETUP_EXCEPT         (to 51)
+
+  8:          31 LOAD_CONST           (-1)
+              34 LOAD_CONST           (('DEBUG',))
+              37 IMPORT_NAME          (local_settings)
+              40 IMPORT_FROM          (DEBUG)
+              43 STORE_NAME           (DEBUG)
+              46 POP_TOP
+              47 POP_BLOCK
+              48 JUMP_FORWARD         (to 64)
+
+  9:     >>   51 POP_TOP
+              52 POP_TOP
+              53 POP_TOP
+
+ 10:          54 LOAD_NAME            (False)
+              57 STORE_NAME           (DEBUG)
+              60 JUMP_FORWARD         (to 64)
+              63 END_FINALLY
+
+ 13:     >>   64 LOAD_CONST           ("Settings")
+              67 LOAD_NAME            (object)
+              70 BUILD_TUPLE          1
+              73 LOAD_CONST           (<Code2 code object Settings at <address omitted>, file pyconf.py>, line 13)
+              76 MAKE_FUNCTION        (0 default parameters)
+              79 CALL_FUNCTION        (0 positional, 0 named)
+              82 BUILD_CLASS
+              83 STORE_NAME           (Settings)
+              86 LOAD_CONST           (None)
+              89 RETURN_VALUE
+
+Symbol: pyconf.Settings
+ 13:           0 LOAD_NAME            (__name__)
+               3 STORE_NAME           (__module__)
+
+ 15:           6 LOAD_CONST           (<Code2 code object __init__ at <address omitted>, file pyconf.py>, line 15)
+               9 MAKE_FUNCTION        (0 default parameters)
+              12 STORE_NAME           (__init__)
+
+ 20:          15 LOAD_CONST           (<Code2 code object __load at <address omitted>, file pyconf.py>, line 20)
+              18 MAKE_FUNCTION        (0 default parameters)
+              21 STORE_NAME           (_Settings__load)
+
+ 31:          24 LOAD_CONST           (None)
+              27 LOAD_NAME            (False)
+              30 LOAD_CONST           (<Code2 code object get at <address omitted>, file pyconf.py>, line 31)
+              33 MAKE_FUNCTION        (2 default parameters)
+              36 STORE_NAME           (get)
+
+ 35:          39 LOAD_CONST           (<Code2 code object set at <address omitted>, file pyconf.py>, line 35)
+              42 MAKE_FUNCTION        (0 default parameters)
+              45 STORE_NAME           (set)
+
+ 45:          48 LOAD_CONST           (<Code2 code object __save at <address omitted>, file pyconf.py>, line 45)
+              51 MAKE_FUNCTION        (0 default parameters)
+              54 STORE_NAME           (_Settings__save)
+              57 LOAD_LOCALS
+              58 RETURN_VALUE
+
+Symbol: pyconf.Settings.__init__
+ 16:           0 BUILD_MAP            0
+               3 LOAD_FAST            (self)
+               6 STORE_ATTR           (_Settings__settings)
+
+ 17:           9 LOAD_FAST            (filename)
+              12 LOAD_FAST            (self)
+              15 STORE_ATTR           (_Settings__filename)
+
+ 18:          18 LOAD_FAST            (self)
+              21 LOAD_ATTR            (_Settings__load)
+              24 CALL_FUNCTION        (0 positional, 0 named)
+              27 POP_TOP
+              28 LOAD_CONST           (None)
+              31 RETURN_VALUE
+
+Symbol: pyconf.Settings.__load
+ 21:           0 LOAD_GLOBAL          (print_debug)
+               3 LOAD_CONST           ("Loading settings from : {}")
+               6 LOAD_ATTR            (format)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (_Settings__filename)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 LOAD_GLOBAL          (DEBUG)
+              21 CALL_FUNCTION        (2 positional, 0 named)
+              24 POP_TOP
+
+ 22:          25 SETUP_EXCEPT         (to 121)
+
+ 23:          28 LOAD_GLOBAL          (open)
+              31 LOAD_FAST            (self)
+              34 LOAD_ATTR            (_Settings__filename)
+              37 LOAD_CONST           ("r")
+              40 CALL_FUNCTION        (2 positional, 0 named)
+              43 STORE_FAST           (f)
+
+ 24:          46 LOAD_FAST            (f)
+              49 LOAD_ATTR            (read)
+              52 CALL_FUNCTION        (0 positional, 0 named)
+              55 STORE_FAST           (data)
+
+ 25:          58 LOAD_FAST            (f)
+              61 LOAD_ATTR            (close)
+              64 CALL_FUNCTION        (0 positional, 0 named)
+              67 POP_TOP
+
+ 26:          68 LOAD_GLOBAL          (json)
+              71 LOAD_ATTR            (loads)
+              74 LOAD_FAST            (data)
+              77 LOAD_ATTR            (strip)
+              80 CALL_FUNCTION        (0 positional, 0 named)
+              83 CALL_FUNCTION        (1 positional, 0 named)
+              86 LOAD_FAST            (self)
+              89 STORE_ATTR           (_Settings__settings)
+
+ 27:          92 LOAD_GLOBAL          (print_debug)
+              95 LOAD_CONST           ("Config read [OK]: {}")
+              98 LOAD_ATTR            (format)
+             101 LOAD_FAST            (self)
+             104 LOAD_ATTR            (_Settings__settings)
+             107 CALL_FUNCTION        (1 positional, 0 named)
+             110 LOAD_GLOBAL          (DEBUG)
+             113 CALL_FUNCTION        (2 positional, 0 named)
+             116 POP_TOP
+             117 POP_BLOCK
+             118 JUMP_FORWARD         (to 162)
+
+ 28:     >>  121 DUP_TOP
+             122 LOAD_GLOBAL          (Exception)
+             125 COMPARE_OP           (exception-match)
+             128 POP_JUMP_IF_FALSE    (to 161)
+             131 POP_TOP
+             132 STORE_FAST           (e)
+             135 POP_TOP
+
+ 29:         136 LOAD_GLOBAL          (print_debug)
+             139 LOAD_CONST           ("Config read [ERROR]: {}")
+             142 LOAD_ATTR            (format)
+             145 LOAD_FAST            (e)
+             148 CALL_FUNCTION        (1 positional, 0 named)
+             151 LOAD_GLOBAL          (DEBUG)
+             154 CALL_FUNCTION        (2 positional, 0 named)
+             157 POP_TOP
+             158 JUMP_FORWARD         (to 162)
+         >>  161 END_FINALLY
+         >>  162 LOAD_CONST           (None)
+             165 RETURN_VALUE
+
+Symbol: pyconf.Settings.get
+ 32:           0 LOAD_GLOBAL          (print_debug)
+               3 LOAD_CONST           ("Requesting {} from {}")
+               6 LOAD_ATTR            (format)
+               9 LOAD_FAST            (name)
+              12 LOAD_FAST            (self)
+              15 LOAD_ATTR            (_Settings__settings)
+              18 CALL_FUNCTION        (2 positional, 0 named)
+              21 CALL_FUNCTION        (1 positional, 0 named)
+              24 POP_TOP
+
+ 33:          25 LOAD_FAST            (ignore)
+              28 POP_JUMP_IF_FALSE    (to 35)
+              31 LOAD_FAST            (default)
+              34 RETURN_VALUE
+         >>   35 LOAD_FAST            (self)
+              38 LOAD_ATTR            (_Settings__settings)
+              41 LOAD_ATTR            (get)
+              44 LOAD_FAST            (name)
+              47 LOAD_FAST            (default)
+              50 CALL_FUNCTION        (2 positional, 0 named)
+              53 RETURN_VALUE
+
+Symbol: pyconf.Settings.set
+ 36:           0 LOAD_FAST            (value)
+               3 LOAD_CONST           (None)
+               6 COMPARE_OP           (is-not)
+               9 POP_JUMP_IF_FALSE    (to 28)
+
+ 37:          12 LOAD_FAST            (value)
+              15 LOAD_FAST            (self)
+              18 LOAD_ATTR            (_Settings__settings)
+              21 LOAD_FAST            (name)
+              24 STORE_SUBSCR
+              25 JUMP_FORWARD         (to 58)
+
+ 39:     >>   28 SETUP_EXCEPT         (to 51)
+
+ 40:          31 LOAD_FAST            (self)
+              34 LOAD_ATTR            (_Settings__settings)
+              37 LOAD_ATTR            (remove)
+              40 LOAD_FAST            (name)
+              43 CALL_FUNCTION        (1 positional, 0 named)
+              46 POP_TOP
+              47 POP_BLOCK
+              48 JUMP_FORWARD         (to 58)
+
+ 41:     >>   51 POP_TOP
+              52 POP_TOP
+              53 POP_TOP
+
+ 42:          54 JUMP_FORWARD         (to 58)
+              57 END_FINALLY
+
+ 43:     >>   58 LOAD_FAST            (self)
+              61 LOAD_ATTR            (_Settings__save)
+              64 CALL_FUNCTION        (0 positional, 0 named)
+              67 POP_TOP
+              68 LOAD_CONST           (None)
+              71 RETURN_VALUE
+
+Symbol: pyconf.Settings.__save
+ 46:           0 LOAD_GLOBAL          (print_debug)
+               3 LOAD_CONST           ("Saving settings: {}")
+               6 LOAD_ATTR            (format)
+               9 LOAD_FAST            (self)
+              12 LOAD_ATTR            (_Settings__settings)
+              15 CALL_FUNCTION        (1 positional, 0 named)
+              18 LOAD_GLOBAL          (DEBUG)
+              21 CALL_FUNCTION        (2 positional, 0 named)
+              24 POP_TOP
+
+ 47:          25 SETUP_EXCEPT         (to 91)
+
+ 48:          28 LOAD_GLOBAL          (json)
+              31 LOAD_ATTR            (dumps)
+              34 LOAD_FAST            (self)
+              37 LOAD_ATTR            (_Settings__settings)
+              40 CALL_FUNCTION        (1 positional, 0 named)
+              43 STORE_FAST           (data)
+
+ 49:          46 LOAD_GLOBAL          (open)
+              49 LOAD_FAST            (self)
+              52 LOAD_ATTR            (_Settings__filename)
+              55 LOAD_CONST           ("w")
+              58 CALL_FUNCTION        (2 positional, 0 named)
+              61 STORE_FAST           (f)
+
+ 50:          64 LOAD_FAST            (f)
+              67 LOAD_ATTR            (write)
+              70 LOAD_FAST            (data)
+              73 CALL_FUNCTION        (1 positional, 0 named)
+              76 POP_TOP
+
+ 51:          77 LOAD_FAST            (f)
+              80 LOAD_ATTR            (close)
+              83 CALL_FUNCTION        (0 positional, 0 named)
+              86 POP_TOP
+              87 POP_BLOCK
+              88 JUMP_FORWARD         (to 132)
+
+ 52:     >>   91 DUP_TOP
+              92 LOAD_GLOBAL          (Exception)
+              95 COMPARE_OP           (exception-match)
+              98 POP_JUMP_IF_FALSE    (to 131)
+             101 POP_TOP
+             102 STORE_FAST           (e)
+             105 POP_TOP
+
+ 53:         106 LOAD_GLOBAL          (print_debug)
+             109 LOAD_CONST           ("Error saving settings: {}")
+             112 LOAD_ATTR            (format)
+             115 LOAD_FAST            (e)
+             118 CALL_FUNCTION        (1 positional, 0 named)
+             121 LOAD_GLOBAL          (DEBUG)
+             124 CALL_FUNCTION        (2 positional, 0 named)
+             127 POP_TOP
+             128 JUMP_FORWARD         (to 132)
+         >>  131 END_FINALLY
+         >>  132 LOAD_CONST           (None)
+             135 RETURN_VALUE

@@ -1,18 +1,20 @@
 # Community maintenance plan
 
-**Status:** proposed implementation plan; no updater implementation exists in this fork.
+**Status:** installer-reference research and proposed implementation plan;
+no runnable community updater exists in this fork.
 **Planning baseline:** 2026-10-06.
 **Owner:** [@ddtdanilo](https://github.com/ddtdanilo).
 
 ## Mission and measurable outcome
 
 Maintain a documented, testable path for keeping existing Pycom ESP32 modules
-usable, especially when the original desktop tooling cannot run natively on a
-modern Mac. Preserve recoverability and user data while building a maintained CLI
-and a new UI over a qualified open-source engine.
+usable as macOS ends the Intel/Rosetta compatibility path. Preserve recoverability
+and user data while delivering a maintained **desktop GUI**, supported by a shared
+core and an optional CLI. A CLI-only result does not fulfill the product objective.
 
-The first release objective is a local-package updater for explicitly validated
-module/expansion-board combinations on Apple Silicon. A subsequent universal2
+The first application release objective is a local-package graphical updater for
+explicitly validated module/expansion-board combinations on native Apple Silicon,
+without Rosetta. A subsequent universal2
 release must run natively on ARM and Intel, without Rosetta. Windows and Linux
 remain later targets until their own evidence is available.
 
@@ -24,6 +26,15 @@ working boot state. A build or serial-port listing alone is insufficient.
 
 - The original updater repository publishes documentation and installers, not
   desktop application source. This fork preserves its ancestry.
+- Static installer recovery yields a Python 3.9 x86_64 service, WebSocket actions,
+  and Qt tray code, with 24 candidate modules disassembled and 23 partial source
+  previews. A full GUI was not found in that asset. See [findings](RECOVERY_FINDINGS.md).
+- A separate public desktop `1.16.6` DMG provides Python 2.7/PyQt4 GUI recovery:
+  eleven candidate GUI/core modules, including the wizard, query/fetch/upgrade
+  workers, and configuration. Its previews pass Python 2 syntax checks, not
+  semantic, hardware, or modern-host qualification.
+- Recovered references have unresolved rights and are not runtime imports. Automatic
+  previews contain omissions/mistranslations; disassembly is research evidence.
 - A separate candidate Python engine contains `updater.py`, `esptool.py`, and
   `pypic.py`. Pin its exact revision before any import.
 - Its CLI exposes flashing, backup/restore, identifiers, configuration, and reset
@@ -86,6 +97,10 @@ peripheral or one-time-programmable state.
 
 ## Incremental release tracks
 
+The GUI remains the final product. R0/R1 are core qualification and optional
+intermediate tooling tracks. Start an original GUI shell with a simulated backend
+in parallel; do not postpone all interface work until a CLI release exists.
+
 | Track | Useful deliverable | Component gate | Qualification gate |
 | --- | --- | --- | --- |
 | R0 | Read-only CLI: discovery, identity, protection summary, backup/verification | Cleared upstream transport; no unresolved Pycom code | M1 and M3 read paths |
@@ -113,6 +128,14 @@ a desktop universal2 claim requires both native host and GUI qualification.
 
 - Per-file import manifest: upstream URL/revision, SHA-256, notices, modifications,
   license declaration, and redistribution basis.
+- Resolve the exact terms of installer-derived components before any runtime reuse.
+  Preserve the [research decision](decisions/0001-installer-reference-recovery.md),
+  module provenance, redactions, and recovery limitations. Do not assume the missing
+  installer license or service terms grant source redistribution rights.
+- Inventory the separate GUI/frontend, if obtainable, independently of the recovered
+  service. The classic wizard is now available as unresolved-rights reference text;
+  record per-component reuse decisions before a port or use it only for a reviewed
+  reconstruction process. A local desktop UI must be qualified independently.
 - Review of updater/PIC Pycom-specific terms and esptool GPL obligations. Select
   the application license after deciding how the engine will be reused.
 - Decide reuse per component: ESP32 bootloader transport, Pycom package semantics,
@@ -294,13 +317,21 @@ evidence block a universal2 compatibility claim.
 
 ## M6 — Desktop interface
 
-**Dependencies:** stable M3 core API; destructive workflows require M4.
-**Status:** not started.
+**Dependencies:** original simulated GUI work can begin alongside M0/M1; real
+read paths require M3 and destructive workflows require M4.
+**Status:** reconstruction requirements documented; application not implemented.
 
 ### Deliverables
 
 - GUI toolkit ADR comparing PySide6/Qt, Tkinter, and SwiftUI: accessibility,
   licensing, universal dependencies, size, cross-platform cost, and maintenance.
+- Standalone desktop GUI is the product acceptance target. Use recovered action
+  names and component boundaries as reference, not automatic source imports.
+- Local GUI assets and local-package updates work without Pybytes login, vendor
+  certificate retrieval, hosts-file modifications, or a remote frontend.
+- A simulated backend exercises empty/loading/error, cancellation, partial-write,
+  and recovery screens before hardware integration. Simulation is visibly labeled
+  and cannot invoke transport or qualify device behavior.
 - Shared core validation/planning; no UI-only flashing rules or bypasses.
 - Workflow: select device → inspect package → review backup/preservation →
   confirm operation → progress → verification or recovery result.
@@ -316,8 +347,13 @@ evidence block a universal2 compatibility claim.
 ### Acceptance criteria
 
 CLI/GUI fixture inputs produce the same plan/errors. A hardware owner can follow
-the supported workflow and understand partial-write recovery. Both native host
-architectures pass startup and declared device workflows.
+the supported workflow and understand partial-write recovery. Each claimed native
+host architecture passes startup and declared device workflows.
+
+The initial native ARM application release must complete the supported GUI workflow
+on a clean host without Rosetta. A CLI or tray/service-only port does not satisfy
+M6. Intel results are required for a universal2 claim, not for the initial ARM-only
+qualification; label architecture scope explicitly for each artifact.
 
 ## M7 — Release integrity and community operation
 

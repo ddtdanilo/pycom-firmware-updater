@@ -1,0 +1,78 @@
+# Pycom-derived reference artifact. SPDX-License-Identifier: LicenseRef-Pycom-Unresolved
+# Historical static recovery; not a community runtime or MIT source.
+# Source paths normalized. See ../README.md and ../../../LICENSE.md.
+# Automatic decompilation may omit or mistranslate code, even when syntax is valid.
+
+# Source Generated with Decompyle++
+# File: utils.actions.marshal (Python 3.9)
+
+from utils.scan_ports import ScanPort
+from utils.utils import print_debug
+from classes.result import Results
+from programmer import Programmer
+import requests
+import os
+import json
+
+def scan_ports(client, add_message, timeout_ref):
+    result = Results(client, add_message, timeout_ref, 'scan_ports')
+    scanner = ScanPort()
+    ports = scanner.scan_port()
+    result.send(ports)
+
+
+def remote_config(client, add_message, timeout_ref, config):
+    result = Results(client, add_message, timeout_ref, 'remote_config')
+    prog = Programmer()
+    response = prog.read_remote_config(config)
+    result.send(response)
+
+
+def infos(client, add_message, timeout_ref, port, baud_rate = (115200,)):
+    error = False
+    result = Results(client, add_message, timeout_ref, 'infos')
+    prog = Programmer(port, baud_rate, **('baud_rate',))
+# WARNING: Decompyle incomplete
+
+
+def device_config(client, add_message, timeout_ref, port, baud_rate = (115200,)):
+    error = False
+    result = Results(client, add_message, timeout_ref, 'device_config')
+    prog = Programmer(port, baud_rate, **('baud_rate',))
+# WARNING: Decompyle incomplete
+
+
+def erase_flash(client, add_message, timeout_ref, port, baud_rate = (115200,)):
+    error = False
+    result = Results(client, add_message, timeout_ref, 'erase_flash')
+    prog = Programmer(port, baud_rate, **('baud_rate',))
+# WARNING: Decompyle incomplete
+
+
+def dl_fw_locally(client, add_message, timeout_ref, url, filename = ('firmware.tar.gz',)):
+    result = Results(client, add_message, timeout_ref, 'download_firmware_locally')
+    path = os.path.join(os.getcwd(), 'tmp', filename.replace('/', '').replace('\\', ''))
+    if not os.path.exists('tmp'):
+        os.makedirs('tmp')
+# WARNING: Decompyle incomplete
+
+
+def write_firmware(client, add_message, timeout_ref, port, filename, baud_rate, erase_fs, erase_nvs, config, remote_config = (115200, False, False, { }, None)):
+    result = Results(client, add_message, timeout_ref, 'write_firmware')
+    path = os.path.join(os.getcwd(), 'tmp', filename.replace('/', '').replace('\\', ''))
+    prog = Programmer(port, result, baud_rate, erase_fs, erase_nvs, path)
+# WARNING: Decompyle incomplete
+
+
+def get_region_list(client, add_message, timeout_ref, tool_version):
+    result = Results(client, add_message, timeout_ref, 'region_list')
+    regions = requests.get('https://software.pycom.io/findupgrade?redirect=true&strict=false&type=stable&key=lopy.regionlist&tool_version={}'.format(tool_version))
+    regions_list = json.loads(regions.content.decode('utf8'))
+    result.send(regions_list)
+
+
+def get_sigfox_region_list(client, add_message, timeout_ref, tool_version):
+    result = Results(client, add_message, timeout_ref, 'sigfox_region_list')
+    country = requests.get('https://software.pycom.io/findupgrade?redirect=true&strict=false&type=stable&key=sipy.freqlist&tool_version={}'.format(tool_version))
+    country_list = json.loads(country.content.decode('utf8'))
+    result.send(country_list)
